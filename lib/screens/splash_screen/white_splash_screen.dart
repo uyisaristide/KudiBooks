@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:kudibooks_app/screens/categories/categories.dart';
 import 'package:kudibooks_app/screens/splash_screen/widgets/splash.dart';
 
 class WhiteSplashScreen extends StatefulWidget {
@@ -15,7 +16,7 @@ class _WhiteSplashScreenState extends State<WhiteSplashScreen> {
     Timer(const Duration(milliseconds: 3000), () {
       setState(() {
         Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => const WhiteSplashScreen()),
+            MaterialPageRoute(builder: (context) => const Categories()),
             (route) => false);
       });
     });
