@@ -25,7 +25,7 @@ class _WhiteSplashScreenState extends State<WhiteSplashScreen> {
   Widget build(BuildContext context) {
     return const Splash(
       backgroundColor: Color(0XffE5E5E5),
-      logoImage: 'assets/images/kudibooks-WHITE-PNG-LOGO.png',
+      logoImage: 'assets/images/splash/kudibooksLogo2.png',
       versionTextColor: Colors.black,
     );
   }

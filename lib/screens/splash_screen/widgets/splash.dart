@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 
 class Splash extends StatelessWidget {
   final Color backgroundColor;
- final String logoImage;
- final Color? versionTextColor;
+  final String logoImage;
+  final Color? versionTextColor;
   const Splash(
-      {required this.backgroundColor, required this.logoImage, this.versionTextColor, Key? key})
+      {required this.backgroundColor,
+      required this.logoImage,
+      this.versionTextColor,
+      Key? key})
       : super(key: key);
 
   @override
@@ -14,26 +17,25 @@ class Splash extends StatelessWidget {
         backgroundColor: backgroundColor,
         body: Stack(
           children: [
-             Center(
+            Center(
               child: Image(
-                image:
-                    AssetImage(logoImage),
-                width: 352,
-                height: 352,
+                image: AssetImage(logoImage),
+                // width: 352,
+                // height: 352,
               ),
             ),
             const Positioned(
                 top: 100,
-                left: -100,
-                child: CircleAvatar(
-                  radius: 100,
-                  backgroundColor: Colors.amber,
-                )),
-             Positioned(
-                top: 120,
                 left: -80,
                 child: CircleAvatar(
                   radius: 80,
+                  backgroundColor: Colors.amber,
+                )),
+            Positioned(
+                top: 120,
+                left: -60,
+                child: CircleAvatar(
+                  radius: 60,
                   backgroundColor: backgroundColor,
                 )),
             Positioned(
@@ -47,7 +49,7 @@ class Splash extends StatelessWidget {
                   height: 100,
                   width: 50,
                 )),
-             Positioned(
+            Positioned(
                 left: 200,
                 bottom: 30,
                 child: SizedBox(
@@ -58,9 +60,6 @@ class Splash extends StatelessWidget {
                   ),
                 ))
           ],
-        )
-
-       
-        );
+        ));
   }
 }
