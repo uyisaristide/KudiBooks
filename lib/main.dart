@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:kudibooks_app/screens/auth_screens/login.dart';
+import 'package:kudibooks_app/screens/auth_screens/phone_login.dart';
+import 'package:kudibooks_app/screens/auth_screens/phone_signup.dart';
+import 'package:kudibooks_app/screens/auth_screens/signup.dart';
 import 'package:kudibooks_app/screens/splash_screen/green_splash_screen.dart';
 
 void main() {
@@ -18,6 +22,13 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const GreenSplashScreen(),
+      initialRoute: '/',
+      routes: {
+        '/login': (context) => const Login(),
+        '/phoneLogin': (context) => const PhoneLogin(),
+        '/signup': (context) => const SignUp(),
+        '/phoneSignup': (context) => const PhoneSignup(),
+      },
     );
   }
 }

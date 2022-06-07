@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/circled_logo.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/custom_devider.dart';
@@ -8,21 +7,25 @@ import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/page_title.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
 
-class Login extends StatelessWidget {
-  const Login({Key? key}) : super(key: key);
+class SignUp extends StatelessWidget {
+  const SignUp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+        body: SingleChildScrollView(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const LockIcon(),
-          const PageTitle(title: 'Account Sign In'),
-          const CustomFormField(hintText: 'Email'),
+          const PageTitle(title: 'Create new account'),
+          const CustomFormField(hintText: 'First Name'),
+          const CustomFormField(hintText: 'Last Name'),
+          const CustomFormField(hintText: 'Email Address'),
           const CustomFormField(hintText: 'Password'),
-          const HyperLinkText(directingText: 'Forgot Password ?'),
-          const LoginButton(text: 'Login'),
+          const CustomFormField(hintText: 'Confirm Password'),
+          const LoginButton(text: 'Register now'),
+          const HyperLinkText(directingText: 'Login instead'),
           const CustomDevider(middleText: 'Or sign in with'),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
@@ -45,6 +48,6 @@ class Login extends StatelessWidget {
           )
         ],
       ),
-    );
+    ));
   }
 }

@@ -60,7 +60,9 @@ class Categories extends StatelessWidget {
                   borderRadius: BorderRadius.circular(15),
                   border: Border.all(color: const Color(0Xff2E7f00))),
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/login');
+                },
                 child: const Text(
                   'Other',
                   style: TextStyle(color: Color(0Xff2E7D32)),
