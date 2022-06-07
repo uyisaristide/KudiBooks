@@ -12,7 +12,7 @@ class GreenSplashScreen extends StatefulWidget {
 }
 
 class _GreenSplashScreenState extends State<GreenSplashScreen> {
- _GreenSplashScreenState(){
+  _GreenSplashScreenState() {
     Timer(const Duration(milliseconds: 3000), () {
       setState(() {
         Navigator.of(context).pushAndRemoveUntil(
@@ -20,15 +20,14 @@ class _GreenSplashScreenState extends State<GreenSplashScreen> {
             (route) => false);
       });
     });
+  }
 
- }
-  
   @override
   Widget build(BuildContext context) {
-   
     return const Splash(
-        backgroundColor:  Color(0Xff157253),
-        logoImage: 'assets/images/splash/kudibooks-WHITE-PNG-LOGO.png',versionTextColor: Colors.white,);
-   
+      backgroundColor: Color(0Xff157253),
+      logoImage: "assets/images/splash/kudibooks-WHITE-PNG-LOGO.png",
+      versionTextColor: Colors.white,
+    );
   }
 }
