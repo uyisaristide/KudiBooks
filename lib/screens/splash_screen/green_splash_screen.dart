@@ -28,7 +28,7 @@ class _GreenSplashScreenState extends State<GreenSplashScreen> {
    
     return const Splash(
         backgroundColor:  Color(0Xff157253),
-        logoImage: 'assets/images/kudibooks-WHITE-PNG-LOGO.png',versionTextColor: Colors.white,);
+        logoImage: 'assets/images/splash/kudibooks-WHITE-PNG-LOGO.png',versionTextColor: Colors.white,);
    
   }
 }
