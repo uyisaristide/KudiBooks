@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 class CarouselCard extends StatelessWidget {
@@ -17,36 +19,38 @@ class CarouselCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: Container(
-      decoration: const BoxDecoration(
-        color: Colors.black38,
-      ),
+        child: Padding(
+      padding: const EdgeInsets.all(20.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Image.asset(
-            image,
-            height: indexCard == 0 ? 300 : 150,
+          Padding(
+            padding: EdgeInsets.only(
+              top: indexCard == 0 ? 100 : 50,
+            ),
+            child: Image.asset(
+              image,
+              height: indexCard == 0 ? 330 : 100,
+            ),
           ),
-          const SizedBox(
-            height: 100,
+          SizedBox(
+            height: indexCard == 0 ? 40 : 100,
           ),
           Text(
             title,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 28),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
           ),
-          const SizedBox(
-            height: 100,
+          SizedBox(
+            height: indexCard == 0 ? 40 : 100,
           ),
           Padding(
             padding: const EdgeInsets.all(25.0),
             child: Text(
               description,
               textAlign: TextAlign.center,
-              style: const TextStyle(color: Colors.white, fontSize: 15),
+              style: const TextStyle(color: Colors.grey, fontSize: 13),
             ),
           )
         ],
