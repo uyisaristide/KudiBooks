@@ -24,8 +24,8 @@ class MyApp extends StatelessWidget {
       home: const GreenSplashScreen(),
       initialRoute: '/',
       routes: {
-        '/login': (context) => const Login(),
-        '/phoneLogin': (context) => const PhoneLogin(),
+        '/login': (context) =>  Login(),
+        '/phoneLogin': (context) =>  PhoneLogin(),
         '/signup': (context) => const SignUp(),
         '/phoneSignup': (context) => const PhoneSignup(),
       },

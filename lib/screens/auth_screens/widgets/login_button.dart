@@ -1,23 +1,28 @@
 import 'package:flutter/material.dart';
 
 class LoginButton extends StatelessWidget {
+  Function? validate;
   final String text;
 
-  const LoginButton({required this.text, Key? key}) : super(key: key);
+  LoginButton({required this.text, this.validate, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: BoxDecoration(
-            color: const Color(0Xff157253),
-            borderRadius: BorderRadius.circular(10)),
-        alignment: Alignment.center,
-        height: 50,
-        width: double.infinity,
-        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        child:  Text(
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            primary: const Color(0Xff157253),
+            minimumSize: const Size(double.infinity, 50),
+            padding: const EdgeInsets.all(2)),
+        onPressed: () => validate!(),
+        child: Text(
           text,
           style: const TextStyle(color: Colors.white),
-        ));
+        ),
+      ),
+    );
   }
 }

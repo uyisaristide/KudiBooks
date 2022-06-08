@@ -24,7 +24,7 @@ class SignUp extends StatelessWidget {
           const CustomFormField(hintText: 'Email Address'),
           const CustomFormField(hintText: 'Password'),
           const CustomFormField(hintText: 'Confirm Password'),
-          const LoginButton(text: 'Register now'),
+           LoginButton(text: 'Register now'),
           const HyperLinkText(directingText: 'Login instead'),
           const CustomDevider(middleText: 'Or sign in with'),
           Padding(
