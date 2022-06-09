@@ -52,18 +52,22 @@ class Categories extends StatelessWidget {
             ),
           ),
           Container(
-            alignment: Alignment.center,
-            height: 40,
-            width: double.infinity,
-            margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                border: Border.all(color: const Color(0Xff2E7f00))),
-            child: const Text(
-              'Other',
-              style: TextStyle(color: Color(0Xff2E7D32)),
-            ),
-          ),
+              alignment: Alignment.center,
+              height: 40,
+              width: double.infinity,
+              margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  border: Border.all(color: const Color(0Xff2E7f00))),
+              child: TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/login');
+                },
+                child: const Text(
+                  'Other',
+                  style: TextStyle(color: Color(0Xff2E7D32)),
+                ),
+              )),
           Container()
         ],
       ),
