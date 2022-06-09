@@ -1,19 +1,13 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:kudibooks_app/models/services_model.dart';
 
 class CarouselCard extends StatelessWidget {
-  String image;
-  String title;
-  String description;
+  CarouselsCard carouselsCard;
   int? indexCard;
 
-  CarouselCard(
-      {Key? key,
-      required this.image,
-      required this.title,
-      this.indexCard,
-      required this.description})
+  CarouselCard({Key? key, required this.carouselsCard, this.indexCard})
       : super(key: key);
 
   @override
@@ -30,7 +24,7 @@ class CarouselCard extends StatelessWidget {
               top: indexCard == 0 ? 100 : 50,
             ),
             child: Image.asset(
-              image,
+              carouselsCard.image,
               height: indexCard == 0 ? 330 : 100,
             ),
           ),
@@ -38,7 +32,7 @@ class CarouselCard extends StatelessWidget {
             height: indexCard == 0 ? 40 : 100,
           ),
           Text(
-            title,
+            carouselsCard.title,
             textAlign: TextAlign.center,
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
           ),
@@ -48,7 +42,7 @@ class CarouselCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(25.0),
             child: Text(
-              description,
+              carouselsCard.description,
               textAlign: TextAlign.center,
               style: const TextStyle(color: Colors.grey, fontSize: 13),
             ),

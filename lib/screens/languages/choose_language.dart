@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kudibooks_app/models/language_model.dart';
 import 'package:kudibooks_app/screens/languages/Widget/language_list.dart';
 
 class Languages extends StatefulWidget {
@@ -18,6 +19,7 @@ class _LanguagesState extends State<Languages> {
     "assets/images/FR.png",
   ];
   final List _listLanguage = ["English", "Kinyarwanda", "Franch"];
+  final List _listLanguages = ChooseLanguages.generateLanguages();
 
   @override
   Widget build(BuildContext context) {
@@ -112,15 +114,15 @@ class _LanguagesState extends State<Languages> {
                       height: 120,
                       child: ListView.separated(
                           scrollDirection: Axis.horizontal,
+                          physics: const BouncingScrollPhysics(),
                           shrinkWrap: true,
                           itemBuilder: (context, index) => LanguageList(
-                                image: flags[index],
-                                languageName: _listLanguage[index],
+                                chooseLanguages: _listLanguages[index],
                               ),
                           separatorBuilder: (_, index) => const SizedBox(
                                 height: 10,
                               ),
-                          itemCount: flags.length),
+                          itemCount: _listLanguages.length),
                     )
                   ],
                 ),

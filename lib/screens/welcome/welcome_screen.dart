@@ -2,6 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kudibooks_app/models/services_model.dart';
+import 'package:kudibooks_app/screens/auth_screens/login.dart';
+import 'package:kudibooks_app/screens/auth_screens/phone_login.dart';
 import 'package:kudibooks_app/screens/languages/choose_language.dart';
 import 'package:kudibooks_app/screens/welcome/widgets/carousel_card.dart';
 
@@ -30,66 +33,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     _pageController.dispose();
   }
 
-  final List carouselCard = [
-    CarouselCard(
-      image: "assets/images/firstSlide.png",
-      description: '',
-      title: "Your accounting done right",
-    ),
-    CarouselCard(
-      image: "assets/images/inventorySlide.png",
-      description:
-          'Keep track of your stock for the ultimate goal to resale, use or production',
-      title: "Inventory",
-    ),
-    CarouselCard(
-      image: "assets/images/budgetingSlide.png",
-      description:
-          'Keep track of your stock for the ultimate goal to resale, use or production',
-      title: "Budgeting",
-    ),
-    CarouselCard(
-      image: "assets/images/expenses.png",
-      description: 'This framework allows you to track your expenses at easy',
-      title: "Expenses",
-    ),
-    CarouselCard(
-      image: "assets/images/reportingSlide.png",
-      description:
-          'Balance sheet, income statement, cash flow statement and other commonly used financial reports',
-      title: "Reporting",
-    ),
-  ];
-  final List carouseLs = [
-    [
-      "assets/images/firstSlide.png",
-      " ",
-      "Your accounting done right",
-    ]
-  ];
-
-  final List<String> _serviceImages = [
-    "assets/images/firstSlide.png",
-    "assets/images/inventorySlide.png",
-    "assets/images/budgetingSlide.png",
-    "assets/images/expenses.png",
-    "assets/images/reportingSlide.png"
-  ];
-
-  final List<String> _titles = [
-    "Your accounting done right",
-    "Inventory",
-    "Budgeting",
-    "Expenses",
-    "Reporting"
-  ];
-  final List<String> _descriptions = [
-    "",
-    "Keep track of your stock for the ultimate goal to resale, use or production",
-    "This framework allows you to create your financial plan so you can monitor your progress",
-    "This framework allows you to track your expenses at easy",
-    "Balance sheet, income statement, cash flow statement and other commonly used financial reports"
-  ];
+  final _listCard = CarouselsCard.generateList();
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +65,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 decoration: const BoxDecoration(color: Colors.amber),
               )),
           BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 75.0, sigmaY: 75.0),
+            filter: ImageFilter.blur(sigmaX: 80.0, sigmaY: 90.0),
             child: Container(
               color: Colors.white.withOpacity(.2),
             ),
@@ -133,14 +77,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     onPageChanged: (index) =>
                         setState(() => _currentPage = index),
                     physics: const ClampingScrollPhysics(),
-                    itemCount: _serviceImages.length,
+                    itemCount: _listCard.length,
                     controller: _pageController,
                     itemBuilder: (context, index) {
                       // return const BackgroundBlur();
                       return CarouselCard(
-                        image: _serviceImages[index],
-                        title: _titles[index],
-                        description: _descriptions[index],
+                        carouselsCard: _listCard[index],
                         indexCard: index,
                       );
                     }),
@@ -153,16 +95,16 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: _serviceImages
+                        children: _listCard
                             .map((e) => Container(
                                   margin: const EdgeInsets.all(2.0),
                                   height: 12,
                                   width: 12,
                                   decoration: BoxDecoration(
-                                      color: _serviceImages.indexOf(e) ==
-                                              _currentPage
-                                          ? Colors.grey
-                                          : null,
+                                      color:
+                                          _listCard.indexOf(e) == _currentPage
+                                              ? Colors.grey
+                                              : null,
                                       border: Border.all(
                                           color: Colors.grey, width: 1.0),
                                       borderRadius: const BorderRadius.all(
@@ -208,7 +150,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                               Navigator.push(
                                   context,
                                   CupertinoPageRoute(
-                                      builder: (context) => const Languages()));
+                                      builder: (context) => PhoneLogin()));
                             },
                             child: const Text(
                               "Login",
