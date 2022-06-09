@@ -17,6 +17,7 @@ class PhoneLogin extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
+
         child: Stack(
           children: [
             Positioned(
@@ -47,6 +48,7 @@ class PhoneLogin extends StatelessWidget {
               filter: ImageFilter.blur(sigmaX: 80.0, sigmaY: 90.0),
               child: Container(
                 color: Colors.white.withOpacity(.2),
+
               ),
             ),
             Padding(
