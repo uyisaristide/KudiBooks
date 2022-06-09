@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/circled_logo.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/custom_devider.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/lock_icon.dart';
@@ -20,11 +21,14 @@ class PhoneLogin extends StatelessWidget {
             children: [
               const LockIcon(),
               const PageTitle(title: 'Account SignIn'),
-              const CustomFormField(hintText: 'Phone Number'),
+              CustomFormField(
+                hintText: 'Phone Number',
+                validators: (value) => Varidators.validatePhoneNumber(value),
+              ),
               LoginButton(
                 text: 'Login',
                 validate: () => _formKey.currentState!.validate()
-                    ? Navigator.pushNamed(context, '/')
+                    ? Navigator.pushNamed(context, '/otp')
                     : null,
               ),
               const CustomDevider(middleText: 'Or sign in with'),

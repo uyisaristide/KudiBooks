@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kudibooks_app/screens/auth_screens/login.dart';
+import 'package:kudibooks_app/screens/auth_screens/otp_verification.dart';
 import 'package:kudibooks_app/screens/auth_screens/phone_login.dart';
 import 'package:kudibooks_app/screens/auth_screens/phone_signup.dart';
 import 'package:kudibooks_app/screens/auth_screens/signup.dart';
@@ -24,10 +25,11 @@ class MyApp extends StatelessWidget {
       home: const GreenSplashScreen(),
       initialRoute: '/',
       routes: {
-        '/login': (context) =>  Login(),
-        '/phoneLogin': (context) =>  PhoneLogin(),
-        '/signup': (context) => const SignUp(),
-        '/phoneSignup': (context) => const PhoneSignup(),
+        '/login': (context) => Login(),
+        '/phoneLogin': (context) => PhoneLogin(),
+        '/signup': (context) => SignUp(),
+        '/phoneSignup': (context) => PhoneSignup(),
+        '/otp':(context) => const OtpVerification()
       },
     );
   }
