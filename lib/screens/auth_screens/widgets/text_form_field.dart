@@ -3,10 +3,47 @@ import 'package:flutter/material.dart';
 class CustomFormField extends StatelessWidget {
   final Function? validators;
   final String hintText;
-  const CustomFormField({required this.hintText,this.validators, Key? key}) : super(key: key);
+  final Icon? fieldIcon;
+  final TextInputType? inputType;
+
+  const CustomFormField(
+      {required this.hintText,
+      this.validators,
+      this.fieldIcon,
+      this.inputType,
+      Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5.0),
+      child: TextFormField(
+        keyboardType: inputType,
+        validator: (value) => validators!(value),
+        decoration: InputDecoration(
+          suffixIcon: fieldIcon,
+          focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: Colors.grey, width: 1.0),
+              borderRadius: BorderRadius.circular(10.0)),
+          focusedErrorBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                  color: validators == null ? Colors.grey : Colors.red,
+                  width: 1.0),
+              borderRadius: BorderRadius.circular(10.0)),
+          enabledBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: Colors.grey, width: 1.0),
+              borderRadius: BorderRadius.circular(10.0)),
+          errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+              borderSide: const BorderSide(
+                color: Colors.red,
+              )),
+          contentPadding: const EdgeInsets.only(left: 10),
+          hintText: hintText,
+        ),
+      ),
+    );
     return Container(
         alignment: Alignment.center,
         height: 50,
@@ -18,6 +55,9 @@ class CustomFormField extends StatelessWidget {
         child: TextFormField(
           validator: (value) => validators!(value),
           decoration: InputDecoration(
+              errorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: const BorderSide(color: Colors.red)),
               contentPadding: const EdgeInsets.only(left: 10),
               hintText: hintText,
               border: InputBorder.none),

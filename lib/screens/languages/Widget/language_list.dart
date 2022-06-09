@@ -1,12 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kudibooks_app/models/language_model.dart';
 
 class LanguageList extends StatelessWidget {
-  String image;
-  String languageName;
+  ChooseLanguages chooseLanguages;
 
-  LanguageList({Key? key, required this.image, required this.languageName})
-      : super(key: key);
+  LanguageList({Key? key, required this.chooseLanguages}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +18,7 @@ class LanguageList extends StatelessWidget {
         children: [
           ClipOval(
             child: Image.asset(
-              image,
+              chooseLanguages.image,
               fit: BoxFit.cover,
               height: 60,
               width: 60,
@@ -29,7 +28,7 @@ class LanguageList extends StatelessWidget {
             height: 10,
           ),
           Text(
-            languageName,
+            chooseLanguages.languageName,
             style: const TextStyle(
               fontSize: 13,
             ),

@@ -1,43 +1,44 @@
-class Varidators{
+class Validators {
   static String? validateEmail(String value) {
     final RegExp regex = RegExp(
         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
     if (value.isEmpty) {
-      return 'enter email address';
+      return 'Enter email address';
     } else if (!regex.hasMatch(value)) {
       return 'Enter the valid email';
     } else {
       return null;
     }
   }
-  static String? validatePassword(String value){
+
+  static String? validatePassword(String value) {
     if (value.isEmpty) {
-      return 'enter password';
-    } else if (value.length <6) {
-      return 'the password might have atleast 6 characters';
+      return 'Enter password';
+    } else if (value.length < 6) {
+      return '6 is minimum character for password';
     } else {
       return null;
     }
   }
-  static String? validateName(String value){
+
+  static String? validateName(String value) {
     if (value.isEmpty) {
-      return 'enter user name';
-    } else if (value.length <3) {
-      return 'this name is Invalid';
+      return 'Enter user name';
+    } else if (value.length < 3) {
+      return '$value is Invalid';
     } else {
       return null;
     }
   }
+
   static String? validatePhoneNumber(String value) {
-    final RegExp regex = RegExp(
-        r'(^(?:[+0]9)?[0-9]{10,12}$)');
+    final RegExp regex = RegExp(r'(^(?:[+0]9)?[0-9]{10,12}$)');
     if (value.isEmpty) {
-      return 'enter Phone';
+      return 'Phone field is required';
     } else if (!regex.hasMatch(value)) {
       return 'Invalid Phone number';
     } else {
       return null;
     }
   }
-
 }

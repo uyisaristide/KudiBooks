@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class CircledLogo extends StatelessWidget {
   final String navigateTo;
   final String logo;
+
   const CircledLogo({required this.navigateTo, required this.logo, Key? key})
       : super(key: key);
 
