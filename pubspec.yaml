@@ -38,6 +38,7 @@ dependencies:
   pin_code_fields: ^7.4.0
 
   carousel_slider: ^4.1.1
+  country_code_picker: ^2.0.2
 
 
 dev_dependencies:

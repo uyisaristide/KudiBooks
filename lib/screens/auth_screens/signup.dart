@@ -26,23 +26,23 @@ class SignUp extends StatelessWidget {
             const PageTitle(title: 'Create new account'),
             CustomFormField(
               hintText: 'First Name',
-              validators: (value) => Varidators.validateName(value),
+              validators: (value) => Validators.validateName(value),
             ),
             CustomFormField(
               hintText: 'Last Name',
-              validators: (value) => Varidators.validateName(value),
+              validators: (value) => Validators.validateName(value),
             ),
             CustomFormField(
               hintText: 'Email Address',
-              validators: (value) => Varidators.validateEmail(value),
+              validators: (value) => Validators.validateEmail(value),
             ),
             CustomFormField(
               hintText: 'Password',
-              validators: (value) => Varidators.validatePassword(value),
+              validators: (value) => Validators.validatePassword(value),
             ),
             CustomFormField(
               hintText: 'Confirm Password',
-              validators: (value) => Varidators.validatePassword(value),
+              validators: (value) => Validators.validatePassword(value),
             ),
             LoginButton(
                 text: 'Register now',

@@ -4,10 +4,13 @@ class CustomFormField extends StatelessWidget {
   final Function? validators;
   final String hintText;
   final Icon? fieldIcon;
+
   final TextInputType? inputType;
+  final Widget? prefix;
 
   const CustomFormField(
       {required this.hintText,
+      this.prefix,
       this.validators,
       this.fieldIcon,
       this.inputType,
@@ -22,6 +25,7 @@ class CustomFormField extends StatelessWidget {
         keyboardType: inputType,
         validator: (value) => validators!(value),
         decoration: InputDecoration(
+          prefixIcon: prefix,
           suffixIcon: fieldIcon,
           focusedBorder: OutlineInputBorder(
               borderSide: const BorderSide(color: Colors.grey, width: 1.0),
@@ -44,23 +48,23 @@ class CustomFormField extends StatelessWidget {
         ),
       ),
     );
-    return Container(
-        alignment: Alignment.center,
-        height: 50,
-        width: double.infinity,
-        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: Colors.black12)),
-        child: TextFormField(
-          validator: (value) => validators!(value),
-          decoration: InputDecoration(
-              errorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                  borderSide: const BorderSide(color: Colors.red)),
-              contentPadding: const EdgeInsets.only(left: 10),
-              hintText: hintText,
-              border: InputBorder.none),
-        ));
+    // return Container(
+    //     alignment: Alignment.center,
+    //     height: 50,
+    //     width: double.infinity,
+    //     margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+    //     decoration: BoxDecoration(
+    //         borderRadius: BorderRadius.circular(10),
+    //         border: Border.all(color: Colors.black12)),
+    //     child: TextFormField(
+    //       validator: (value) => validators!(value),
+    //       decoration: InputDecoration(
+    //           errorBorder: OutlineInputBorder(
+    //               borderRadius: BorderRadius.circular(10.0),
+    //               borderSide: const BorderSide(color: Colors.red)),
+    //           contentPadding: const EdgeInsets.only(left: 10),
+    //           hintText: hintText,
+    //           border: InputBorder.none),
+    //     ));
   }
 }

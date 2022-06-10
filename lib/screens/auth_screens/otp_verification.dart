@@ -28,6 +28,12 @@ class _OtpVerificationState extends State<OtpVerification>
   }
 
   @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     controller.reverse(from: controller.value == 0 ? 1.0 : controller.value);
     return Scaffold(
