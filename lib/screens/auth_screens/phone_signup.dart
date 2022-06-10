@@ -11,6 +11,9 @@ import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart'
 class PhoneSignup extends StatelessWidget {
   PhoneSignup({Key? key}) : super(key: key);
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,13 +29,13 @@ class PhoneSignup extends StatelessWidget {
               ),
               CustomFormField(
                   hintText: 'First Name',
-                  validators: (value) => Varidators.validateName(value)),
+                  validators: (value) => Validators.validateName(value)),
               CustomFormField(
                   hintText: 'Last Name',
-                  validators: (value) => Varidators.validateName(value)),
+                  validators: (value) => Validators.validateName(value)),
               CustomFormField(
                   hintText: 'Phone Number',
-                  validators: (value) => Varidators.validatePhoneNumber(value)),
+                  validators: (value) => Validators.validatePhoneNumber(value)),
               LoginButton(
                   text: 'Register now',
                   validate: () => _formKey.currentState!.validate()

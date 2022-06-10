@@ -13,6 +13,9 @@ class SignUp extends StatelessWidget {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  final TextEditingController _pwd = TextEditingController();
+  final TextEditingController _cPwd = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,23 +29,31 @@ class SignUp extends StatelessWidget {
             const PageTitle(title: 'Create new account'),
             CustomFormField(
               hintText: 'First Name',
-              validators: (value) => Varidators.validateName(value),
+              validators: (value) => Validators.validateName(value),
             ),
             CustomFormField(
               hintText: 'Last Name',
-              validators: (value) => Varidators.validateName(value),
+              validators: (value) => Validators.validateName(value),
             ),
             CustomFormField(
               hintText: 'Email Address',
-              validators: (value) => Varidators.validateEmail(value),
+              validators: (value) => Validators.validateEmail(value),
             ),
             CustomFormField(
+              controller: _pwd,
               hintText: 'Password',
-              validators: (value) => Varidators.validatePassword(value),
+              validators: (value) => Validators.validatePassword(value),
             ),
             CustomFormField(
+              controller: _cPwd,
               hintText: 'Confirm Password',
-              validators: (value) => Varidators.validatePassword(value),
+              validators: (value) {
+                if (_cPwd.text != _pwd.text) {
+                  return 'enter same password';
+                } else {
+                  return Validators.validatePassword(value);
+                }
+              },
             ),
             LoginButton(
                 text: 'Register now',
