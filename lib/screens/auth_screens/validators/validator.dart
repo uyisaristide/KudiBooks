@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 class Validators {
   static String? validateEmail(String value) {
     final RegExp regex = RegExp(
@@ -16,6 +18,16 @@ class Validators {
       return 'Enter password';
     } else if (value.length < 6) {
       return '6 is minimum character for password';
+    } else {
+      return null;
+    }
+  }
+
+  static String? validatePin(String value) {
+    if (value.toString().isEmpty) {
+      return 'Enter Pin';
+    } else if (value.toString().length > 4) {
+      return 'PIN is 4 digits';
     } else {
       return null;
     }
