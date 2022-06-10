@@ -4,6 +4,7 @@ import 'package:kudibooks_app/screens/auth_screens/otp_verification.dart';
 import 'package:kudibooks_app/screens/auth_screens/phone_login.dart';
 import 'package:kudibooks_app/screens/auth_screens/phone_signup.dart';
 import 'package:kudibooks_app/screens/auth_screens/signup.dart';
+import 'package:kudibooks_app/screens/categories/categories.dart';
 import 'package:kudibooks_app/screens/splash_screen/green_splash_screen.dart';
 
 void main() {
@@ -29,7 +30,8 @@ class MyApp extends StatelessWidget {
         '/phoneLogin': (context) => PhoneLogin(),
         '/signup': (context) => SignUp(),
         '/phoneSignup': (context) => PhoneSignup(),
-        '/otp':(context) => const OtpVerification()
+        '/otp':(context) => const OtpVerification(),
+        '/categories':(context) => const Categories()
       },
     );
   }

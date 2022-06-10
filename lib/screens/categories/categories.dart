@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kudibooks_app/screens/categories/widgets/grid_card.dart';
+import 'package:kudibooks_app/screens/drawer/navigation_drawer.dart';
 
 class Categories extends StatelessWidget {
   const Categories({Key? key}) : super(key: key);
@@ -7,6 +8,7 @@ class Categories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const NavigationDrawer(),
       backgroundColor: const Color(0XffE5E5E5),
       appBar: AppBar(
           elevation: 0,

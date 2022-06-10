@@ -65,21 +65,24 @@ class Login extends StatelessWidget {
                     CustomFormField(
                       hintText: 'Email',
                       fieldIcon: const Icon(Icons.email),
-                      validators: (value) => Validators.validateEmail(value),
+                      validators: (value) => Validators.validateEmail(value!),
                     ),
                     CustomFormField(
                       fieldIcon: const Icon(Icons.remove_red_eye),
                       hintText: 'Password',
-                      validators: (value) => Validators.validatePassword(value),
+                      validators: (value) =>
+                          Validators.validatePassword(value!),
                     ),
                     const HyperLinkText(
                       directingText: 'Forgot Password ?',
                     ),
                     LoginButton(
-                        text: 'Login',
-                        validate: () => _formKey.currentState!.validate()
-                            ? Navigator.pushNamed(context, '/')
-                            : null),
+                      text: 'Login',
+                      actionField: () => _formKey.currentState!.validate()
+                          ? Navigator.pushReplacementNamed(context, '/categories')
+                          : null,
+                      
+                    ),
                     const CustomDevider(middleText: 'Or sign in with'),
                     Padding(
                       padding: const EdgeInsets.symmetric(

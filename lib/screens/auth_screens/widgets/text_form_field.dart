@@ -3,17 +3,21 @@ import 'package:flutter/material.dart';
 class CustomFormField extends StatelessWidget {
   final Function? validators;
   final String hintText;
-  final Icon? fieldIcon;
-  final TextInputType? inputType;
-  final TextEditingController? controller;
+  final Widget? fieldIcon;
 
-  const CustomFormField(
-      {required this.hintText,
-      this.validators,
-      this.fieldIcon,
-      this.inputType,
-      this.controller,
-      Key? key})
+  final TextInputType? inputType;
+  final VoidCallback? onChangeAction;
+  final Widget? countryCode;
+  final int? maximumLength;
+
+  const CustomFormField({required this.hintText,
+    this.validators,
+    this.fieldIcon,
+    this.inputType,
+    Key? key,
+    this.onChangeAction,
+    this.countryCode,
+    this.maximumLength})
       : super(key: key);
 
   @override
@@ -21,10 +25,11 @@ class CustomFormField extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5.0),
       child: TextFormField(
-        controller: controller,
+        maxLength: maximumLength,
         keyboardType: inputType,
         validator: (value) => validators!(value),
         decoration: InputDecoration(
+          prefix: countryCode,
           suffixIcon: fieldIcon,
           focusedBorder: OutlineInputBorder(
               borderSide: const BorderSide(color: Colors.grey, width: 1.0),
@@ -47,23 +52,5 @@ class CustomFormField extends StatelessWidget {
         ),
       ),
     );
-    // return Container(
-    //     alignment: Alignment.center,
-    //     height: 50,
-    //     width: double.infinity,
-    //     margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-    //     decoration: BoxDecoration(
-    //         borderRadius: BorderRadius.circular(10),
-    //         border: Border.all(color: Colors.black12)),
-    //     child: TextFormField(
-    //       validator: (value) => validators!(value),
-    //       decoration: InputDecoration(
-    //           errorBorder: OutlineInputBorder(
-    //               borderRadius: BorderRadius.circular(10.0),
-    //               borderSide: const BorderSide(color: Colors.red)),
-    //           contentPadding: const EdgeInsets.only(left: 10),
-    //           hintText: hintText,
-    //           border: InputBorder.none),
-    //     ));
   }
 }
