@@ -16,7 +16,7 @@ class CircledLogo extends StatelessWidget {
         child: TextButton(
           child: Image.asset(logo),
           onPressed: () {
-            Navigator.pushNamed(context, navigateTo);
+            Navigator.pushReplacementNamed(context, navigateTo);
           },
         ),
       ),

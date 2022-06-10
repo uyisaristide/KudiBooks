@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 class LoginButton extends StatelessWidget {
-  Function? validate;
+  final Function? validate;
   final String text;
+  VoidCallback actionField;
 
-  LoginButton({required this.text, this.validate, Key? key}) : super(key: key);
+  LoginButton({required this.text, this.validate, required this.actionField, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,7 @@ class LoginButton extends StatelessWidget {
             primary: const Color(0Xff157253),
             minimumSize: const Size(double.infinity, 50),
             padding: const EdgeInsets.all(2)),
-        onPressed: () => validate!(),
+        onPressed: actionField,
         child: Text(
           text,
           style: const TextStyle(color: Colors.white),
