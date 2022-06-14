@@ -1,4 +1,5 @@
 import 'dart:ffi';
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -12,15 +13,42 @@ import 'package:kudibooks_app/screens/auth_screens/widgets/phone_input.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
 import 'package:kudibooks_app/screens/background.dart';
 
-class PhoneLogin extends StatelessWidget {
+class PhoneLogin extends StatefulWidget {
   PhoneLogin({Key? key}) : super(key: key);
+
+  @override
+  State<PhoneLogin> createState() => _PhoneLoginState();
+}
+
+class _PhoneLoginState extends State<PhoneLogin> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
   final phoneController = TextEditingController();
   final pinController = TextEditingController();
+  var _countryCode = '';
 
   @override
   Widget build(BuildContext context) {
-    return BackgroundScreen(paddingSize: 150,
+    return BackgroundScreen(
+      buttonWidget: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          TextButton(
+            onPressed: () {
+              Navigator.pushReplacementNamed(context, '/signup');
+            },
+            child: const Text(
+              "Sign up",
+              style: TextStyle(
+                color: Color(0Xff157253),
+              ),
+            ),
+          ),
+        ],
+      ),
+      paddingSize: 150,
       screens: Form(
         key: _formKey,
         child: Column(
@@ -28,13 +56,12 @@ class PhoneLogin extends StatelessWidget {
           children: [
             const LockIcon(),
             const PageTitle(title: 'Account Sign In'),
-            // CustomFormField(
-            //   hintText: 'Phone Number',
-            //   validators: (value) =>
-            //       Validators.validatePhoneNumber(value),
-            //   fieldIcon: const Icon(Icons.phone),
-            // ),
             PhoneField(
+              countryCodes: (country) {
+                setState(() {
+                  _countryCode = country.code;
+                });
+              },
               fieldIcon: const Icon(
                 Icons.phone,
                 size: 17,
@@ -42,6 +69,8 @@ class PhoneLogin extends StatelessWidget {
               phoneNumber: phoneController,
             ),
             CustomFormField(
+              labelText: "Pin",
+              maximumLength: 4,
               inputType: TextInputType.phone,
               hintText: 'Enter your pin',
               validators: (value) => Validators.validatePin(value),
@@ -49,6 +78,7 @@ class PhoneLogin extends StatelessWidget {
                 Icons.remove_red_eye,
                 size: 17,
               ),
+              fieldController: pinController,
             ),
             const SizedBox(
               height: 10,
@@ -60,7 +90,8 @@ class PhoneLogin extends StatelessWidget {
                   : null,
               actionField: () {
                 if (_formKey.currentState!.validate()) {
-                  print("Here we go!");
+                  print(
+                      "Country code is: ${_countryCode + phoneController.text}");
                 }
                 print("Clicked successfully");
               },
@@ -69,18 +100,20 @@ class PhoneLogin extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: Row(
-                children: const [
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
                   CircledLogo(
                     logo: 'assets/images/categories/emailIcon.png',
-                    navigateTo: '/login',
+                    navigateTo: () =>
+                        Navigator.pushReplacementNamed(context, '/login'),
                   ),
                   CircledLogo(
+                    navigateTo: () {},
                     logo: 'assets/images/categories/googleIcon.png',
-                    navigateTo: '/signup',
                   ),
                   CircledLogo(
+                    navigateTo: () {},
                     logo: 'assets/images/categories/appleIcon.png',
-                    navigateTo: '/phoneSignup',
                   )
                 ],
               ),

@@ -11,14 +11,47 @@ import 'package:kudibooks_app/screens/auth_screens/widgets/page_title.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
 import 'package:kudibooks_app/screens/background.dart';
 
-class Login extends StatelessWidget {
-  Login({Key? key}) : super(key: key);
+class Login extends StatefulWidget {
+  const Login({Key? key}) : super(key: key);
 
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  final emailController = TextEditingController();
+
+  final passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    emailController.addListener(() => setState(() {}));
+    passwordController.addListener(() => setState(() {}));
+  }
 
   @override
   Widget build(BuildContext context) {
     return BackgroundScreen(
+      buttonWidget: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          TextButton(
+            onPressed: () {
+              Navigator.pushReplacementNamed(context, '/signup');
+            },
+            child: const Text(
+              "Sign up",
+              style: TextStyle(
+                color: Color(0Xff157253),
+              ),
+            ),
+          ),
+        ],
+      ),
       paddingSize: 150,
       screens: Form(
         key: _formKey,
@@ -28,17 +61,27 @@ class Login extends StatelessWidget {
             const LockIcon(),
             const PageTitle(title: 'Account Sign In'),
             CustomFormField(
+              labelText: "Email",
+              inputType: TextInputType.emailAddress,
+              onChangeAction: (value) {
+                // Validators.validateEmail(value) == null ? :;
+              },
               hintText: 'Email',
               fieldIcon: const Icon(Icons.email),
               validators: (value) => Validators.validateEmail(value!),
+              fieldController: emailController,
             ),
-            CustomFormField(
+            CustomFormField(labelText: "Password",
               fieldIcon: const Icon(Icons.remove_red_eye),
               hintText: 'Password',
               validators: (value) => Validators.validatePassword(value!),
+              fieldController: passwordController,
             ),
-            const HyperLinkText(
+            HyperLinkText(
               directingText: 'Forgot Password ?',
+              actions: () {
+                print("Need to recover");
+              },
             ),
             LoginButton(
               text: 'Login',
@@ -56,18 +99,19 @@ class Login extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: Row(
-                children: const [
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
                   CircledLogo(
                     logo: 'assets/images/categories/logoutIcon.png',
-                    navigateTo: '/phoneLogin',
+                    navigateTo: () {
+                      Navigator.pushReplacementNamed(context, "/phoneLogin");
+                    },
                   ),
-                  CircledLogo(
+                  const CircledLogo(
                     logo: 'assets/images/categories/googleIcon.png',
-                    navigateTo: '/signup',
                   ),
-                  CircledLogo(
+                  const CircledLogo(
                     logo: 'assets/images/categories/appleIcon.png',
-                    navigateTo: '/phoneSignup',
                   )
                 ],
               ),

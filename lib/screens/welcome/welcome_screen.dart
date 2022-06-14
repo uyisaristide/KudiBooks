@@ -4,9 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kudibooks_app/models/services_model.dart';
 import 'package:kudibooks_app/screens/auth_screens/login.dart';
-import 'package:kudibooks_app/screens/auth_screens/phone_login.dart';
-import 'package:kudibooks_app/screens/background.dart';
-import 'package:kudibooks_app/screens/languages/choose_language.dart';
 import 'package:kudibooks_app/screens/welcome/widgets/carousel_card.dart';
 
 import 'widgets/background_stack.dart';
@@ -37,7 +34,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     return BackgroundBlur(
       screens: Column(
         children: [
-          Flexible(
+          SizedBox(
+            height: 700,
             child: PageView.builder(
                 onPageChanged: (index) => setState(() => _currentPage = index),
                 physics: const ClampingScrollPhysics(),
@@ -74,7 +72,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     .toList(),
               ),
               Padding(
-                padding: const EdgeInsets.all(4.0),
+                padding: const EdgeInsets.all(10),
                 child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         shape: const RoundedRectangleBorder(
@@ -93,7 +91,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     )),
               ),
               Padding(
-                padding: const EdgeInsets.all(4.0),
+                padding: const EdgeInsets.all(10.0),
                 child: OutlinedButton(
                     style: OutlinedButton.styleFrom(
                         shape: const RoundedRectangleBorder(
@@ -105,12 +103,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         primary: const Color(0xff157253),
                         minimumSize: const Size(254, 45)),
                     onPressed: () {
-                      // Navigator.pushReplacement(
-                      //     context,
-                      //     CupertinoPageRoute(
-                      //         builder: (context) => PhoneLogin()));
                       Navigator.push(context,
-                          CupertinoPageRoute(builder: (context) => const Languages()));
+                          CupertinoPageRoute(builder: (context) => Login()));
                     },
                     child: const Text(
                       "Login",
@@ -121,7 +115,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             ],
           )
         ],
-      ), paddingSize: 0.0,
+      ),
+      paddingSize: 0.0,
     );
   }
 
