@@ -5,7 +5,8 @@ class LoginButton extends StatelessWidget {
   final String text;
   VoidCallback actionField;
 
-  LoginButton({required this.text, this.validate, required this.actionField, Key? key})
+  LoginButton(
+      {required this.text, this.validate, required this.actionField, Key? key})
       : super(key: key);
 
   @override

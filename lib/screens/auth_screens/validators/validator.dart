@@ -26,7 +26,7 @@ class Validators {
   static String? validatePin(String value) {
     if (value.toString().isEmpty) {
       return 'Enter Pin';
-    } else if (value.toString().length > 4) {
+    } else if (value.toString().length < 4) {
       return 'PIN is 4 digits';
     } else {
       return null;

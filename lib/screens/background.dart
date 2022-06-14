@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 class BackgroundScreen extends StatelessWidget {
   Widget? screens;
   double paddingSize;
+  Widget? buttonWidget;
 
-  BackgroundScreen({Key? key, this.screens, required this.paddingSize})
+  BackgroundScreen(
+      {Key? key, this.screens, required this.paddingSize, this.buttonWidget})
       : super(key: key);
 
   @override
@@ -43,6 +45,12 @@ class BackgroundScreen extends StatelessWidget {
               filter: ImageFilter.blur(sigmaX: 80.0, sigmaY: 90.0),
               child: Container(
                 color: Colors.white.withOpacity(.0),
+              ),
+            ),
+            Positioned(
+              child: Padding(
+                padding: const EdgeInsets.only(right: 10, top: 30),
+                child: buttonWidget,
               ),
             ),
             Padding(

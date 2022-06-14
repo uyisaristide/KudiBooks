@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:kudibooks_app/providers/user_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/login.dart';
 import 'package:kudibooks_app/screens/auth_screens/otp_verification.dart';
 import 'package:kudibooks_app/screens/auth_screens/phone_login.dart';
 import 'package:kudibooks_app/screens/auth_screens/phone_signup.dart';
 import 'package:kudibooks_app/screens/auth_screens/signup.dart';
 import 'package:kudibooks_app/screens/splash_screen/green_splash_screen.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(
+      providers: [ChangeNotifierProvider(create: (_) => UserProvider())],
+      child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -29,7 +33,7 @@ class MyApp extends StatelessWidget {
         '/phoneLogin': (context) => PhoneLogin(),
         '/signup': (context) => SignUp(),
         '/phoneSignup': (context) => PhoneSignup(),
-        '/otp':(context) => const OtpVerification()
+        '/otp': (context) => const OtpVerification()
       },
     );
   }
