@@ -52,12 +52,16 @@ class Splash extends StatelessWidget {
             Positioned(
                 left: 200,
                 bottom: 30,
-                child: SizedBox(
-                  child: Text(
-                    'v1.0',
-                    style: TextStyle(color: versionTextColor),
-                    textAlign: TextAlign.center,
-                  ),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      child: Text(
+                        'v1.0',
+                        style: TextStyle(color: versionTextColor),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ],
                 ))
           ],
         ));

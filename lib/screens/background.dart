@@ -6,14 +6,28 @@ class BackgroundScreen extends StatelessWidget {
   Widget? screens;
   double paddingSize;
   Widget? buttonWidget;
+  PreferredSizeWidget? appBars;
+  Widget? drawerWidget;
+  Widget? bottomNavigation;
 
   BackgroundScreen(
-      {Key? key, this.screens, required this.paddingSize, this.buttonWidget})
+      {Key? key,
+      this.screens,
+      required this.paddingSize,
+      this.buttonWidget,
+      this.appBars,
+      this.drawerWidget,
+      this.bottomNavigation})
       : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: appBars,
+      bottomNavigationBar: bottomNavigation,
+      drawer: drawerWidget,
       body: SingleChildScrollView(
         child: Stack(
           children: [
