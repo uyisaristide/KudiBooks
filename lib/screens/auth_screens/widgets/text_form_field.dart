@@ -5,6 +5,7 @@ class CustomFormField extends StatelessWidget {
   final String hintText;
   final String? labelText;
   final Icon? fieldIcon;
+  final bool isShown;
   final TextInputType? inputType;
   final void Function(String)? onChangeAction;
   final Widget? countryCode;
@@ -21,7 +22,8 @@ class CustomFormField extends StatelessWidget {
       this.countryCode,
       this.maximumLength,
       required this.fieldController,
-      this.labelText})
+      this.labelText,
+      required this.isShown})
       : super(key: key);
 
   @override
@@ -29,6 +31,7 @@ class CustomFormField extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5.0),
       child: TextFormField(
+        obscureText: isShown,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         controller: fieldController,
         maxLength: maximumLength,
@@ -38,6 +41,7 @@ class CustomFormField extends StatelessWidget {
         decoration: InputDecoration(
             focusColor: const Color(0xff157253),
             labelStyle: TextStyle(
+                fontSize: 12,
                 color:
                     validators == null ? const Color(0xff157253) : Colors.grey),
             labelText: labelText,

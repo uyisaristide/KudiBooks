@@ -24,13 +24,13 @@ class _LoginState extends State<Login> {
   final emailController = TextEditingController();
 
   final passwordController = TextEditingController();
+  bool isHidden = true;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     emailController.addListener(() => setState(() {}));
-    passwordController.addListener(() => setState(() {}));
   }
 
   @override
@@ -61,22 +61,79 @@ class _LoginState extends State<Login> {
             const LockIcon(),
             const PageTitle(title: 'Account Sign In'),
             CustomFormField(
-              labelText: "Email",
+              labelText: "Enter your email",
               inputType: TextInputType.emailAddress,
               onChangeAction: (value) {
                 // Validators.validateEmail(value) == null ? :;
               },
               hintText: 'Email',
-              fieldIcon: const Icon(Icons.email),
+              fieldIcon: const Icon(
+                Icons.email,
+                color: Colors.grey,
+              ),
               validators: (value) => Validators.validateEmail(value!),
               fieldController: emailController,
+              isShown: false,
             ),
-            CustomFormField(labelText: "Password",
-              fieldIcon: const Icon(Icons.remove_red_eye),
-              hintText: 'Password',
-              validators: (value) => Validators.validatePassword(value!),
-              fieldController: passwordController,
+            Padding(
+              padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
+              child: TextFormField(
+                obscureText: isHidden,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                controller: passwordController,
+                maxLength: 30,
+                validator: (value) => Validators.validatePassword(value!),
+                decoration: InputDecoration(
+                    focusColor: const Color(0xff157253),
+                    labelStyle: const TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey,
+                    ),
+                    suffixIcon: IconButton(
+                        onPressed: () => setState(() => isHidden = !isHidden),
+                        icon: isHidden
+                            ? const Icon(
+                                Icons.visibility,
+                                color: Colors.grey,
+                              )
+                            : const Icon(Icons.visibility_off)),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: Color(0xff157253), width: 1.0),
+                        borderRadius: BorderRadius.circular(10.0)),
+                    focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Validators.validatePassword(
+                                        passwordController.text) ==
+                                    null
+                                ? Colors.grey
+                                : Colors.red,
+                            width: 1.0),
+                        borderRadius: BorderRadius.circular(10.0)),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(color: Colors.grey, width: 1.0),
+                        borderRadius: BorderRadius.circular(10.0)),
+                    errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: const BorderSide(
+                          color: Colors.red,
+                        )),
+                    contentPadding: const EdgeInsets.only(left: 10),
+                    hintText: "Password",
+                    hintStyle: const TextStyle(color: Colors.grey)),
+              ),
             ),
+            // CustomFormField(
+            //   labelText: "Enter your password",
+            //   fieldIcon: isHidden
+            //       ? const Icon(Icons.visibility_off)
+            //       : const Icon(Icons.visibility),
+            //   hintText: 'Password',
+            //   validators: (value) => Validators.validatePassword(value!),
+            //   fieldController: passwordController,
+            //   isShown: false,
+            // ),
             HyperLinkText(
               directingText: 'Forgot Password ?',
               actions: () {

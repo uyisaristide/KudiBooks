@@ -10,7 +10,6 @@ import 'package:kudibooks_app/screens/auth_screens/widgets/lock_icon.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/page_title.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/phone_input.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
 import 'package:kudibooks_app/screens/background.dart';
 
 class PhoneLogin extends StatefulWidget {
@@ -28,6 +27,14 @@ class _PhoneLoginState extends State<PhoneLogin> {
   final phoneController = TextEditingController();
   final pinController = TextEditingController();
   var _countryCode = '';
+  bool isHidden = true;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    phoneController.addListener(() => setState(() {}));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +64,8 @@ class _PhoneLoginState extends State<PhoneLogin> {
             const LockIcon(),
             const PageTitle(title: 'Account Sign In'),
             PhoneField(
+              validators: () =>
+                  Validators.validatePhoneNumber(phoneController.text),
               countryCodes: (country) {
                 setState(() {
                   _countryCode = country.code;
@@ -68,17 +77,57 @@ class _PhoneLoginState extends State<PhoneLogin> {
               ),
               phoneNumber: phoneController,
             ),
-            CustomFormField(
-              labelText: "Pin",
-              maximumLength: 4,
-              inputType: TextInputType.phone,
-              hintText: 'Enter your pin',
-              validators: (value) => Validators.validatePin(value),
-              fieldIcon: const Icon(
-                Icons.remove_red_eye,
-                size: 17,
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 15,
+                right: 15,
               ),
-              fieldController: pinController,
+              child: TextFormField(
+                obscureText: isHidden,
+                keyboardType: TextInputType.number,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                controller: pinController,
+                maxLength: 4,
+                validator: (value) => Validators.validatePin(value!),
+                decoration: InputDecoration(
+                    focusColor: const Color(0xff157253),
+                    labelStyle: const TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey,
+                    ),
+                    suffixIcon: IconButton(
+                        onPressed: () => setState(() => isHidden = !isHidden),
+                        icon: isHidden
+                            ? const Icon(
+                                Icons.visibility,
+                                color: Colors.grey,
+                              )
+                            : const Icon(Icons.visibility_off)),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: Color(0xff157253), width: 1.0),
+                        borderRadius: BorderRadius.circular(10.0)),
+                    focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Validators.validatePin(pinController.text) ==
+                                    null
+                                ? Colors.grey
+                                : Colors.red,
+                            width: 1.0),
+                        borderRadius: BorderRadius.circular(10.0)),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(color: Colors.grey, width: 1.0),
+                        borderRadius: BorderRadius.circular(10.0)),
+                    errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: const BorderSide(
+                          color: Colors.red,
+                        )),
+                    contentPadding: const EdgeInsets.only(left: 10),
+                    hintText: "Password",
+                    hintStyle: const TextStyle(color: Colors.grey)),
+              ),
             ),
             const SizedBox(
               height: 10,
