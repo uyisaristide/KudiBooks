@@ -28,7 +28,11 @@ class PhoneField extends StatelessWidget {
         validator: (value) => validators!(value),
         onCountryChanged: countryCodes,
         decoration: InputDecoration(
-            suffixIcon: fieldIcon,
+            suffixIcon: phoneNumber.text.isEmpty
+                ? fieldIcon
+                : IconButton(
+                    onPressed: () => phoneNumber.clear(),
+                    icon: const Icon(Icons.close)),
             focusedBorder: OutlineInputBorder(
                 borderSide: const BorderSide(color: Colors.grey, width: 1.0),
                 borderRadius: BorderRadius.circular(10.0)),
