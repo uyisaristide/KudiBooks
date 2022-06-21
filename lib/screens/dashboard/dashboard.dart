@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kudibooks_app/screens/background.dart';
+import 'package:kudibooks_app/screens/dashboard/widget/action_card.dart';
+import 'package:kudibooks_app/screens/dashboard/widget/card_dash_sm.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/card_dashboard.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/dash_header.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/horizontal_line_container.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -52,35 +54,88 @@ class _DashboardState extends State<Dashboard> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Expanded(
-                    child: Container(
-                        padding: const EdgeInsets.all(8.0),
-                        decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.3),
-                                spreadRadius: 10,
-                                blurRadius: 15,
-                                offset: const Offset(0, 3),
-                              )
-                            ],
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(10.0)),
-                            shape: BoxShape.rectangle,
-                            color: Colors.white),
-                        height: 136,
-                        alignment: Alignment.centerLeft,
-                        child: Column(
-                          children: [
-                            HorizontalLine(lineColor: const Color(0xffFFDC99))
-                          ],
-                        )),
+                    child: CardDashSmall(
+                      lignColor: const Color(0xffFFDC99),
+                      price: 166,
+                      discount: 10,
+                      containerIcon: const Icon(
+                        Icons.bar_chart,
+                        color: Color(0xffF2C94C),
+                      ),
+                      colorContainer: const Color(0xffEDF6EE),
+                    ),
                   ),
                   const SizedBox(
                     width: 20.0,
                   ),
                   Expanded(
-                    child: Container(),
+                    child: CardDashSmall(
+                      lignColor: const Color(0xff219653),
+                      price: 186,
+                      discount: 30,
+                      containerIcon: const Icon(
+                        Icons.bar_chart,
+                        color: Color(0xff43A047),
+                      ),
+                      colorContainer: const Color(0xffEDF6EE),
+                    ),
                   )
+                ],
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.only(left: 15.0, bottom: 15.0),
+              alignment: AlignmentDirectional.centerStart,
+              child: const Text(
+                "Actions",
+                style: TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Row(
+                children: [
+                  ActionCard(
+                    cardIcon: const Icon(
+                      Icons.shopping_cart_outlined,
+                      color: Colors.white,
+                    ),
+                    cardColor: const Color(0xff157253),
+                    title: 'Sell',
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  ActionCard(
+                    cardIcon: const Icon(
+                      Icons.shopping_cart_outlined,
+                      color: Colors.white,
+                    ),
+                    cardColor: const Color(0xffA70C4A),
+                    title: 'New load',
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  ActionCard(
+                    cardIcon: const Icon(
+                      Icons.shopping_cart_outlined,
+                      color: Colors.white,
+                    ),
+                    cardColor: const Color(0xffFDAB30),
+                    title: 'Expense',
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  ActionCard(
+                    cardIcon: const Icon(
+                      Icons.shopping_cart_outlined,
+                      color: Colors.white,
+                    ),
+                    cardColor: const Color(0xff61B76B),
+                    title: 'More',
+                  ),
                 ],
               ),
             )
