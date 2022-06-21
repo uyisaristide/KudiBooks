@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kudibooks_app/models/services_model.dart';
-import 'package:kudibooks_app/screens/dashboard/dashboard.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/bottom_navigation.dart';
 import 'package:kudibooks_app/screens/welcome/widgets/carousel_card.dart';
 
