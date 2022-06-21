@@ -28,8 +28,10 @@ class CarouselCard extends StatelessWidget {
               height: indexCard == 0 ? 330 : 100,
             ),
           ),
-          SizedBox(
-            height: indexCard == 0 ? 40 : 100,
+          Flexible(
+            child: SizedBox(
+              height: indexCard == 0 ? 40 : 100,
+            ),
           ),
           Text(
             carouselsCard.title,
@@ -37,7 +39,7 @@ class CarouselCard extends StatelessWidget {
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
           ),
           SizedBox(
-            height: indexCard == 0 ? 40 : 100,
+            height: indexCard == 0 ? 20 : 100,
           ),
           Padding(
             padding: const EdgeInsets.all(25.0),
