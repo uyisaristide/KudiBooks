@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kudibooks_app/providers/user_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/login.dart';
@@ -33,7 +32,7 @@ class MyApp extends StatelessWidget {
       home: const GreenSplashScreen(),
       initialRoute: '/',
       routes: {
-        '/login': (context) => Login(),
+        '/login': (context) => const Login(),
         '/phoneLogin': (context) => PhoneLogin(),
         '/signup': (context) => SignUp(),
         '/phoneSignup': (context) => PhoneSignup(),

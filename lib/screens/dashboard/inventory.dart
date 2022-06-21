@@ -1,7 +1,8 @@
-import 'dart:ffi';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kudibooks_app/screens/auth_screens/widgets/product_list_card.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/button_widget.dart';
+import 'package:kudibooks_app/screens/dashboard/widget/search_input.dart';
 
 class InventoryScreen extends StatefulWidget {
   const InventoryScreen({Key? key}) : super(key: key);
@@ -58,9 +59,36 @@ class _InventoryScreenState extends State<InventoryScreen> {
                     size: 20,
                     color: Color(0xff157253),
                   ),
-                )
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
               ],
-            )
+            ),
+            SearchTextField(),
+            const SizedBox(
+              height: 20,
+            ),
+            Container(
+              padding: const EdgeInsets.only(left: 15.0, bottom: 15.0),
+              alignment: AlignmentDirectional.centerStart,
+              child: const Text(
+                "Products",
+                style: TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold),
+              ),
+            ),
+            SizedBox(
+              height: 580,
+              child: ListView.separated(
+                  // itemBuilder: (context, index) => ProductListCard(index: index),
+                  itemBuilder: (context, index) => ProductListCard(
+                        index: index,
+                      ),
+                  separatorBuilder: (_, idx) => const SizedBox(
+                        height: 10,
+                      ),
+                  itemCount: 30),
+            ),
           ],
         ),
       ),
