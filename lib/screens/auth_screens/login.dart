@@ -127,16 +127,6 @@ class _LoginState extends State<Login> {
                     hintStyle: const TextStyle(color: Colors.grey)),
               ),
             ),
-            // CustomFormField(
-            //   labelText: "Enter your password",
-            //   fieldIcon: isHidden
-            //       ? const Icon(Icons.visibility_off)
-            //       : const Icon(Icons.visibility),
-            //   hintText: 'Password',
-            //   validators: (value) => Validators.validatePassword(value!),
-            //   fieldController: passwordController,
-            //   isShown: false,
-            // ),
             HyperLinkText(
               directingText: 'Forgot Password ?',
               actions: () {
