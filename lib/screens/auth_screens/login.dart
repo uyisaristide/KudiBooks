@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/circled_logo.dart';
@@ -10,6 +11,7 @@ import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/page_title.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
 import 'package:kudibooks_app/screens/background.dart';
+import 'package:kudibooks_app/screens/dashboard/widget/bottom_navigation.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -121,6 +123,7 @@ class _LoginState extends State<Login> {
                         )),
                     contentPadding: const EdgeInsets.only(left: 10),
                     hintText: "Password",
+                    labelText: 'Enter your password',
                     hintStyle: const TextStyle(color: Colors.grey)),
               ),
             ),
@@ -147,7 +150,10 @@ class _LoginState extends State<Login> {
                   : null,
               actionField: () {
                 if (_formKey.currentState!.validate()) {
-                  print("Here we go!");
+                  Navigator.pushReplacement(
+                      context,
+                      CupertinoPageRoute(
+                          builder: (context) => NavigationBottom()));
                 }
                 print("Printed successfully");
               },

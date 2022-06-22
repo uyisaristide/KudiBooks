@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kudibooks_app/screens/auth_screens/login.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
 import 'package:kudibooks_app/screens/background.dart';
 
@@ -135,7 +137,12 @@ class Drawers extends StatelessWidget {
                 padding: const EdgeInsets.all(20.0),
                 child: LoginButton(
                   text: 'Logout',
-                  actionField: () {},
+                  actionField: () {
+                    Navigator.pushReplacement(
+                        context,
+                        CupertinoPageRoute(
+                            builder: (context) => const Login()));
+                  },
                 ),
               ),
             ],
