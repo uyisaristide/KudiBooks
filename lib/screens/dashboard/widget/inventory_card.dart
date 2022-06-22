@@ -19,9 +19,12 @@ class InventoryProductCard extends StatelessWidget {
             textFontSize: 16.0,
             leftSide: 'Product Name',
             fontWeight: FontWeight.bold,
-            rightSide: const Icon(
-              Icons.close,
-              color: Color(0xffA34646),
+            rightSide: IconButton(
+              icon: const Icon(
+                Icons.close,
+                color: Color(0xffA34646),
+              ),
+              onPressed: () {},
             ),
             bottomSize: 10,
           ),
