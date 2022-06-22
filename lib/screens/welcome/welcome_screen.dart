@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kudibooks_app/models/services_model.dart';
+import 'package:kudibooks_app/screens/auth_screens/login.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/bottom_navigation.dart';
 import 'package:kudibooks_app/screens/welcome/widgets/carousel_card.dart';
 
@@ -106,7 +107,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       Navigator.push(
                           context,
                           CupertinoPageRoute(
-                              builder: (context) => NavigationBottom()));
+                              builder: (context) => const Login()));
                     },
                     child: const Text(
                       "Login",
