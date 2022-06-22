@@ -4,6 +4,7 @@ class Splash extends StatelessWidget {
   final Color backgroundColor;
   final String logoImage;
   final Color? versionTextColor;
+
   const Splash(
       {required this.backgroundColor,
       required this.logoImage,
@@ -50,19 +51,18 @@ class Splash extends StatelessWidget {
                   width: 50,
                 )),
             Positioned(
-                left: 200,
-                bottom: 30,
-                child: Row(
-                  children: [
-                    SizedBox(
-                      child: Text(
-                        'v1.0',
-                        style: TextStyle(color: versionTextColor),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ],
-                ))
+              bottom: 25,
+              right: 200,
+              child: Row(
+                children: [
+                  Text(
+                    'v1.0',
+                    style: TextStyle(color: versionTextColor),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            )
           ],
         ));
   }
