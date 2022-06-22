@@ -123,6 +123,7 @@ class _LoginState extends State<Login> {
                         )),
                     contentPadding: const EdgeInsets.only(left: 10),
                     hintText: "Password",
+                    labelText: 'Enter your password',
                     hintStyle: const TextStyle(color: Colors.grey)),
               ),
             ),
