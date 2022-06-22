@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/product_list_card.dart';
+import 'package:kudibooks_app/screens/dashboard/new_inventory.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/button_widget.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/search_input.dart';
 
@@ -45,6 +46,9 @@ class _InventoryScreenState extends State<InventoryScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 BodyButton(
+                  onClickAction: () {
+                    print("Kigali a");
+                  },
                   buttonTitle: 'Add Products',
                   suffixIcon: const Icon(
                     Icons.shopping_cart_outlined,
@@ -53,11 +57,15 @@ class _InventoryScreenState extends State<InventoryScreen> {
                   ),
                 ),
                 BodyButton(
+                  onClickAction: () => Navigator.push(
+                      context,
+                      (CupertinoPageRoute(
+                          builder: (context) => NewInventory()))),
                   buttonTitle: 'New load',
                   suffixIcon: const Icon(
-                    Icons.shopping_cart_outlined,
+                    Icons.add,
                     size: 20,
-                    color: Color(0xff157253),
+                    color: Color(0xffA70C4A),
                   ),
                 ),
                 const SizedBox(

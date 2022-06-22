@@ -3,8 +3,13 @@ import 'package:flutter/material.dart';
 class BodyButton extends StatelessWidget {
   Icon suffixIcon;
   String buttonTitle;
+  Function()? onClickAction;
 
-  BodyButton({required this.buttonTitle, required this.suffixIcon, Key? key})
+  BodyButton(
+      {this.onClickAction,
+      required this.buttonTitle,
+      required this.suffixIcon,
+      Key? key})
       : super(key: key);
 
   @override
@@ -25,7 +30,7 @@ class BodyButton extends StatelessWidget {
                 primary: Colors.white,
                 padding: const EdgeInsets.only(
                     left: 30, right: 30, top: 15, bottom: 15)),
-            onPressed: () {},
+            onPressed: onClickAction,
             label: Text(
               buttonTitle,
               style: const TextStyle(

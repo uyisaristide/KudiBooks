@@ -8,11 +8,13 @@ class CardDashSmall extends StatelessWidget {
   Widget? containerIcon;
   Color? iconColor;
   Color? colorContainer;
+  String stringTotal;
 
   CardDashSmall(
       {this.lignColor,
       this.discount,
       this.price,
+      required this.stringTotal,
       this.containerIcon,
       this.colorContainer,
       this.iconColor,
@@ -66,12 +68,12 @@ class CardDashSmall extends StatelessWidget {
                   fontSize: 12.0),
             ),
           ),
-          const Positioned(
+          Positioned(
             top: 70.0,
             left: 15,
             child: Text(
-              "Total cost",
-              style: TextStyle(
+              stringTotal,
+              style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.grey,
                   fontSize: 16.0),

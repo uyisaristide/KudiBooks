@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/product_list_card.dart';
 import 'package:kudibooks_app/screens/background.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/action_card.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/card_dash_sm.dart';
@@ -63,6 +62,7 @@ class _DashboardState extends State<Dashboard> {
                       color: Color(0xffF2C94C),
                     ),
                     colorContainer: const Color(0xffEDF6EE),
+                    stringTotal: 'Total Sales',
                   ),
                 ),
                 const SizedBox(
@@ -78,6 +78,7 @@ class _DashboardState extends State<Dashboard> {
                       color: Color(0xff43A047),
                     ),
                     colorContainer: const Color(0xffEDF6EE),
+                    stringTotal: 'Total cost',
                   ),
                 )
               ],
@@ -150,18 +151,45 @@ class _DashboardState extends State<Dashboard> {
           Container(
             padding: const EdgeInsets.only(left: 15, right: 15),
             height: 150,
-            width: MediaQuery.of(context).size.width,
+            width: MediaQuery
+                .of(context)
+                .size
+                .width,
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(5.0)),
             child: Image.asset(
               "assets/images/reportChart.png",
               fit: BoxFit.cover,
             ),
           ),
-          const DoubleHeader(),
+          DoubleHeader(),
           SizedBox(
               height: 400,
               child: ListView.separated(
-                  itemBuilder: (context, index) => ListTile(
+                  itemBuilder: (context, index) =>
+                      ListTile(
+                        subtitle: const Text("20 April 2022"),
+                        trailing: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "\$25.99",
+                            ),
+                            Text(
+                              index % 2 == 0 ? "Approved" : "In process",
+                              style: TextStyle(
+                                color: index % 2 == 0
+                                    ? Colors.green
+                                    : Colors.amber,
+                              ),
+                            )
+                          ],
+                        ),
+                        title: const Text(
+                          "Transaction name",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 14),
+                        ),
                         leading: CircleAvatar(
                           backgroundColor: const Color(0xffC4C4C4),
                           child: Text(
@@ -171,13 +199,14 @@ class _DashboardState extends State<Dashboard> {
                                     ? Colors.amber
                                     : Colors.green,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 14),
+                                fontSize: 18),
                           ),
                         ),
                       ),
-                  separatorBuilder: (_, idx) => const SizedBox(
-                        height: 5,
-                      ),
+                  separatorBuilder: (_, idx) =>
+                  const SizedBox(
+                    height: 5,
+                  ),
                   itemCount: 15))
         ],
       ),
