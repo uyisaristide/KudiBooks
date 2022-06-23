@@ -15,17 +15,19 @@ class SearchTextField extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           child: TextFormField(
               onChanged: searchingContent,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 filled: true,
                 hintText: 'Search product',
                 focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(width: 1.0, color: Colors.grey)),
-                prefixIcon: Icon(
+                    borderSide:
+                        const BorderSide(width: 1.0, color: Colors.grey),
+                    borderRadius: BorderRadius.circular(15.0)),
+                prefixIcon: const Icon(
                   Icons.search,
                   color: Colors.grey,
                   size: 20,
                 ),
-                enabledBorder: OutlineInputBorder(
+                enabledBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(15.0)),
                     borderSide: BorderSide.none),
               )),

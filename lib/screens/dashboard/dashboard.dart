@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kudibooks_app/screens/background.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/action_card.dart';
@@ -151,10 +150,7 @@ class _DashboardState extends State<Dashboard> {
           Container(
             padding: const EdgeInsets.only(left: 15, right: 15),
             height: 150,
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
+            width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(5.0)),
             child: Image.asset(
               "assets/images/reportChart.png",
@@ -165,8 +161,7 @@ class _DashboardState extends State<Dashboard> {
           SizedBox(
               height: 400,
               child: ListView.separated(
-                  itemBuilder: (context, index) =>
-                      ListTile(
+                  itemBuilder: (context, index) => ListTile(
                         subtitle: const Text("20 April 2022"),
                         trailing: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -203,10 +198,9 @@ class _DashboardState extends State<Dashboard> {
                           ),
                         ),
                       ),
-                  separatorBuilder: (_, idx) =>
-                  const SizedBox(
-                    height: 5,
-                  ),
+                  separatorBuilder: (_, idx) => const SizedBox(
+                        height: 5,
+                      ),
                   itemCount: 15))
         ],
       ),

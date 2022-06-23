@@ -5,6 +5,7 @@ import 'package:kudibooks_app/screens/auth_screens/otp_verification.dart';
 import 'package:kudibooks_app/screens/auth_screens/phone_login.dart';
 import 'package:kudibooks_app/screens/auth_screens/phone_signup.dart';
 import 'package:kudibooks_app/screens/auth_screens/signup.dart';
+import 'package:kudibooks_app/screens/dashboard/loads.dart';
 import 'package:kudibooks_app/screens/splash_screen/green_splash_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
@@ -36,7 +37,8 @@ class MyApp extends StatelessWidget {
         '/phoneLogin': (context) => PhoneLogin(),
         '/signup': (context) => SignUp(),
         '/phoneSignup': (context) => PhoneSignup(),
-        '/otp': (context) => const OtpVerification()
+        '/otp': (context) => const OtpVerification(),
+        '/loadInventories':(context) => Loads(),
       },
     );
   }
