@@ -157,7 +157,14 @@ class _DashboardState extends State<Dashboard> {
               fit: BoxFit.cover,
             ),
           ),
-          DoubleHeader(),
+          DoubleHeader(
+            rightSide: "Recent Transactions",
+            iconButton2: IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.arrow_forward_ios),
+            ),
+            iconButton: const Text("View all"),
+          ),
           SizedBox(
               height: 400,
               child: ListView.separated(

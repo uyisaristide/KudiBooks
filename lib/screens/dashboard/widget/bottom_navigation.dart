@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kudibooks_app/screens/dashboard/alert_screen.dart';
+import 'package:kudibooks_app/screens/dashboard/client_list.dart';
 import 'package:kudibooks_app/screens/dashboard/dashboard.dart';
 import 'package:kudibooks_app/screens/dashboard/inventory.dart';
 import 'package:kudibooks_app/screens/dashboard/my_account.dart';
@@ -16,7 +17,7 @@ class _NavigationBottomState extends State<NavigationBottom> {
         const Dashboard(),
         InventoryScreen(),
         const AlertScreen(),
-        const MyAccountScreen(),
+        MyAccountScreen(),
       ];
 
   static int currentIndex = 0;
