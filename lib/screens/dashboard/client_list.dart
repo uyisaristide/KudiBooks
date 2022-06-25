@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kudibooks_app/screens/dashboard/client_deposit.dart';
-import 'package:kudibooks_app/screens/dashboard/new_client.dart';
 
 class ClientList extends StatelessWidget {
   ClientList({Key? key}) : super(key: key);

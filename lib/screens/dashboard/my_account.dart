@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kudibooks_app/screens/dashboard/widget/list_tile.dart';
 
 class MyAccountScreen extends StatelessWidget {
   const MyAccountScreen({Key? key}) : super(key: key);
@@ -28,8 +29,8 @@ class MyAccountScreen extends StatelessWidget {
         ),
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(15.0),
+        child: Container(
+          margin: const EdgeInsets.all(15.0),
           child: Column(
             children: [
               Container(
@@ -73,192 +74,60 @@ class MyAccountScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    decoration: const BoxDecoration(
-                        border: Border(
-                            bottom: BorderSide(width: 1.0),
-                            top: BorderSide(width: 1.0))),
-                    alignment: Alignment.centerLeft,
-                    child: const Text(
-                      "Billing details",
-                      style: TextStyle(
-                          fontSize: 18.0, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Container(
-                    alignment: Alignment.centerRight,
-                    child: IconButton(
-                      icon: const Icon(Icons.arrow_forward_ios),
-                      onPressed: () {},
-                    ),
-                  ),
-                ],
+              DoubleRowWidgets(
+                rightSideText: 'Billing details',
+                borderSidebottom: true,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    child: const Text(
-                      "Company profile",
-                      style: TextStyle(
-                          fontSize: 18.0, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Container(
-                    alignment: Alignment.centerRight,
-                    child: IconButton(
-                      icon: const Icon(Icons.arrow_forward_ios),
-                      onPressed: () {},
-                    ),
-                  ),
-                ],
+              DoubleRowWidgets(
+                rightSideText: 'Company profile',
+                borderSidebottom: true,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    child: const Text(
-                      "Chart of account",
-                      style: TextStyle(
-                          fontSize: 18.0, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Container(
-                    alignment: Alignment.centerRight,
-                    child: IconButton(
-                      icon: const Icon(Icons.arrow_forward_ios),
-                      onPressed: () {},
-                    ),
-                  ),
-                ],
+              DoubleRowWidgets(
+                rightSideText: 'Chart of account',
+                borderSidebottom: true,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    child: const Text(
-                      "Refer & Earn",
-                      style: TextStyle(
-                          fontSize: 18.0, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Container(
-                    alignment: Alignment.centerRight,
-                    child: IconButton(
-                      icon: const Icon(Icons.arrow_forward_ios),
-                      onPressed: () {},
-                    ),
-                  ),
-                ],
+              DoubleRowWidgets(
+                rightSideText: 'Refer & Earn',
+                borderSidebottom: true,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    child: const Text(
-                      "Edit profile",
-                      style: TextStyle(
-                          fontSize: 18.0, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Container(
-                    alignment: Alignment.centerRight,
-                    child: IconButton(
-                      icon: const Icon(Icons.arrow_forward_ios),
-                      onPressed: () {},
-                    ),
-                  ),
-                ],
+              DoubleRowWidgets(
+                rightSideText: 'Edit profile',
+                borderSidebottom: true,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    child: const Text(
-                      "Change password",
-                      style: TextStyle(
-                          fontSize: 18.0, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Container(
-                    alignment: Alignment.centerRight,
-                    child: IconButton(
-                      icon: const Icon(Icons.arrow_forward_ios),
-                      onPressed: () {},
-                    ),
-                  ),
-                ],
+              DoubleRowWidgets(
+                rightSideText: 'Change password',
+                borderSidebottom: true,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    child: const Text(
-                      "Settings",
-                      style: TextStyle(
-                          fontSize: 18.0, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Container(
-                    alignment: Alignment.centerRight,
-                    child: IconButton(
-                      icon: const Icon(Icons.arrow_forward_ios),
-                      onPressed: () {},
-                    ),
-                  ),
-                ],
+              DoubleRowWidgets(
+                rightSideText: 'Settings',
+                borderSidebottom: true,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    child: const Text(
-                      "Help",
-                      style: TextStyle(
-                          fontSize: 18.0, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Container(
-                    alignment: Alignment.centerRight,
-                    child: IconButton(
-                      icon: const Icon(Icons.arrow_forward_ios),
-                      onPressed: () {},
-                    ),
-                  ),
-                ],
+              DoubleRowWidgets(
+                rightSideText: 'Help',
+                borderSidebottom: true,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    child: const Text(
+              Container(
+                padding: const EdgeInsets.only(bottom: 10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
                       "Logout",
                       style: TextStyle(
                           fontSize: 18.0,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w400,
                           color: Color(0xffD16262)),
                     ),
-                  ),
-                  Container(
-                    alignment: Alignment.centerRight,
-                    child: IconButton(
-                      icon: const Icon(Icons.arrow_forward_ios),
-                      onPressed: () {},
+                    Container(
+                      alignment: Alignment.centerRight,
+                      child: IconButton(
+                        icon: const Icon(Icons.arrow_forward_ios),
+                        onPressed: () {},
+                      ),
                     ),
-                  ),
-                ],
-              ),
+                  ],
+                ),
+              )
             ],
           ),
         ),

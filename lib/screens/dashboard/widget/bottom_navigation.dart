@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:kudibooks_app/screens/dashboard/alert_screen.dart';
-import 'package:kudibooks_app/screens/dashboard/client_list.dart';
 import 'package:kudibooks_app/screens/dashboard/dashboard.dart';
 import 'package:kudibooks_app/screens/dashboard/inventory.dart';
 import 'package:kudibooks_app/screens/dashboard/my_account.dart';
@@ -14,7 +13,10 @@ class NavigationBottom extends StatefulWidget {
 
 class _NavigationBottomState extends State<NavigationBottom> {
   List<Widget> get screens => [
-        const Dashboard(),
+        Dashboard(
+            callBack: () => setState(() {
+                  currentIndex = 0;
+                })),
         InventoryScreen(),
         const AlertScreen(),
         MyAccountScreen(),

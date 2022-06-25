@@ -6,8 +6,14 @@ import 'package:kudibooks_app/screens/background.dart';
 import 'package:kudibooks_app/screens/dashboard/all_transaction.dart';
 import 'package:kudibooks_app/screens/dashboard/client_list.dart';
 import 'package:kudibooks_app/screens/dashboard/inventory.dart';
+import 'package:kudibooks_app/screens/dashboard/reports.dart';
+import 'package:kudibooks_app/screens/dashboard/settings_screen.dart';
 
 class Drawers extends StatelessWidget {
+  VoidCallback? dashboardScreen;
+
+  Drawers({this.dashboardScreen, Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -59,9 +65,10 @@ class Drawers extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ListTile(
+                      onTap: () => Navigator.pop(context),
                       leading: Icon(Icons.home),
                       title: Text("Home"),
-                      trailing: Icon(
+                      trailing: const Icon(
                         Icons.arrow_forward_ios,
                         size: 15,
                       ),
@@ -111,17 +118,25 @@ class Drawers extends StatelessWidget {
                       ),
                     ),
                     ListTile(
-                      leading: Icon(Icons.bar_chart_outlined),
-                      title: Text("Reports"),
-                      trailing: Icon(
+                      onTap: () => Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                              builder: (context) => const Reports())),
+                      leading: const Icon(Icons.bar_chart_outlined),
+                      title: const Text("Reports"),
+                      trailing: const Icon(
                         Icons.arrow_forward_ios,
                         size: 15,
                       ),
                     ),
                     ListTile(
-                      leading: Icon(Icons.notifications),
-                      title: Text("Settings"),
-                      trailing: Icon(
+                      onTap: () => Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                              builder: (context) => const Settings())),
+                      leading: const Icon(Icons.notifications),
+                      title: const Text("Settings"),
+                      trailing: const Icon(
                         Icons.arrow_forward_ios,
                         size: 15,
                       ),
