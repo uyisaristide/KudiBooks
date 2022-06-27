@@ -1,3 +1,5 @@
+import 'dart:ffi';
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -8,18 +10,52 @@ import 'package:kudibooks_app/screens/auth_screens/widgets/lock_icon.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/page_title.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/phone_input.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
 import 'package:kudibooks_app/screens/background.dart';
 
-class PhoneLogin extends StatelessWidget {
+class PhoneLogin extends StatefulWidget {
   PhoneLogin({Key? key}) : super(key: key);
+
+  @override
+  State<PhoneLogin> createState() => _PhoneLoginState();
+}
+
+class _PhoneLoginState extends State<PhoneLogin> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
   final phoneController = TextEditingController();
   final pinController = TextEditingController();
+  var _countryCode = '';
+  bool isHidden = true;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    phoneController.addListener(() => setState(() {}));
+  }
 
   @override
   Widget build(BuildContext context) {
-    return BackgroundScreen(paddingSize: 150,
+    return BackgroundScreen(
+      buttonWidget: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          TextButton(
+            onPressed: () {
+              Navigator.pushReplacementNamed(context, '/signup');
+            },
+            child: const Text(
+              "Sign up",
+              style: TextStyle(
+                color: Color(0Xff157253),
+              ),
+            ),
+          ),
+        ],
+      ),
+      paddingSize: 150,
       screens: Form(
         key: _formKey,
         child: Column(
@@ -27,26 +63,70 @@ class PhoneLogin extends StatelessWidget {
           children: [
             const LockIcon(),
             const PageTitle(title: 'Account Sign In'),
-            // CustomFormField(
-            //   hintText: 'Phone Number',
-            //   validators: (value) =>
-            //       Validators.validatePhoneNumber(value),
-            //   fieldIcon: const Icon(Icons.phone),
-            // ),
             PhoneField(
+              validators: () =>
+                  Validators.validatePhoneNumber(phoneController.text),
+              countryCodes: (country) {
+                setState(() {
+                  _countryCode = country.code;
+                });
+              },
               fieldIcon: const Icon(
                 Icons.phone,
                 size: 17,
               ),
               phoneNumber: phoneController,
             ),
-            CustomFormField(
-              inputType: TextInputType.phone,
-              hintText: 'Enter your pin',
-              validators: (value) => Validators.validatePin(value),
-              fieldIcon: const Icon(
-                Icons.remove_red_eye,
-                size: 17,
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 15,
+                right: 15,
+              ),
+              child: TextFormField(
+                obscureText: isHidden,
+                keyboardType: TextInputType.number,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                controller: pinController,
+                maxLength: 4,
+                validator: (value) => Validators.validatePin(value!),
+                decoration: InputDecoration(
+                    focusColor: const Color(0xff157253),
+                    labelStyle: const TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey,
+                    ),
+                    suffixIcon: IconButton(
+                        onPressed: () => setState(() => isHidden = !isHidden),
+                        icon: isHidden
+                            ? const Icon(
+                                Icons.visibility,
+                                color: Colors.grey,
+                              )
+                            : const Icon(Icons.visibility_off)),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: Color(0xff157253), width: 1.0),
+                        borderRadius: BorderRadius.circular(10.0)),
+                    focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Validators.validatePin(pinController.text) ==
+                                    null
+                                ? Colors.grey
+                                : Colors.red,
+                            width: 1.0),
+                        borderRadius: BorderRadius.circular(10.0)),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(color: Colors.grey, width: 1.0),
+                        borderRadius: BorderRadius.circular(10.0)),
+                    errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: const BorderSide(
+                          color: Colors.red,
+                        )),
+                    contentPadding: const EdgeInsets.only(left: 10),
+                    hintText: "Password",
+                    hintStyle: const TextStyle(color: Colors.grey)),
               ),
             ),
             const SizedBox(
@@ -59,7 +139,8 @@ class PhoneLogin extends StatelessWidget {
                   : null,
               actionField: () {
                 if (_formKey.currentState!.validate()) {
-                  print("Here we go!");
+                  print(
+                      "Country code is: ${_countryCode + phoneController.text}");
                 }
                 print("Clicked successfully");
               },
@@ -68,18 +149,20 @@ class PhoneLogin extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: Row(
-                children: const [
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
                   CircledLogo(
                     logo: 'assets/images/categories/emailIcon.png',
-                    navigateTo: '/login',
+                    navigateTo: () =>
+                        Navigator.pushReplacementNamed(context, '/login'),
                   ),
                   CircledLogo(
+                    navigateTo: () {},
                     logo: 'assets/images/categories/googleIcon.png',
-                    navigateTo: '/signup',
                   ),
                   CircledLogo(
+                    navigateTo: () {},
                     logo: 'assets/images/categories/appleIcon.png',
-                    navigateTo: '/phoneSignup',
                   )
                 ],
               ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/hyperlink_text.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/page_title.dart';
+import 'package:kudibooks_app/screens/background.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OtpVerification extends StatefulWidget {
@@ -22,7 +23,6 @@ class _OtpVerificationState extends State<OtpVerification>
   @override
   void initState() {
     super.initState();
-
     controller =
         AnimationController(vsync: this, duration: const Duration(seconds: 60));
   }
@@ -36,8 +36,8 @@ class _OtpVerificationState extends State<OtpVerification>
   @override
   Widget build(BuildContext context) {
     controller.reverse(from: controller.value == 0 ? 1.0 : controller.value);
-    return Scaffold(
-      body: SingleChildScrollView(
+    return BackgroundScreen(
+      screens: SingleChildScrollView(
         child: Column(
           children: [
             Container(
@@ -53,7 +53,7 @@ class _OtpVerificationState extends State<OtpVerification>
               ),
             ),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 50),
               child: PinCodeTextField(
                 keyboardType: TextInputType.number,
                 appContext: context,
@@ -64,7 +64,6 @@ class _OtpVerificationState extends State<OtpVerification>
                     shape: PinCodeFieldShape.box,
                     borderRadius: BorderRadius.circular(10),
                     fieldHeight: 70,
-                    // fieldWidth: 50,
                     activeColor: Colors.grey,
                     selectedColor: Colors.blueAccent,
                     inactiveColor: Colors.grey),
@@ -82,6 +81,7 @@ class _OtpVerificationState extends State<OtpVerification>
           ],
         ),
       ),
+      paddingSize: 150,
     );
   }
 }

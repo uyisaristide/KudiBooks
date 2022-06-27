@@ -11,14 +11,47 @@ import 'package:kudibooks_app/screens/auth_screens/widgets/page_title.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
 import 'package:kudibooks_app/screens/background.dart';
 
-class Login extends StatelessWidget {
-  Login({Key? key}) : super(key: key);
+class Login extends StatefulWidget {
+  const Login({Key? key}) : super(key: key);
 
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  final emailController = TextEditingController();
+
+  final passwordController = TextEditingController();
+  bool isHidden = true;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    emailController.addListener(() => setState(() {}));
+  }
 
   @override
   Widget build(BuildContext context) {
     return BackgroundScreen(
+      buttonWidget: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          TextButton(
+            onPressed: () {
+              Navigator.pushReplacementNamed(context, '/signup');
+            },
+            child: const Text(
+              "Sign up",
+              style: TextStyle(
+                color: Color(0Xff157253),
+              ),
+            ),
+          ),
+        ],
+      ),
       paddingSize: 150,
       screens: Form(
         key: _formKey,
@@ -28,17 +61,84 @@ class Login extends StatelessWidget {
             const LockIcon(),
             const PageTitle(title: 'Account Sign In'),
             CustomFormField(
+              labelText: "Enter your email",
+              inputType: TextInputType.emailAddress,
+              onChangeAction: (value) {
+                // Validators.validateEmail(value) == null ? :;
+              },
               hintText: 'Email',
-              fieldIcon: const Icon(Icons.email),
+              fieldIcon: const Icon(
+                Icons.email,
+                color: Colors.grey,
+              ),
               validators: (value) => Validators.validateEmail(value!),
+              fieldController: emailController,
+              isShown: false,
             ),
-            CustomFormField(
-              fieldIcon: const Icon(Icons.remove_red_eye),
-              hintText: 'Password',
-              validators: (value) => Validators.validatePassword(value!),
+            Padding(
+              padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
+              child: TextFormField(
+                obscureText: isHidden,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                controller: passwordController,
+                maxLength: 30,
+                validator: (value) => Validators.validatePassword(value!),
+                decoration: InputDecoration(
+                    focusColor: const Color(0xff157253),
+                    labelStyle: const TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey,
+                    ),
+                    suffixIcon: IconButton(
+                        onPressed: () => setState(() => isHidden = !isHidden),
+                        icon: isHidden
+                            ? const Icon(
+                                Icons.visibility,
+                                color: Colors.grey,
+                              )
+                            : const Icon(Icons.visibility_off)),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: Color(0xff157253), width: 1.0),
+                        borderRadius: BorderRadius.circular(10.0)),
+                    focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Validators.validatePassword(
+                                        passwordController.text) ==
+                                    null
+                                ? Colors.grey
+                                : Colors.red,
+                            width: 1.0),
+                        borderRadius: BorderRadius.circular(10.0)),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(color: Colors.grey, width: 1.0),
+                        borderRadius: BorderRadius.circular(10.0)),
+                    errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: const BorderSide(
+                          color: Colors.red,
+                        )),
+                    contentPadding: const EdgeInsets.only(left: 10),
+                    hintText: "Password",
+                    hintStyle: const TextStyle(color: Colors.grey)),
+              ),
             ),
-            const HyperLinkText(
+            // CustomFormField(
+            //   labelText: "Enter your password",
+            //   fieldIcon: isHidden
+            //       ? const Icon(Icons.visibility_off)
+            //       : const Icon(Icons.visibility),
+            //   hintText: 'Password',
+            //   validators: (value) => Validators.validatePassword(value!),
+            //   fieldController: passwordController,
+            //   isShown: false,
+            // ),
+            HyperLinkText(
               directingText: 'Forgot Password ?',
+              actions: () {
+                print("Need to recover");
+              },
             ),
             LoginButton(
               text: 'Login',
@@ -56,18 +156,19 @@ class Login extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: Row(
-                children: const [
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
                   CircledLogo(
                     logo: 'assets/images/categories/logoutIcon.png',
-                    navigateTo: '/phoneLogin',
+                    navigateTo: () {
+                      Navigator.pushReplacementNamed(context, "/phoneLogin");
+                    },
                   ),
-                  CircledLogo(
+                  const CircledLogo(
                     logo: 'assets/images/categories/googleIcon.png',
-                    navigateTo: '/signup',
                   ),
-                  CircledLogo(
+                  const CircledLogo(
                     logo: 'assets/images/categories/appleIcon.png',
-                    navigateTo: '/phoneSignup',
                   )
                 ],
               ),
