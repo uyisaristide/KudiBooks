@@ -27,36 +27,38 @@ class Drawers extends StatelessWidget {
           height: 800,
           child: ListView(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Container(
-                      height: 60,
-                      width: 60,
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 1, color: Colors.grey),
-                        shape: BoxShape.circle,
+              DrawerHeader(
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Container(
+                        height: 60,
+                        width: 60,
+                        decoration: BoxDecoration(
+                          border: Border.all(width: 1, color: Colors.grey),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Image.asset(
+                            "assets/images/splash/kudibooksLogo2.png"),
                       ),
-                      child: Image.asset(
-                          "assets/images/splash/kudibooksLogo2.png"),
-                    ),
-                    Flexible(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text(
-                            "User Name",
-                            style: TextStyle(fontSize: 17.0),
-                          ),
-                          Text("useremail@email.com")
-                        ],
+                      Flexible(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: const [
+                            Text(
+                              "User Name",
+                              style: TextStyle(fontSize: 17.0),
+                            ),
+                            Text("useremail@email.com")
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               Padding(

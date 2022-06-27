@@ -23,10 +23,81 @@ class _DashboardState extends State<Dashboard> {
       drawerWidget: Drawers(dashboardScreen: widget.callBack),
       appBars: AppBar(
           actions: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.more_vert_outlined),
-            )
+            PopupMenuButton(
+                itemBuilder: (context) => [
+                      PopupMenuItem(
+                        child: ListTile(
+                            onTap: () => Navigator.pop(context),
+                            trailing: const Icon(
+                              Icons.close,
+                              size: 17,
+                            ),
+                            title: const Text(
+                              "More menus",
+                              style: TextStyle(fontSize: 12),
+                            )),
+                      ),
+                      const PopupMenuItem(
+                        child: ListTile(
+                            leading: Icon(
+                              Icons.create_new_folder_outlined,
+                              size: 17,
+                            ),
+                            trailing: Icon(
+                              Icons.arrow_forward_ios,
+                              size: 17,
+                            ),
+                            title: Text(
+                              "Inventory reduction",
+                              style: TextStyle(fontSize: 12),
+                            )),
+                      ),
+                      const PopupMenuItem(
+                        child: ListTile(
+                            leading: Icon(
+                              Icons.credit_card,
+                              size: 17,
+                            ),
+                            trailing: Icon(
+                              Icons.arrow_forward_ios,
+                              size: 17,
+                            ),
+                            title: Text(
+                              "Client deposit",
+                              style: TextStyle(fontSize: 12),
+                            )),
+                      ),
+                      const PopupMenuItem(
+                        child: ListTile(
+                            leading: Icon(
+                              Icons.credit_card,
+                              size: 17,
+                            ),
+                            trailing: Icon(
+                              Icons.arrow_forward_ios,
+                              size: 17,
+                            ),
+                            title: Text(
+                              "Vendor deposit",
+                              style: TextStyle(fontSize: 12),
+                            )),
+                      ),
+                      const PopupMenuItem(
+                        child: ListTile(
+                            leading: Icon(
+                              Icons.change_circle,
+                              size: 17,
+                            ),
+                            trailing: Icon(
+                              Icons.arrow_forward_ios,
+                              size: 17,
+                            ),
+                            title: Text(
+                              "Account transfer",
+                              style: TextStyle(fontSize: 12),
+                            )),
+                      ),
+                    ])
           ],
           iconTheme: const IconThemeData(color: Color(0xff157253)),
           elevation: 0.0,
@@ -152,10 +223,7 @@ class _DashboardState extends State<Dashboard> {
           Container(
             padding: const EdgeInsets.only(left: 15, right: 15),
             height: 150,
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
+            width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(5.0)),
             child: Image.asset(
               "assets/images/reportChart.png",
@@ -173,8 +241,7 @@ class _DashboardState extends State<Dashboard> {
           SizedBox(
               height: 400,
               child: ListView.separated(
-                  itemBuilder: (context, index) =>
-                      ListTile(
+                  itemBuilder: (context, index) => ListTile(
                         subtitle: const Text("20 April 2022"),
                         trailing: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -211,10 +278,9 @@ class _DashboardState extends State<Dashboard> {
                           ),
                         ),
                       ),
-                  separatorBuilder: (_, idx) =>
-                  const SizedBox(
-                    height: 5,
-                  ),
+                  separatorBuilder: (_, idx) => const SizedBox(
+                        height: 5,
+                      ),
                   itemCount: 15))
         ],
       ),
