@@ -66,8 +66,8 @@ class Drawers extends StatelessWidget {
                   children: [
                     ListTile(
                       onTap: () => Navigator.pop(context),
-                      leading: Icon(Icons.home),
-                      title: Text("Home"),
+                      leading: const Icon(Icons.home),
+                      title: const Text("Home"),
                       trailing: const Icon(
                         Icons.arrow_forward_ios,
                         size: 15,
@@ -109,7 +109,7 @@ class Drawers extends StatelessWidget {
                         size: 15,
                       ),
                     ),
-                    ListTile(
+                    const ListTile(
                       leading: Icon(Icons.shopping_bag_rounded),
                       title: Text("Vendors"),
                       trailing: Icon(
@@ -141,7 +141,7 @@ class Drawers extends StatelessWidget {
                         size: 15,
                       ),
                     ),
-                    ListTile(
+                    const ListTile(
                       leading: Icon(Icons.help),
                       title: Text("Help"),
                       trailing: Icon(
@@ -149,7 +149,7 @@ class Drawers extends StatelessWidget {
                         size: 15,
                       ),
                     ),
-                    ListTile(
+                    const ListTile(
                       leading: Icon(Icons.info_outline),
                       title: Text("About"),
                       trailing: Icon(

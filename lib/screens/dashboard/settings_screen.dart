@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kudibooks_app/screens/dashboard/widget/list_tile.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/title_double.dart';
 
 class Settings extends StatefulWidget {
@@ -43,12 +44,78 @@ class _SettingsState extends State<Settings> {
                 alignment: Alignment.centerLeft,
                 padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
                 child: const Text(
-                  "Clients list",
+                  "Display",
                   style: TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.bold,
                       color: Colors.grey),
                 ),
+              ),
+              DoubleRowWidgets(
+                leftSideWidget: IconButton(
+                  icon: const Icon(Icons.arrow_forward_ios),
+                  onPressed: () {},
+                ),
+                borderSidebottom: false,
+                rightSideText: 'Theme',
+              ),
+              Container(
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
+                child: const Text(
+                  "Display",
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey),
+                ),
+              ),
+              DoubleRowWidgets(
+                leftSideWidget: Switch(value: true, onChanged: (value) {}),
+                rightSideText: 'Inventory refill alert',
+                borderSidebottom: true,
+              ),
+              DoubleRowWidgets(
+                leftSideWidget: Switch(value: true, onChanged: (value) {}),
+                rightSideText: 'Billing updates',
+                borderSidebottom: true,
+              ),
+              DoubleRowWidgets(
+                leftSideWidget: Switch(value: true, onChanged: (value) {}),
+                rightSideText: 'Product expiration',
+                borderSidebottom: true,
+              ),
+              DoubleRowWidgets(
+                leftSideWidget: Switch(value: true, onChanged: (value) {}),
+                rightSideText: 'Other updates',
+                borderSidebottom: false,
+              ),
+              Container(
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
+                child: const Text(
+                  "Device permissions",
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey),
+                ),
+              ),
+              DoubleRowWidgets(
+                leftSideWidget: Switch(value: true, onChanged: (value) {}),
+                rightSideText: 'SMS permission',
+                borderSidebottom: true,
+              ),
+              DoubleRowWidgets(
+                leftSideWidget: Switch(value: true, onChanged: (value) {}),
+                rightSideText: 'Camera permisson',
+                borderSidebottom: false,
+              ),
+              const SizedBox(height: 50),
+              DoubleRowWidgets(
+                leftSideWidget: Switch(value: true, onChanged: (value) {}),
+                rightSideText: 'Default data',
+                borderSidebottom: true,
               ),
             ],
           ),

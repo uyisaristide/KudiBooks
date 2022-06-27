@@ -32,13 +32,7 @@ class DoubleRowWidgets extends StatelessWidget {
                   const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w400),
             ),
           ),
-          Container(
-            alignment: Alignment.centerRight,
-            child: IconButton(
-              icon: const Icon(Icons.arrow_forward_ios),
-              onPressed: () {},
-            ),
-          ),
+          Container(alignment: Alignment.centerRight, child: leftSideWidget),
         ],
       ),
     );
