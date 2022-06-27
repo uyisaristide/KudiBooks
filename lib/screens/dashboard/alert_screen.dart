@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/custom_devider.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/alert_box.dart';
+import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
 
 class AlertScreen extends StatefulWidget {
   const AlertScreen({Key? key}) : super(key: key);
@@ -14,6 +15,8 @@ class _AlertScreenState extends State<AlertScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawerEnableOpenDragGesture: true,
+      drawer: Drawers(),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(56.0),
         child: Column(
