@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/drop_down_widget.dart';
@@ -7,13 +6,19 @@ import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart'
 import 'package:kudibooks_app/screens/dashboard/widget/double_header_two.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/inventory_card.dart';
 
-class NewInventory extends StatelessWidget {
-  NewInventory({Key? key}) : super(key: key);
+class ProductSale extends StatelessWidget {
+  ProductSale({Key? key}) : super(key: key);
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  var nameController = TextEditingController();
-  var transactionDateController = TextEditingController();
-  var memoController = TextEditingController();
-  List<String> unitProduct = ["Kg", "Liter"];
+  final nameController = TextEditingController();
+  final transactionDateController = TextEditingController();
+  final memoController = TextEditingController();
+
+  List<String> unitProduct = [
+    "Account 1",
+    "Account 2",
+    "Account 3",
+    "Account 4"
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +29,7 @@ class NewInventory extends StatelessWidget {
           child: Container(
             margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             child: LoginButton(
-                text: 'Add product',
+                text: 'Save',
                 actionField: () {
                   if (_formKey.currentState!.validate()) {
                     Navigator.pop(context);
@@ -44,7 +49,7 @@ class NewInventory extends StatelessWidget {
               elevation: 0.0,
               backgroundColor: const Color(0xff157253),
               centerTitle: true,
-              title: const Text("New inventory load",
+              title: const Text("Product sale",
                   style: TextStyle(
                     fontSize: 20,
                   )),
@@ -61,12 +66,22 @@ class NewInventory extends StatelessWidget {
               child: Column(
                 children: [
                   CustomFormField(
+                      fieldIcon: const Icon(Icons.calendar_today_outlined),
                       validators: (value) {
                         Validators.validateName(value);
                       },
-                      hintText: 'Bulk name',
+                      hintText: 'Transaction date',
+                      fieldController: transactionDateController,
+                      isShown: false,
+                      inputType: TextInputType.datetime),
+                  CustomFormField(
+                      validators: (value) {
+                        Validators.validateName(value);
+                      },
+                      hintText: 'Transaction name',
                       fieldController: nameController,
-                      isShown: false),
+                      isShown: false,
+                      inputType: TextInputType.name),
                   Container(
                     alignment: Alignment.centerLeft,
                     padding: const EdgeInsets.symmetric(
@@ -187,6 +202,25 @@ class NewInventory extends StatelessWidget {
                     )),
                   ),
                   Container(
+                    margin: const EdgeInsets.only(
+                        right: 15.0, bottom: 1.0, top: 30),
+                    alignment: Alignment.centerRight,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: const [
+                        Text(
+                          "Total Amount: ",
+                          style: TextStyle(fontSize: 16, color: Colors.grey),
+                        ),
+                        Text(
+                          "0.0",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
                     height: 150,
                     width: double.infinity,
                     margin: const EdgeInsets.symmetric(
@@ -220,6 +254,14 @@ class NewInventory extends StatelessWidget {
                     ),
                   ),
                   Container(
+                    margin: const EdgeInsets.only(right: 15.0, bottom: 15.0),
+                    alignment: Alignment.topRight,
+                    child: const Text(
+                      "Add payment method",
+                      style: TextStyle(fontSize: 12, color: Color(0xffA70C4A)),
+                    ),
+                  ),
+                  Container(
                     margin: const EdgeInsets.only(bottom: 20),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -234,46 +276,11 @@ class NewInventory extends StatelessWidget {
                             inputType: TextInputType.number),
                         SelectInputType(
                           itemsToSelect: unitProduct,
-                          dropDownHint: const Text("Select vendor"),
+                          dropDownHint: const Text("Select client"),
                         ),
                       ],
                     ),
                   ),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 15, horizontal: 15),
-                    child: const Text(
-                      "Transaction details section",
-                      style: TextStyle(fontSize: 16, color: Color(0xff808080)),
-                    ),
-                  ),
-                  CustomFormField(
-                      validators: (value) {
-                        Validators.validateName(value);
-                      },
-                      hintText: 'Transaction name',
-                      fieldController: nameController,
-                      isShown: false,
-                      inputType: TextInputType.name),
-                  CustomFormField(
-                      fieldIcon: const Icon(Icons.calendar_today_outlined),
-                      validators: (value) {
-                        Validators.validateName(value);
-                      },
-                      hintText: 'Transaction date',
-                      fieldController: transactionDateController,
-                      isShown: false,
-                      inputType: TextInputType.datetime),
-                  CustomFormField(
-                      validators: (value) {
-                        Validators.validateName(value);
-                      },
-                      hintText: 'Memo',
-                      maxLining: 5,
-                      fieldController: memoController,
-                      isShown: false,
-                      inputType: TextInputType.multiline),
                 ],
               ),
             ),

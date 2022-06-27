@@ -58,31 +58,36 @@ class _SignUpState extends State<SignUp> {
               fieldController: firstNameController,
               fieldIcon: const Icon(Icons.person),
               hintText: 'First Name',
-              validators: (value) => Validators.validateName(value), isShown: false,
+              validators: (value) => Validators.validateName(value),
+              isShown: false,
             ),
             CustomFormField(
               fieldController: lastNameController,
               fieldIcon: const Icon(Icons.person_outline),
               hintText: 'Last Name',
-              validators: (value) => Validators.validateName(value), isShown: false,
+              validators: (value) => Validators.validateName(value),
+              isShown: false,
             ),
             CustomFormField(
               fieldController: emailController,
               fieldIcon: const Icon(Icons.email),
               hintText: 'Email Address',
-              validators: (value) => Validators.validateEmail(value), isShown: false,
+              validators: (value) => Validators.validateEmail(value),
+              isShown: false,
             ),
             CustomFormField(
               fieldController: secretController,
               fieldIcon: const Icon(Icons.remove_red_eye),
               hintText: 'Password',
-              validators: (value) => Validators.validatePassword(value), isShown: false,
+              validators: (value) => Validators.validatePassword(value),
+              isShown: false,
             ),
             CustomFormField(
               fieldController: confirmController,
               fieldIcon: const Icon(Icons.remove_red_eye),
               hintText: 'Confirm Password',
-              validators: (value) => Validators.validatePassword(value), isShown: false,
+              validators: (value) => Validators.validatePassword(value),
+              isShown: false,
             ),
             LoginButton(
               text: 'Register now',
@@ -104,7 +109,11 @@ class _SignUpState extends State<SignUp> {
               actions: () =>
                   Navigator.pushReplacementNamed(context, ('/login')),
             ),
-            const CustomDevider(middleText: 'Or sign in with'),
+            CustomDevider(
+              middleText: 'Or sign in with',
+              horizotalPadding: 40.0,
+              verticalPadding: 15.0,
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: Row(
