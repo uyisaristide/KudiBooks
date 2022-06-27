@@ -20,7 +20,6 @@ class BackgroundScreen extends StatelessWidget {
       this.bottomNavigation})
       : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,6 +27,7 @@ class BackgroundScreen extends StatelessWidget {
       appBar: appBars,
       bottomNavigationBar: bottomNavigation,
       drawer: drawerWidget,
+      drawerEnableOpenDragGesture: true,
       body: SingleChildScrollView(
         child: Stack(
           children: [

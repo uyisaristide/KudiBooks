@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kudibooks_app/screens/dashboard/product_details.dart';
 
 class ProductListCard extends StatelessWidget {
   int index;
@@ -11,6 +12,8 @@ class ProductListCard extends StatelessWidget {
     return Column(
       children: [
         ListTile(
+          onTap: () => Navigator.push(context,
+              CupertinoPageRoute(builder: (context) => ProductDetails())),
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: [

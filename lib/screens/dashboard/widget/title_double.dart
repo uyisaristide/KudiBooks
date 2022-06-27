@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 
 class DoubleHeader extends StatelessWidget {
-  String? rightSide;
-  Icon? iconButton;
+  String rightSide;
+  Widget iconButton;
+  IconButton iconButton2;
 
-  DoubleHeader({Key? key}) : super(key: key);
+  DoubleHeader(
+      {required this.rightSide,
+      required this.iconButton,
+      required this.iconButton2,
+      Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +21,10 @@ class DoubleHeader extends StatelessWidget {
           Expanded(
             child: Container(
                 alignment: Alignment.centerLeft,
-                child: const Text(
-                  "Recent transactions",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
+                child: Text(
+                  rightSide,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 16.0),
                 )),
           ),
           Expanded(
@@ -26,7 +33,7 @@ class DoubleHeader extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    const Text("View All"),
+                    iconButton,
                     IconButton(
                       onPressed: () {},
                       icon: const Icon(Icons.arrow_forward_ios),

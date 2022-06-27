@@ -199,7 +199,11 @@ class _PhoneSignupState extends State<PhoneSignup> {
               directingText: 'Login instead',
               actions: () => Navigator.pushReplacementNamed(context, '/login'),
             ),
-            const CustomDevider(middleText: 'Or sign up with'),
+            CustomDevider(
+              middleText: 'Or sign up with',
+              horizotalPadding: 40.0,
+              verticalPadding: 15.0,
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: Row(

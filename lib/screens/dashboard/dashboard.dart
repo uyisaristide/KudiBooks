@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kudibooks_app/screens/background.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/action_card.dart';
@@ -9,7 +8,9 @@ import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/title_double.dart';
 
 class Dashboard extends StatefulWidget {
-  const Dashboard({Key? key}) : super(key: key);
+  final VoidCallback? callBack;
+
+  Dashboard({this.callBack, Key? key}) : super(key: key);
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -19,13 +20,84 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return BackgroundScreen(
-      drawerWidget: Drawers(),
+      drawerWidget: Drawers(dashboardScreen: widget.callBack),
       appBars: AppBar(
           actions: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.more_vert_outlined),
-            )
+            PopupMenuButton(
+                itemBuilder: (context) => [
+                      PopupMenuItem(
+                        child: ListTile(
+                            onTap: () => Navigator.pop(context),
+                            trailing: const Icon(
+                              Icons.close,
+                              size: 17,
+                            ),
+                            title: const Text(
+                              "More menus",
+                              style: TextStyle(fontSize: 12),
+                            )),
+                      ),
+                      const PopupMenuItem(
+                        child: ListTile(
+                            leading: Icon(
+                              Icons.create_new_folder_outlined,
+                              size: 17,
+                            ),
+                            trailing: Icon(
+                              Icons.arrow_forward_ios,
+                              size: 17,
+                            ),
+                            title: Text(
+                              "Inventory reduction",
+                              style: TextStyle(fontSize: 12),
+                            )),
+                      ),
+                      const PopupMenuItem(
+                        child: ListTile(
+                            leading: Icon(
+                              Icons.credit_card,
+                              size: 17,
+                            ),
+                            trailing: Icon(
+                              Icons.arrow_forward_ios,
+                              size: 17,
+                            ),
+                            title: Text(
+                              "Client deposit",
+                              style: TextStyle(fontSize: 12),
+                            )),
+                      ),
+                      const PopupMenuItem(
+                        child: ListTile(
+                            leading: Icon(
+                              Icons.credit_card,
+                              size: 17,
+                            ),
+                            trailing: Icon(
+                              Icons.arrow_forward_ios,
+                              size: 17,
+                            ),
+                            title: Text(
+                              "Vendor deposit",
+                              style: TextStyle(fontSize: 12),
+                            )),
+                      ),
+                      const PopupMenuItem(
+                        child: ListTile(
+                            leading: Icon(
+                              Icons.change_circle,
+                              size: 17,
+                            ),
+                            trailing: Icon(
+                              Icons.arrow_forward_ios,
+                              size: 17,
+                            ),
+                            title: Text(
+                              "Account transfer",
+                              style: TextStyle(fontSize: 12),
+                            )),
+                      ),
+                    ])
           ],
           iconTheme: const IconThemeData(color: Color(0xff157253)),
           elevation: 0.0,
@@ -151,22 +223,25 @@ class _DashboardState extends State<Dashboard> {
           Container(
             padding: const EdgeInsets.only(left: 15, right: 15),
             height: 150,
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
+            width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(5.0)),
             child: Image.asset(
               "assets/images/reportChart.png",
               fit: BoxFit.cover,
             ),
           ),
-          DoubleHeader(),
+          DoubleHeader(
+            rightSide: "Recent Transactions",
+            iconButton2: IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.arrow_forward_ios),
+            ),
+            iconButton: const Text("View all"),
+          ),
           SizedBox(
               height: 400,
               child: ListView.separated(
-                  itemBuilder: (context, index) =>
-                      ListTile(
+                  itemBuilder: (context, index) => ListTile(
                         subtitle: const Text("20 April 2022"),
                         trailing: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -203,10 +278,9 @@ class _DashboardState extends State<Dashboard> {
                           ),
                         ),
                       ),
-                  separatorBuilder: (_, idx) =>
-                  const SizedBox(
-                    height: 5,
-                  ),
+                  separatorBuilder: (_, idx) => const SizedBox(
+                        height: 5,
+                      ),
                   itemCount: 15))
         ],
       ),

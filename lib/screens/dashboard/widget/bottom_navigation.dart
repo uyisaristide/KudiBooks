@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
-import 'package:kudibooks_app/screens/background.dart';
 import 'package:kudibooks_app/screens/dashboard/alert_screen.dart';
 import 'package:kudibooks_app/screens/dashboard/dashboard.dart';
 import 'package:kudibooks_app/screens/dashboard/inventory.dart';
@@ -14,11 +12,14 @@ class NavigationBottom extends StatefulWidget {
 }
 
 class _NavigationBottomState extends State<NavigationBottom> {
-  static List<Widget> get screens => [
-        const Dashboard(),
-        const InventoryScreen(),
+  List<Widget> get screens => [
+        Dashboard(
+            callBack: () => setState(() {
+                  currentIndex = 0;
+                })),
+        InventoryScreen(),
         const AlertScreen(),
-        const MyAccountScreen(),
+        MyAccountScreen(),
       ];
 
   static int currentIndex = 0;

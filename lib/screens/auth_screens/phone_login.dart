@@ -145,7 +145,11 @@ class _PhoneLoginState extends State<PhoneLogin> {
                 print("Clicked successfully");
               },
             ),
-            const CustomDevider(middleText: 'Or sign in with'),
+            CustomDevider(
+              middleText: 'Or sign in with',
+              horizotalPadding: 40.0,
+              verticalPadding: 15.0,
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: Row(
