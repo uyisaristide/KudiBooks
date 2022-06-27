@@ -75,34 +75,66 @@ class MyAccountScreen extends StatelessWidget {
                 ),
               ),
               DoubleRowWidgets(
+                leftSideWidget: IconButton(
+                  icon: const Icon(Icons.arrow_forward_ios),
+                  onPressed: () {},
+                ),
                 rightSideText: 'Billing details',
                 borderSidebottom: true,
               ),
               DoubleRowWidgets(
+                leftSideWidget: IconButton(
+                  icon: const Icon(Icons.arrow_forward_ios),
+                  onPressed: () {},
+                ),
                 rightSideText: 'Company profile',
                 borderSidebottom: true,
               ),
               DoubleRowWidgets(
+                leftSideWidget: IconButton(
+                  icon: const Icon(Icons.arrow_forward_ios),
+                  onPressed: () {},
+                ),
                 rightSideText: 'Chart of account',
                 borderSidebottom: true,
               ),
               DoubleRowWidgets(
+                leftSideWidget: IconButton(
+                  icon: const Icon(Icons.arrow_forward_ios),
+                  onPressed: () {},
+                ),
                 rightSideText: 'Refer & Earn',
                 borderSidebottom: true,
               ),
               DoubleRowWidgets(
+                leftSideWidget: IconButton(
+                  icon: const Icon(Icons.arrow_forward_ios),
+                  onPressed: () {},
+                ),
                 rightSideText: 'Edit profile',
                 borderSidebottom: true,
               ),
               DoubleRowWidgets(
+                leftSideWidget: IconButton(
+                  icon: const Icon(Icons.arrow_forward_ios),
+                  onPressed: () {},
+                ),
                 rightSideText: 'Change password',
                 borderSidebottom: true,
               ),
               DoubleRowWidgets(
+                leftSideWidget: IconButton(
+                  icon: const Icon(Icons.arrow_forward_ios),
+                  onPressed: () {},
+                ),
                 rightSideText: 'Settings',
                 borderSidebottom: true,
               ),
               DoubleRowWidgets(
+                leftSideWidget: IconButton(
+                  icon: const Icon(Icons.arrow_forward_ios),
+                  onPressed: () {},
+                ),
                 rightSideText: 'Help',
                 borderSidebottom: true,
               ),
