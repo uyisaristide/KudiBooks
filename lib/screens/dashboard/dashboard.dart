@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:kudibooks_app/screens/background.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/action_card.dart';
@@ -19,6 +21,211 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      drawer: Drawers(dashboardScreen: widget.callBack),
+      body: Stack(
+        children: [
+          Positioned(
+              top: 150,
+              left: 250,
+              child: Container(
+                height: 100,
+                width: 100,
+                decoration: const BoxDecoration(color: Colors.green),
+              )),
+          Positioned(
+              top: 30,
+              left: 60,
+              child: Container(
+                height: 100,
+                width: 100,
+                decoration: const BoxDecoration(color: Colors.amber),
+              )),
+          Positioned(
+              top: 200,
+              left: -80,
+              child: Container(
+                height: 200,
+                width: 100,
+                decoration: const BoxDecoration(color: Colors.amber),
+              )),
+          BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 80.0, sigmaY: 90.0),
+            child: Container(
+              color: Colors.white.withOpacity(.0),
+            ),
+          ),
+          NestedScrollView(
+              headerSliverBuilder:
+                  (BuildContext context, bool innerBoxIsScrolled) {
+                return [
+                  SliverAppBar(
+                      pinned: innerBoxIsScrolled ? true : false,
+                      iconTheme: IconThemeData(
+                          color: innerBoxIsScrolled
+                              ? Colors.white
+                              : const Color(0xff157253)),
+                      elevation: 0.0,
+                      backgroundColor: innerBoxIsScrolled
+                          ? const Color(0xff157253)
+                          : Colors.transparent,
+                      centerTitle: true,
+                      title: innerBoxIsScrolled
+                          ? Image.asset(
+                              "assets/images/splash/kudibooks-WHITE-PNG-LOGO.png",
+                              height: 150,
+                            )
+                          : Image.asset(
+                              "assets/images/splash/kudibooksLogo2.png",
+                              height: 150,
+                            )),
+                ];
+              },
+              body: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.only(
+                          left: 15.0, bottom: 10.0, top: 30),
+                      alignment: AlignmentDirectional.centerStart,
+                      child: const Text(
+                        "Actions",
+                        style: TextStyle(
+                            fontSize: 17.0, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15, right: 15),
+                      child: Row(
+                        children: [
+                          ActionCard(
+                            cardIcon: const Icon(
+                              Icons.shopping_cart_outlined,
+                              color: Colors.white,
+                            ),
+                            cardColor: const Color(0xff157253),
+                            title: 'Sell',
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          ActionCard(
+                            cardIcon: const Icon(
+                              Icons.shopping_cart_outlined,
+                              color: Colors.white,
+                            ),
+                            cardColor: const Color(0xffA70C4A),
+                            title: 'New load',
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          ActionCard(
+                            cardIcon: const Icon(
+                              Icons.shopping_cart_outlined,
+                              color: Colors.white,
+                            ),
+                            cardColor: const Color(0xffFDAB30),
+                            title: 'Expense',
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          ActionCard(
+                            cardIcon: const Icon(
+                              Icons.shopping_cart_outlined,
+                              color: Colors.white,
+                            ),
+                            cardColor: const Color(0xff61B76B),
+                            title: 'More',
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(left: 15.0, top: 5),
+                      alignment: AlignmentDirectional.centerStart,
+                      child: const Text(
+                        "Sales",
+                        style: TextStyle(
+                            fontSize: 17.0, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(left: 15, right: 15),
+                      height: 150,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5.0)),
+                      child: Image.asset(
+                        "assets/images/reportChart.png",
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    DoubleHeader(
+                      rightSide: "Recent Transactions",
+                      iconButton2: IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.arrow_forward_ios),
+                      ),
+                      iconButton: const Text("View all"),
+                    ),
+                    SizedBox(
+                        height: 800,
+                        child: ListView.separated(
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) => ListTile(
+                                  subtitle: const Text("20 April 2022"),
+                                  trailing: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Text(
+                                        "\$25.99",
+                                      ),
+                                      Text(
+                                        index % 2 == 0
+                                            ? "Approved"
+                                            : "In process",
+                                        style: TextStyle(
+                                          color: index % 2 == 0
+                                              ? Colors.green
+                                              : Colors.amber,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  title: const Text(
+                                    "Transaction name",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14),
+                                  ),
+                                  leading: CircleAvatar(
+                                    backgroundColor: const Color(0xffC4C4C4),
+                                    child: Text(
+                                      "${++index}",
+                                      style: TextStyle(
+                                          color: index % 2 == 0
+                                              ? Colors.amber
+                                              : Colors.green,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18),
+                                    ),
+                                  ),
+                                ),
+                            separatorBuilder: (_, idx) => const SizedBox(
+                                  height: 5,
+                                ),
+                            itemCount: 10))
+                  ],
+                ),
+              ))
+        ],
+      ),
+    );
     return BackgroundScreen(
       drawerWidget: Drawers(dashboardScreen: widget.callBack),
       appBars: AppBar(

@@ -5,6 +5,7 @@ import 'package:kudibooks_app/screens/dashboard/loads.dart';
 import 'package:kudibooks_app/screens/dashboard/new_expense.dart';
 import 'package:kudibooks_app/screens/dashboard/new_product.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/button_widget.dart';
+import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/search_input.dart';
 
 class InventoryScreen extends StatefulWidget {
@@ -20,6 +21,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawers(),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(56.0),
         child: Column(

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
 import 'package:kudibooks_app/screens/dashboard/account_transfer.dart';
+import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/list_tile.dart';
 
 class MyAccountScreen extends StatelessWidget {
@@ -11,6 +11,7 @@ class MyAccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawers(),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(56.0),
         child: Column(
