@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kudibooks_app/screens/dashboard/classes/sliver_delegate_search.dart';
 import 'package:kudibooks_app/screens/dashboard/new_inventory.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/double_header_two.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/inventory_card.dart';
@@ -340,49 +341,66 @@ class Loads extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(136.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            AppBar(
-              automaticallyImplyLeading: false,
-              bottomOpacity: .4,
-              actions: [
-                IconButton(
-                    onPressed: () => Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                            builder: (context) => NewInventory())),
-                    icon: const Icon(Icons.add))
-              ],
-              elevation: 0.0,
-              backgroundColor: const Color(0xff157253),
-              centerTitle: true,
-              title: const Text("Inventory loads",
-                  style: TextStyle(
-                    fontSize: 20,
+      body: SafeArea(
+        child: NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return [
+              SliverAppBar(
+                automaticallyImplyLeading: false,
+                actions: [
+                  IconButton(
+                      onPressed: () => Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                              builder: (context) => NewInventory())),
+                      icon: const Icon(Icons.add))
+                ],
+                elevation: 0.0,
+                backgroundColor: const Color(0xff157253),
+                centerTitle: true,
+                title: const Text("Inventory loads",
+                    style: TextStyle(
+                      fontSize: 20,
+                    )),
+              ),
+              SliverPersistentHeader(
+                  pinned: true,
+                  delegate: SearchBoxSliver(
+                    child: Container(
+                        color: innerBoxIsScrolled
+                            ? const Color(0xff157253)
+                            : Colors.transparent,
+                        width: MediaQuery.of(context).size.width,
+                        child: SearchTextField()),
+                    maxHeight: 65,
+                    minHeight: 65,
                   )),
-            ),
-            Container(
-                margin:
-                    const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                child: SearchTextField()),
-          ],
+            ];
+          },
+          body: CustomScrollView(
+            physics: const BouncingScrollPhysics(),
+            slivers: [
+              SliverList(
+                delegate: SliverChildBuilderDelegate((context, index) {
+                  return Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 15),
+                      child: inventoryLoads[index]);
+                }, childCount: inventoryLoads.length),
+              )
+              // Container(
+              //     margin:
+              //     const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+              //     child: ListView.separated(
+              //         shrinkWrap: true,
+              //         physics: const BouncingScrollPhysics(),
+              //         itemBuilder: (context, index) => inventoryLoads[index],
+              //         separatorBuilder: (_, idx) => const SizedBox(
+              //           height: 0.0,
+              //         ),
+              //         itemCount: inventoryLoads.length))
+            ],
+          ),
         ),
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-            margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-            child: ListView.separated(
-                shrinkWrap: true,
-                physics: const BouncingScrollPhysics(),
-                itemBuilder: (context, index) => inventoryLoads[index],
-                separatorBuilder: (_, idx) => const SizedBox(
-                      height: 0.0,
-                    ),
-                itemCount: inventoryLoads.length)),
       ),
     );
   }
