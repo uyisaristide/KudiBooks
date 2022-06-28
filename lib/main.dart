@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kudibooks_app/providers/user_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/login.dart';
@@ -6,6 +5,7 @@ import 'package:kudibooks_app/screens/auth_screens/otp_verification.dart';
 import 'package:kudibooks_app/screens/auth_screens/phone_login.dart';
 import 'package:kudibooks_app/screens/auth_screens/phone_signup.dart';
 import 'package:kudibooks_app/screens/auth_screens/signup.dart';
+import 'package:kudibooks_app/screens/dashboard/loads.dart';
 import 'package:kudibooks_app/screens/splash_screen/green_splash_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
@@ -33,11 +33,12 @@ class MyApp extends StatelessWidget {
       home: const GreenSplashScreen(),
       initialRoute: '/',
       routes: {
-        '/login': (context) => Login(),
+        '/login': (context) => const Login(),
         '/phoneLogin': (context) => PhoneLogin(),
         '/signup': (context) => SignUp(),
         '/phoneSignup': (context) => PhoneSignup(),
-        '/otp': (context) => const OtpVerification()
+        '/otp': (context) => const OtpVerification(),
+        '/loadInventories':(context) => Loads(),
       },
     );
   }
