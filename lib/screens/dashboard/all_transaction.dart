@@ -78,52 +78,52 @@ class AllTransaction extends StatelessWidget {
                 ),
                 iconButton: const Text("View all"),
               ),
-              SizedBox(
-                  height: 600,
-                  child: ListView.separated(
-                      shrinkWrap: true,
-                      physics: const BouncingScrollPhysics(),
-                      itemBuilder: (context, index) => ListTile(
-                            subtitle: const Text("20 April 2022"),
-                            trailing: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  "\$25.99",
-                                ),
-                                Text(
-                                  index % 2 == 0 ? "Approved" : "In process",
-                                  style: TextStyle(
-                                    color: index % 2 == 0
-                                        ? Colors.green
-                                        : Colors.amber,
-                                  ),
-                                )
-                              ],
-                            ),
-                            title: const Text(
-                              "Transaction name",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 14),
-                            ),
-                            leading: CircleAvatar(
-                              backgroundColor: const Color(0xffC4C4C4),
-                              child: Text(
-                                "${++index}",
-                                style: TextStyle(
-                                    color: index % 2 == 0
-                                        ? Colors.amber
-                                        : Colors.green,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18),
+              LimitedBox(
+                child: ListView.separated(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) => ListTile(
+                          subtitle: const Text("20 April 2022"),
+                          trailing: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                "\$25.99",
                               ),
+                              Text(
+                                index % 2 == 0 ? "Approved" : "In process",
+                                style: TextStyle(
+                                  color: index % 2 == 0
+                                      ? Colors.green
+                                      : Colors.amber,
+                                ),
+                              )
+                            ],
+                          ),
+                          title: const Text(
+                            "Transaction name",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 14),
+                          ),
+                          leading: CircleAvatar(
+                            backgroundColor: const Color(0xffC4C4C4),
+                            child: Text(
+                              "${++index}",
+                              style: TextStyle(
+                                  color: index % 2 == 0
+                                      ? Colors.amber
+                                      : Colors.green,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18),
                             ),
                           ),
-                      separatorBuilder: (_, idx) => const SizedBox(
-                            height: 5,
-                          ),
-                      itemCount: 15))
+                        ),
+                    separatorBuilder: (_, idx) => const SizedBox(
+                          height: 5,
+                        ),
+                    itemCount: 15),
+              )
             ],
           ),
         ),

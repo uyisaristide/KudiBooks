@@ -371,9 +371,11 @@ class Loads extends StatelessWidget {
                             ? const Color(0xff157253)
                             : Colors.transparent,
                         width: MediaQuery.of(context).size.width,
-                        child: SearchTextField()),
-                    maxHeight: 65,
-                    minHeight: 65,
+                        child: Container(
+                            margin: const EdgeInsets.only(left: 15, right: 15),
+                            child: SearchTextField())),
+                    maxHeight: 60,
+                    minHeight: 60,
                   )),
             ];
           },

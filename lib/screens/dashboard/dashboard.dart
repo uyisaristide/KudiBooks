@@ -1,7 +1,11 @@
 import 'dart:ui';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kudibooks_app/screens/background.dart';
+import 'package:kudibooks_app/screens/dashboard/inventory_deduction.dart';
+import 'package:kudibooks_app/screens/dashboard/new_expense.dart';
+import 'package:kudibooks_app/screens/dashboard/new_inventory.dart';
+import 'package:kudibooks_app/screens/dashboard/product_sale.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/action_card.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/card_dash_sm.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/card_dashboard.dart';
@@ -95,8 +99,8 @@ class _DashboardState extends State<Dashboard> {
                             fontSize: 17.0, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15, right: 15),
+                    Container(
+                      margin: const EdgeInsets.only(left: 10, right: 10),
                       child: Row(
                         children: [
                           ActionCard(
@@ -106,40 +110,183 @@ class _DashboardState extends State<Dashboard> {
                             ),
                             cardColor: const Color(0xff157253),
                             title: 'Sell',
-                          ),
-                          const SizedBox(
-                            width: 5,
+                            actionClick: () => Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                    builder: (context) => ProductSale())),
                           ),
                           ActionCard(
+                            actionClick: () => Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                    builder: (context) => NewInventory())),
                             cardIcon: const Icon(
                               Icons.shopping_cart_outlined,
                               color: Colors.white,
                             ),
                             cardColor: const Color(0xffA70C4A),
-                            title: 'New load',
-                          ),
-                          const SizedBox(
-                            width: 5,
+                            title: 'New Load',
                           ),
                           ActionCard(
+                            actionClick: () => Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                    builder: (context) => NewExpense())),
                             cardIcon: const Icon(
                               Icons.shopping_cart_outlined,
                               color: Colors.white,
                             ),
                             cardColor: const Color(0xffFDAB30),
-                            title: 'Expense',
+                            title: 'Expenses',
                           ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          ActionCard(
-                            cardIcon: const Icon(
-                              Icons.shopping_cart_outlined,
-                              color: Colors.white,
+                          Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: const Color(0xff61B76B),
+                                  shape: BoxShape.rectangle,
+                                  borderRadius: BorderRadius.circular(10.0)),
+                              margin: const EdgeInsets.only(left: 5.0),
+                              width: 100,
+                              height: 73,
+                              child: Container(
+                                height: 100,
+                                width: 50,
+                                child: PopupMenuButton(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: const [
+                                        Icon(
+                                          Icons.menu,
+                                          color: Colors.white,
+                                        ),
+                                        Text(
+                                          'More',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12.6),
+                                        ),
+                                      ],
+                                    ),
+                                    itemBuilder: (context) => [
+                                          PopupMenuItem(
+                                            child: ListTile(
+                                                onTap: () =>
+                                                    Navigator.pop(context),
+                                                trailing: const Icon(
+                                                  Icons.close,
+                                                  size: 17,
+                                                ),
+                                                title: const Text(
+                                                  "More menus",
+                                                  style:
+                                                      TextStyle(fontSize: 12),
+                                                )),
+                                          ),
+                                          PopupMenuItem(
+                                            child: ListTile(
+                                                onTap: () => Navigator.push(
+                                                    context,
+                                                    CupertinoPageRoute(
+                                                        builder: (context) =>
+                                                            InventoryDeduction())),
+                                                leading: const Icon(
+                                                  Icons
+                                                      .create_new_folder_outlined,
+                                                  size: 17,
+                                                ),
+                                                trailing: const Icon(
+                                                  Icons.arrow_forward_ios,
+                                                  size: 17,
+                                                ),
+                                                title: const Text(
+                                                  "Inventory reduction",
+                                                  style:
+                                                      TextStyle(fontSize: 12),
+                                                )),
+                                          ),
+                                          const PopupMenuItem(
+                                            child: ListTile(
+                                                leading: Icon(
+                                                  Icons.credit_card,
+                                                  size: 17,
+                                                ),
+                                                trailing: Icon(
+                                                  Icons.arrow_forward_ios,
+                                                  size: 17,
+                                                ),
+                                                title: Text(
+                                                  "Client deposit",
+                                                  style:
+                                                      TextStyle(fontSize: 12),
+                                                )),
+                                          ),
+                                          const PopupMenuItem(
+                                            child: ListTile(
+                                                leading: Icon(
+                                                  Icons.credit_card,
+                                                  size: 17,
+                                                ),
+                                                trailing: Icon(
+                                                  Icons.arrow_forward_ios,
+                                                  size: 17,
+                                                ),
+                                                title: Text(
+                                                  "Vendor deposit",
+                                                  style:
+                                                      TextStyle(fontSize: 12),
+                                                )),
+                                          ),
+                                          const PopupMenuItem(
+                                            child: ListTile(
+                                                leading: Icon(
+                                                  Icons.change_circle,
+                                                  size: 17,
+                                                ),
+                                                trailing: Icon(
+                                                  Icons.arrow_forward_ios,
+                                                  size: 17,
+                                                ),
+                                                title: Text(
+                                                  "Account transfer",
+                                                  style:
+                                                      TextStyle(fontSize: 12),
+                                                )),
+                                          ),
+                                        ]),
+                              ),
                             ),
-                            cardColor: const Color(0xff61B76B),
-                            title: 'More',
                           ),
+                          // ActionCard(
+                          //   cardIcon: const Icon(
+                          //     Icons.shopping_cart_outlined,
+                          //     color: Colors.white,
+                          //   ),
+                          //   cardColor: const Color(0xffA70C4A),
+                          //   title: 'New load',
+                          // ),
+                          // const SizedBox(
+                          //   width: 5,
+                          // ),
+                          // ActionCard(
+                          //   cardIcon: const Icon(
+                          //     Icons.shopping_cart_outlined,
+                          //     color: Colors.white,
+                          //   ),
+                          //   cardColor: const Color(0xffFDAB30),
+                          //   title: 'Expense',
+                          // ),
+                          // const SizedBox(
+                          //   width: 5,
+                          // ),
+                          // ActionCard(
+                          //   cardIcon: const Icon(
+                          //     Icons.shopping_cart_outlined,
+                          //     color: Colors.white,
+                          //   ),
+                          //   cardColor: const Color(0xff61B76B),
+                          //   title: 'More',
+                          // ),
                         ],
                       ),
                     ),
@@ -171,55 +318,55 @@ class _DashboardState extends State<Dashboard> {
                       ),
                       iconButton: const Text("View all"),
                     ),
-                    SizedBox(
-                        height: 800,
-                        child: ListView.separated(
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) => ListTile(
-                                  subtitle: const Text("20 April 2022"),
-                                  trailing: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const Text(
-                                        "\$25.99",
-                                      ),
-                                      Text(
-                                        index % 2 == 0
-                                            ? "Approved"
-                                            : "In process",
-                                        style: TextStyle(
-                                          color: index % 2 == 0
-                                              ? Colors.green
-                                              : Colors.amber,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  title: const Text(
-                                    "Transaction name",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14),
-                                  ),
-                                  leading: CircleAvatar(
-                                    backgroundColor: const Color(0xffC4C4C4),
-                                    child: Text(
-                                      "${++index}",
-                                      style: TextStyle(
-                                          color: index % 2 == 0
-                                              ? Colors.amber
-                                              : Colors.green,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18),
+                    LimitedBox(
+                      maxHeight: 800,
+                      child: ListView.separated(
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) => ListTile(
+                                subtitle: const Text("20 April 2022"),
+                                trailing: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      "\$25.99",
                                     ),
+                                    Text(
+                                      index % 2 == 0
+                                          ? "Approved"
+                                          : "In process",
+                                      style: TextStyle(
+                                        color: index % 2 == 0
+                                            ? Colors.green
+                                            : Colors.amber,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                title: const Text(
+                                  "Transaction name",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14),
+                                ),
+                                leading: CircleAvatar(
+                                  backgroundColor: const Color(0xffC4C4C4),
+                                  child: Text(
+                                    "${++index}",
+                                    style: TextStyle(
+                                        color: index % 2 == 0
+                                            ? Colors.amber
+                                            : Colors.green,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18),
                                   ),
                                 ),
-                            separatorBuilder: (_, idx) => const SizedBox(
-                                  height: 5,
-                                ),
-                            itemCount: 10))
+                              ),
+                          separatorBuilder: (_, idx) => const SizedBox(
+                                height: 5,
+                              ),
+                          itemCount: 10),
+                    )
                   ],
                 ),
               ))

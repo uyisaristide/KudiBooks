@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:kudibooks_app/screens/dashboard/client_deposit.dart';
 
 class ClientList extends StatelessWidget {
@@ -407,18 +408,50 @@ class ClientList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(56.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            AppBar(
+      // appBar: PreferredSize(
+      //   preferredSize: const Size.fromHeight(56.0),
+      //   child: Column(
+      //     mainAxisAlignment: MainAxisAlignment.end,
+      //     crossAxisAlignment: CrossAxisAlignment.end,
+      //     children: [
+      //       AppBar(
+      //         leading: IconButton(
+      //             icon: const Icon(Icons.arrow_back_ios),
+      //             onPressed: () => Navigator.pop(context)),
+      //         automaticallyImplyLeading: false,
+      //         bottomOpacity: .4,
+      //         actions: [
+      //           IconButton(
+      //             icon: const Icon(
+      //               Icons.add,
+      //             ),
+      //             onPressed: () => Navigator.push(
+      //                 context,
+      //                 CupertinoPageRoute(
+      //                     builder: (context) => ClientDeposit())),
+      //           )
+      //         ],
+      //         elevation: 0.0,
+      //         backgroundColor: const Color(0xff157253),
+      //         centerTitle: true,
+      //         title: const Text("Clients list",
+      //             style: TextStyle(
+      //               fontSize: 20,
+      //             )),
+      //       ),
+      //     ],
+      //   ),
+      // ),
+      body: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return [
+            SliverAppBar(
+              systemOverlayStyle:
+                  const SystemUiOverlayStyle(statusBarColor: Color(0xff157253)),
               leading: IconButton(
                   icon: const Icon(Icons.arrow_back_ios),
                   onPressed: () => Navigator.pop(context)),
               automaticallyImplyLeading: false,
-              bottomOpacity: .4,
               actions: [
                 IconButton(
                   icon: const Icon(
@@ -438,77 +471,77 @@ class ClientList extends StatelessWidget {
                     fontSize: 20,
                   )),
             ),
-          ],
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: statisticsCard
-                    .map((e) => Expanded(
-                          child: e,
-                        ))
-                    .toList(),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Container(
-                height: 150,
-                decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: Colors.grey),
-                    borderRadius: BorderRadius.circular(15.0)),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
-                    child: const Text(
-                      "Clients list",
-                      style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey),
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.search,
-                          color: Colors.grey,
-                        ),
+          ];
+        },
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: statisticsCard
+                      .map((e) => Expanded(
+                            child: e,
+                          ))
+                      .toList(),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  height: 150,
+                  decoration: BoxDecoration(
+                      border: Border.all(width: 1, color: Colors.grey),
+                      borderRadius: BorderRadius.circular(15.0)),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
+                      child: const Text(
+                        "Clients list",
+                        style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey),
                       ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.sort,
-                          color: Colors.grey,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.search,
+                            color: Colors.grey,
+                          ),
                         ),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 350,
-                child: ListView.separated(
-                    physics: const BouncingScrollPhysics(),
-                    itemBuilder: (context, index) => listClients[index],
-                    separatorBuilder: (_, idx) => const SizedBox(
-                          height: 5,
-                        ),
-                    itemCount: listClients.length),
-              )
-            ],
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.sort,
+                            color: Colors.grey,
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+                LimitedBox(
+                  child: ListView.separated(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) => listClients[index],
+                      separatorBuilder: (_, idx) => const SizedBox(
+                            height: 5,
+                          ),
+                      itemCount: listClients.length),
+                )
+              ],
+            ),
           ),
         ),
       ),
