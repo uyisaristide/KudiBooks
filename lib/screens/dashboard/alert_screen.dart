@@ -20,12 +20,10 @@ class _AlertScreenState extends State<AlertScreen> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(56.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             AppBar(
-              automaticallyImplyLeading: false,
-              bottomOpacity: .4,
+              automaticallyImplyLeading: true,
               elevation: 0.0,
               backgroundColor: const Color(0xff157253),
               centerTitle: true,
@@ -38,17 +36,14 @@ class _AlertScreenState extends State<AlertScreen> {
         ),
       ),
       body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
         child: Container(
           margin: const EdgeInsets.all(15.0),
           child: Column(
             children: [
-              Container(
-                child: CustomDevider(
-                  middleText: 'Today at 12:50',
-                  horizotalPadding: 0.0,
-                  verticalPadding: 0.0,
-                ),
+              CustomDevider(
+                middleText: 'Today at 12:50',
+                horizotalPadding: 0.0,
+                verticalPadding: 0.0,
               ),
               AlertCard(
                 cardTitle: 'Inventory alert',

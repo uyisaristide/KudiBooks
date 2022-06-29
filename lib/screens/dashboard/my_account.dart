@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kudibooks_app/screens/dashboard/account_transfer.dart';
+import 'package:kudibooks_app/screens/dashboard/chart_of_account.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/list_tile.dart';
 
@@ -101,7 +102,10 @@ class MyAccountScreen extends StatelessWidget {
               DoubleRowWidgets(
                 leftSideWidget: IconButton(
                   icon: const Icon(Icons.arrow_forward_ios),
-                  onPressed: () {},
+                  onPressed: () => Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                          builder: (context) => const ChartAccount())),
                 ),
                 rightSideText: 'Chart of account',
                 borderSidebottom: true,
