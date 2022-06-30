@@ -66,10 +66,7 @@ class _DashboardState extends State<Dashboard> {
                 return [
                   SliverAppBar(
                       pinned: innerBoxIsScrolled ? true : false,
-                      iconTheme: IconThemeData(
-                          color: innerBoxIsScrolled
-                              ? Colors.white
-                              : const Color(0xff157253)),
+                      iconTheme: const IconThemeData(color: Color(0xff157253)),
                       elevation: 0.0,
                       backgroundColor: innerBoxIsScrolled
                           ? const Color(0xff157253)

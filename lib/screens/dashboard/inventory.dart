@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/product_list_card.dart';
 import 'package:kudibooks_app/screens/dashboard/classes/sliver_delegate_search.dart';
 import 'package:kudibooks_app/screens/dashboard/new_expense.dart';
@@ -28,9 +27,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return [
               const SliverAppBar(
-                systemOverlayStyle:
-                    SystemUiOverlayStyle(statusBarColor: Color(0xff157253)),
-                automaticallyImplyLeading: false,
+                automaticallyImplyLeading: true,
                 elevation: 0.0,
                 backgroundColor: Color(0xff157253),
                 centerTitle: true,

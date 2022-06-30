@@ -23,9 +23,10 @@ class Drawers extends StatelessWidget {
         padding: const EdgeInsets.only(
           top: 50,
         ),
-        child: SizedBox(
-          height: 800,
+        child: LimitedBox(
           child: ListView(
+            physics: const BouncingScrollPhysics(),
+            shrinkWrap: true,
             children: [
               DrawerHeader(
                 child: Padding(
