@@ -6,6 +6,7 @@ import 'package:kudibooks_app/screens/background.dart';
 import 'package:kudibooks_app/screens/dashboard/all_transaction.dart';
 import 'package:kudibooks_app/screens/dashboard/client_list.dart';
 import 'package:kudibooks_app/screens/dashboard/inventory.dart';
+import 'package:kudibooks_app/screens/dashboard/loads.dart';
 import 'package:kudibooks_app/screens/dashboard/reports.dart';
 import 'package:kudibooks_app/screens/dashboard/settings_screen.dart';
 
@@ -83,6 +84,16 @@ class Drawers extends StatelessWidget {
                               builder: (context) => InventoryScreen())),
                       leading: const Icon(Icons.shopping_cart_outlined),
                       title: const Text("Products"),
+                      trailing: const Icon(
+                        Icons.arrow_forward_ios,
+                        size: 15,
+                      ),
+                    ),
+                    ListTile(
+                      onTap: () => Navigator.push(context,
+                          CupertinoPageRoute(builder: (context) => Loads())),
+                      leading: const Icon(Icons.people),
+                      title: const Text("Load Iventory"),
                       trailing: const Icon(
                         Icons.arrow_forward_ios,
                         size: 15,
