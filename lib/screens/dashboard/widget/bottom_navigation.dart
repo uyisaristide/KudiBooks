@@ -11,31 +11,54 @@ class NavigationBottom extends StatefulWidget {
   State<NavigationBottom> createState() => _NavigationBottomState();
 }
 
-class _NavigationBottomState extends State<NavigationBottom> {
+class _NavigationBottomState extends State<NavigationBottom>
+    with TickerProviderStateMixin {
   List<Widget> get screens => [
         Dashboard(
             callBack: () => setState(() {
-                  currentIndex = 0;
+                  _currentIndex = 0;
                 })),
         InventoryScreen(),
         const AlertScreen(),
         MyAccountScreen(),
       ];
+  static int _currentIndex = 0;
+  late PageController _pageController;
 
-  static int currentIndex = 0;
+  // TabBarView _tabBarView;
+  @override
+  void initState() {
+    _pageController = PageController(initialPage: _currentIndex);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: screens[currentIndex],
+      body: PageView(
+          controller: _pageController,
+          children: screens,
+          onPageChanged: (newPage) => setState(() {
+                _currentIndex = newPage;
+              })),
+      // body: screens[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
           elevation: 0.0,
           type: BottomNavigationBarType.fixed,
           fixedColor: const Color(0xff157253),
-          currentIndex: currentIndex,
-          onTap: (index) => setState(() {
-                currentIndex = index;
-              }),
+          currentIndex: _currentIndex,
+          onTap: (index) {
+            _pageController.animateToPage(index,
+                duration: const Duration(milliseconds: 10),
+                curve: Curves.easeInOut);
+          },
           items: const [
             BottomNavigationBarItem(
                 icon: Icon(Icons.inventory_2_outlined), label: 'Home'),

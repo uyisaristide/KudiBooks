@@ -141,6 +141,7 @@ class _DashboardState extends State<Dashboard> {
                           ),
                           ActionCard(
                             actionClick: () => showModalBottomSheet(
+                                isDismissible: false,
                                 shape: const RoundedRectangleBorder(
                                     borderRadius: BorderRadius.only(
                                         topRight: Radius.circular(15),
@@ -215,36 +216,6 @@ class _DashboardState extends State<Dashboard> {
                             cardColor: const Color(0xff61B76B),
                             title: 'More',
                           ),
-                          // ActionCard(
-                          //   cardIcon: const Icon(
-                          //     Icons.shopping_cart_outlined,
-                          //     color: Colors.white,
-                          //   ),
-                          //   cardColor: const Color(0xffA70C4A),
-                          //   title: 'New load',
-                          // ),
-                          // const SizedBox(
-                          //   width: 5,
-                          // ),
-                          // ActionCard(
-                          //   cardIcon: const Icon(
-                          //     Icons.shopping_cart_outlined,
-                          //     color: Colors.white,
-                          //   ),
-                          //   cardColor: const Color(0xffFDAB30),
-                          //   title: 'Expense',
-                          // ),
-                          // const SizedBox(
-                          //   width: 5,
-                          // ),
-                          // ActionCard(
-                          //   cardIcon: const Icon(
-                          //     Icons.shopping_cart_outlined,
-                          //     color: Colors.white,
-                          //   ),
-                          //   cardColor: const Color(0xff61B76B),
-                          //   title: 'More',
-                          // ),
                         ],
                       ),
                     ),
