@@ -10,7 +10,7 @@ class PhoneField extends StatelessWidget {
   final void Function(Country)? countryCodes;
 
   const PhoneField(
-      {this.validators,
+      { this.validators,
       this.fieldIcon,
       this.onChangeAction,
       Key? key,
