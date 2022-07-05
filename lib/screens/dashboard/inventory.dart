@@ -23,14 +23,14 @@ class _InventoryScreenState extends State<InventoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: Drawers(),
-      body: SafeArea(
-        child: NestedScrollView(
+      body: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return [
               const SliverAppBar(
                 systemOverlayStyle:
                     SystemUiOverlayStyle(statusBarColor: Color(0xff157253)),
-                automaticallyImplyLeading: false,
+                pinned: true,
+                automaticallyImplyLeading: true,
                 elevation: 0.0,
                 backgroundColor: Color(0xff157253),
                 centerTitle: true,
@@ -40,31 +40,10 @@ class _InventoryScreenState extends State<InventoryScreen> {
                     )),
               ),
               SliverPersistentHeader(
-                  pinned: true,
                   delegate: SearchBoxSliver(
-                      maxHeight: 70,
-                      minHeight: 60,
-                      child: Container(
-                          decoration: BoxDecoration(
-                              color: innerBoxIsScrolled
-                                  ? const Color(0xff157253)
-                                  : Colors.transparent,
-                              borderRadius: const BorderRadius.only(
-                                  bottomLeft: Radius.circular(10),
-                                  bottomRight: Radius.circular(10))),
-                          child: SearchTextField(
-                            searchingContent: (value) {},
-                            hintStyle: TextStyle(
-                                color:
-                                    innerBoxIsScrolled ? Colors.white : null),
-                          )))),
-            ];
-          },
-          body: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Row(
+                maxHeight: 70,
+                minHeight: 60,
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     BodyButton(
@@ -96,6 +75,25 @@ class _InventoryScreenState extends State<InventoryScreen> {
                     ),
                   ],
                 ),
+              )),
+              SliverPersistentHeader(
+                  pinned: true,
+                  delegate: SearchBoxSliver(
+                      maxHeight: 60,
+                      minHeight: 60,
+                      child: Container(
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                        child: SearchTextField(
+                          searchingContent: (value) {},
+                        ),
+                      ))),
+            ];
+          },
+          body: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
                 const SizedBox(
                   height: 20,
                 ),
@@ -123,9 +121,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                 ),
               ],
             ),
-          ),
-        ),
-      ),
+          )),
     );
   }
 }

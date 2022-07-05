@@ -139,154 +139,83 @@ class _DashboardState extends State<Dashboard> {
                             cardColor: const Color(0xffFDAB30),
                             title: 'Expenses',
                           ),
-                          Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: const Color(0xff61B76B),
-                                  shape: BoxShape.rectangle,
-                                  borderRadius: BorderRadius.circular(10.0)),
-                              margin: const EdgeInsets.only(left: 5.0),
-                              width: 100,
-                              height: 73,
-                              child: Container(
-                                height: 100,
-                                width: 50,
-                                child: PopupMenuButton(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: const [
-                                        Icon(
-                                          Icons.menu,
-                                          color: Colors.white,
-                                        ),
-                                        Text(
-                                          'More',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 12.6),
-                                        ),
-                                      ],
-                                    ),
-                                    itemBuilder: (context) => [
-                                          PopupMenuItem(
-                                            child: ListTile(
-                                                onTap: () =>
+                          ActionCard(
+                            actionClick: () => showModalBottomSheet(
+                                isDismissible: false,
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(15),
+                                        topLeft: Radius.circular(15))),
+                                context: context,
+                                builder: (context) => SizedBox(
+                                      height: 300,
+                                      child: Column(
+                                        children: [
+                                          ListTile(
+                                            title: const Text(
+                                              "More menus",
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            trailing: IconButton(
+                                                onPressed: () =>
                                                     Navigator.pop(context),
-                                                trailing: const Icon(
-                                                  Icons.close,
-                                                  size: 17,
-                                                ),
-                                                title: const Text(
-                                                  "More menus",
-                                                  style:
-                                                      TextStyle(fontSize: 12),
-                                                )),
+                                                icon: const Icon(Icons.close)),
                                           ),
-                                          PopupMenuItem(
-                                            child: ListTile(
-                                                onTap: () => Navigator.push(
-                                                    context,
-                                                    CupertinoPageRoute(
-                                                        builder: (context) =>
-                                                            InventoryDeduction())),
-                                                leading: const Icon(
-                                                  Icons
-                                                      .create_new_folder_outlined,
-                                                  size: 17,
-                                                ),
-                                                trailing: const Icon(
-                                                  Icons.arrow_forward_ios,
-                                                  size: 17,
-                                                ),
-                                                title: const Text(
-                                                  "Inventory reduction",
-                                                  style:
-                                                      TextStyle(fontSize: 12),
-                                                )),
+                                          ListTile(
+                                            onTap: () => Navigator.push(
+                                                context,
+                                                CupertinoPageRoute(
+                                                    builder: (context) =>
+                                                        InventoryDeduction())),
+                                            leading: const Icon(Icons
+                                                .create_new_folder_outlined),
+                                            title: const Text(
+                                              "Inventory reduction",
+                                            ),
+                                            trailing: const Icon(
+                                              Icons.arrow_forward_ios,
+                                            ),
                                           ),
-                                          const PopupMenuItem(
-                                            child: ListTile(
-                                                leading: Icon(
-                                                  Icons.credit_card,
-                                                  size: 17,
-                                                ),
-                                                trailing: Icon(
-                                                  Icons.arrow_forward_ios,
-                                                  size: 17,
-                                                ),
-                                                title: Text(
-                                                  "Client deposit",
-                                                  style:
-                                                      TextStyle(fontSize: 12),
-                                                )),
+                                          const ListTile(
+                                            leading: Icon(Icons.credit_card),
+                                            title: Text(
+                                              "Client deposit",
+                                            ),
+                                            trailing: Icon(
+                                              Icons.arrow_forward_ios,
+                                            ),
                                           ),
-                                          const PopupMenuItem(
-                                            child: ListTile(
-                                                leading: Icon(
-                                                  Icons.credit_card,
-                                                  size: 17,
-                                                ),
-                                                trailing: Icon(
-                                                  Icons.arrow_forward_ios,
-                                                  size: 17,
-                                                ),
-                                                title: Text(
-                                                  "Vendor deposit",
-                                                  style:
-                                                      TextStyle(fontSize: 12),
-                                                )),
+                                          const ListTile(
+                                            leading: Icon(Icons.credit_card),
+                                            title: Text(
+                                              "Vendor deposit",
+                                            ),
+                                            trailing: Icon(
+                                              Icons.arrow_forward_ios,
+                                            ),
                                           ),
-                                          const PopupMenuItem(
-                                            child: ListTile(
-                                                leading: Icon(
-                                                  Icons.change_circle,
-                                                  size: 17,
-                                                ),
-                                                trailing: Icon(
-                                                  Icons.arrow_forward_ios,
-                                                  size: 17,
-                                                ),
-                                                title: Text(
-                                                  "Account transfer",
-                                                  style:
-                                                      TextStyle(fontSize: 12),
-                                                )),
+                                          const ListTile(
+                                            leading: Icon(Icons
+                                                .create_new_folder_outlined),
+                                            title: Text(
+                                              "Account transfer",
+                                            ),
+                                            trailing: Icon(
+                                              Icons.arrow_forward_ios,
+                                            ),
                                           ),
-                                        ]),
-                              ),
+                                        ],
+                                      ),
+                                    )),
+                            cardIcon: const Icon(
+                              Icons.shopping_cart_outlined,
+                              color: Colors.white,
                             ),
+                            cardColor: const Color(0xff61B76B),
+                            title: 'More',
                           ),
-                          // ActionCard(
-                          //   cardIcon: const Icon(
-                          //     Icons.shopping_cart_outlined,
-                          //     color: Colors.white,
-                          //   ),
-                          //   cardColor: const Color(0xffA70C4A),
-                          //   title: 'New load',
-                          // ),
-                          // const SizedBox(
-                          //   width: 5,
-                          // ),
-                          // ActionCard(
-                          //   cardIcon: const Icon(
-                          //     Icons.shopping_cart_outlined,
-                          //     color: Colors.white,
-                          //   ),
-                          //   cardColor: const Color(0xffFDAB30),
-                          //   title: 'Expense',
-                          // ),
-                          // const SizedBox(
-                          //   width: 5,
-                          // ),
-                          // ActionCard(
-                          //   cardIcon: const Icon(
-                          //     Icons.shopping_cart_outlined,
-                          //     color: Colors.white,
-                          //   ),
-                          //   cardColor: const Color(0xff61B76B),
-                          //   title: 'More',
-                          // ),
                         ],
                       ),
                     ),

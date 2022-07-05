@@ -73,12 +73,14 @@ class _PhoneSignupState extends State<PhoneSignup> {
               isShown: false,
             ),
             PhoneField(
-                countryCodes: (country) {
-                  _countryCodes = country.dialCode;
-                  print("Country ${_countryCodes + phoneController.text}");
-                },
-                fieldIcon: const Icon(Icons.phone, size: 18),
-                phoneNumber: phoneController),
+              countryCodes: (country) {
+                _countryCodes = country.dialCode;
+                print("Country ${_countryCodes + phoneController.text}");
+              },
+              fieldIcon: const Icon(Icons.phone, size: 18),
+              phoneNumber: phoneController,
+              validators: () {},
+            ),
             Padding(
               padding: const EdgeInsets.only(
                 left: 15,
