@@ -38,9 +38,6 @@ class NewProduct extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             AppBar(
-              leading: IconButton(
-                  icon: const Icon(Icons.arrow_back_ios),
-                  onPressed: () => Navigator.pop(context)),
               automaticallyImplyLeading: true,
               elevation: 0.0,
               backgroundColor: const Color(0xff157253),
