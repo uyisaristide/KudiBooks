@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kudibooks_app/screens/dashboard/classes/sliver_delegate_search.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/title_double.dart';
 
 class ProductDetails extends StatelessWidget {
@@ -146,34 +147,25 @@ class ProductDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(56.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            AppBar(
-              leading: IconButton(
-                  icon: const Icon(Icons.arrow_back_ios),
-                  onPressed: () => Navigator.pop(context)),
+      body: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return [
+            const SliverAppBar(
+              pinned: true,
               automaticallyImplyLeading: true,
               elevation: 0.0,
-              backgroundColor: const Color(0xff157253),
+              backgroundColor: Color(0xff157253),
               centerTitle: true,
-              title: const Text("Product details",
+              title: Text("Product details",
                   style: TextStyle(
                     fontSize: 20,
                   )),
             ),
-          ],
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
+            SliverPersistentHeader(
+                delegate: SearchBoxSliver(
+              minHeight: 250,
+              maxHeight: 250,
+              child: Container(
                 margin: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
                 child: Column(
                   children: [
@@ -219,24 +211,59 @@ class ProductDetails extends StatelessWidget {
                   ],
                 ),
               ),
-              Row(
-                  children: listOfSmallCards
-                      .map((e) => Expanded(
-                            child: e,
-                          ))
-                      .toList()),
-              DoubleHeader(
-                rightSide: "Transactions",
-                iconButton2: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.arrow_forward_ios),
-                ),
-                iconButton: const Text("View all"),
-              ),
-              SizedBox(
-                  height: 400,
+            )),
+            SliverPersistentHeader(
+                pinned: true,
+                delegate: SearchBoxSliver(
+                  maxHeight: 80,
+                  minHeight: 70,
+                  child: Container(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    margin: const EdgeInsets.only(
+                      left: 15,
+                      right: 15,
+                    ),
+                    child: Row(
+                        children: listOfSmallCards
+                            .map((e) => Expanded(
+                                  child: e,
+                                ))
+                            .toList()),
+                  ),
+                )),
+            SliverPersistentHeader(
+                pinned: true,
+                delegate: SearchBoxSliver(
+                  maxHeight: 50,
+                  minHeight: 50,
+                  child: Container(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    margin: const EdgeInsets.only(
+                      left: 15,
+                      right: 15,
+                    ),
+                    child: DoubleHeader(
+                      rightSide: "Transactions",
+                      iconButton2: IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.arrow_forward_ios),
+                      ),
+                      iconButton: const Text("View all"),
+                    ),
+                  ),
+                ))
+          ];
+        },
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 15, right: 15),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                LimitedBox(
                   child: ListView.separated(
-                      physics: const BouncingScrollPhysics(),
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) => ListTile(
                             subtitle: const Text("20 April 2022"),
                             trailing: Column(
@@ -277,8 +304,10 @@ class ProductDetails extends StatelessWidget {
                       separatorBuilder: (_, idx) => const SizedBox(
                             height: 5,
                           ),
-                      itemCount: 15))
-            ],
+                      itemCount: 15),
+                )
+              ],
+            ),
           ),
         ),
       ),

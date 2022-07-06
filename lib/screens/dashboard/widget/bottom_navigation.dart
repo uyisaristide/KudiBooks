@@ -11,8 +11,7 @@ class NavigationBottom extends StatefulWidget {
   State<NavigationBottom> createState() => _NavigationBottomState();
 }
 
-class _NavigationBottomState extends State<NavigationBottom>
-    with TickerProviderStateMixin {
+class _NavigationBottomState extends State<NavigationBottom> {
   List<Widget> get screens => [
         Dashboard(
             callBack: () => setState(() {

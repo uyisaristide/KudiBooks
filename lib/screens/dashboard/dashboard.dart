@@ -1,7 +1,11 @@
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:kudibooks_app/models/transition_chart.dart';
 import 'package:kudibooks_app/screens/background.dart';
+import 'package:kudibooks_app/screens/dashboard/account_transfer.dart';
+import 'package:kudibooks_app/screens/dashboard/client_deposit.dart';
 import 'package:kudibooks_app/screens/dashboard/inventory_deduction.dart';
 import 'package:kudibooks_app/screens/dashboard/new_expense.dart';
 import 'package:kudibooks_app/screens/dashboard/new_inventory.dart';
@@ -10,6 +14,7 @@ import 'package:kudibooks_app/screens/dashboard/widget/action_card.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/card_dash_sm.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/card_dashboard.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/dash_header.dart';
+import 'package:kudibooks_app/screens/dashboard/widget/business_movement_cart.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/title_double.dart';
 
@@ -23,6 +28,8 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  final List<BusinessMovement> chartData = BusinessMovement.data;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -178,12 +185,18 @@ class _DashboardState extends State<Dashboard> {
                                               Icons.arrow_forward_ios,
                                             ),
                                           ),
-                                          const ListTile(
-                                            leading: Icon(Icons.credit_card),
-                                            title: Text(
+                                          ListTile(
+                                            onTap: () => Navigator.push(
+                                                context,
+                                                CupertinoPageRoute(
+                                                    builder: (context) =>
+                                                        ClientDeposit())),
+                                            leading:
+                                                const Icon(Icons.credit_card),
+                                            title: const Text(
                                               "Client deposit",
                                             ),
-                                            trailing: Icon(
+                                            trailing: const Icon(
                                               Icons.arrow_forward_ios,
                                             ),
                                           ),
@@ -196,13 +209,18 @@ class _DashboardState extends State<Dashboard> {
                                               Icons.arrow_forward_ios,
                                             ),
                                           ),
-                                          const ListTile(
-                                            leading: Icon(Icons
+                                          ListTile(
+                                            onTap: () => Navigator.push(
+                                                context,
+                                                CupertinoPageRoute(
+                                                    builder: (context) =>
+                                                        AccountTransfer())),
+                                            leading: const Icon(Icons
                                                 .create_new_folder_outlined),
-                                            title: Text(
+                                            title: const Text(
                                               "Account transfer",
                                             ),
-                                            trailing: Icon(
+                                            trailing: const Icon(
                                               Icons.arrow_forward_ios,
                                             ),
                                           ),
@@ -220,7 +238,8 @@ class _DashboardState extends State<Dashboard> {
                       ),
                     ),
                     Container(
-                      padding: const EdgeInsets.only(left: 15.0, top: 5),
+                      padding: const EdgeInsets.only(
+                          left: 15.0, top: 10, bottom: 10),
                       alignment: AlignmentDirectional.centerStart,
                       child: const Text(
                         "Sales",
@@ -230,14 +249,11 @@ class _DashboardState extends State<Dashboard> {
                     ),
                     Container(
                       padding: const EdgeInsets.only(left: 15, right: 15),
-                      height: 150,
+                      height: 300,
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5.0)),
-                      child: Image.asset(
-                        "assets/images/reportChart.png",
-                        fit: BoxFit.cover,
-                      ),
+                      child: DeveloperCharts(data: chartData),
                     ),
                     DoubleHeader(
                       rightSide: "Recent Transactions",
@@ -251,43 +267,55 @@ class _DashboardState extends State<Dashboard> {
                       maxHeight: 800,
                       child: ListView.separated(
                           physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) => ListTile(
-                                subtitle: const Text("20 April 2022"),
-                                trailing: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                          itemBuilder: (context, index) => Slidable(
+                                endActionPane: ActionPane(
+                                  motion: const ScrollMotion(),
                                   children: [
-                                    const Text(
-                                      "\$25.99",
-                                    ),
-                                    Text(
-                                      index % 2 == 0
-                                          ? "Approved"
-                                          : "In process",
-                                      style: TextStyle(
-                                        color: index % 2 == 0
-                                            ? Colors.green
-                                            : Colors.amber,
-                                      ),
+                                    SlidableAction(
+                                      icon: Icons.delete,
+                                      onPressed: (BuildContext context) {},
                                     )
                                   ],
                                 ),
-                                title: const Text(
-                                  "Transaction name",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14),
-                                ),
-                                leading: CircleAvatar(
-                                  backgroundColor: const Color(0xffC4C4C4),
-                                  child: Text(
-                                    "${++index}",
+                                child: ListTile(
+                                  subtitle: const Text("20 April 2022"),
+                                  trailing: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Text(
+                                        "\$25.99",
+                                      ),
+                                      Text(
+                                        index % 2 == 0
+                                            ? "Approved"
+                                            : "In process",
+                                        style: TextStyle(
+                                          color: index % 2 == 0
+                                              ? Colors.green
+                                              : Colors.amber,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  title: const Text(
+                                    "Transaction name",
                                     style: TextStyle(
-                                        color: index % 2 == 0
-                                            ? Colors.amber
-                                            : Colors.green,
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 18),
+                                        fontSize: 14),
+                                  ),
+                                  leading: CircleAvatar(
+                                    backgroundColor: const Color(0xffC4C4C4),
+                                    child: Text(
+                                      "${++index}",
+                                      style: TextStyle(
+                                          color: index % 2 == 0
+                                              ? Colors.amber
+                                              : Colors.green,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18),
+                                    ),
                                   ),
                                 ),
                               ),
