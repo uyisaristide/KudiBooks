@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
+import 'package:kudibooks_app/screens/auth_screens/widgets/drop_down_widget.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
+import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
 import 'package:kudibooks_app/screens/dashboard/classes/sliver_delegate_search.dart';
 
 class ClientDeposit extends StatelessWidget {
@@ -7,7 +10,7 @@ class ClientDeposit extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _formKeys = GlobalKey<FormState>();
   final nameController = TextEditingController();
-  final memoController = TextEditingController();
+  final transactionController = TextEditingController();
   List<String> clientList = [];
   List<String> bankList = [];
 
@@ -80,17 +83,132 @@ class ClientDeposit extends StatelessWidget {
             ];
           },
           body: Container(
-            margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+            margin: const EdgeInsets.symmetric(
+              vertical: 15,
+              horizontal: 15,
+            ),
             child: TabBarView(
               children: [
-                Form(
-                  child: Column(
-                    children: const [Text("Tab 1")],
+                SingleChildScrollView(
+                  child: Form(
+                    key: _formKey,
+                    child: Container(
+                      margin: const EdgeInsets.only(top: 10),
+                      child: Column(
+                        children: [
+                          SelectInputType(
+                            itemsToSelect: clientList,
+                            dropDownHint: const Text(
+                              "Select client",
+                              style: TextStyle(fontSize: 15),
+                            ),
+                          ),
+                          SelectInputType(
+                            itemsToSelect: bankList,
+                            dropDownHint: const Text(
+                              "Cash / Bank",
+                              style: TextStyle(fontSize: 15),
+                            ),
+                          ),
+                          CustomFormField(
+                              fieldIcon: const Icon(
+                                Icons.calendar_today_outlined,
+                                color: Colors.grey,
+                              ),
+                              validators: (value) {
+                                Validators.validateName(value);
+                              },
+                              hintText: 'Transaction date',
+                              fieldController: transactionController,
+                              isShown: false,
+                              inputType: TextInputType.datetime),
+                          Container(
+                            padding: const EdgeInsets.all(30),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                Text(
+                                  "Client balance",
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                                Text(" 0.0",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold))
+                              ],
+                            ),
+                          ),
+                          CustomFormField(
+                            validators: (value) {},
+                            hintText: 'Memo',
+                            fieldController: nameController,
+                            isShown: false,
+                            maxLining: 5,
+                          )
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-                Form(
-                  child: Column(
-                    children: const [Text("Tab 2")],
+                SingleChildScrollView(
+                  child: Form(
+                    key: _formKeys,
+                    child: Container(
+                      margin: const EdgeInsets.only(top: 10),
+                      child: Column(
+                        children: [
+                          SelectInputType(
+                            itemsToSelect: clientList,
+                            dropDownHint: const Text(
+                              "Select client",
+                              style: TextStyle(fontSize: 15),
+                            ),
+                          ),
+                          SelectInputType(
+                            itemsToSelect: bankList,
+                            dropDownHint: const Text(
+                              "Cash / Bank",
+                              style: TextStyle(fontSize: 15),
+                            ),
+                          ),
+                          CustomFormField(
+                              fieldIcon: const Icon(
+                                Icons.calendar_today_outlined,
+                                color: Colors.grey,
+                              ),
+                              validators: (value) {
+                                Validators.validateName(value);
+                              },
+                              hintText: 'Transaction date',
+                              fieldController: transactionController,
+                              isShown: false,
+                              inputType: TextInputType.datetime),
+                          Container(
+                            padding: const EdgeInsets.all(30),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                Text(
+                                  "Client balance",
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                                Text(" 0.0",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold))
+                              ],
+                            ),
+                          ),
+                          CustomFormField(
+                            validators: (value) {},
+                            hintText: 'Memo',
+                            fieldController: nameController,
+                            isShown: false,
+                            maxLining: 5,
+                          )
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ],
