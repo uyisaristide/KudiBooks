@@ -13,7 +13,7 @@ class AllTransaction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarCommon.preferredSizeWidget(context),
+      appBar: AppBarCommon.preferredSizeWidget(context, 'All Transactions'),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(15.0),

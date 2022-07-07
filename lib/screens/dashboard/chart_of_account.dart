@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:kudibooks_app/screens/dashboard/classes/snack_bars.dart';
 import 'package:kudibooks_app/screens/dashboard/new_account.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
 
 class ChartAccount extends StatelessWidget {
   const ChartAccount({Key? key}) : super(key: key);
@@ -23,27 +24,7 @@ class ChartAccount extends StatelessWidget {
           style: TextStyle(fontSize: 25),
         ),
       ),
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(56.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            AppBar(
-              leading: IconButton(
-                  icon: const Icon(Icons.arrow_back_ios),
-                  onPressed: () => Navigator.pop(context)),
-              automaticallyImplyLeading: true,
-              elevation: 0.0,
-              backgroundColor: const Color(0xff157253),
-              centerTitle: true,
-              title: const Text("Chart of account",
-                  style: TextStyle(
-                    fontSize: 20,
-                  )),
-            ),
-          ],
-        ),
-      ),
+      appBar: AppBarCommon.preferredSizeWidget(context, 'Chart of Account'),
       body: Container(
         margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
         child: SizedBox(
@@ -77,6 +58,7 @@ class ChartAccount extends StatelessWidget {
                         motion: const ScrollMotion(),
                         children: [
                           SlidableAction(
+                            backgroundColor: Colors.red,
                             onPressed: (context) {},
                             icon: Icons.delete,
                           )
