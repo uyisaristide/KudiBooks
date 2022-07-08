@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:kudibooks_app/models/product_model.dart';
 import 'package:kudibooks_app/screens/dashboard/classes/sliver_delegate_search.dart';
 import 'package:kudibooks_app/screens/dashboard/product_sale.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/title_double.dart';
@@ -8,7 +9,9 @@ import 'package:kudibooks_app/screens/dashboard/widget/title_double.dart';
 import 'all_transaction.dart';
 
 class ProductDetails extends StatelessWidget {
-  ProductDetails({Key? key}) : super(key: key);
+  ProductModel productModel;
+
+  ProductDetails({required this.productModel, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -212,16 +215,16 @@ class ProductDetails extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const Text("Product full name here",
-                        style: TextStyle(
+                    Text(productModel.productName,
+                        style: const TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold)),
                     const SizedBox(
                       height: 10,
                     ),
-                    const Text(
-                      "About the product, this is the description of the product",
+                    Text(
+                      productModel.productDescription!,
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.grey, fontSize: 13),
+                      style: const TextStyle(color: Colors.grey, fontSize: 13),
                     )
                   ],
                 ),

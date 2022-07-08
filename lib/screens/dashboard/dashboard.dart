@@ -145,7 +145,7 @@ class _DashboardState extends State<Dashboard> {
                           ),
                           ActionCard(
                             actionClick: () => showModalBottomSheet(
-                                isDismissible: false,
+                                isDismissible: true,
                                 shape: const RoundedRectangleBorder(
                                     borderRadius: BorderRadius.only(
                                         topRight: Radius.circular(15),
@@ -269,59 +269,47 @@ class _DashboardState extends State<Dashboard> {
                       maxHeight: 800,
                       child: ListView.separated(
                           physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) => Slidable(
-                                endActionPane: ActionPane(
-                                  motion: const ScrollMotion(),
-                                  children: [
-                                    SlidableAction(
-                                      backgroundColor: Colors.red,
-                                      icon: Icons.delete,
-                                      onPressed: (BuildContext context) {},
-                                    )
-                                  ],
+                          itemBuilder: (context, index) => ListTile(
+                            subtitle: const Text("20 April 2022"),
+                            trailing: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment:
+                                  CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  "\$25.99",
                                 ),
-                                child: ListTile(
-                                  subtitle: const Text("20 April 2022"),
-                                  trailing: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const Text(
-                                        "\$25.99",
-                                      ),
-                                      Text(
-                                        index % 2 == 0
-                                            ? "Approved"
-                                            : "In process",
-                                        style: TextStyle(
-                                          color: index % 2 == 0
-                                              ? Colors.green
-                                              : Colors.amber,
-                                        ),
-                                      )
-                                    ],
+                                Text(
+                                  index % 2 == 0
+                                      ? "Approved"
+                                      : "In process",
+                                  style: TextStyle(
+                                    color: index % 2 == 0
+                                        ? Colors.green
+                                        : Colors.amber,
                                   ),
-                                  title: const Text(
-                                    "Transaction name",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14),
-                                  ),
-                                  leading: CircleAvatar(
-                                    backgroundColor: const Color(0xffC4C4C4),
-                                    child: Text(
-                                      "${++index}",
-                                      style: TextStyle(
-                                          color: index % 2 == 0
-                                              ? Colors.amber
-                                              : Colors.green,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18),
-                                    ),
-                                  ),
-                                ),
+                                )
+                              ],
+                            ),
+                            title: const Text(
+                              "Transaction name",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14),
+                            ),
+                            leading: CircleAvatar(
+                              backgroundColor: const Color(0xffC4C4C4),
+                              child: Text(
+                                "${++index}",
+                                style: TextStyle(
+                                    color: index % 2 == 0
+                                        ? Colors.amber
+                                        : Colors.green,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18),
                               ),
+                            ),
+                          ),
                           separatorBuilder: (_, idx) => const SizedBox(
                                 height: 5,
                               ),

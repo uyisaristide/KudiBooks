@@ -5,8 +5,8 @@ import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
 import 'package:kudibooks_app/screens/background.dart';
 import 'package:kudibooks_app/screens/dashboard/all_transaction.dart';
 import 'package:kudibooks_app/screens/dashboard/client_list.dart';
-import 'package:kudibooks_app/screens/dashboard/inventory.dart';
 import 'package:kudibooks_app/screens/dashboard/loads.dart';
+import 'package:kudibooks_app/screens/dashboard/products.dart';
 import 'package:kudibooks_app/screens/dashboard/reports.dart';
 import 'package:kudibooks_app/screens/dashboard/settings_screen.dart';
 
@@ -81,7 +81,7 @@ class Drawers extends StatelessWidget {
                       onTap: () => Navigator.push(
                           context,
                           CupertinoPageRoute(
-                              builder: (context) => InventoryScreen())),
+                              builder: (context) => ProductsScreen())),
                       leading: const Icon(Icons.shopping_cart_outlined),
                       title: const Text("Products"),
                       trailing: const Icon(

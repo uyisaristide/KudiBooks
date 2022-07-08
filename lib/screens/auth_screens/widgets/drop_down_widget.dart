@@ -3,8 +3,13 @@ import 'package:flutter/material.dart';
 class SelectInputType extends StatelessWidget {
   List<String> itemsToSelect;
   Widget? dropDownHint;
+  Function(String?)? selectedValue;
 
-  SelectInputType({this.dropDownHint, required this.itemsToSelect, Key? key})
+  SelectInputType(
+      {this.dropDownHint,
+      required this.itemsToSelect,
+      this.selectedValue,
+      Key? key})
       : super(key: key);
 
   @override
@@ -41,7 +46,7 @@ class SelectInputType extends StatelessWidget {
                         child: Text(value),
                       ))
               .toList(),
-          onChanged: (value) {},
+          onChanged: selectedValue,
         ));
   }
 }
