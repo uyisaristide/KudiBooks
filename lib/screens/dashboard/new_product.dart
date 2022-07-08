@@ -1,10 +1,15 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:kudibooks_app/models/product_model.dart';
+import 'package:kudibooks_app/providers/product_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/drop_down_widget.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/double_header_two.dart';
+import 'package:provider/provider.dart';
 
 class NewProduct extends StatefulWidget {
   NewProduct({Key? key}) : super(key: key);
@@ -15,6 +20,7 @@ class NewProduct extends StatefulWidget {
 
 class _NewProductState extends State<NewProduct> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _idRandom = Random();
 
   List<String> revenueAccounts = ["Account 1", "Account 2", "Account 3"];
   List<String> expenseAccount = [
@@ -43,6 +49,8 @@ class _NewProductState extends State<NewProduct> {
 
   @override
   Widget build(BuildContext context) {
+    ProductProvider productProvider = Provider.of<ProductProvider>(context);
+    List<ProductModel> _listProducts = productProvider.allProducts;
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
           color: Colors.transparent,
@@ -53,6 +61,19 @@ class _NewProductState extends State<NewProduct> {
                 text: 'Add product',
                 actionField: () {
                   if (_formKey.currentState!.validate()) {
+                    productProvider.addProduct(ProductModel(
+                        id: _idRandom.nextInt(300),
+                        revenueAccount: revenueAccountValue,
+                        inventoryExpenseAccount: expenseAccountValue,
+                        productName: productNameController.text,
+                        subUnit: unitType,
+                        numberOfSubUnits: numberOfSubUnits.text,
+                        subUnitPrice: subUnitPrice.text,
+                        subUnitName: subUnitName.text,
+                        productPrice: priceController.text,
+                        defaultSellingMethod: defaultSellingMethodValue,
+                        productDescription: descriptionController.text,
+                        productNote: noteController.text));
                     Navigator.pop(context);
                   }
                 }),
@@ -100,7 +121,7 @@ class _NewProductState extends State<NewProduct> {
                       itemsToSelect: expenseAccount)
                   : Container(),
               CustomFormField(
-                validators: (value){},
+                validators: (value) => Validators.validateName(value),
                 hintText: 'Product name',
                 fieldController: productNameController,
                 isShown: false,
@@ -185,7 +206,7 @@ class _NewProductState extends State<NewProduct> {
                 dropDownHint: const Text("Default selling method"),
               ),
               CustomFormField(
-                  validators: (value) =>Validators.validateName(value),
+                  validators: (value) {},
                   hintText: 'Product price',
                   inputType: TextInputType.number,
                   fieldController: priceController,
@@ -208,7 +229,7 @@ class _NewProductState extends State<NewProduct> {
                     rightSide: Container()),
               ),
               CustomFormField(
-                  validators: (value){},
+                  validators: (value) {},
                   inputType: TextInputType.multiline,
                   hintText: 'Note',
                   maxLining: 5,

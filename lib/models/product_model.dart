@@ -1,5 +1,5 @@
 class ProductModel {
-  int? id;
+  int id;
   String? revenueAccount;
   String? inventoryExpenseAccount;
   String productName;
@@ -13,7 +13,8 @@ class ProductModel {
   String? productNote;
 
   ProductModel(
-      {this.revenueAccount,
+      {required this.id,
+      this.revenueAccount,
       this.inventoryExpenseAccount,
       required this.productName,
       this.subUnit,
@@ -25,10 +26,5 @@ class ProductModel {
       this.productDescription,
       this.productNote});
 
-  static List<ProductModel> generateList() => [
-        ProductModel(
-            inventoryExpenseAccount: null,
-            revenueAccount: "Account 4",
-            productName: "Default")
-      ];
+  static List<ProductModel> generateList() => [];
 }

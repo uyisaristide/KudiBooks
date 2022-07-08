@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kudibooks_app/providers/product_provider.dart';
 import 'package:kudibooks_app/providers/user_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/login.dart';
 import 'package:kudibooks_app/screens/auth_screens/otp_verification.dart';
@@ -10,9 +11,10 @@ import 'package:kudibooks_app/screens/splash_screen/green_splash_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => UserProvider())],
-      child: const MyApp()));
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (_) => UserProvider()),
+    ChangeNotifierProvider(create: (_) => ProductProvider())
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
