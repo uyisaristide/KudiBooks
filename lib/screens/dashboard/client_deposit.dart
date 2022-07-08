@@ -16,9 +16,11 @@ class ClientDeposit extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
+        
           color: Colors.transparent,
           elevation: 0.0,
           child: Container(
+            
             margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             child: LoginButton(
                 text: 'Deposit',
@@ -31,6 +33,7 @@ class ClientDeposit extends StatelessWidget {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(56.0),
         child: Column(
+          
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             AppBar(
@@ -75,6 +78,7 @@ class ClientDeposit extends StatelessWidget {
                         ),
                       ),
                       Container(
+                        
                         padding: const EdgeInsets.only(bottom: 20),
                         decoration: const BoxDecoration(border: Border()),
                         child: const Text(
@@ -114,6 +118,7 @@ class ClientDeposit extends StatelessWidget {
                       fieldController: nameController,
                       isShown: false),
                   Container(
+                    
                     padding: const EdgeInsets.only(
                         top: 40, bottom: 40, right: 15, left: 15),
                     child: Center(

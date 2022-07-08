@@ -8,11 +8,8 @@ import 'package:kudibooks_app/screens/auth_screens/signup.dart';
 import 'package:kudibooks_app/screens/dashboard/loads.dart';
 import 'package:kudibooks_app/screens/splash_screen/green_splash_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/services.dart';
 
 void main() {
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-      overlays: [SystemUiOverlay.bottom]);
   runApp(MultiProvider(
       providers: [ChangeNotifierProvider(create: (_) => UserProvider())],
       child: const MyApp()));
@@ -38,7 +35,7 @@ class MyApp extends StatelessWidget {
         '/signup': (context) => SignUp(),
         '/phoneSignup': (context) => PhoneSignup(),
         '/otp': (context) => const OtpVerification(),
-        '/loadInventories':(context) => Loads(),
+        '/loadInventories': (context) => Loads(),
       },
     );
   }
