@@ -2,30 +2,30 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kudibooks_app/models/product_model.dart';
+import 'package:kudibooks_app/providers/product_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/product_list_card.dart';
 import 'package:kudibooks_app/screens/dashboard/classes/sliver_delegate_search.dart';
 import 'package:kudibooks_app/screens/dashboard/new_expense.dart';
 import 'package:kudibooks_app/screens/dashboard/new_product.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/button_widget.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/search_input.dart';
+import 'package:provider/provider.dart';
 
-class InventoryScreen extends StatefulWidget {
-  VoidCallback? loadInventories;
+class ProductsScreen extends StatefulWidget {
+  VoidCallback? loadProducts;
 
-  InventoryScreen({this.loadInventories, Key? key}) : super(key: key);
+  ProductsScreen({this.loadProducts, Key? key}) : super(key: key);
 
   @override
-  State<InventoryScreen> createState() => _InventoryScreenState();
+  State<ProductsScreen> createState() => _ProductsScreenState();
 }
 
-class _InventoryScreenState extends State<InventoryScreen> {
-  final List<ProductModel> _productList = ProductModel.generateList();
-
+class _ProductsScreenState extends State<ProductsScreen> {
   @override
   Widget build(BuildContext context) {
+    ProductProvider _productProvider = Provider.of<ProductProvider>(context);
+    List<ProductModel> _productList = _productProvider.allProducts;
     return Scaffold(
-      drawer: Drawers(),
       body: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return [
@@ -37,7 +37,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                 elevation: 0.0,
                 backgroundColor: Color(0xff157253),
                 centerTitle: true,
-                title: Text("Inventory",
+                title: Text("Products",
                     style: TextStyle(
                       fontSize: 20,
                     )),
@@ -97,11 +97,8 @@ class _InventoryScreenState extends State<InventoryScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                const SizedBox(
-                  height: 20,
-                ),
                 Container(
-                  padding: const EdgeInsets.only(left: 15.0, bottom: 15.0),
+                  padding: const EdgeInsets.only(left: 15.0, top: 10),
                   alignment: AlignmentDirectional.centerStart,
                   child: const Text(
                     "Products",
@@ -109,30 +106,19 @@ class _InventoryScreenState extends State<InventoryScreen> {
                         TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold),
                   ),
                 ),
-                _productList.isEmpty
-                    ? const Center(
-                        child: Text("There is no inventory"),
-                      )
-                    : LimitedBox(
-                        maxHeight: 1000,
-                        child: ListView.separated(
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) =>
-                                _productList.isEmpty
-                                    ? const Center(
-                                        child: Text("There is no inventory"),
-                                      )
-                                    : ProductListCard(
-                                        productModel: _productList.reversed
-                                            .toList()[index],
-                                      ),
-                            // itemBuilder: (context, index) => const Text("Kigali"),
-                            separatorBuilder: (_, idx) => const SizedBox(
-                                  height: 10,
-                                ),
-                            itemCount:
-                                _productList.isEmpty ? 1 : _productList.length),
-                      ),
+                LimitedBox(
+                  maxHeight: 1000,
+                  child: ListView.separated(
+                      physics: const NeverScrollableScrollPhysics(),
+                      // itemBuilder: (context, index) => ProductListCard(index: index),
+                      itemBuilder: (context, index) => ProductListCard(
+                            productModel: _productList.reversed.toList()[index],
+                          ),
+                      separatorBuilder: (_, idx) => const SizedBox(
+                            height: 10,
+                          ),
+                      itemCount: _productList.length),
+                ),
               ],
             ),
           )),
