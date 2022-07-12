@@ -3,6 +3,7 @@ import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/drop_down_widget.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
+import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/double_header_two.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/inventory_card.dart';
 
@@ -13,6 +14,8 @@ class InventoryDeduction extends StatelessWidget {
   final memoController = TextEditingController();
   final transactionController = TextEditingController();
   final transactionDateController = TextEditingController();
+  final descriptionController = TextEditingController();
+  final noteController = TextEditingController();
   List<String> unitProduct = [];
 
   @override
@@ -31,27 +34,7 @@ class InventoryDeduction extends StatelessWidget {
                   }
                 }),
           )),
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(56.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            AppBar(
-              leading: IconButton(
-                  icon: const Icon(Icons.arrow_back_ios),
-                  onPressed: () => Navigator.pop(context)),
-              automaticallyImplyLeading: true,
-              elevation: 0.0,
-              backgroundColor: const Color(0xff157253),
-              centerTitle: true,
-              title: const Text("Inventory deduction",
-                  style: TextStyle(
-                    fontSize: 20,
-                  )),
-            ),
-          ],
-        ),
-      ),
+      appBar: AppBarCommon.preferredSizeWidget(context, "Inventory deduction"),
       body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Container(
@@ -180,10 +163,14 @@ class InventoryDeduction extends StatelessWidget {
                         ),
                         shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.circular(10.0)),
-                    child: const Center(
-                        child: Text(
-                      "Add Product",
-                      style: TextStyle(color: Color(0xff6FCF97), fontSize: 12),
+                    child: Center(
+                        child: InkWell(
+                      onTap: () => _addProductModel(context),
+                      child: const Text(
+                        "Add Product",
+                        style:
+                            TextStyle(color: Color(0xff6FCF97), fontSize: 12),
+                      ),
                     )),
                   ),
                   CustomFormField(
@@ -212,5 +199,164 @@ class InventoryDeduction extends StatelessWidget {
             ),
           )),
     );
+  }
+
+  _addProductModel(BuildContext context) {
+    showModalBottomSheet(
+        isDismissible: false,
+        elevation: 0.0,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20.0),
+                topRight: Radius.circular(20.0))),
+        context: context,
+        builder: (context) => SingleChildScrollView(
+              child: Column(
+                children: [
+                  ListTile(
+                      trailing: IconButton(
+                        onPressed: () => Navigator.pop(context),
+                        icon: const Icon(Icons.close),
+                      ),
+                      title: const Text(
+                        "Add product",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w400),
+                      )),
+                  const Divider(),
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    child: Form(
+                      child: Column(
+                        children: [
+                          SelectInputType(
+                              dropDownHint: const Text('Revenue account'),
+                              itemsToSelect: unitProduct),
+                          Container(
+                            padding: const EdgeInsets.only(left: 15, right: 15),
+                            child: TwoSideHeader(
+                                textFontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                bottomSize: 10,
+                                leftSide: 'It is in inventory?',
+                                rightSide: Switch(
+                                  onChanged: (bool value) {},
+                                  value: true,
+                                )),
+                          ),
+                          SelectInputType(
+                              dropDownHint:
+                                  const Text('Inventory expense account'),
+                              itemsToSelect: unitProduct),
+                          CustomFormField(
+                            validators: (value) {
+                              Validators.validateName(value);
+                            },
+                            hintText: 'Product name',
+                            fieldController: nameController,
+                            isShown: false,
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(left: 15, right: 15),
+                            child: TwoSideHeader(
+                                textFontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                bottomSize: 0.0,
+                                leftSide: 'Sold in sub-units?',
+                                rightSide: Switch(
+                                  onChanged: (bool value) {},
+                                  value: true,
+                                )),
+                          ),
+                          Container(
+                            height: 200,
+                            width: double.infinity,
+                            margin: const EdgeInsets.symmetric(
+                                vertical: 15, horizontal: 15),
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                  width: 1.0,
+                                  color: Colors.grey,
+                                ),
+                                shape: BoxShape.rectangle,
+                                borderRadius: BorderRadius.circular(10.0)),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: SelectInputType(
+                                        itemsToSelect: unitProduct,
+                                        dropDownHint: const Text("Select unit"),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: CustomFormField(
+                                          validators: (value) {
+                                            Validators.validateName(value);
+                                          },
+                                          hintText: 'Sub units',
+                                          fieldController: nameController,
+                                          isShown: false),
+                                    )
+                                  ],
+                                ),
+                                CustomFormField(
+                                    validators: (value) {},
+                                    hintText: 'Sub-unit price',
+                                    fieldController: nameController,
+                                    isShown: false),
+                                CustomFormField(
+                                    validators: (value) {},
+                                    hintText: 'Sub-unit name',
+                                    fieldController: nameController,
+                                    isShown: false),
+                              ],
+                            ),
+                          ),
+                          SelectInputType(
+                            itemsToSelect: unitProduct,
+                            dropDownHint: const Text("Default selling method"),
+                          ),
+                          CustomFormField(
+                              validators: (value) {},
+                              hintText: 'Product price',
+                              inputType: TextInputType.number,
+                              fieldController: nameController,
+                              isShown: false),
+                          CustomFormField(
+                            validators: (value) {},
+                            hintText: 'Description',
+                            fieldController: descriptionController,
+                            isShown: false,
+                            inputType: TextInputType.multiline,
+                          ),
+                          Container(
+                            margin: const EdgeInsets.symmetric(
+                                vertical: 0.0, horizontal: 20),
+                            child: TwoSideHeader(
+                                textFontSize: 12,
+                                bottomSize: 10.0,
+                                leftSide: 'Displayed on invoice',
+                                rightSide: const Text("")),
+                          ),
+                          CustomFormField(
+                              validators: (value) {},
+                              inputType: TextInputType.multiline,
+                              hintText: 'Note',
+                              maxLining: 5,
+                              fieldController: noteController,
+                              isShown: false),
+                          LoginButton(
+                              text: 'Add',
+                              actionField: () => Navigator.pop(context))
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ));
   }
 }

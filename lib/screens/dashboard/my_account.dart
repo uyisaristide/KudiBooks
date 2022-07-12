@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kudibooks_app/screens/auth_screens/login.dart';
 import 'package:kudibooks_app/screens/dashboard/account_transfer.dart';
 import 'package:kudibooks_app/screens/dashboard/chart_of_account.dart';
+import 'package:kudibooks_app/screens/dashboard/settings_screen.dart';
+import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/list_tile.dart';
 
@@ -17,27 +20,7 @@ class MyAccountScreen extends StatelessWidget {
       },
       child: Scaffold(
         drawer: Drawers(),
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(56.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              AppBar(
-                // leading: IconButton(
-                //     icon: const Icon(Icons.arrow_back_ios),
-                //     onPressed: () => Navigator.pop(context)),
-                automaticallyImplyLeading: true,
-                elevation: 0.0,
-                backgroundColor: const Color(0xff157253),
-                centerTitle: true,
-                title: const Text("Account transfer",
-                    style: TextStyle(
-                      fontSize: 20,
-                    )),
-              ),
-            ],
-          ),
-        ),
+        appBar: AppBarCommon.preferredSizeWidget(context, 'My Account'),
         body: SingleChildScrollView(
           child: Container(
             margin: const EdgeInsets.all(15.0),
@@ -142,16 +125,18 @@ class MyAccountScreen extends StatelessWidget {
                 DoubleRowWidgets(
                   leftSideWidget: IconButton(
                     icon: const Icon(Icons.arrow_forward_ios),
-                    onPressed: () {},
+                    onPressed: () => Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                            builder: (context) => const Settings())),
                   ),
                   rightSideText: 'Settings',
                   borderSidebottom: true,
                 ),
                 DoubleRowWidgets(
                   leftSideWidget: IconButton(
-                    icon: const Icon(Icons.arrow_forward_ios),
-                    onPressed: () {},
-                  ),
+                      icon: const Icon(Icons.arrow_forward_ios),
+                      onPressed: () {}),
                   rightSideText: 'Help',
                   borderSidebottom: true,
                 ),
@@ -171,7 +156,10 @@ class MyAccountScreen extends StatelessWidget {
                         alignment: Alignment.centerRight,
                         child: IconButton(
                           icon: const Icon(Icons.arrow_forward_ios),
-                          onPressed: () {},
+                          onPressed: () => Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                  builder: (context) => const Login())),
                         ),
                       ),
                     ],

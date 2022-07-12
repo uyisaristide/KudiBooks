@@ -341,12 +341,26 @@ class Loads extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            primary: const Color(0xffFDAB30),
+            padding: const EdgeInsets.all(15.0),
+            elevation: 0.0,
+            shape: const CircleBorder()),
+        onPressed: () => Navigator.push(
+            context, CupertinoPageRoute(builder: (context) => NewInventory())),
+        child: const Text(
+          '+',
+          style: TextStyle(fontSize: 25),
+        ),
+      ),
       body: SafeArea(
         child: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return [
               SliverAppBar(
-                automaticallyImplyLeading: false,
+                pinned: true,
+                automaticallyImplyLeading: true,
                 actions: [
                   IconButton(
                       onPressed: () => Navigator.push(
@@ -367,13 +381,9 @@ class Loads extends StatelessWidget {
                   pinned: true,
                   delegate: SearchBoxSliver(
                     child: Container(
-                        color: innerBoxIsScrolled
-                            ? const Color(0xff157253)
-                            : Colors.transparent,
+                        color: Theme.of(context).scaffoldBackgroundColor,
                         width: MediaQuery.of(context).size.width,
-                        child: Container(
-                            margin: const EdgeInsets.only(left: 15, right: 15),
-                            child: SearchTextField())),
+                        child: SearchTextField()),
                     maxHeight: 60,
                     minHeight: 60,
                   )),

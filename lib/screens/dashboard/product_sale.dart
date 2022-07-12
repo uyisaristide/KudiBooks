@@ -3,6 +3,7 @@ import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/drop_down_widget.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
+import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/double_header_two.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/inventory_card.dart';
 
@@ -44,27 +45,7 @@ class ProductSale extends StatelessWidget {
                   }
                 }),
           )),
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(56.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            AppBar(
-              leading: IconButton(
-                  icon: const Icon(Icons.arrow_back_ios),
-                  onPressed: () => Navigator.pop(context)),
-              automaticallyImplyLeading: true,
-              elevation: 0.0,
-              backgroundColor: const Color(0xff157253),
-              centerTitle: true,
-              title: const Text("Product sale",
-                  style: TextStyle(
-                    fontSize: 20,
-                  )),
-            ),
-          ],
-        ),
-      ),
+      appBar: AppBarCommon.preferredSizeWidget(context, "Product sale"),
       body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Container(
@@ -233,8 +214,9 @@ class ProductSale extends StatelessWidget {
           );
         });
   }
+
   _addProductForm(BuildContext context) {
-   return Form(
+    return Form(
       key: _formKey,
       child: Column(
         children: [
@@ -257,8 +239,7 @@ class ProductSale extends StatelessWidget {
               inputType: TextInputType.name),
           Container(
             alignment: Alignment.centerLeft,
-            padding: const EdgeInsets.symmetric(
-                vertical: 15, horizontal: 15),
+            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
             child: const Text(
               "Products section",
               style: TextStyle(fontSize: 16, color: Color(0xff808080)),
@@ -359,8 +340,7 @@ class ProductSale extends StatelessWidget {
           Container(
             height: 100,
             width: double.infinity,
-            margin: const EdgeInsets.symmetric(
-                vertical: 10, horizontal: 15),
+            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
             decoration: BoxDecoration(
                 border: Border.all(
                   width: 1.0,
@@ -373,13 +353,11 @@ class ProductSale extends StatelessWidget {
                     onPressed: () => _addProductButton(context),
                     child: const Text(
                       "Add Product",
-                      style: TextStyle(
-                          color: Color(0xff6FCF97), fontSize: 12),
+                      style: TextStyle(color: Color(0xff6FCF97), fontSize: 12),
                     ))),
           ),
           Container(
-            margin: const EdgeInsets.only(
-                right: 15.0, bottom: 1.0, top: 30),
+            margin: const EdgeInsets.only(right: 15.0, bottom: 1.0, top: 30),
             alignment: Alignment.centerRight,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -390,8 +368,7 @@ class ProductSale extends StatelessWidget {
                 ),
                 Text(
                   "0.0",
-                  style: TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
@@ -399,8 +376,7 @@ class ProductSale extends StatelessWidget {
           Container(
             height: 150,
             width: double.infinity,
-            margin: const EdgeInsets.symmetric(
-                vertical: 10, horizontal: 15),
+            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
             decoration: BoxDecoration(
                 border: Border.all(
                   width: 1.0,

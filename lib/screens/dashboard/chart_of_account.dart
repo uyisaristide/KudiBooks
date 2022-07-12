@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kudibooks_app/screens/dashboard/classes/snack_bars.dart';
 import 'package:kudibooks_app/screens/dashboard/new_account.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
 
 class ChartAccount extends StatelessWidget {
   const ChartAccount({Key? key}) : super(key: key);
@@ -21,27 +24,7 @@ class ChartAccount extends StatelessWidget {
           style: TextStyle(fontSize: 25),
         ),
       ),
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(56.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            AppBar(
-              leading: IconButton(
-                  icon: const Icon(Icons.arrow_back_ios),
-                  onPressed: () => Navigator.pop(context)),
-              automaticallyImplyLeading: true,
-              elevation: 0.0,
-              backgroundColor: const Color(0xff157253),
-              centerTitle: true,
-              title: const Text("Chart of account",
-                  style: TextStyle(
-                    fontSize: 20,
-                  )),
-            ),
-          ],
-        ),
-      ),
+      appBar: AppBarCommon.preferredSizeWidget(context, 'Chart of Account'),
       body: Container(
         margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
         child: SizedBox(
@@ -49,60 +32,94 @@ class ChartAccount extends StatelessWidget {
             child: ListView.separated(
                 shrinkWrap: true,
                 physics: const BouncingScrollPhysics(),
-                itemBuilder: (context, index) => ListTile(
-                      subtitle: const Text("Account type"),
-                      trailing: Column(
+                itemBuilder: (context, index) => Slidable(
+                      key: const ValueKey(0),
+                      startActionPane: ActionPane(
+                        extentRatio: 0.2,
+                        motion: const ScrollMotion(),
                         children: [
-                          const Text(
-                            "\$25.99",
-                            style: TextStyle(fontSize: 16),
-                          ),
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: const [
-                              Text(
-                                "IN: ",
-                                style: TextStyle(
-                                  fontSize: 8,
-                                ),
-                              ),
-                              Text(
-                                "\$0.0",
-                                style: TextStyle(
-                                    fontSize: 8, color: Color(0xff78C278)),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: const [
-                              Text(
-                                "OUT: ",
-                                style: TextStyle(fontSize: 8),
-                              ),
-                              Text(
-                                "\$0.0",
-                                style: TextStyle(
-                                    fontSize: 8, color: Color(0xffFF8787)),
-                              ),
-                            ],
-                          ),
+                          SlidableAction(
+                              foregroundColor: Colors.white,
+                              backgroundColor: Colors.green.shade400,
+                              icon: Icons.edit_outlined,
+                              onPressed: (context) {
+                                ScaffoldMessenger.of(context)
+                                  ..removeCurrentSnackBar()
+                                  ..showSnackBar(SnackBars.snackBars(
+                                      "Successfully deleted", Colors.green));
+                              })
                         ],
                       ),
-                      title: const Text(
-                        "Account name",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 14),
+                      endActionPane: ActionPane(
+                        extentRatio: 0.2,
+                        dismissible: DismissiblePane(
+                          onDismissed: () {},
+                        ),
+                        motion: const ScrollMotion(),
+                        children: [
+                          SlidableAction(
+                            backgroundColor: Colors.red,
+                            onPressed: (context) {},
+                            icon: Icons.delete,
+                          )
+                        ],
                       ),
-                      leading: CircleAvatar(
-                        backgroundColor: const Color(0xffC4C4C4),
-                        child: Text(
-                          "${++index}",
+                      child: ListTile(
+                        subtitle: const Text("Account type"),
+                        trailing: Column(
+                          children: [
+                            const Text(
+                              "\$25.99",
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: const [
+                                Text(
+                                  "IN: ",
+                                  style: TextStyle(
+                                    fontSize: 8,
+                                  ),
+                                ),
+                                Text(
+                                  "\$0.0",
+                                  style: TextStyle(
+                                      fontSize: 8, color: Color(0xff78C278)),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: const [
+                                Text(
+                                  "OUT: ",
+                                  style: TextStyle(fontSize: 8),
+                                ),
+                                Text(
+                                  "\$0.0",
+                                  style: TextStyle(
+                                      fontSize: 8, color: Color(0xffFF8787)),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        title: const Text(
+                          "Account name",
                           style: TextStyle(
-                              color:
-                                  index % 2 == 0 ? Colors.amber : Colors.green,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18),
+                              fontWeight: FontWeight.bold, fontSize: 14),
+                        ),
+                        leading: CircleAvatar(
+                          backgroundColor: const Color(0xffC4C4C4),
+                          child: Text(
+                            "${++index}",
+                            style: TextStyle(
+                                color: index % 2 == 0
+                                    ? Colors.amber
+                                    : Colors.green,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18),
+                          ),
                         ),
                       ),
                     ),

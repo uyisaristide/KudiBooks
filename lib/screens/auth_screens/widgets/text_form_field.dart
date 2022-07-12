@@ -4,7 +4,9 @@ class CustomFormField extends StatelessWidget {
   final Function? validators;
   final String hintText;
   final String? labelText;
+  final Function? onIconPressed;
   final Icon? fieldIcon;
+  final IconButton? fieldIconbutton;
   final int? maxLining;
   final TextStyle? hintStyles;
   final bool isShown;
@@ -16,9 +18,11 @@ class CustomFormField extends StatelessWidget {
 
   const CustomFormField(
       {required this.hintText,
+      this.onIconPressed,
       this.hintStyles,
       this.validators,
       this.fieldIcon,
+      this.fieldIconbutton,
       this.inputType,
       Key? key,
       this.onChangeAction,
@@ -26,14 +30,16 @@ class CustomFormField extends StatelessWidget {
       this.maximumLength,
       required this.fieldController,
       this.labelText,
-      required this.isShown, this.maxLining})
+      required this.isShown,
+      this.maxLining})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5.0),
-      child: TextFormField(maxLines: maxLining,
+      child: TextFormField(
+        maxLines: maxLining,
         obscureText: isShown,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         controller: fieldController,
@@ -49,16 +55,18 @@ class CustomFormField extends StatelessWidget {
                     validators == null ? const Color(0xff157253) : Colors.grey),
             labelText: labelText,
             prefix: countryCode,
-            suffixIcon: fieldController.text.isEmpty
-                ? fieldIcon
-                : IconButton(
-                    onPressed: () {
-                      fieldController.clear();
-                    },
-                    icon: const Icon(
-                      Icons.close,
-                      color: Colors.grey,
-                    )),
+            suffixIcon: fieldIconbutton,
+            // fieldController.text.isEmpty
+            //     ? fieldIcon
+            //     : IconButton(
+            //         onPressed: () {
+            //           onIconPressed;
+            //           fieldController.clear();
+            //         },
+            //         icon: const Icon(
+            //           Icons.close,
+            //           color: Colors.grey,
+            //         )),
             focusedBorder: OutlineInputBorder(
                 borderSide:
                     const BorderSide(color: Color(0xff157253), width: 1.0),

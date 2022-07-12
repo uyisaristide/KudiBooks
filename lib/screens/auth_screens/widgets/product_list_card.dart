@@ -1,23 +1,35 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kudibooks_app/models/product_model.dart';
+import 'package:kudibooks_app/providers/product_provider.dart';
 import 'package:kudibooks_app/screens/dashboard/product_details.dart';
+import 'package:provider/provider.dart';
 
 class ProductListCard extends StatelessWidget {
-  int index;
+  ProductModel productModel;
 
-  ProductListCard({required this.index, Key? key}) : super(key: key);
+  ProductListCard({required this.productModel, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    ProductProvider _productProvider = Provider.of<ProductProvider>(context);
     return Column(
       children: [
         ListTile(
-          onTap: () => Navigator.push(context,
-              CupertinoPageRoute(builder: (context) => ProductDetails())),
+          onLongPress: () {
+            _productProvider.removeProduct(productModel.id);
+            print("Deleted ${productModel.id}");
+          },
+          onTap: () => Navigator.push(
+              context,
+              CupertinoPageRoute(
+                  builder: (context) => ProductDetails(
+                        productModel: productModel,
+                      ))),
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text("\$ 4.5"),
+              Text("\$${productModel.productPrice}"),
               IconButton(
                 onPressed: () {},
                 icon: const Icon(Icons.arrow_forward_ios),
@@ -27,8 +39,8 @@ class ProductListCard extends StatelessWidget {
           leading: Image.asset(
             "assets/images/itemImage.png",
           ),
-          title: Text("Product ${++index}"),
-          subtitle: Text("Product $index subtitle"),
+          title: Text(productModel.productName),
+          subtitle: Text("${productModel.productDescription}"),
         ),
         const SizedBox(
           height: 15,

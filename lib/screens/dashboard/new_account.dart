@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/drop_down_widget.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
+import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
 
 class NewAccount extends StatelessWidget {
   NewAccount({Key? key}) : super(key: key);
@@ -26,27 +27,7 @@ class NewAccount extends StatelessWidget {
                   }
                 }),
           )),
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(56.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            AppBar(
-              leading: IconButton(
-                  icon: const Icon(Icons.arrow_back_ios),
-                  onPressed: () => Navigator.pop(context)),
-              automaticallyImplyLeading: true,
-              elevation: 0.0,
-              backgroundColor: const Color(0xff157253),
-              centerTitle: true,
-              title: const Text("New account",
-                  style: TextStyle(
-                    fontSize: 20,
-                  )),
-            ),
-          ],
-        ),
-      ),
+      appBar: AppBarCommon.preferredSizeWidget(context, "New account"),
       body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Container(

@@ -2,17 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/drop_down_widget.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
+import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/double_header_two.dart';
 
 import '../auth_screens/widgets/text_form_field.dart';
 
 class NewExpense extends StatelessWidget {
   NewExpense({Key? key}) : super(key: key);
+  DateTime time =
+      DateTime(DateTime.now().day, DateTime.now().month, DateTime.now().year);
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final productNameController = TextEditingController();
   final nameController = TextEditingController();
-  final transactionDateController = TextEditingController();
+  final transactionDateController = TextEditingController(text: ''
+      // text:
+      //     '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}'
+      );
   final memoController = TextEditingController();
 
   List<String> expenseAccount = [
@@ -38,27 +44,7 @@ class NewExpense extends StatelessWidget {
                   }
                 }),
           )),
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(56.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            AppBar(
-              leading: IconButton(
-                  icon: const Icon(Icons.arrow_back_ios),
-                  onPressed: () => Navigator.pop(context)),
-              automaticallyImplyLeading: true,
-              elevation: 0.0,
-              backgroundColor: const Color(0xff157253),
-              centerTitle: true,
-              title: const Text("New expense",
-                  style: TextStyle(
-                    fontSize: 20,
-                  )),
-            ),
-          ],
-        ),
-      ),
+      appBar: AppBarCommon.preferredSizeWidget(context, "New expense"),
       body: SingleChildScrollView(
           child: Container(
         margin: const EdgeInsets.only(top: 20),
@@ -237,9 +223,19 @@ class NewExpense extends StatelessWidget {
                   inputType: TextInputType.name),
               CustomFormField(
                   fieldIcon: const Icon(Icons.calendar_today_outlined),
+                  fieldIconbutton: IconButton(
+                      onPressed: () async {
+                        showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2000),
+                            lastDate: DateTime(2025));
+                      },
+                      icon: const Icon(Icons.calendar_today_outlined)),
                   validators: (value) {
                     Validators.validateName(value);
                   },
+                  // initialText: '${time.day}/${time.month}',
                   hintText: 'Transaction date',
                   fieldController: transactionDateController,
                   isShown: false,

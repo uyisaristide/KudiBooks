@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kudibooks_app/models/product_model.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/product_list_card.dart';
 import 'package:kudibooks_app/screens/dashboard/classes/sliver_delegate_search.dart';
 import 'package:kudibooks_app/screens/dashboard/new_expense.dart';
@@ -19,6 +20,8 @@ class InventoryScreen extends StatefulWidget {
 }
 
 class _InventoryScreenState extends State<InventoryScreen> {
+  final List<ProductModel> _productList = ProductModel.generateList();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -109,19 +112,30 @@ class _InventoryScreenState extends State<InventoryScreen> {
                         TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold),
                   ),
                 ),
-                LimitedBox(
-                  maxHeight: 1000,
-                  child: ListView.separated(
-                      physics: const NeverScrollableScrollPhysics(),
-                      // itemBuilder: (context, index) => ProductListCard(index: index),
-                      itemBuilder: (context, index) => ProductListCard(
-                            index: index,
-                          ),
-                      separatorBuilder: (_, idx) => const SizedBox(
-                            height: 10,
-                          ),
-                      itemCount: 20),
-                ),
+                _productList.isEmpty
+                    ? const Center(
+                        child: Text("There is no inventory"),
+                      )
+                    : LimitedBox(
+                        maxHeight: 1000,
+                        child: ListView.separated(
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) =>
+                                _productList.isEmpty
+                                    ? const Center(
+                                        child: Text("There is no inventory"),
+                                      )
+                                    : ProductListCard(
+                                        productModel: _productList.reversed
+                                            .toList()[index],
+                                      ),
+                            // itemBuilder: (context, index) => const Text("Kigali"),
+                            separatorBuilder: (_, idx) => const SizedBox(
+                                  height: 10,
+                                ),
+                            itemCount:
+                                _productList.isEmpty ? 1 : _productList.length),
+                      ),
               ],
             ),
           )),

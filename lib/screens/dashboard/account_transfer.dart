@@ -3,6 +3,7 @@ import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/drop_down_widget.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
+import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
 
 class AccountTransfer extends StatelessWidget {
   AccountTransfer({Key? key}) : super(key: key);
@@ -26,27 +27,7 @@ class AccountTransfer extends StatelessWidget {
                   }
                 }),
           )),
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(56.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            AppBar(
-              leading: IconButton(
-                  icon: const Icon(Icons.arrow_back_ios),
-                  onPressed: () => Navigator.pop(context)),
-              automaticallyImplyLeading: true,
-              elevation: 0.0,
-              backgroundColor: const Color(0xff157253),
-              centerTitle: true,
-              title: const Text("Reports",
-                  style: TextStyle(
-                    fontSize: 20,
-                  )),
-            ),
-          ],
-        ),
-      ),
+      appBar: AppBarCommon.preferredSizeWidget(context, "Account transfer"),
       body: SingleChildScrollView(
         child: Container(
           margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
@@ -63,7 +44,7 @@ class AccountTransfer extends StatelessWidget {
                 ),
                 SelectInputType(
                   dropDownHint: const Text(
-                    'Withdraw from',
+                    'Withdraw to',
                     style: TextStyle(color: Colors.grey, fontSize: 16),
                   ),
                   itemsToSelect: [],
@@ -76,13 +57,6 @@ class AccountTransfer extends StatelessWidget {
                     fieldController: nameController,
                     isShown: false,
                     inputType: TextInputType.streetAddress),
-                SelectInputType(
-                  dropDownHint: const Text(
-                    'Withdraw from',
-                    style: TextStyle(color: Colors.grey, fontSize: 16),
-                  ),
-                  itemsToSelect: [],
-                ),
                 CustomFormField(
                     fieldIcon: const Icon(
                       Icons.calendar_today_outlined,
@@ -92,7 +66,6 @@ class AccountTransfer extends StatelessWidget {
                       Validators.validateName(value);
                     },
                     hintText: 'Transaction date',
-                    maxLining: 5,
                     fieldController: transactionController,
                     isShown: false,
                     inputType: TextInputType.datetime),
