@@ -4,11 +4,12 @@ import 'package:flutter/services.dart';
 import 'package:kudibooks_app/models/product_model.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/product_list_card.dart';
 import 'package:kudibooks_app/screens/dashboard/classes/sliver_delegate_search.dart';
-import 'package:kudibooks_app/screens/dashboard/new_expense.dart';
 import 'package:kudibooks_app/screens/dashboard/new_product.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/button_widget.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/search_input.dart';
+
+import 'new_inventory.dart';
 
 class InventoryScreen extends StatefulWidget {
   VoidCallback? loadInventories;
@@ -65,7 +66,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                       onClickAction: () => Navigator.push(
                           context,
                           (CupertinoPageRoute(
-                              builder: (context) => NewExpense()))),
+                              builder: (context) => NewInventory()))),
                       buttonTitle: 'New load',
                       suffixIcon: const Icon(
                         Icons.add,
@@ -104,7 +105,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                   padding: const EdgeInsets.only(left: 15.0, bottom: 15.0),
                   alignment: AlignmentDirectional.centerStart,
                   child: const Text(
-                    "Products",
+                    "Inventory",
                     style:
                         TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold),
                   ),
