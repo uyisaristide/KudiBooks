@@ -2,18 +2,29 @@ import 'package:flutter/material.dart';
 
 class CustomDevider extends StatelessWidget {
   final String middleText;
-  const CustomDevider({required this.middleText,Key? key}) : super(key: key);
+  double horizotalPadding;
+  double verticalPadding;
+
+  CustomDevider(
+      {required this.middleText,
+      required this.horizotalPadding,
+      required this.verticalPadding,
+      Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-      child: Row(children:  <Widget>[
+      padding: EdgeInsets.symmetric(horizontal: horizotalPadding, vertical: verticalPadding),
+      child: Row(children: <Widget>[
         const Expanded(
             child: Divider(
           thickness: 2,
         )),
-        Text(middleText),
+        Padding(
+          padding: const EdgeInsets.only(left: 10, right: 10),
+          child: Text(middleText),
+        ),
         const Expanded(
             child: Divider(
           thickness: 2,

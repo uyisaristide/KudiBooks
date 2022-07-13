@@ -17,7 +17,7 @@ class _GreenSplashScreenState extends State<GreenSplashScreen> {
       setState(() {
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (context) => const WhiteSplashScreen()),
-            (route) => false);
+                (route) => false);
       });
     });
   }

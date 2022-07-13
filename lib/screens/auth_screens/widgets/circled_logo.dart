@@ -1,25 +1,34 @@
 import 'package:flutter/material.dart';
 
 class CircledLogo extends StatelessWidget {
-  final String navigateTo;
+  final void Function()? navigateTo;
   final String logo;
 
-  const CircledLogo({required this.navigateTo, required this.logo, Key? key})
+  const CircledLogo({this.navigateTo, required this.logo, Key? key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: CircleAvatar(
-        backgroundColor: const Color.fromRGBO(196, 196, 196, 0.15),
-        radius: 25,
-        child: TextButton(
-          child: Image.asset(logo),
-          onPressed: () {
-            Navigator.pushReplacementNamed(context, navigateTo);
-          },
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+              elevation: 1,
+              primary: Colors.white.withOpacity(.2),
+              padding: const EdgeInsets.only(
+                  top: 15, left: 10, right: 10, bottom: 15),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0))),
+          onPressed: navigateTo,
+          // child: Text("Icon"),
+          child: Image.asset(
+            logo,
+            width: 20,
+            height: 20,
+          ),
         ),
-      ),
+      ],
     );
   }
 }
