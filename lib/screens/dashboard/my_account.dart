@@ -8,6 +8,8 @@ import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/list_tile.dart';
 
+import 'widget/bottom_navigation.dart';
+
 class MyAccountScreen extends StatelessWidget {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
@@ -15,7 +17,10 @@ class MyAccountScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        // Navigator.of(context).pop();
+        print('cant pop');
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => NavigationBottom()));
+        // Navigator.pop(context);
         return false;
       },
       child: Scaffold(

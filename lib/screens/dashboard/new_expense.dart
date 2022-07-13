@@ -9,11 +9,16 @@ import '../auth_screens/widgets/text_form_field.dart';
 
 class NewExpense extends StatelessWidget {
   NewExpense({Key? key}) : super(key: key);
+  DateTime time =
+      DateTime(DateTime.now().day, DateTime.now().month, DateTime.now().year);
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final productNameController = TextEditingController();
   final nameController = TextEditingController();
-  final transactionDateController = TextEditingController();
+  final transactionDateController = TextEditingController(text: ''
+      // text:
+      //     '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}'
+      );
   final memoController = TextEditingController();
 
   List<String> expenseAccount = [
@@ -218,9 +223,19 @@ class NewExpense extends StatelessWidget {
                   inputType: TextInputType.name),
               CustomFormField(
                   fieldIcon: const Icon(Icons.calendar_today_outlined),
+                  fieldIconbutton: IconButton(
+                      onPressed: () async {
+                        showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2000),
+                            lastDate: DateTime(2025));
+                      },
+                      icon: const Icon(Icons.calendar_today_outlined)),
                   validators: (value) {
                     Validators.validateName(value);
                   },
+                  // initialText: '${time.day}/${time.month}',
                   hintText: 'Transaction date',
                   fieldController: transactionDateController,
                   isShown: false,
