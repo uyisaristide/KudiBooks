@@ -5,7 +5,12 @@ import 'package:kudibooks_app/screens/dashboard/classes/sliver_delegate_search.d
 import 'package:kudibooks_app/screens/dashboard/client_deposit.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/progress_row.dart';
 
+
+import 'package:kudibooks_app/screens/dashboard/new_client.dart';
+import 'package:kudibooks_app/screens/dashboard/widget/progress_row.dart';
+
 import 'widget/progress_row.dart';
+
 
 class ClientList extends StatelessWidget {
   ClientList({Key? key}) : super(key: key);
