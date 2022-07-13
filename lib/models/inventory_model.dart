@@ -1,4 +1,5 @@
 class InventoryModel {
+  int id;
   final String bulkName;
   final List<int>? productList;
   final double? amountPaid;
@@ -10,7 +11,8 @@ class InventoryModel {
   final String? memoInventory;
 
   InventoryModel(
-      this.bulkName,
+      {required this.id,
+      required this.bulkName,
       this.productList,
       this.amountPaid,
       this.bankAccount,
@@ -18,5 +20,5 @@ class InventoryModel {
       this.vendor,
       this.transactionName,
       this.transactionDate,
-      this.memoInventory);
+      this.memoInventory});
 }

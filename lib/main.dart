@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kudibooks_app/providers/inventory_provider.dart';
 import 'package:kudibooks_app/providers/product_provider.dart';
 import 'package:kudibooks_app/providers/user_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/login.dart';
@@ -13,7 +14,8 @@ import 'package:provider/provider.dart';
 void main() {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => UserProvider()),
-    ChangeNotifierProvider(create: (_) => ProductProvider())
+    ChangeNotifierProvider(create: (_) => ProductProvider()),
+    ChangeNotifierProvider(create: (_) => InventoryProviders()),
   ], child: const MyApp()));
 }
 
