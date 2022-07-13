@@ -2,9 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kudibooks_app/screens/dashboard/classes/sliver_delegate_search.dart';
+<<<<<<< HEAD
 import 'package:kudibooks_app/screens/dashboard/client_deposit.dart';
 <<<<<<< HEAD
 import 'package:kudibooks_app/screens/dashboard/widget/progress_row.dart';
+=======
+import 'package:kudibooks_app/screens/dashboard/new_client.dart';
+>>>>>>> main
 =======
 import 'package:kudibooks_app/screens/dashboard/new_client.dart';
 >>>>>>> main
@@ -236,39 +240,10 @@ class ClientList extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
                         height: 150,
                         decoration: BoxDecoration(
                             border: Border.all(width: 1, color: Colors.grey),
                             borderRadius: BorderRadius.circular(15.0)),
-                        child: Column(children: const [
-                          ProgreeRow(
-                              beginningText: 'Not Yet Invoiced',
-                              endigText: '0/0'),
-                          ClipRRect(
-                            borderRadius: BorderRadius.all(Radius.circular(5)),
-                            child: LinearProgressIndicator(
-                              minHeight: 7,
-                              value: 0.3,
-                            ),
-                          ),
-                          ProgreeRow(
-                            beginningText: 'Over paying',
-                            endigText: '0/0',
-                          ),
-                          ClipRRect(
-                            borderRadius: BorderRadius.all(Radius.circular(5)),
-                            child: LinearProgressIndicator(
-                              minHeight: 7,
-                              value: 0.3,
-                            ),
-                          ),
-                          ProgreeRow(
-                            beginningText: 'Unpaid invoices',
-                            endigText: '7',
-                            textColor: Colors.red,
-                          ),
-                        ]),
                       ),
                     ]),
               ),
