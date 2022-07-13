@@ -8,8 +8,10 @@ class CustomFormField extends StatelessWidget {
   final Icon? fieldIcon;
   final IconButton? fieldIconbutton;
   final int? maxLining;
+  final String? initialValues;
   final TextStyle? hintStyles;
   final bool isShown;
+  final bool? isEnabled;
   final TextInputType? inputType;
   final void Function(String)? onChangeAction;
   final Widget? countryCode;
@@ -20,6 +22,8 @@ class CustomFormField extends StatelessWidget {
       {required this.hintText,
       this.onIconPressed,
       this.hintStyles,
+      this.isEnabled,
+      this.initialValues,
       this.validators,
       this.fieldIcon,
       this.fieldIconbutton,
@@ -39,6 +43,10 @@ class CustomFormField extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5.0),
       child: TextFormField(
+
+        initialValue: initialValues,
+        enabled: isEnabled,
+
         maxLines: maxLining,
         obscureText: isShown,
         autovalidateMode: AutovalidateMode.onUserInteraction,
