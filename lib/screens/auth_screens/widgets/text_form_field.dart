@@ -6,8 +6,10 @@ class CustomFormField extends StatelessWidget {
   final String? labelText;
   final Icon? fieldIcon;
   final int? maxLining;
+  final String? initialValues;
   final TextStyle? hintStyles;
   final bool isShown;
+  final bool? isEnabled;
   final TextInputType? inputType;
   final void Function(String)? onChangeAction;
   final Widget? countryCode;
@@ -17,6 +19,8 @@ class CustomFormField extends StatelessWidget {
   const CustomFormField(
       {required this.hintText,
       this.hintStyles,
+      this.isEnabled,
+      this.initialValues,
       this.validators,
       this.fieldIcon,
       this.inputType,
@@ -26,14 +30,18 @@ class CustomFormField extends StatelessWidget {
       this.maximumLength,
       required this.fieldController,
       this.labelText,
-      required this.isShown, this.maxLining})
+      required this.isShown,
+      this.maxLining})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5.0),
-      child: TextFormField(maxLines: maxLining,
+      child: TextFormField(
+        initialValue: initialValues,
+        enabled: isEnabled,
+        maxLines: maxLining,
         obscureText: isShown,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         controller: fieldController,

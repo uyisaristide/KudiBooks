@@ -1,14 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:kudibooks_app/models/product_model.dart';
+import 'package:kudibooks_app/models/inventory_model.dart';
+import 'package:kudibooks_app/providers/inventory_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/product_list_card.dart';
 import 'package:kudibooks_app/screens/dashboard/classes/sliver_delegate_search.dart';
-import 'package:kudibooks_app/screens/dashboard/new_expense.dart';
 import 'package:kudibooks_app/screens/dashboard/new_product.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/button_widget.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/search_input.dart';
+import 'package:provider/provider.dart';
+
+import 'new_inventory.dart';
 
 class InventoryScreen extends StatefulWidget {
   VoidCallback? loadInventories;
@@ -20,10 +23,14 @@ class InventoryScreen extends StatefulWidget {
 }
 
 class _InventoryScreenState extends State<InventoryScreen> {
-  final List<ProductModel> _productList = ProductModel.generateList();
-
   @override
   Widget build(BuildContext context) {
+    InventoryProviders _inventoryProvider =
+        Provider.of<InventoryProviders>(context);
+
+    final List<InventoryModel> _productList = _inventoryProvider.allInventories;
+
+    print(_productList.length);
     return Scaffold(
       drawer: Drawers(),
       body: NestedScrollView(
@@ -65,7 +72,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                       onClickAction: () => Navigator.push(
                           context,
                           (CupertinoPageRoute(
-                              builder: (context) => NewExpense()))),
+                              builder: (context) => NewInventory()))),
                       buttonTitle: 'New load',
                       suffixIcon: const Icon(
                         Icons.add,
@@ -104,7 +111,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                   padding: const EdgeInsets.only(left: 15.0, bottom: 15.0),
                   alignment: AlignmentDirectional.centerStart,
                   child: const Text(
-                    "Products",
+                    "Inventory",
                     style:
                         TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold),
                   ),
@@ -117,15 +124,22 @@ class _InventoryScreenState extends State<InventoryScreen> {
                         maxHeight: 1000,
                         child: ListView.separated(
                             physics: const NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) =>
-                                _productList.isEmpty
-                                    ? const Center(
-                                        child: Text("There is no inventory"),
-                                      )
-                                    : ProductListCard(
-                                        productModel: _productList.reversed
-                                            .toList()[index],
-                                      ),
+                            itemBuilder: (context, index) => _productList
+                                    .isEmpty
+                                ? const Center(
+                                    child: Text("There is no inventory"),
+                                  )
+                                : ListTile(
+                                    title: Text(_productList[index].bulkName),
+                                    leading: Image.asset(
+                                      "assets/images/itemImage.png",
+                                      width: 40,
+                                      height: 40,
+                                    ),
+                                    subtitle: Text(_productList[index]
+                                        .memoInventory!
+                                        .toString()),
+                                  ),
                             // itemBuilder: (context, index) => const Text("Kigali"),
                             separatorBuilder: (_, idx) => const SizedBox(
                                   height: 10,
