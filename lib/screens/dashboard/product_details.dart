@@ -182,7 +182,7 @@ class ProductDetails extends StatelessWidget {
             SliverPersistentHeader(
                 delegate: SearchBoxSliver(
               minHeight: 250,
-              maxHeight: 250,
+              maxHeight: 300,
               child: Container(
                 margin: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
                 child: Column(
@@ -215,16 +215,20 @@ class ProductDetails extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Text(productModel.productName,
-                        style: const TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold)),
+                    Flexible(
+                      child: Text(productModel.productName,
+                          style: const TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.bold)),
+                    ),
                     const SizedBox(
                       height: 10,
                     ),
-                    Text(
-                      productModel.productDescription!,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(color: Colors.grey, fontSize: 13),
+                    Flexible(
+                      child: Text(
+                        productModel.productDescription.toString(),
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(color: Colors.grey, fontSize: 13),
+                      ),
                     )
                   ],
                 ),
