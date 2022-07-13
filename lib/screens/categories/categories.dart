@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kudibooks_app/screens/background.dart';
 import 'package:kudibooks_app/screens/categories/widgets/grid_card.dart';
+import 'package:kudibooks_app/screens/drawer/navigation_drawer.dart';
 
 class Categories extends StatelessWidget {
   const Categories({Key? key}) : super(key: key);
