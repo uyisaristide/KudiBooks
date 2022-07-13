@@ -5,7 +5,7 @@ import 'package:kudibooks_app/models/product_model.dart';
 import 'package:kudibooks_app/providers/product_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/product_list_card.dart';
 import 'package:kudibooks_app/screens/dashboard/classes/sliver_delegate_search.dart';
-import 'package:kudibooks_app/screens/dashboard/new_expense.dart';
+import 'package:kudibooks_app/screens/dashboard/new_inventory.dart';
 import 'package:kudibooks_app/screens/dashboard/new_product.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/button_widget.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/search_input.dart';
@@ -65,7 +65,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                       onClickAction: () => Navigator.push(
                           context,
                           (CupertinoPageRoute(
-                              builder: (context) => NewExpense()))),
+                              builder: (context) => NewInventory()))),
                       buttonTitle: 'New load',
                       suffixIcon: const Icon(
                         Icons.add,
