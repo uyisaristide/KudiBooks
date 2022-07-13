@@ -27,10 +27,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
   Widget build(BuildContext context) {
     InventoryProviders _inventoryProvider =
         Provider.of<InventoryProviders>(context);
-
     final List<InventoryModel> _productList = _inventoryProvider.allInventories;
-
-    print(_productList.length);
     return Scaffold(
       drawer: Drawers(),
       body: NestedScrollView(
