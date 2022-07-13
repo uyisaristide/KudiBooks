@@ -119,7 +119,8 @@ class _NewInventoryState extends State<NewInventory> {
                                 Icons.close,
                                 color: Color(0xffA34646),
                               ),
-                              onPressed: () => setState(() {}),
+                              onPressed: () => setState(() => productProvider
+                                  .removeLoadInModel(int.parse(changeToInt))),
                             ),
                             bottomSize: 10,
                           ),
