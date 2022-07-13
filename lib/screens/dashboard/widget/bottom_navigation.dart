@@ -27,6 +27,7 @@ class _NavigationBottomState extends State<NavigationBottom> {
   // TabBarView _tabBarView;
   @override
   void initState() {
+    _currentIndex = 0;
     _pageController = PageController(initialPage: _currentIndex);
     super.initState();
   }
@@ -60,7 +61,9 @@ class _NavigationBottomState extends State<NavigationBottom> {
           },
           items: const [
             BottomNavigationBarItem(
-                icon: Icon(Icons.inventory_2_outlined), label: 'Home'),
+              icon: Icon(Icons.inventory_2_outlined),
+              label: 'Home',
+            ),
             BottomNavigationBarItem(
                 icon: Icon(Icons.folder), label: 'Inventory'),
             BottomNavigationBarItem(
