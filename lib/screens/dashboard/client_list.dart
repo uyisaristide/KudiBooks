@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:kudibooks_app/screens/dashboard/classes/sliver_delegate_search.dart';
 
 import 'package:kudibooks_app/screens/dashboard/new_client.dart';
+import 'package:kudibooks_app/screens/dashboard/new_client.dart';
 
 class ClientList extends StatelessWidget {
   ClientList({Key? key}) : super(key: key);
