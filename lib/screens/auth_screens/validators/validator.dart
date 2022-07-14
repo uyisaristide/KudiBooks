@@ -36,7 +36,7 @@ class Validators {
   static String? validateName(String value) {
     if (value.isEmpty) {
       return 'Enter user name';
-    } else if (value.length < 2) {
+    } else if (value.length < 3) {
       return '$value is Invalid';
     } else {
       return null;
