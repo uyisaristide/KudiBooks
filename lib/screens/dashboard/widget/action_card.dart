@@ -16,55 +16,58 @@ class ActionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    // return Expanded(
+    //   child: Container(
+    //     margin: const EdgeInsets.only(left: 5.0),
+    //     width: 100,
+    //     height: 73,
+    //     child: ElevatedButton(
+    //       style: ElevatedButton.styleFrom(
+    //           primary: cardColor,
+    //           shape: RoundedRectangleBorder(
+    //               borderRadius: BorderRadius.circular(10.0))),
+    //       onPressed: actionClick,
+    //       child: Column(
+    //         mainAxisAlignment: MainAxisAlignment.center,
+    //         children: [
+    //           Container(
+    //             child: cardIcon,
+    //           ),
+    //           Text(
+    //             title,
+    //             style: const TextStyle(color: Colors.white, fontSize: 12.6),
+    //           ),
+    //         ],
+    //       ),
+    //     ),
+    //   ),
+    // );
+    return InkWell(
+      onTap: actionClick,
       child: Container(
-        margin: const EdgeInsets.only(left: 5.0),
-        width: 100,
-        height: 73,
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-              primary: cardColor,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0))),
-          onPressed: actionClick,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                child: cardIcon,
-              ),
-              Text(
-                title,
-                style: const TextStyle(color: Colors.white, fontSize: 12.6),
-              ),
-            ],
-          ),
+        height: 72,
+        width: 95,
+        decoration: BoxDecoration(
+        color: cardColor,
+        shape: BoxShape.rectangle,
+        borderRadius: const BorderRadius.all(Radius.circular(10.0))),
+        child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          child: cardIcon,
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Text(
+          title,
+          style: const TextStyle(color: Colors.white),
+        )
+      ],
         ),
       ),
     );
-    return Expanded(
-        child: Container(
-      height: 72,
-      decoration: BoxDecoration(
-          color: cardColor,
-          shape: BoxShape.rectangle,
-          borderRadius: const BorderRadius.all(Radius.circular(10.0))),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            child: cardIcon,
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          Text(
-            title,
-            style: const TextStyle(color: Colors.white),
-          )
-        ],
-      ),
-    ));
   }
 }

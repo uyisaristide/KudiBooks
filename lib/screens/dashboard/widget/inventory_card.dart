@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kudibooks_app/models/Users/ProductInLoad.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/double_header_two.dart';
 
 class InventoryProductCard extends StatelessWidget {
