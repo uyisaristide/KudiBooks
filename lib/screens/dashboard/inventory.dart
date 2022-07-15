@@ -28,7 +28,6 @@ class _InventoryScreenState extends State<InventoryScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        print('cant pop');
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => NavigationBottom()));
 
