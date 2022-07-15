@@ -45,7 +45,7 @@ class ProductSale extends StatelessWidget {
                   }
                 }),
           )),
-      appBar: AppBarCommon.preferredSizeWidget(context, "Product sale"),
+      appBar: AppBarCommon.preferredSizeWidget(context, "Products sale"),
       body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Container(
@@ -74,7 +74,7 @@ class ProductSale extends StatelessWidget {
                       icon: const Icon(Icons.close),
                     ),
                     title: const Text(
-                      "Add product",
+                      "Add products",
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
                     )),
@@ -86,7 +86,7 @@ class ProductSale extends StatelessWidget {
                     child: Column(
                       children: [
                         SelectInputType(
-                            dropDownHint: const Text('Revenue account'),
+                            dropDownHint: const Text('Select Product'),
                             itemsToSelect: revenueAccounts),
                         Container(
                           padding: const EdgeInsets.only(left: 15, right: 15),
