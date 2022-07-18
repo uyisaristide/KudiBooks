@@ -9,7 +9,11 @@ import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/page_title.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
 import 'package:kudibooks_app/screens/background.dart';
+import 'package:kudibooks_app/screens/dashboard/classes/snack_bars.dart';
 import 'package:provider/provider.dart';
+import 'package:collection/collection.dart';
+
+import 'widgets/password_field.dart';
 
 class SignUp extends StatefulWidget {
   SignUp({Key? key}) : super(key: key);
@@ -29,6 +33,7 @@ class _SignUpState extends State<SignUp> {
 
   final secretController = TextEditingController();
 
+  final passwordController = TextEditingController();
   final confirmController = TextEditingController();
 
   @override
@@ -40,12 +45,17 @@ class _SignUpState extends State<SignUp> {
     emailController.addListener(() => setState(() {}));
     secretController.addListener(() => setState(() {}));
     confirmController.addListener(() => setState(() {}));
+    passwordController.addListener(() => setState(() {}));
   }
+
+  bool isHiddens = true;
+  bool isHidden = true;
 
   @override
   Widget build(BuildContext context) {
     UserProvider _userProvider = Provider.of<UserProvider>(context);
-    List<User> _userList = _userProvider.allUsers;
+    List<User> _users = _userProvider.allUsers;
+    print(_users.length);
     return BackgroundScreen(
       paddingSize: 150,
       screens: Form(
@@ -75,32 +85,57 @@ class _SignUpState extends State<SignUp> {
               validators: (value) => Validators.validateEmail(value),
               isShown: false,
             ),
-            CustomFormField(
-              fieldController: secretController,
-              fieldIcon: const Icon(Icons.remove_red_eye),
-              hintText: 'Password',
-              validators: (value) => Validators.validatePassword(value),
-              isShown: false,
+            PasswordField(
+              hintText: "Password",
+              maxLength: 30,
+              isHidden: isHiddens,
+              passwordController: passwordController,
+              validators: (value) => Validators.validatePassword(value!),
+              suffixIcon: IconButton(
+                  onPressed: () => setState(() => isHiddens = !isHiddens),
+                  icon: isHiddens
+                      ? const Icon(
+                          Icons.visibility,
+                          color: Colors.grey,
+                        )
+                      : const Icon(Icons.visibility_off)),
             ),
-            CustomFormField(
-              fieldController: confirmController,
-              fieldIcon: const Icon(Icons.remove_red_eye),
-              hintText: 'Confirm Password',
-              validators: (value) => Validators.validatePassword(value),
-              isShown: false,
+            PasswordField(
+              hintText: "Confirm Password",
+              maxLength: 30,
+              isHidden: isHidden,
+              passwordController: confirmController,
+              validators: (value) => Validators.validatePassword(value!),
+              suffixIcon: IconButton(
+                  onPressed: () => setState(() => isHidden = !isHidden),
+                  icon: isHidden
+                      ? const Icon(
+                          Icons.visibility,
+                          color: Colors.grey,
+                        )
+                      : const Icon(Icons.visibility_off)),
             ),
             LoginButton(
               text: 'Register now',
               actionField: () {
                 if (_formKey.currentState!.validate()) {
-                  _userProvider.addUser(User(
-                      firstName: firstNameController.text,
-                      lastName: lastNameController.text,
-                      email: emailController.text,
-                      password: secretController.text));
-                  // print(
-                  //     "First name is: ${firstNameController.text} '\n and last name is : ${lastNameController.text} '\ email is: ${emailController.text}");
-                  Navigator.pushReplacementNamed(context, '/signup');
+                  var checkUser = _users.firstWhereOrNull((element) =>
+                      element.phoneOrEmail == emailController.text);
+                  if (checkUser == null) {
+                    _userProvider.addUser(User(
+                        firstName: firstNameController.text,
+                        lastName: lastNameController.text,
+                        phoneOrEmail: emailController.text,
+                        password: passwordController.text));
+                    Navigator.pushReplacementNamed(context, '/signup');
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBars.snackBars(
+                            'User saved successfully', Colors.green.shade400));
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBars.snackBars(
+                            'User already exist', Colors.redAccent.shade400));
+                  }
                 }
               },
             ),
@@ -136,22 +171,6 @@ class _SignUpState extends State<SignUp> {
                 ],
               ),
             ),
-            SizedBox(
-              height: 100,
-              child: ListView.separated(
-                  physics: const BouncingScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    List<User> _revList = _userList.reversed.toList();
-                    return ListTile(
-                        leading: const Icon(Icons.person),
-                        title: Text(
-                            "${_revList[index].firstName} ${_revList[index].lastName}"));
-                  },
-                  separatorBuilder: (_, idx) => const SizedBox(
-                        height: 1.0,
-                      ),
-                  itemCount: _userList.length),
-            )
           ],
         ),
       ),

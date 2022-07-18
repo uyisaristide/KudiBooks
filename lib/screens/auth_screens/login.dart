@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kudibooks_app/models/Users/user_model.dart';
+import 'package:kudibooks_app/providers/user_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/circled_logo.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/custom_devider.dart';
@@ -11,7 +13,10 @@ import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/page_title.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
 import 'package:kudibooks_app/screens/background.dart';
+import 'package:kudibooks_app/screens/dashboard/classes/snack_bars.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/bottom_navigation.dart';
+import 'package:provider/provider.dart';
+import 'package:collection/collection.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -37,6 +42,8 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    UserProvider _userProvider = Provider.of<UserProvider>(context);
+    List<User> _user = _userProvider.allUsers;
     return BackgroundScreen(
       buttonWidget: Row(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -135,17 +142,29 @@ class _LoginState extends State<Login> {
             ),
             LoginButton(
               text: 'Login',
-              validate: () => _formKey.currentState!.validate()
-                  ? Navigator.pushNamed(context, '/')
-                  : null,
               actionField: () {
                 if (_formKey.currentState!.validate()) {
-                  Navigator.pushReplacement(
-                      context,
-                      CupertinoPageRoute(
-                          builder: (context) => NavigationBottom()));
+                  var checkUser = _user.where((element) =>
+                      element.phoneOrEmail == emailController.text);
+                  if (checkUser.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBars.snackBars(
+                            'This user not found', Colors.redAccent));
+                  } else if (checkUser.first.phoneOrEmail ==
+                          emailController.text &&
+                      checkUser.first.password == passwordController.text) {
+                    Navigator.pushReplacement(
+                        context,
+                        CupertinoPageRoute(
+                            builder: (context) => NavigationBottom()));
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBars.snackBars(
+                            'Incorrect password', Colors.redAccent));
+                    print(
+                        "Printed successfully ${checkUser.first.phoneOrEmail} and password is: ${checkUser.first.password}");
+                  }
                 }
-                print("Printed successfully");
               },
             ),
             CustomDevider(

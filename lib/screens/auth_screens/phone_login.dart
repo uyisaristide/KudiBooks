@@ -1,16 +1,20 @@
-import 'dart:ffi';
-import 'dart:math';
-import 'dart:ui';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kudibooks_app/models/Users/user_model.dart';
+import 'package:kudibooks_app/providers/user_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/circled_logo.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/custom_devider.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/lock_icon.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/page_title.dart';
+import 'package:kudibooks_app/screens/auth_screens/widgets/password_field.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/phone_input.dart';
 import 'package:kudibooks_app/screens/background.dart';
+import 'package:provider/provider.dart';
+
+import '../dashboard/classes/snack_bars.dart';
+import '../dashboard/widget/bottom_navigation.dart';
 
 class PhoneLogin extends StatefulWidget {
   PhoneLogin({Key? key}) : super(key: key);
@@ -26,7 +30,7 @@ class _PhoneLoginState extends State<PhoneLogin> {
   final lastNameController = TextEditingController();
   final phoneController = TextEditingController();
   final pinController = TextEditingController();
-  var _countryCode = '';
+  var _countryCode = '250';
   bool isHidden = true;
 
   @override
@@ -38,6 +42,8 @@ class _PhoneLoginState extends State<PhoneLogin> {
 
   @override
   Widget build(BuildContext context) {
+    UserProvider _userProvider = Provider.of<UserProvider>(context);
+    List<User> _users = _userProvider.allUsers;
     return BackgroundScreen(
       buttonWidget: Row(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -67,9 +73,8 @@ class _PhoneLoginState extends State<PhoneLogin> {
               validators: () =>
                   Validators.validatePhoneNumber(phoneController.text),
               countryCodes: (country) {
-                setState(() {
-                  _countryCode = country.code;
-                });
+                _countryCode = country.dialCode;
+                print(_countryCode);
               },
               fieldIcon: const Icon(
                 Icons.phone,
@@ -77,72 +82,52 @@ class _PhoneLoginState extends State<PhoneLogin> {
               ),
               phoneNumber: phoneController,
             ),
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 15,
-                right: 15,
-              ),
-              child: TextFormField(
-                obscureText: isHidden,
-                keyboardType: TextInputType.number,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                controller: pinController,
-                maxLength: 4,
-                validator: (value) => Validators.validatePin(value!),
-                decoration: InputDecoration(
-                    focusColor: const Color(0xff157253),
-                    labelStyle: const TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey,
-                    ),
-                    suffixIcon: IconButton(
-                        onPressed: () => setState(() => isHidden = !isHidden),
-                        icon: isHidden
-                            ? const Icon(
-                                Icons.visibility,
-                                color: Colors.grey,
-                              )
-                            : const Icon(Icons.visibility_off)),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                            color: Color(0xff157253), width: 1.0),
-                        borderRadius: BorderRadius.circular(10.0)),
-                    focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Validators.validatePin(pinController.text) ==
-                                    null
-                                ? Colors.grey
-                                : Colors.red,
-                            width: 1.0),
-                        borderRadius: BorderRadius.circular(10.0)),
-                    enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(color: Colors.grey, width: 1.0),
-                        borderRadius: BorderRadius.circular(10.0)),
-                    errorBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: const BorderSide(
-                          color: Colors.red,
-                        )),
-                    contentPadding: const EdgeInsets.only(left: 10),
-                    hintText: "Password",
-                    hintStyle: const TextStyle(color: Colors.grey)),
-              ),
+            PasswordField(
+              hintText: "Password",
+              isHidden: isHidden,
+              passwordController: pinController,
+              maxLength: 4,
+              textInputType: TextInputType.number,
+              validators: (value) => Validators.validatePin(value!),
+              suffixIcon: IconButton(
+                  onPressed: () => setState(() => isHidden = !isHidden),
+                  icon: isHidden
+                      ? const Icon(
+                          Icons.visibility,
+                          color: Colors.grey,
+                        )
+                      : const Icon(Icons.visibility_off)),
             ),
             const SizedBox(
               height: 10,
             ),
             LoginButton(
-              text: 'Logins',
-              validate: () => _formKey.currentState!.validate()
-                  ? Navigator.pushNamed(context, '/')
-                  : null,
+              text: 'Login',
               actionField: () {
                 if (_formKey.currentState!.validate()) {
+                  var checkUser = _users.where((element) =>
+                      element.phoneOrEmail ==
+                      _countryCode + phoneController.text);
+                  if (checkUser.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBars.snackBars(
+                            'This user not found', Colors.redAccent));
+                  } else if (checkUser.first.phoneOrEmail ==
+                          _countryCode + phoneController.text &&
+                      checkUser.first.password == pinController.text) {
+                    Navigator.pushReplacement(
+                        context,
+                        CupertinoPageRoute(
+                            builder: (context) => NavigationBottom()));
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBars.snackBars('Incorrect pin', Colors.redAccent));
+                    print(
+                        "Printed successfully ${checkUser.first.phoneOrEmail} and password is: ${checkUser.first.password}");
+                  }
                   print(
                       "Country code is: ${_countryCode + phoneController.text}");
                 }
-                print("Clicked successfully");
               },
             ),
             CustomDevider(
