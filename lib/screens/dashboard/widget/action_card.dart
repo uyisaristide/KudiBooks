@@ -42,18 +42,6 @@ class ActionCard extends StatelessWidget {
     //     ),
     //   ),
     // );
-<<<<<<< HEAD
-    return InkWell(
-      onTap: actionClick,
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-        height: 72,
-        decoration: BoxDecoration(
-            color: cardColor,
-            shape: BoxShape.rectangle,
-            borderRadius: const BorderRadius.all(Radius.circular(10.0))),
-        child: Column(
-=======
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.only(left: 3, right: 3),
@@ -62,30 +50,26 @@ class ActionCard extends StatelessWidget {
           child: Container(
             height: 72,
             decoration: BoxDecoration(
-            color: cardColor,
-            shape: BoxShape.rectangle,
-            borderRadius: const BorderRadius.all(Radius.circular(10.0))),
+                color: cardColor,
+                shape: BoxShape.rectangle,
+                borderRadius: const BorderRadius.all(Radius.circular(10.0))),
             child: Column(
->>>>>>> 6dce77032ce8e78cad99435b92cd51ff598b0683
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              child: cardIcon,
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Text(
-              title,
-              style: const TextStyle(color: Colors.white),
-            )
-          ],
-<<<<<<< HEAD
-=======
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  child: cardIcon,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  title,
+                  style: const TextStyle(color: Colors.white),
+                )
+              ],
             ),
           ),
->>>>>>> 6dce77032ce8e78cad99435b92cd51ff598b0683
         ),
       ),
     );
