@@ -53,4 +53,12 @@ class Validators {
       return null;
     }
   }
+
+  static String? notEmpty(String value) {
+    if (value.isEmpty) {
+      return "cant't be empty";
+    } else {
+      return null;
+    }
+  }
 }

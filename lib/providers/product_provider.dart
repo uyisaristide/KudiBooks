@@ -6,7 +6,7 @@ class ProductProvider extends ChangeNotifier {
   final List<ProductModel> _listProducts = [];
   final List<ProductInLoadModel> _productLoadModel = [];
 
-  // ProductProvider _productProvider = Provider.of<ProductProvider>(BuildContext contexts);
+  
 
   List<ProductModel> get allProducts => _listProducts;
 

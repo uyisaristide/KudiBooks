@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kudibooks_app/models/product_model.dart';
 import 'package:kudibooks_app/providers/product_provider.dart';
+import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
 import 'package:provider/provider.dart';
 
 class SelectItemDynamic extends StatelessWidget {
@@ -15,6 +16,7 @@ class SelectItemDynamic extends StatelessWidget {
     return Container(
         margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5.0),
         child: DropdownButtonFormField<ProductModel>(
+          // validator: (value) => Validators.notEmpty(value),
           hint: const Text("Select product"),
           decoration: InputDecoration(
               focusColor: const Color(0xff157253),
