@@ -18,181 +18,175 @@ class Drawers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-        child: BackgroundScreen(
-      paddingSize: 0.0,
-      screens: Container(
-        padding: const EdgeInsets.only(
-          top: 50,
-        ),
-        child: LimitedBox(
-          child: ListView(
-            physics: const BouncingScrollPhysics(),
-            shrinkWrap: true,
-            children: [
-              DrawerHeader(
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+      elevation: 0.0,
+      child: ListView(
+        children: [
+          DrawerHeader(
+            decoration: const BoxDecoration(color: Color(0Xff157253)),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  height: 80,
+                  width: 80,
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 1, color: Colors.grey),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Image.asset(
+                      "assets/images/splash/kudibooks-WHITE-PNG-LOGO.png"),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text(
+                      "User Name",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    Text("useremail@email.com",
+                        style: TextStyle(color: Colors.white))
+                  ],
+                ),
+              ],
+            ),
+          ),
+          LimitedBox(
+            child: ListView(
+              physics: const BouncingScrollPhysics(),
+              shrinkWrap: true,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        height: 60,
-                        width: 60,
-                        decoration: BoxDecoration(
-                          border: Border.all(width: 1, color: Colors.grey),
-                          shape: BoxShape.circle,
+                      ListTile(
+                        onTap: () => Navigator.pop(context),
+                        leading: const Icon(Icons.home),
+                        title: const Text("Home"),
+                        trailing: const Icon(
+                          Icons.arrow_forward_ios,
+                          size: 15,
                         ),
-                        child: Image.asset(
-                            "assets/images/splash/kudibooksLogo2.png"),
                       ),
-                      Flexible(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            Text(
-                              "User Name",
-                              style: TextStyle(fontSize: 17.0),
-                            ),
-                            Text("useremail@email.com")
-                          ],
+                      ListTile(
+                        onTap: () => Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                                builder: (context) => ProductsScreen())),
+                        leading: const Icon(Icons.shopping_cart_outlined),
+                        title: const Text("Products"),
+                        trailing: const Icon(
+                          Icons.arrow_forward_ios,
+                          size: 15,
+                        ),
+                      ),
+                      ListTile(
+                        onTap: () => Navigator.push(context,
+                            CupertinoPageRoute(builder: (context) => Loads())),
+                        leading: const Icon(Icons.people),
+                        title: const Text("Load Iventory"),
+                        trailing: const Icon(
+                          Icons.arrow_forward_ios,
+                          size: 15,
+                        ),
+                      ),
+                      ListTile(
+                        onTap: () => Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                                builder: (context) => ClientList())),
+                        leading: const Icon(Icons.people),
+                        title: const Text("Clients"),
+                        trailing: const Icon(
+                          Icons.arrow_forward_ios,
+                          size: 15,
+                        ),
+                      ),
+                      ListTile(
+                        onTap: () => Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                                builder: (context) => AllTransaction())),
+                        leading: const Icon(Icons.credit_card),
+                        title: const Text("Transaction"),
+                        trailing: const Icon(
+                          Icons.arrow_forward_ios,
+                          size: 15,
+                        ),
+                      ),
+                      const ListTile(
+                        leading: Icon(Icons.shopping_bag_rounded),
+                        title: Text("Vendors"),
+                        trailing: Icon(
+                          Icons.arrow_forward_ios,
+                          size: 15,
+                        ),
+                      ),
+                      ListTile(
+                        onTap: () => Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                                builder: (context) => const Reports())),
+                        leading: const Icon(Icons.bar_chart_outlined),
+                        title: const Text("Reports"),
+                        trailing: const Icon(
+                          Icons.arrow_forward_ios,
+                          size: 15,
+                        ),
+                      ),
+                      ListTile(
+                        onTap: () => Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                                builder: (context) => const Settings())),
+                        leading: const Icon(Icons.notifications),
+                        title: const Text("Settings"),
+                        trailing: const Icon(
+                          Icons.arrow_forward_ios,
+                          size: 15,
+                        ),
+                      ),
+                      const ListTile(
+                        leading: Icon(Icons.help),
+                        title: Text("Help"),
+                        trailing: Icon(
+                          Icons.arrow_forward_ios,
+                          size: 15,
+                        ),
+                      ),
+                      const ListTile(
+                        leading: Icon(Icons.info_outline),
+                        title: Text("About"),
+                        trailing: Icon(
+                          Icons.arrow_forward_ios,
+                          size: 15,
                         ),
                       ),
                     ],
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ListTile(
-                      onTap: () => Navigator.pop(context),
-                      leading: const Icon(Icons.home),
-                      title: const Text("Home"),
-                      trailing: const Icon(
-                        Icons.arrow_forward_ios,
-                        size: 15,
-                      ),
-                    ),
-                    ListTile(
-                      onTap: () => Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                              builder: (context) => ProductsScreen())),
-                      leading: const Icon(Icons.shopping_cart_outlined),
-                      title: const Text("Products"),
-                      trailing: const Icon(
-                        Icons.arrow_forward_ios,
-                        size: 15,
-                      ),
-                    ),
-                    ListTile(
-                      onTap: () => Navigator.push(context,
-                          CupertinoPageRoute(builder: (context) => Loads())),
-                      leading: const Icon(Icons.people),
-                      title: const Text("Load Iventory"),
-                      trailing: const Icon(
-                        Icons.arrow_forward_ios,
-                        size: 15,
-                      ),
-                    ),
-                    ListTile(
-                      onTap: () => Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                              builder: (context) => ClientList())),
-                      leading: const Icon(Icons.people),
-                      title: const Text("Clients"),
-                      trailing: const Icon(
-                        Icons.arrow_forward_ios,
-                        size: 15,
-                      ),
-                    ),
-                    ListTile(
-                      onTap: () => Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                              builder: (context) => AllTransaction())),
-                      leading: const Icon(Icons.credit_card),
-                      title: const Text("Transaction"),
-                      trailing: const Icon(
-                        Icons.arrow_forward_ios,
-                        size: 15,
-                      ),
-                    ),
-                    const ListTile(
-                      leading: Icon(Icons.shopping_bag_rounded),
-                      title: Text("Vendors"),
-                      trailing: Icon(
-                        Icons.arrow_forward_ios,
-                        size: 15,
-                      ),
-                    ),
-                    ListTile(
-                      onTap: () => Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                              builder: (context) => const Reports())),
-                      leading: const Icon(Icons.bar_chart_outlined),
-                      title: const Text("Reports"),
-                      trailing: const Icon(
-                        Icons.arrow_forward_ios,
-                        size: 15,
-                      ),
-                    ),
-                    ListTile(
-                      onTap: () => Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                              builder: (context) => const Settings())),
-                      leading: const Icon(Icons.notifications),
-                      title: const Text("Settings"),
-                      trailing: const Icon(
-                        Icons.arrow_forward_ios,
-                        size: 15,
-                      ),
-                    ),
-                    const ListTile(
-                      leading: Icon(Icons.help),
-                      title: Text("Help"),
-                      trailing: Icon(
-                        Icons.arrow_forward_ios,
-                        size: 15,
-                      ),
-                    ),
-                    const ListTile(
-                      leading: Icon(Icons.info_outline),
-                      title: Text("About"),
-                      trailing: Icon(
-                        Icons.arrow_forward_ios,
-                        size: 15,
-                      ),
-                    ),
-                  ],
+                const SizedBox(
+                  height: 30,
                 ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: LoginButton(
-                  text: 'Logout',
-                  actionField: () {
-                    Navigator.pushReplacement(
-                        context,
-                        CupertinoPageRoute(
-                            builder: (context) => const Login()));
-                  },
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: LoginButton(
+                    text: 'Logout',
+                    actionField: () {
+                      Navigator.pushReplacement(
+                          context,
+                          CupertinoPageRoute(
+                              builder: (context) => const Login()));
+                    },
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ),
+              ],
+            ),
+          )
+        ],
       ),
-    ));
+    );
   }
 }

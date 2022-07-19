@@ -150,23 +150,71 @@ class _DashboardState extends State<Dashboard> {
                             fontSize: 17.0, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    Container(
-                      height: 73,
-                      margin: const EdgeInsets.only(left: 10, right: 10),
-                      child: LimitedBox(
-                        maxHeight: 100,
-                        maxWidth: MediaQuery.of(context).size.width,
-                        child: ListView.separated(
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, inx) {
-                              return actions[inx];
-                            },
-                            separatorBuilder: (_, ins) => const SizedBox(
-                                  width: 3,
-                                ),
-                            itemCount: actions.length),
+                    Container(padding:const EdgeInsets.only(left: 10, right: 10),child: Row(mainAxisAlignment:MainAxisAlignment.spaceAround,children: [
+                      ActionCard(
+                        actionClick: () => Navigator.push(
+                            context, CupertinoPageRoute(builder: (ctx) => ProductSale())),
+                        cardIcon: const Icon(
+                          Icons.shopping_cart_outlined,
+                          color: Colors.white,
+                        ),
+                        cardColor: const Color(0xff157253),
+                        title: 'Sell',
                       ),
-                    ),
+                      ActionCard(
+                        actionClick: () => Navigator.push(
+                            context, CupertinoPageRoute(builder: (ctx) => NewInventory())),
+                        cardIcon: const Icon(
+                          Icons.shopping_cart_outlined,
+                          color: Colors.white,
+                        ),
+                        cardColor: const Color(0xffA70C4A),
+                        title: 'New Load',
+                      ),
+                      ActionCard(
+                        actionClick: () => Navigator.push(
+                            context, CupertinoPageRoute(builder: (ctx) => NewExpense())),
+                        cardIcon: const Icon(
+                          Icons.shopping_cart_outlined,
+                          color: Colors.white,
+                        ),
+                        cardColor: const Color(0xffFDAB30),
+                        title: 'Expenses',
+                      ),
+                      ActionCard(
+                        actionClick: () => showModalBottomSheet(
+                            isDismissible: true,
+                            shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(15),
+                                    topLeft: Radius.circular(15))),
+                            context: context,
+                            builder: (context) => _modalForMore(context)),
+                        cardIcon: const Icon(
+                          Icons.shopping_cart_outlined,
+                          color: Colors.white,
+                        ),
+                        cardColor: const Color(0xff61B76B),
+                        title: 'More',
+                      ),
+                    ],),),
+                    // Container(
+                    //   height: 73,
+                    //   margin: const EdgeInsets.only(left: 10, right: 10),
+                    //   child: LimitedBox(
+                    //     maxHeight: 100,
+                    //     maxWidth: MediaQuery.of(context).size.width,
+                    //     child: ListView.separated(
+                    //         scrollDirection: Axis.horizontal,
+                    //         itemBuilder: (context, inx) {
+                    //           return actions[inx];
+                    //         },
+                    //         separatorBuilder: (_, ins) => const SizedBox(
+                    //               width: 3,
+                    //             ),
+                    //         itemCount: actions.length),
+                    //   ),
+                    // ),
                     Container(
                       padding: const EdgeInsets.only(
                           left: 15.0, top: 10, bottom: 10),
@@ -272,10 +320,8 @@ class _DashboardState extends State<Dashboard> {
                 icon: const Icon(Icons.close)),
           ),
           ListTile(
-            onTap: () => Navigator.push(
-                context,
-                CupertinoPageRoute(
-                    builder: (context) => InventoryDeduction())),
+            onTap: () => Navigator.push(context,
+                CupertinoPageRoute(builder: (context) => InventoryDeduction())),
             leading: const Icon(Icons.create_new_folder_outlined),
             title: const Text(
               "Inventory reduction",
@@ -285,10 +331,8 @@ class _DashboardState extends State<Dashboard> {
             ),
           ),
           ListTile(
-            onTap: () => Navigator.push(
-                context,
-                CupertinoPageRoute(
-                    builder: (context) => ClientDeposit())),
+            onTap: () => Navigator.push(context,
+                CupertinoPageRoute(builder: (context) => ClientDeposit())),
             leading: const Icon(Icons.credit_card),
             title: const Text(
               "Client deposit",
@@ -307,10 +351,8 @@ class _DashboardState extends State<Dashboard> {
             ),
           ),
           ListTile(
-            onTap: () => Navigator.push(
-                context,
-                CupertinoPageRoute(
-                    builder: (context) => AccountTransfer())),
+            onTap: () => Navigator.push(context,
+                CupertinoPageRoute(builder: (context) => AccountTransfer())),
             leading: const Icon(Icons.create_new_folder_outlined),
             title: const Text(
               "Account transfer",
