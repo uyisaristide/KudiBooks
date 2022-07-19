@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 class LoginButton extends StatelessWidget {
   final String text;
   VoidCallback actionField;
-  Function? validate;
   LoginButton(
-      {required this.text, this.validate, required this.actionField, Key? key})
+      {required this.text, required this.actionField, Key? key})
       : super(key: key);
 
   @override

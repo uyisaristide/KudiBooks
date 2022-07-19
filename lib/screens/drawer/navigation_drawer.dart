@@ -41,10 +41,7 @@ class NavigationDrawer extends StatelessWidget {
                   navigateTo: () {}),
               DrawerListItem(
                   itemName: 'Help', leadingIcon: Icons.help, navigateTo: () {}),
-              DrawerListItem(
-                  itemName: 'About',
-                  leadingIcon: Icons.home,
-                  navigateTo: () {}),
+
             ],
           ),
         ),

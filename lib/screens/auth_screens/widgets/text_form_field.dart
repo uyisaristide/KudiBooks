@@ -43,10 +43,8 @@ class CustomFormField extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5.0),
       child: TextFormField(
-
         initialValue: initialValues,
         enabled: isEnabled,
-
         maxLines: maxLining,
         obscureText: isShown,
         autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -63,18 +61,17 @@ class CustomFormField extends StatelessWidget {
                     validators == null ? const Color(0xff157253) : Colors.grey),
             labelText: labelText,
             prefix: countryCode,
-            suffixIcon: fieldIconbutton,
-            // fieldController.text.isEmpty
-            //     ? fieldIcon
-            //     : IconButton(
-            //         onPressed: () {
-            //           onIconPressed;
-            //           fieldController.clear();
-            //         },
-            //         icon: const Icon(
-            //           Icons.close,
-            //           color: Colors.grey,
-            //         )),
+            suffixIcon: fieldController.text.isEmpty
+                ? fieldIcon
+                : IconButton(
+                    onPressed: () {
+                      onIconPressed;
+                      fieldController.clear();
+                    },
+                    icon: const Icon(
+                      Icons.close,
+                      color: Colors.grey,
+                    )),
             focusedBorder: OutlineInputBorder(
                 borderSide:
                     const BorderSide(color: Color(0xff157253), width: 1.0),
