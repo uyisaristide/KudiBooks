@@ -135,9 +135,9 @@ class _LoginState extends State<Login> {
             ),
             LoginButton(
               text: 'Login',
-              validate: () => _formKey.currentState!.validate()
-                  ? Navigator.pushNamed(context, '/')
-                  : null,
+              // validate: () => _formKey.currentState!.validate()
+              //     ? Navigator.pushNamed(context, '/')
+              //     : null,
               actionField: () {
                 if (_formKey.currentState!.validate()) {
                   Navigator.pushReplacement(

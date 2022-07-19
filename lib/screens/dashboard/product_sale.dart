@@ -1,17 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:kudibooks_app/models/Users/ProductInLoad.dart';
+import 'package:kudibooks_app/models/product_model.dart';
+import 'package:kudibooks_app/models/product_sale_model.dart';
+import 'package:kudibooks_app/providers/product_provider.dart';
+import 'package:kudibooks_app/providers/products_sale_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/drop_down_widget.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
+import 'package:kudibooks_app/screens/dashboard/add_products_popup.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/double_header_two.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/inventory_card.dart';
+import 'package:provider/provider.dart';
 
-class ProductSale extends StatelessWidget {
+class ProductSale extends StatefulWidget {
   ProductSale({Key? key}) : super(key: key);
+
+  @override
+  State<ProductSale> createState() => _ProductSaleState();
+}
+
+class _ProductSaleState extends State<ProductSale> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   final nameController = TextEditingController();
+
   final transactionDateController = TextEditingController();
+
   final memoController = TextEditingController();
 
   List<String> unitProduct = [
@@ -22,12 +38,25 @@ class ProductSale extends StatelessWidget {
   ];
 
   List<String> revenueAccounts = ["Account 1", "Account 2", "Account 3"];
+
   final productNameController = TextEditingController();
+
   final noteController = TextEditingController();
+
   final descriptionController = TextEditingController();
+
   final priceController = TextEditingController();
 
   List<String> unitOfProduct = ["Kg", "Little", "Hg"];
+
+  List<String> bankAccounts = ["Bank 1", "Bank 2", "Bank 3"];
+
+  String? bankAccountsValue;
+  List<String> clientsList = ["client 1", "client 2", "client 3"];
+
+  String? clientListValue;
+
+  // GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +70,7 @@ class ProductSale extends StatelessWidget {
                 text: 'Save',
                 actionField: () {
                   if (_formKey.currentState!.validate()) {
-                    Navigator.pop(context);
+                    return Navigator.pop(context);
                   }
                 }),
           )),
@@ -105,9 +134,7 @@ class ProductSale extends StatelessWidget {
                                 const Text('Inventory expense account'),
                             itemsToSelect: revenueAccounts),
                         CustomFormField(
-                          validators: (value) {
-                            Validators.validateName(value);
-                          },
+                          validators: (value) => Validators.validateName(value),
                           hintText: 'Product name',
                           fieldController: productNameController,
                           isShown: false,
@@ -150,7 +177,7 @@ class ProductSale extends StatelessWidget {
                                   Expanded(
                                     child: CustomFormField(
                                         validators: (value) {
-                                          Validators.validateName(value);
+                                          return Validators.notEmpty(value);
                                         },
                                         hintText: 'Sub units',
                                         fieldController: productNameController,
@@ -159,7 +186,8 @@ class ProductSale extends StatelessWidget {
                                 ],
                               ),
                               CustomFormField(
-                                  validators: (value) {},
+                                  validators: (value) =>
+                                      Validators.notEmpty(value),
                                   hintText: 'Sub-unit price',
                                   fieldController: productNameController,
                                   isShown: false),
@@ -216,6 +244,13 @@ class ProductSale extends StatelessWidget {
   }
 
   _addProductForm(BuildContext context) {
+    ProductSalesProvider _salesProvider =
+        Provider.of<ProductSalesProvider>(context);
+    List<ProductSalesModel> salesProvidersList =
+        _salesProvider.productSalesList;
+    ProductProvider productProvider = Provider.of<ProductProvider>(context);
+    List<ProductModel> _productModel = productProvider.allProducts;
+    List<ProductInLoadModel> _productsToLoad = productProvider.allToLoadModel;
     return Form(
       key: _formKey,
       child: Column(
@@ -223,7 +258,7 @@ class ProductSale extends StatelessWidget {
           CustomFormField(
               fieldIcon: const Icon(Icons.calendar_today_outlined),
               validators: (value) {
-                Validators.validateName(value);
+                return Validators.notEmpty(value!);
               },
               hintText: 'Transaction date',
               fieldController: transactionDateController,
@@ -231,7 +266,7 @@ class ProductSale extends StatelessWidget {
               inputType: TextInputType.datetime),
           CustomFormField(
               validators: (value) {
-                Validators.validateName(value);
+                return Validators.notEmpty(value);
               },
               hintText: 'Transaction name',
               fieldController: nameController,
@@ -245,98 +280,164 @@ class ProductSale extends StatelessWidget {
               style: TextStyle(fontSize: 16, color: Color(0xff808080)),
             ),
           ),
-          InventoryProductCard(
-            widgetPadding: Column(children: [
-              TwoSideHeader(
-                textFontSize: 16.0,
-                leftSide: 'Product Name',
-                fontWeight: FontWeight.bold,
-                rightSide: IconButton(
-                  icon: const Icon(
-                    Icons.close,
-                    color: Color(0xffA34646),
-                  ),
-                  onPressed: () {},
-                ),
-                bottomSize: 10,
-              ),
-              TwoSideHeader(
-                textFontSize: 14.0,
-                textColor: Colors.grey,
-                leftSide: 'Buying price',
-                rightSide: const Text(
-                  "\$15.99",
-                  style: TextStyle(fontSize: 16.0),
-                ),
-                bottomSize: 0.0,
-              ),
-              const Divider(),
-              TwoSideHeader(
-                  fontWeight: FontWeight.bold,
-                  bottomSize: 10,
-                  textFontSize: 14.0,
-                  leftSide: 'By sub-units',
-                  rightSide: const Text(
-                    "\$15.99",
-                    style: TextStyle(fontSize: 13.0),
-                  )),
-              TwoSideHeader(
-                textFontSize: 14.0,
-                leftSide: 'Count',
-                rightSide: const Text(
-                  "3",
-                  style: TextStyle(fontSize: 13.0),
-                ),
-                bottomSize: 0.0,
-              ),
-            ]),
+
+          LimitedBox(
+            child: ListView.separated(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  String changeToInt =
+                      _productsToLoad[index].productId.toString();
+                  print(changeToInt);
+                  var _names = _productModel.firstWhere(
+                      (element) => element.id == int.parse(changeToInt));
+
+                  return InventoryProductCard(
+                    widgetPadding: Column(children: [
+                      TwoSideHeader(
+                        textFontSize: 16.0,
+                        leftSide: _names.productName,
+                        fontWeight: FontWeight.bold,
+                        rightSide: IconButton(
+                          icon: const Icon(
+                            Icons.close,
+                            color: Color(0xffA34646),
+                          ),
+                          onPressed: () => setState(() => productProvider
+                              .removeLoadInModel(int.parse(changeToInt))),
+                        ),
+                        bottomSize: 10,
+                      ),
+                      TwoSideHeader(
+                        textFontSize: 14.0,
+                        textColor: Colors.grey,
+                        leftSide: 'Buying price',
+                        rightSide: Text(
+                          "\$ ${_names.productPrice}",
+                          style: const TextStyle(fontSize: 16.0),
+                        ),
+                        bottomSize: 0.0,
+                      ),
+                      const Divider(),
+                      TwoSideHeader(
+                          fontWeight: FontWeight.bold,
+                          bottomSize: 10,
+                          textFontSize: 14.0,
+                          leftSide: 'By sub-units',
+                          rightSide: Text(
+                            "\$ ${_names.subUnitPrice}",
+                            style: const TextStyle(fontSize: 13.0),
+                          )),
+                      TwoSideHeader(
+                        textFontSize: 14.0,
+                        leftSide: 'Count',
+                        rightSide: const Text(
+                          "3",
+                          style: TextStyle(fontSize: 13.0),
+                        ),
+                        bottomSize: 0.0,
+                      ),
+                    ]),
+                  );
+                },
+                separatorBuilder: (_, idx) => const SizedBox(
+                      height: 2,
+                    ),
+                itemCount: _productsToLoad.length),
           ),
-          InventoryProductCard(
-            widgetPadding: Column(children: [
-              TwoSideHeader(
-                textFontSize: 16.0,
-                leftSide: 'Product Name',
-                fontWeight: FontWeight.bold,
-                rightSide: IconButton(
-                  icon: const Icon(
-                    Icons.close,
-                    color: Color(0xffA34646),
-                  ),
-                  onPressed: () {},
-                ),
-                bottomSize: 10,
-              ),
-              TwoSideHeader(
-                textFontSize: 14.0,
-                textColor: Colors.grey,
-                leftSide: 'Buying price',
-                rightSide: const Text(
-                  "\$15.99",
-                  style: TextStyle(fontSize: 16.0),
-                ),
-                bottomSize: 0.0,
-              ),
-              const Divider(),
-              TwoSideHeader(
-                  fontWeight: FontWeight.bold,
-                  bottomSize: 10,
-                  textFontSize: 14.0,
-                  leftSide: 'By sub-units',
-                  rightSide: const Text(
-                    "\$15.99",
-                    style: TextStyle(fontSize: 13.0),
-                  )),
-              TwoSideHeader(
-                textFontSize: 14.0,
-                leftSide: 'Count',
-                rightSide: const Text(
-                  "3",
-                  style: TextStyle(fontSize: 13.0),
-                ),
-                bottomSize: 0.0,
-              ),
-            ]),
-          ),
+
+          // InventoryProductCard(
+          //   widgetPadding: Column(children: [
+          //     TwoSideHeader(
+          //       textFontSize: 16.0,
+          //       leftSide: 'Product Name',
+          //       fontWeight: FontWeight.bold,
+          //       rightSide: IconButton(
+          //         icon: const Icon(
+          //           Icons.close,
+          //           color: Color(0xffA34646),
+          //         ),
+          //         onPressed: () {},
+          //       ),
+          //       bottomSize: 10,
+          //     ),
+          //     TwoSideHeader(
+          //       textFontSize: 14.0,
+          //       textColor: Colors.grey,
+          //       leftSide: 'Buying price',
+          //       rightSide: const Text(
+          //         "\$15.99",
+          //         style: TextStyle(fontSize: 16.0),
+          //       ),
+          //       bottomSize: 0.0,
+          //     ),
+          //     const Divider(),
+          //     TwoSideHeader(
+          //         fontWeight: FontWeight.bold,
+          //         bottomSize: 10,
+          //         textFontSize: 14.0,
+          //         leftSide: 'By sub-units',
+          //         rightSide: const Text(
+          //           "\$15.99",
+          //           style: TextStyle(fontSize: 13.0),
+          //         )),
+          //     TwoSideHeader(
+          //       textFontSize: 14.0,
+          //       leftSide: 'Count',
+          //       rightSide: const Text(
+          //         "3",
+          //         style: TextStyle(fontSize: 13.0),
+          //       ),
+          //       bottomSize: 0.0,
+          //     ),
+          //   ]),
+          // ),
+          // InventoryProductCard(
+          //   widgetPadding: Column(children: [
+          //     TwoSideHeader(
+          //       textFontSize: 16.0,
+          //       leftSide: 'Product Name',
+          //       fontWeight: FontWeight.bold,
+          //       rightSide: IconButton(
+          //         icon: const Icon(
+          //           Icons.close,
+          //           color: Color(0xffA34646),
+          //         ),
+          //         onPressed: () {},
+          //       ),
+          //       bottomSize: 10,
+          //     ),
+          //     TwoSideHeader(
+          //       textFontSize: 14.0,
+          //       textColor: Colors.grey,
+          //       leftSide: 'Buying price',
+          //       rightSide: const Text(
+          //         "\$15.99",
+          //         style: TextStyle(fontSize: 16.0),
+          //       ),
+          //       bottomSize: 0.0,
+          //     ),
+          //     const Divider(),
+          //     TwoSideHeader(
+          //         fontWeight: FontWeight.bold,
+          //         bottomSize: 10,
+          //         textFontSize: 14.0,
+          //         leftSide: 'By sub-units',
+          //         rightSide: const Text(
+          //           "\$15.99",
+          //           style: TextStyle(fontSize: 13.0),
+          //         )),
+          //     TwoSideHeader(
+          //       textFontSize: 14.0,
+          //       leftSide: 'Count',
+          //       rightSide: const Text(
+          //         "3",
+          //         style: TextStyle(fontSize: 13.0),
+          //       ),
+          //       bottomSize: 0.0,
+          //     ),
+          //   ]),
+          // ),
           Container(
             height: 100,
             width: double.infinity,
@@ -350,7 +451,17 @@ class ProductSale extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10.0)),
             child: Center(
                 child: TextButton(
-                    onPressed: () => _addProductButton(context),
+                    onPressed: () => showModalBottomSheet(
+                        isDismissible: false,
+                        elevation: 0.0,
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20.0),
+                                topRight: Radius.circular(20.0))),
+                        context: context,
+                        builder: (context) {
+                          return const AddProductsPopup();
+                        }),
                     child: const Text(
                       "Add Product",
                       style: TextStyle(color: Color(0xff6FCF97), fontSize: 12),
@@ -361,14 +472,15 @@ class ProductSale extends StatelessWidget {
             alignment: Alignment.centerRight,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
-              children: const [
-                Text(
+              children: [
+                const Text(
                   "Total Amount: ",
                   style: TextStyle(fontSize: 16, color: Colors.grey),
                 ),
                 Text(
-                  "0.0",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  "${_productsToLoad.length}",
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
@@ -389,18 +501,23 @@ class ProductSale extends StatelessWidget {
               children: [
                 CustomFormField(
                     validators: (value) {
-                      Validators.validateName(value);
+                      return Validators.notEmpty(value);
                     },
                     hintText: 'Amount paid',
                     fieldController: nameController,
                     isShown: false,
                     inputType: TextInputType.number),
                 SelectInputType(
-                  itemsToSelect: unitProduct,
+                  itemsToSelect: bankAccounts,
                   dropDownHint: const Text(
                     "Cash / Bank Account",
                     style: TextStyle(color: Colors.grey),
                   ),
+                  selectedValue: (value) {
+                    setState(() {
+                      bankAccountsValue = value;
+                    });
+                  },
                 ),
               ],
             ),
@@ -420,14 +537,19 @@ class ProductSale extends StatelessWidget {
               children: [
                 CustomFormField(
                     validators: (value) {
-                      Validators.validateName(value);
+                      return Validators.notEmpty(value);
                     },
                     hintText: 'Debt amount',
                     fieldController: nameController,
                     isShown: false,
                     inputType: TextInputType.number),
                 SelectInputType(
-                  itemsToSelect: unitProduct,
+                  itemsToSelect: clientsList,
+                  selectedValue: (value) {
+                    setState(() {
+                      clientListValue = value;
+                    });
+                  },
                   dropDownHint: const Text("Select client"),
                 ),
               ],
