@@ -42,6 +42,7 @@ class ActionCard extends StatelessWidget {
     //     ),
     //   ),
     // );
+<<<<<<< HEAD
     return InkWell(
       onTap: actionClick,
       child: Container(
@@ -52,6 +53,20 @@ class ActionCard extends StatelessWidget {
             shape: BoxShape.rectangle,
             borderRadius: const BorderRadius.all(Radius.circular(10.0))),
         child: Column(
+=======
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.only(left: 3, right: 3),
+        child: InkWell(
+          onTap: actionClick,
+          child: Container(
+            height: 72,
+            decoration: BoxDecoration(
+            color: cardColor,
+            shape: BoxShape.rectangle,
+            borderRadius: const BorderRadius.all(Radius.circular(10.0))),
+            child: Column(
+>>>>>>> 6dce77032ce8e78cad99435b92cd51ff598b0683
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -66,6 +81,11 @@ class ActionCard extends StatelessWidget {
               style: const TextStyle(color: Colors.white),
             )
           ],
+<<<<<<< HEAD
+=======
+            ),
+          ),
+>>>>>>> 6dce77032ce8e78cad99435b92cd51ff598b0683
         ),
       ),
     );

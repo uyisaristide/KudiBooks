@@ -6,8 +6,6 @@ class ProductProvider extends ChangeNotifier {
   final List<ProductModel> _listProducts = [];
   final List<ProductInLoadModel> _productLoadModel = [];
 
-  
-
   List<ProductModel> get allProducts => _listProducts;
 
   List<ProductInLoadModel> get allToLoadModel => _productLoadModel;

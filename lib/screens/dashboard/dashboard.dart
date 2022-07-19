@@ -41,6 +41,16 @@ class _DashboardState extends State<Dashboard> {
       ),
       ActionCard(
         actionClick: () => Navigator.push(
+            context, CupertinoPageRoute(builder: (ctx) => ProductSale())),
+        cardIcon: const Icon(
+          Icons.shopping_cart_outlined,
+          color: Colors.white,
+        ),
+        cardColor: const Color(0xff157253),
+        title: 'test',
+      ),
+      ActionCard(
+        actionClick: () => Navigator.push(
             context, CupertinoPageRoute(builder: (ctx) => NewInventory())),
         cardIcon: const Icon(
           Icons.shopping_cart_outlined,
