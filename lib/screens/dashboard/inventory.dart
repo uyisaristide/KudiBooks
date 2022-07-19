@@ -11,6 +11,8 @@ import 'package:kudibooks_app/screens/dashboard/widget/button_widget.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/search_input.dart';
 
+import 'new_inventory.dart';
+
 class InventoryScreen extends StatefulWidget {
   VoidCallback? loadInventories;
 
@@ -76,16 +78,13 @@ class _InventoryScreenState extends State<InventoryScreen> {
                           onClickAction: () => Navigator.push(
                               context,
                               (CupertinoPageRoute(
-                                  builder: (context) => NewExpense()))),
+                                  builder: (context) => NewInventory()))),
                           buttonTitle: 'New load',
                           suffixIcon: const Icon(
                             Icons.add,
                             size: 20,
                             color: Color(0xffA70C4A),
                           ),
-                        ),
-                        const SizedBox(
-                          height: 20,
                         ),
                       ],
                     ),

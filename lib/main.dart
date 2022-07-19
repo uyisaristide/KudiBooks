@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kudibooks_app/providers/expenses_provider.dart';
 import 'package:kudibooks_app/providers/inventory_provider.dart';
 import 'package:kudibooks_app/providers/product_provider.dart';
 import 'package:kudibooks_app/providers/products_sale_provider.dart';
@@ -18,6 +19,7 @@ void main() {
     ChangeNotifierProvider(create: (_) => ProductSalesProvider()),
     ChangeNotifierProvider(create: (_) => ProductProvider()),
     ChangeNotifierProvider(create: (_) => InventoryProviders()),
+    ChangeNotifierProvider(create: (_) => ExpensesProvider()),
   ], child: const MyApp()));
 }
 

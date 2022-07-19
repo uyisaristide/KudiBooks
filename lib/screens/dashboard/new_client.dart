@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/drop_down_widget.dart';
@@ -8,11 +10,16 @@ import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
 class NewClient extends StatelessWidget {
   NewClient({Key? key}) : super(key: key);
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final Random _randomId = Random();
   final nameController = TextEditingController();
   final idNumberController = TextEditingController();
   final contactPersonName = TextEditingController();
   final emailController = TextEditingController();
+  final phoneController = TextEditingController();
+  final addressController = TextEditingController();
+  final noteController = TextEditingController();
   List<String> clientStatus = ['Active', 'Inactive'];
+  String? clientStatusOption;
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +33,7 @@ class NewClient extends StatelessWidget {
                 text: 'Add product',
                 actionField: () {
                   if (_formKey.currentState!.validate()) {
+
                     Navigator.pop(context);
                   }
                 }),
@@ -41,23 +49,30 @@ class NewClient extends StatelessWidget {
                 children: [
                   CustomFormField(
                       validators: (value) {
-                        Validators.validateName(value);
+                        if(nameController.text.isEmpty){
+                          return 'Enter client name';
+                        }
+                        return null;
                       },
                       hintText: 'Client name',
                       fieldController: nameController,
                       isShown: false),
                   CustomFormField(
                       validators: (value) {
-                        Validators.validateName(value);
+                        if(idNumberController.text.isEmpty){
+                          return 'Enter client name';
+                        }else if(idNumberController.text.length <16){
+                          return 'Match 16 digits';
+                        }
+                        return null;
                       },
                       hintText: 'Identification',
                       fieldController: idNumberController,
                       isShown: false,
                       inputType: TextInputType.number),
                   CustomFormField(
-                      fieldIcon: const Icon(Icons.calendar_today_outlined),
                       validators: (value) {
-                        Validators.validateName(value);
+                        return 'Enter client name';
                       },
                       hintText: 'Contact person’s names',
                       fieldController: contactPersonName,
@@ -65,7 +80,10 @@ class NewClient extends StatelessWidget {
                       inputType: TextInputType.name),
                   CustomFormField(
                       validators: (value) {
-                        Validators.validateEmail(value);
+                        if(emailController.text.isEmpty){
+                          return 'Enter email address';
+                        }
+                        return null;
                       },
                       hintText: 'Email',
                       fieldController: emailController,
@@ -73,30 +91,41 @@ class NewClient extends StatelessWidget {
                       inputType: TextInputType.emailAddress),
                   CustomFormField(
                       validators: (value) {
-                        Validators.validatePhoneNumber(value);
+                        if(phoneController.text.isEmpty){
+                          return 'Enter email address';
+                        }
+                        return null;
                       },
                       hintText: 'Phone number',
-                      fieldController: emailController,
+                      fieldController: phoneController,
                       isShown: false,
                       inputType: TextInputType.multiline),
                   CustomFormField(
                       validators: (value) {
-                        Validators.validateName(value);
+                        if(addressController.text.isEmpty){
+                          return 'Enter email address';
+                        }
+                        return null;
                       },
                       hintText: 'Address',
-                      fieldController: emailController,
+                      fieldController: addressController,
                       isShown: false,
                       inputType: TextInputType.streetAddress),
                   SelectInputType(
+                    dropDownHint: const Text(
+                      'Client Status',
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                    selectedValue: (value) {
+                      clientStatusOption = value;
+                    },
+                    validation: (value) {},
                     itemsToSelect: clientStatus,
                   ),
                   CustomFormField(
-                      validators: (value) {
-                        Validators.validateName(value);
-                      },
-                      hintText: 'Address',
+                      hintText: 'Note',
                       maxLining: 5,
-                      fieldController: emailController,
+                      fieldController: noteController,
                       isShown: false,
                       inputType: TextInputType.streetAddress),
                 ],

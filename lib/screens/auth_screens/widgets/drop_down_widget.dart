@@ -4,9 +4,11 @@ class SelectInputType extends StatelessWidget {
   List<String> itemsToSelect;
   Widget? dropDownHint;
   Function(String?)? selectedValue;
+  String? Function(String?)? validation;
 
   SelectInputType(
       {this.dropDownHint,
+      this.validation,
       required this.itemsToSelect,
       this.selectedValue,
       Key? key})
@@ -17,6 +19,7 @@ class SelectInputType extends StatelessWidget {
     return Container(
         margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5.0),
         child: DropdownButtonFormField<String>(
+          validator: validation,
           hint: dropDownHint,
           decoration: InputDecoration(
               focusColor: const Color(0xff157253),

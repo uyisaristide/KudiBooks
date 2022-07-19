@@ -27,7 +27,6 @@ class _NewInventoryState extends State<NewInventory> {
   final _randNumber = Random();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   var nameController = TextEditingController();
-  List<String>? itemId = [];
   var transactionDateController = TextEditingController();
   var transactionNameController = TextEditingController();
   var amountPaid = TextEditingController();
@@ -47,6 +46,7 @@ class _NewInventoryState extends State<NewInventory> {
     ProductProvider productProvider = Provider.of<ProductProvider>(context);
     List<ProductModel> _productModel = productProvider.allProducts;
     List<ProductInLoadModel> _productsToLoad = productProvider.allToLoadModel;
+
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
           color: Colors.transparent,
@@ -60,7 +60,7 @@ class _NewInventoryState extends State<NewInventory> {
                     _inventoryProviders.addInventory(InventoryModel(
                         id: _randNumber.nextInt(500),
                         bulkName: nameController.text,
-                        productList: [],
+                        productList: _productsToLoad,
                         amountPaid: double.parse(amountPaid.text),
                         bankAccount: bankAccountsValue,
                         deptAmount: double.parse(debtAmount.text),
@@ -68,6 +68,7 @@ class _NewInventoryState extends State<NewInventory> {
                         transactionName: transactionNameController.text,
                         transactionDate: transactionDateController.text,
                         memoInventory: memoController.text));
+                    _productsToLoad.clear();
                     print("Saved");
                     Navigator.pop(context);
                   }
@@ -83,7 +84,10 @@ class _NewInventoryState extends State<NewInventory> {
             children: [
               CustomFormField(
                   validators: (value) {
-                    Validators.validateName(value);
+                    if(nameController.text.isEmpty){
+                      return 'Enter user name';
+                    }
+                    return null;
                   },
                   hintText: 'Bulk name',
                   fieldController: nameController,
@@ -266,7 +270,9 @@ class _NewInventoryState extends State<NewInventory> {
               ),
               CustomFormField(
                   validators: (value) {
-                    Validators.validateName(value);
+                    if(transactionNameController.text.isEmpty){
+                      return 'Enter user name';
+                    }
                   },
                   hintText: 'Transaction name',
                   fieldController: transactionNameController,

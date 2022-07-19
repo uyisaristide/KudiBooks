@@ -1,35 +1,68 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:kudibooks_app/models/expense_model.dart';
+import 'package:kudibooks_app/providers/expenses_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/drop_down_widget.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/double_header_two.dart';
-
+import 'package:provider/provider.dart';
 import '../auth_screens/widgets/text_form_field.dart';
+import 'classes/snack_bars.dart';
 
-class NewExpense extends StatelessWidget {
+class NewExpense extends StatefulWidget {
   NewExpense({Key? key}) : super(key: key);
+
+  @override
+  State<NewExpense> createState() => _NewExpenseState();
+}
+
+class _NewExpenseState extends State<NewExpense> {
   DateTime time =
       DateTime(DateTime.now().day, DateTime.now().month, DateTime.now().year);
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   final productNameController = TextEditingController();
+
+  final amountPaidController = TextEditingController();
+
+  final amountPaidExpensesController = TextEditingController();
+
   final nameController = TextEditingController();
+  Random _idRandom = Random();
   final transactionDateController = TextEditingController(text: ''
       // text:
       //     '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}'
       );
+
   final memoController = TextEditingController();
 
-  List<String> expenseAccount = [
+  List expensesForm = [];
+
+  List<String> expenseAccountList = [
+    'Expenses 1',
+    'Expenses 2',
+    'Expenses 3',
+    'Expenses 4'
+  ];
+
+  String? expenseAccount;
+
+  List<String> cashBankAccountList = [
     'Account 1',
     'Account 2',
     'Account 3',
     'Account 4'
   ];
 
+  String? cashBankAccount;
+
   @override
   Widget build(BuildContext context) {
+    ExpensesProvider _expensesProvider = Provider.of<ExpensesProvider>(context);
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
           color: Colors.transparent,
@@ -40,6 +73,19 @@ class NewExpense extends StatelessWidget {
                 text: 'Save',
                 actionField: () {
                   if (_formKey.currentState!.validate()) {
+                    _expensesProvider.addExpense(Expense(
+                        _idRandom.nextInt(100),
+                        expenseAccount.toString(),
+                        double.parse(amountPaidExpensesController.text),
+                        double.parse(amountPaidExpensesController.text),
+                        cashBankAccount.toString(),
+                        nameController.text,
+                        transactionDateController.text,
+                        memoController.text));
+                    ScaffoldMessenger.of(context)
+                      ..removeCurrentSnackBar()
+                      ..showSnackBar(SnackBars.snackBars(
+                          'Expense saved successfully', Colors.green.shade400));
                     Navigator.pop(context);
                   }
                 }),
@@ -52,11 +98,7 @@ class NewExpense extends StatelessWidget {
           key: _formKey,
           child: Column(
             children: [
-              SelectInputType(
-                  dropDownHint: const Text('Expense account'),
-                  itemsToSelect: expenseAccount),
               Container(
-                height: 150,
                 width: double.infinity,
                 margin:
                     const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
@@ -70,76 +112,58 @@ class NewExpense extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    SelectInputType(
+                        dropDownHint: const Text('Expense account'),
+                        selectedValue: (values) {
+                          expenseAccount = values;
+                        },
+                        validation: (expenseName) {
+                          if (expenseName == null) {
+                            return 'Select expense';
+                          }
+                          return null;
+                        },
+                        itemsToSelect: expenseAccountList),
                     Row(
                       children: [
                         Expanded(
                           child: CustomFormField(
+                              inputType: TextInputType.number,
                               validators: (value) {
-                                Validators.validateName(value);
+                                if (amountPaidExpensesController.text.isEmpty) {
+                                  return 'Enter amount';
+                                }
+                                return null;
                               },
                               hintText: 'Amount paid',
-                              fieldController: productNameController,
+                              fieldController: amountPaidExpensesController,
                               isShown: false),
                         ),
                         Expanded(
-                          child: CustomFormField(
-                              validators: (value) {
-                                Validators.validateName(value);
-                              },
-                              hintText: 'Add tags',
-                              fieldController: productNameController,
-                              isShown: false),
-                        )
-                      ],
-                    ),
-                    CustomFormField(
-                        validators: (value) {},
-                        hintText: 'Sub-unit price',
-                        fieldController: productNameController,
-                        isShown: false),
-                  ],
-                ),
-              ),
-              Container(
-                height: 150,
-                width: double.infinity,
-                margin:
-                    const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 1.0,
-                      color: Colors.grey,
-                    ),
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.circular(10.0)),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CustomFormField(
-                        validators: (value) {},
-                        hintText: 'Sub-unit price',
-                        fieldController: productNameController,
-                        isShown: false),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: CustomFormField(
-                              validators: (value) {
-                                Validators.validateName(value);
-                              },
-                              hintText: 'Amount paid',
-                              fieldController: productNameController,
-                              isShown: false),
-                        ),
-                        Expanded(
-                          child: CustomFormField(
-                              validators: (value) {
-                                Validators.validateName(value);
-                              },
-                              hintText: 'Add tags',
-                              fieldController: productNameController,
-                              isShown: false),
-                        )
+                            child: Container(
+                          margin: const EdgeInsets.only(right: 15),
+                          padding: const EdgeInsets.all(15),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              border:
+                                  Border.all(width: 1.0, color: Colors.grey),
+                              borderRadius: BorderRadius.circular(10.0)),
+                          child: InkWell(
+                            onTap: () => showModalBottomSheet(
+                                elevation: 0.0,
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(10.0),
+                                        topRight: Radius.circular(10.0))),
+                                context: (context),
+                                builder: (index) => LoadTags()),
+                            child: const Text(
+                              "Add Tag",
+                              style: TextStyle(color: Color(0xffA70C4A)),
+                            ),
+                          ),
+                        ))
                       ],
                     ),
                   ],
@@ -152,9 +176,12 @@ class NewExpense extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     bottomSize: 20,
                     leftSide: '',
-                    rightSide: const Text(
-                      "New expense",
-                      style: TextStyle(color: Colors.green, fontSize: 12),
+                    rightSide: TextButton(
+                      onPressed: () {},
+                      child: const Text(
+                        "New expense",
+                        style: TextStyle(color: Colors.green, fontSize: 12),
+                      ),
                     )),
               ),
               Container(
@@ -177,7 +204,6 @@ class NewExpense extends StatelessWidget {
                 ),
               ),
               Container(
-                height: 150,
                 width: double.infinity,
                 margin:
                     const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
@@ -193,29 +219,48 @@ class NewExpense extends StatelessWidget {
                   children: [
                     CustomFormField(
                       validators: (value) {
-                        Validators.validateName(value);
+                        if (amountPaidController.text.isEmpty) {
+                          return 'Enter amount';
+                        }
+                        return null;
                       },
                       hintText: 'Amount',
-                      fieldController: productNameController,
+                      fieldController: amountPaidController,
                       isShown: false,
                     ),
                     SelectInputType(
+                        validation: (account) {
+                          if (cashBankAccount == null) {
+                            return "Enter cash or bank";
+                          }
+                          return null;
+                        },
+                        selectedValue: (value) {
+                          setState(() {
+                            cashBankAccount = value;
+                          });
+                        },
                         dropDownHint: const Text('Cash/Bank account'),
-                        itemsToSelect: expenseAccount),
+                        itemsToSelect: cashBankAccountList),
                   ],
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(right: 15.0, bottom: 15.0),
-                alignment: Alignment.topRight,
-                child: const Text(
-                  "Add payment method",
-                  style: TextStyle(fontSize: 12, color: Color(0xffA70C4A)),
-                ),
-              ),
+                  margin: const EdgeInsets.only(right: 15.0, bottom: 15.0),
+                  alignment: Alignment.topRight,
+                  child: TextButton(
+                    child: const Text(
+                      "Add payment method",
+                      style: TextStyle(fontSize: 12, color: Color(0xffA70C4A)),
+                    ),
+                    onPressed: () {},
+                  )),
               CustomFormField(
                   validators: (value) {
-                    Validators.validateName(value);
+                    if (nameController.text.isEmpty) {
+                      return 'Fill this field';
+                    }
+                    return null;
                   },
                   hintText: 'Transaction name',
                   fieldController: nameController,
@@ -253,6 +298,106 @@ class NewExpense extends StatelessWidget {
           ),
         ),
       )),
+    );
+  }
+}
+
+class LoadTags extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            ListTile(
+              title: const Text(
+                "Add tags",
+                style: TextStyle(),
+              ),
+              trailing: IconButton(
+                  onPressed: () => Navigator.pop(context),
+                  icon: const Icon(Icons.close)),
+            ),
+            const Divider(
+              thickness: 0.7,
+              color: Colors.grey,
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 10.0, horizontal: 10.0),
+                  child: Row(
+                    children: const [
+                      Text(
+                        "CLIENTS",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(fontSize: 16, color: Colors.grey),
+                      ),
+                    ],
+                  ),
+                ),
+                LimitedBox(
+                  maxHeight: 300,
+                  child: ListView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: const [
+                      ListTile(
+                        leading: Icon(Icons.person),
+                        title: Text("Client Name 1"),
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.person),
+                        title: Text("Client Name 1"),
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.person),
+                        title: Text("Client Name 1"),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 10.0, horizontal: 10.0),
+                  child: Row(
+                    children: const [
+                      Text(
+                        "VENDOR",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(fontSize: 16, color: Colors.grey),
+                      ),
+                    ],
+                  ),
+                ),
+                LimitedBox(
+                  maxHeight: 300,
+                  child: ListView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: const [
+                      ListTile(
+                        leading: Icon(Icons.person),
+                        title: Text("Client Name 1"),
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.person),
+                        title: Text("Client Name 1"),
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.person),
+                        title: Text("Client Name 1"),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
     );
   }
 }
