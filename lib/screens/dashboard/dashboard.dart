@@ -157,7 +157,9 @@ class _DashboardState extends State<Dashboard> {
                         maxHeight: 100,
                         maxWidth: MediaQuery.of(context).size.width,
                         child: ListView.separated(
-                            scrollDirection: Axis.horizontal,
+                            physics: NeverScrollableScrollPhysics(),
+                            // shrinkWrap: false,
+                            // scrollDirection: Axis.horizontal,
                             itemBuilder: (context, inx) {
                               return actions[inx];
                             },
@@ -272,10 +274,8 @@ class _DashboardState extends State<Dashboard> {
                 icon: const Icon(Icons.close)),
           ),
           ListTile(
-            onTap: () => Navigator.push(
-                context,
-                CupertinoPageRoute(
-                    builder: (context) => InventoryDeduction())),
+            onTap: () => Navigator.push(context,
+                CupertinoPageRoute(builder: (context) => InventoryDeduction())),
             leading: const Icon(Icons.create_new_folder_outlined),
             title: const Text(
               "Inventory reduction",
@@ -285,10 +285,8 @@ class _DashboardState extends State<Dashboard> {
             ),
           ),
           ListTile(
-            onTap: () => Navigator.push(
-                context,
-                CupertinoPageRoute(
-                    builder: (context) => ClientDeposit())),
+            onTap: () => Navigator.push(context,
+                CupertinoPageRoute(builder: (context) => ClientDeposit())),
             leading: const Icon(Icons.credit_card),
             title: const Text(
               "Client deposit",
@@ -307,10 +305,8 @@ class _DashboardState extends State<Dashboard> {
             ),
           ),
           ListTile(
-            onTap: () => Navigator.push(
-                context,
-                CupertinoPageRoute(
-                    builder: (context) => AccountTransfer())),
+            onTap: () => Navigator.push(context,
+                CupertinoPageRoute(builder: (context) => AccountTransfer())),
             leading: const Icon(Icons.create_new_folder_outlined),
             title: const Text(
               "Account transfer",
