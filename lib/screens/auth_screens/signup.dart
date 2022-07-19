@@ -167,7 +167,7 @@ class _SignUpState extends State<SignUp> {
                   CircledLogo(
                     navigateTo: () {},
                     logo: 'assets/images/categories/appleIcon.png',
-                  )
+                  ),
                 ],
               ),
             ),

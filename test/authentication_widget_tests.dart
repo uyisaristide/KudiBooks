@@ -95,13 +95,6 @@ void main() {
       expect(find.byType(PhoneField), findsOneWidget);
       expect(find.byType(CustomDevider), findsOneWidget);
       expect(find.byType(CircledLogo), findsNWidgets(3));
-
-      // Text on sign up with phone screen
-      expect(find.text("First Name"), findsOneWidget);
-      expect(find.text("Last Name"), findsOneWidget);
-      expect(find.text("Pin"), findsNWidgets(2));
-      expect(find.text("Register now"), findsOneWidget);
-      expect(find.text("Login instead"), findsOneWidget);
     });
   });
 }
