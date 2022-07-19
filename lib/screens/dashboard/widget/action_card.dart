@@ -42,30 +42,34 @@ class ActionCard extends StatelessWidget {
     //     ),
     //   ),
     // );
-    return InkWell(
-      onTap: actionClick,
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-        height: 72,
-        decoration: BoxDecoration(
-        color: cardColor,
-        shape: BoxShape.rectangle,
-        borderRadius: const BorderRadius.all(Radius.circular(10.0))),
-        child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Container(
-          child: cardIcon,
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        Text(
-          title,
-          style: const TextStyle(color: Colors.white),
-        )
-      ],
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.only(left: 3, right: 3),
+        child: InkWell(
+          onTap: actionClick,
+          child: Container(
+            height: 72,
+            decoration: BoxDecoration(
+            color: cardColor,
+            shape: BoxShape.rectangle,
+            borderRadius: const BorderRadius.all(Radius.circular(10.0))),
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              child: cardIcon,
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Text(
+              title,
+              style: const TextStyle(color: Colors.white),
+            )
+          ],
+            ),
+          ),
         ),
       ),
     );
