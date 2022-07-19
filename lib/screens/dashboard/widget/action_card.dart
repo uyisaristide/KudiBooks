@@ -45,8 +45,8 @@ class ActionCard extends StatelessWidget {
     return InkWell(
       onTap: actionClick,
       child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
         height: 72,
-        width: 95,
         decoration: BoxDecoration(
             color: cardColor,
             shape: BoxShape.rectangle,
