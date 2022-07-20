@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kudibooks_app/screens/auth_screens/login.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
-import 'package:kudibooks_app/screens/background.dart';
 import 'package:kudibooks_app/screens/dashboard/all_transaction.dart';
 import 'package:kudibooks_app/screens/dashboard/client_list.dart';
 import 'package:kudibooks_app/screens/dashboard/loads.dart';

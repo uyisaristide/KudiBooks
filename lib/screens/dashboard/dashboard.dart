@@ -30,64 +30,6 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    List actions = [
-      ActionCard(
-        actionClick: () => Navigator.push(
-            context, CupertinoPageRoute(builder: (ctx) => ProductSale())),
-        cardIcon: const Icon(
-          Icons.shopping_cart_outlined,
-          color: Colors.white,
-        ),
-        cardColor: const Color(0xff157253),
-        title: 'Sell',
-      ),
-      ActionCard(
-        actionClick: () => Navigator.push(
-            context, CupertinoPageRoute(builder: (ctx) => ProductSale())),
-        cardIcon: const Icon(
-          Icons.shopping_cart_outlined,
-          color: Colors.white,
-        ),
-        cardColor: const Color(0xff157253),
-        title: 'test',
-      ),
-      ActionCard(
-        actionClick: () => Navigator.push(
-            context, CupertinoPageRoute(builder: (ctx) => NewInventory())),
-        cardIcon: const Icon(
-          Icons.shopping_cart_outlined,
-          color: Colors.white,
-        ),
-        cardColor: const Color(0xffA70C4A),
-        title: 'New Load',
-      ),
-      ActionCard(
-        actionClick: () => Navigator.push(
-            context, CupertinoPageRoute(builder: (ctx) => NewExpense())),
-        cardIcon: const Icon(
-          Icons.shopping_cart_outlined,
-          color: Colors.white,
-        ),
-        cardColor: const Color(0xffFDAB30),
-        title: 'Expenses',
-      ),
-      ActionCard(
-        actionClick: () => showModalBottomSheet(
-            isDismissible: true,
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(15),
-                    topLeft: Radius.circular(15))),
-            context: context,
-            builder: (context) => _modalForMore(context)),
-        cardIcon: const Icon(
-          Icons.shopping_cart_outlined,
-          color: Colors.white,
-        ),
-        cardColor: const Color(0xff61B76B),
-        title: 'More',
-      ),
-    ];
     return Scaffold(
       extendBodyBehindAppBar: true,
       drawer: Drawers(dashboardScreen: widget.callBack),
@@ -221,6 +163,7 @@ class _DashboardState extends State<Dashboard> {
                           ),
                         ],
                       ),
+                    ],),),
                     ),
                     // Container(
                     //   height: 73,

@@ -3,14 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kudibooks_app/screens/dashboard/classes/sliver_delegate_search.dart';
 import 'package:kudibooks_app/screens/dashboard/client_deposit.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/progress_row.dart';
-
-
 import 'package:kudibooks_app/screens/dashboard/new_client.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/progress_row.dart';
-
 import 'widget/progress_row.dart';
-
 
 class ClientList extends StatelessWidget {
   ClientList({Key? key}) : super(key: key);
@@ -201,10 +196,8 @@ class ClientList extends StatelessWidget {
                   icon: const Icon(
                     Icons.add,
                   ),
-                  onPressed: () => Navigator.push(
-                      context,
-                      CupertinoPageRoute(
-                          builder: (context) => ClientDeposit())),
+                  onPressed: () => Navigator.push(context,
+                      CupertinoPageRoute(builder: (context) => NewClient())),
                 )
               ],
               elevation: 0.0,
