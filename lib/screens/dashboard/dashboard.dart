@@ -163,23 +163,6 @@ class _DashboardState extends State<Dashboard> {
                         ],
                       ),
                     ),
-                    // Container(
-                    //   height: 73,
-                    //   margin: const EdgeInsets.only(left: 10, right: 10),
-                    //   child: LimitedBox(
-                    //     maxHeight: 100,
-                    //     maxWidth: MediaQuery.of(context).size.width,
-                    //     child: ListView.separated(
-                    //         scrollDirection: Axis.horizontal,
-                    //         itemBuilder: (context, inx) {
-                    //           return actions[inx];
-                    //         },
-                    //         separatorBuilder: (_, ins) => const SizedBox(
-                    //               width: 3,
-                    //             ),
-                    //         itemCount: actions.length),
-                    //   ),
-                    // ),
                     Container(
                       padding: const EdgeInsets.only(
                           left: 15.0, top: 10, bottom: 10),

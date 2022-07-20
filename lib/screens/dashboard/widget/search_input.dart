@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 class SearchTextField extends StatelessWidget {
   Function(String)? searchingContent;
   TextStyle? hintStyle;
+  String? hintTexts;
 
-  SearchTextField({this.hintStyle, this.searchingContent, Key? key})
+  SearchTextField(
+      {this.hintStyle, this.hintTexts, this.searchingContent, Key? key})
       : super(key: key);
 
   @override
@@ -20,7 +22,7 @@ class SearchTextField extends StatelessWidget {
               onChanged: searchingContent,
               decoration: InputDecoration(
                 filled: true,
-                hintText: 'Search product',
+                hintText: hintTexts,
                 hintStyle: hintStyle,
                 focusedBorder: OutlineInputBorder(
                     borderSide:
