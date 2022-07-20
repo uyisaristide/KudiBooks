@@ -4,13 +4,19 @@ class ActionCard extends StatelessWidget {
   Color? cardColor;
   Icon? cardIcon;
   String title;
+  bool? isBordered;
   Function()? actionClick;
+  Color? titleColor;
+  bool? isBoxShadow;
 
   ActionCard(
       {this.actionClick,
       required this.title,
       this.cardColor,
+      this.isBoxShadow,
+      this.isBordered,
       this.cardIcon,
+      this.titleColor,
       Key? key})
       : super(key: key);
 
@@ -50,6 +56,9 @@ class ActionCard extends StatelessWidget {
           child: Container(
             height: 72,
             decoration: BoxDecoration(
+                boxShadow: isBoxShadow == true
+                    ? [const BoxShadow(blurRadius: 3.0, color: Colors.grey)]
+                    : [],
                 color: cardColor,
                 shape: BoxShape.rectangle,
                 borderRadius: const BorderRadius.all(Radius.circular(10.0))),
@@ -65,7 +74,7 @@ class ActionCard extends StatelessWidget {
                 ),
                 Text(
                   title,
-                  style: const TextStyle(color: Colors.white),
+                  style: const TextStyle(fontWeight: FontWeight.w600),
                 )
               ],
             ),

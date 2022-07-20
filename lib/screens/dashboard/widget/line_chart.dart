@@ -8,12 +8,12 @@ class LignChartObject extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 400,
+      height: 300,
       child: LineChart(
         LineChartData(
             minX: 0,
-            maxX: 11,
-            minY: 1,
+            maxX: 12,
+            minY: 0,
             maxY: 6,
             gridData: FlGridData(
               show: true,
@@ -23,7 +23,8 @@ class LignChartObject extends StatelessWidget {
               getDrawingVerticalLine: (value) =>
                   FlLine(color: Colors.grey, strokeWidth: 2),
             ),
-            borderData: FlBorderData(show: true),titlesData: LineTitles.getTitleData(),
+            borderData: FlBorderData(show: true),
+            titlesData: LineTitles.getTitleData(),
             lineBarsData: [
               LineChartBarData(
                   spots: [
@@ -31,45 +32,46 @@ class LignChartObject extends StatelessWidget {
                     const FlSpot(3, 2),
                     const FlSpot(6, 4),
                     const FlSpot(9, 6),
-                    const FlSpot(11, 4),
+                    const FlSpot(12, 3.2),
                   ],
                   isCurved: true,
-                  barWidth: 4,
-                  dotData: FlDotData(show: false),
+                  barWidth: 5,
+                  dotData: FlDotData(show: true),
                   belowBarData: BarAreaData(
-                      show: true,
-                      //  colors: Colors.teal.withOpacity(0.5)
-                       )),
+                    show: true,
+                    //  colors: Colors.teal.withOpacity(0.5)
+                  )),
             ]),
       ),
     );
   }
 }
+
 SideTitles get _bottomTitles => SideTitles(
-     showTitles: true,
-     reservedSize: 22,
-     margin: 10,
-     interval: 1,
-     getTextStyles: (context, value) => const TextStyle(
-       color: Colors.blueGrey,
-       fontWeight: FontWeight.bold,
-       fontSize: 16,
-     ),
-     getTitles: (value) {
-       switch (value.toInt()) {
-         case 1:
-           return 'Jan';
-         case 3:
-           return 'Mar';
-         case 5:
-           return 'May';
-         case 7:
-           return 'Jul';
-         case 9:
-           return 'Sep';
-         case 11:
-           return 'Nov';
-       }
-       return '';
-     },
-   );
+      showTitles: true,
+      reservedSize: 22,
+      margin: 10,
+      interval: 1,
+      getTextStyles: (context, value) => const TextStyle(
+        color: Colors.blueGrey,
+        fontWeight: FontWeight.bold,
+        fontSize: 16,
+      ),
+      getTitles: (value) {
+        switch (value.toInt()) {
+          case 1:
+            return 'Jan';
+          case 3:
+            return 'Mar';
+          case 5:
+            return 'May';
+          case 7:
+            return 'Jul';
+          case 9:
+            return 'Sep';
+          case 11:
+            return 'Nov';
+        }
+        return '';
+      },
+    );

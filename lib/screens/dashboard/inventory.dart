@@ -145,56 +145,53 @@ class _InventoryScreenState extends State<InventoryScreen> {
               body: TabBarView(
                 physics: const NeverScrollableScrollPhysics(),
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          const SizedBox(
-                            height: 10,
+                  SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          padding: const EdgeInsets.only(
+                            left: 15.0,
+                            right: 15,
                           ),
-                          Container(
-                            padding: const EdgeInsets.only(
-                              left: 15.0,
-                              right: 15,
-                            ),
-                            alignment: AlignmentDirectional.centerStart,
-                            child: const Text(
-                              "Inventory",
-                              style: TextStyle(
-                                  fontSize: 17.0, fontWeight: FontWeight.bold),
-                            ),
+                          alignment: AlignmentDirectional.centerStart,
+                          child: const Text(
+                            "Inventory",
+                            style: TextStyle(
+                                fontSize: 17.0, fontWeight: FontWeight.bold),
                           ),
-                          _loadsList.isEmpty
-                              ? const Center(
-                                  child: Text("There is no inventory"),
-                                )
-                              : LimitedBox(
-                                  maxHeight: 1000,
-                                  child: ListView.separated(
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      itemBuilder: (context, load) => _loadsList
-                                              .isNotEmpty
-                                          ? LoadCard(
-                                              inventoryModel: _loadsList[load],
-                                            )
-                                          : const Center(
-                                              child:
-                                                  Text("There is no inventory"),
-                                            ),
-                                      // itemBuilder: (context, index) => const Text("Kigali"),
-                                      separatorBuilder: (_, idx) =>
-                                          const SizedBox(
-                                            height: 10,
+                        ),
+                        _loadsList.isEmpty
+                            ? const Center(
+                                child: Text("There is no inventory"),
+                              )
+                            : LimitedBox(
+                                maxHeight: 1000,
+                                child: ListView.separated(
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    itemBuilder: (context, load) => _loadsList.reversed.toList()
+                                            .isNotEmpty
+                                        ? LoadCard(
+                                            inventoryModel: _loadsList[load],
+                                          )
+                                        : const Center(
+                                            child:
+                                                Text("There is no inventory"),
                                           ),
-                                      itemCount: _loadsList.isEmpty
-                                          ? 1
-                                          : _loadsList.length),
-                                ),
-                        ],
-                      ),
+                                    // itemBuilder: (context, index) => const Text("Kigali"),
+                                    separatorBuilder: (_, idx) =>
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                    itemCount: _loadsList.isEmpty
+                                        ? 1
+                                        : _loadsList.length),
+                              ),
+                      ],
                     ),
                   ),
                   SingleChildScrollView(
@@ -225,7 +222,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                                     physics:
                                         const NeverScrollableScrollPhysics(),
                                     itemBuilder: (context, index) =>
-                                        _productList.isEmpty
+                                        _productList.reversed.toList().isEmpty
                                             ? const Center(
                                                 child: Text(
                                                     "There is no inventory"),
