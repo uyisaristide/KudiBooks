@@ -7,7 +7,8 @@ class LignChartObject extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
+      padding: EdgeInsets.only(right: 10),
       height: 300,
       child: LineChart(
         LineChartData(
@@ -54,31 +55,31 @@ class LignChartObject extends StatelessWidget {
   }
 }
 
-SideTitles get _bottomTitles => SideTitles(
-      showTitles: true,
-      reservedSize: 22,
-      margin: 10,
-      interval: 1,
-      getTextStyles: (context, value) => const TextStyle(
-        color: Colors.blueGrey,
-        fontWeight: FontWeight.bold,
-        fontSize: 16,
-      ),
-      getTitles: (value) {
-        switch (value.toInt()) {
-          case 1:
-            return 'Jan';
-          case 3:
-            return 'Mar';
-          case 5:
-            return 'May';
-          case 7:
-            return 'Jul';
-          case 9:
-            return 'Sep';
-          case 11:
-            return 'Nov';
-        }
-        return '';
-      },
-    );
+// SideTitles get _bottomTitles => SideTitles(
+//       showTitles: true,
+//       reservedSize: 22,
+//       margin: 10,
+//       interval: 1,
+//       getTextStyles: (context, value) => const TextStyle(
+//         color: Colors.blueGrey,
+//         fontWeight: FontWeight.bold,
+//         fontSize: 16,
+//       ),
+//       getTitles: (value) {
+//         switch (value.toInt()) {
+//           case 1:
+//             return 'Jan';
+//           case 3:
+//             return 'Mar';
+//           case 5:
+//             return 'May';
+//           case 7:
+//             return 'Jul';
+//           case 9:
+//             return 'Sep';
+//           case 11:
+//             return 'Nov';
+//         }
+//         return '';
+//       },
+//     );

@@ -4,33 +4,34 @@ class LineTitles {
   static getTitleData() => FlTitlesData(
       show: true,
       topTitles: SideTitles(showTitles: false),
+      rightTitles: SideTitles(showTitles: false),
       bottomTitles: SideTitles(
           showTitles: true,
           margin: 8,
           getTitles: (value) {
             switch (value.toInt()) {
               case 0:
-                return 'jan';
+                return 'Jan';
               case 1:
-                return 'feb';
+                return 'Feb';
               case 2:
-                return 'mar';
+                return 'Mar';
               case 3:
-                return 'apr';
+                return 'Apr';
               case 4:
-                return 'may';
+                return 'May';
               case 5:
-                return 'jun';
+                return 'Jun';
               case 6:
-                return 'jul';
+                return 'Jul';
               case 7:
-                return 'aug';
+                return 'Aug';
               case 8:
-                return 'sep';
+                return 'Sep';
               case 9:
-                return '0ct';
+                return 'Oct';
               case 10:
-                return 'nov';
+                return 'Nov';
               case 11:
                 return 'Dec';
             }
