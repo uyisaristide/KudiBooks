@@ -50,24 +50,24 @@ class ActionCard extends StatelessWidget {
           child: Container(
             height: 72,
             decoration: BoxDecoration(
-            color: cardColor,
-            shape: BoxShape.rectangle,
-            borderRadius: const BorderRadius.all(Radius.circular(10.0))),
+                color: cardColor,
+                shape: BoxShape.rectangle,
+                borderRadius: const BorderRadius.all(Radius.circular(10.0))),
             child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              child: cardIcon,
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Text(
-              title,
-              style: const TextStyle(color: Colors.white),
-            )
-          ],
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  child: cardIcon,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  title,
+                  style: const TextStyle(color: Colors.white),
+                )
+              ],
             ),
           ),
         ),

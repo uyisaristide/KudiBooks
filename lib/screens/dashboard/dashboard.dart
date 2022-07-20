@@ -12,6 +12,8 @@ import 'package:kudibooks_app/screens/dashboard/product_sale.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/action_card.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/business_movement_cart.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
+import 'package:kudibooks_app/screens/dashboard/widget/line_chart.dart';
+import 'package:kudibooks_app/screens/dashboard/widget/pie_chart.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/title_double.dart';
 
 class Dashboard extends StatefulWidget {
@@ -102,54 +104,84 @@ class _DashboardState extends State<Dashboard> {
                             fontSize: 17.0, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    Container(padding:const EdgeInsets.only(left: 10, right: 10),child: Row(mainAxisAlignment:MainAxisAlignment.spaceAround,children: [
-                      ActionCard(
-                        actionClick: () => Navigator.push(
-                            context, CupertinoPageRoute(builder: (ctx) => ProductSale())),
-                        cardIcon: const Icon(
-                          Icons.shopping_cart_outlined,
-                          color: Colors.white,
-                        ),
-                        cardColor: const Color(0xff157253),
-                        title: 'Sell',
-                      ),
-                      ActionCard(
-                        actionClick: () => Navigator.push(
-                            context, CupertinoPageRoute(builder: (ctx) => NewInventory())),
-                        cardIcon: const Icon(
-                          Icons.shopping_cart_outlined,
-                          color: Colors.white,
-                        ),
-                        cardColor: const Color(0xffA70C4A),
-                        title: 'New Load',
-                      ),
-                      ActionCard(
-                        actionClick: () => Navigator.push(
-                            context, CupertinoPageRoute(builder: (ctx) => NewExpense())),
-                        cardIcon: const Icon(
-                          Icons.shopping_cart_outlined,
-                          color: Colors.white,
-                        ),
-                        cardColor: const Color(0xffFDAB30),
-                        title: 'Expenses',
-                      ),
-                      ActionCard(
-                        actionClick: () => showModalBottomSheet(
-                            isDismissible: true,
-                            shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(15),
-                                    topLeft: Radius.circular(15))),
-                            context: context,
-                            builder: (context) => _modalForMore(context)),
-                        cardIcon: const Icon(
-                          Icons.shopping_cart_outlined,
-                          color: Colors.white,
-                        ),
-                        cardColor: const Color(0xff61B76B),
-                        title: 'More',
+                    Container(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          ActionCard(
+                            actionClick: () => Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                    builder: (ctx) => ProductSale())),
+                            cardIcon: const Icon(
+                              Icons.shopping_cart_outlined,
+                              color: Colors.white,
+                            ),
+                            cardColor: const Color(0xff157253),
+                            title: 'Sell',
+                          ),
+                          ActionCard(
+                            actionClick: () => Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                    builder: (ctx) => NewInventory())),
+                            cardIcon: const Icon(
+                              Icons.shopping_cart_outlined,
+                              color: Colors.white,
+                            ),
+                            cardColor: const Color(0xffA70C4A),
+                            title: 'New Load',
+                          ),
+                          ActionCard(
+                            actionClick: () => Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                    builder: (ctx) => NewExpense())),
+                            cardIcon: const Icon(
+                              Icons.shopping_cart_outlined,
+                              color: Colors.white,
+                            ),
+                            cardColor: const Color(0xffFDAB30),
+                            title: 'Expenses',
+                          ),
+                          ActionCard(
+                            actionClick: () => showModalBottomSheet(
+                                isDismissible: true,
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(15),
+                                        topLeft: Radius.circular(15))),
+                                context: context,
+                                builder: (context) => _modalForMore(context)),
+                            cardIcon: const Icon(
+                              Icons.shopping_cart_outlined,
+                              color: Colors.white,
+                            ),
+                            cardColor: const Color(0xff61B76B),
+                            title: 'More',
+                          ),
+                        ],
                       ),
                     ],),),
+                    ),
+                    // Container(
+                    //   height: 73,
+                    //   margin: const EdgeInsets.only(left: 10, right: 10),
+                    //   child: LimitedBox(
+                    //     maxHeight: 100,
+                    //     maxWidth: MediaQuery.of(context).size.width,
+                    //     child: ListView.separated(
+                    //         scrollDirection: Axis.horizontal,
+                    //         itemBuilder: (context, inx) {
+                    //           return actions[inx];
+                    //         },
+                    //         separatorBuilder: (_, ins) => const SizedBox(
+                    //               width: 3,
+                    //             ),
+                    //         itemCount: actions.length),
+                    //   ),
+                    // ),
                     Container(
                       padding: const EdgeInsets.only(
                           left: 15.0, top: 10, bottom: 10),
@@ -168,6 +200,8 @@ class _DashboardState extends State<Dashboard> {
                           borderRadius: BorderRadius.circular(5.0)),
                       child: DeveloperCharts(data: chartData),
                     ),
+                    const LignChartObject(),
+                    const CustomPieChart(),
                     DoubleHeader(
                       rightSide: "Recent Transactions",
                       iconButton2: IconButton(
