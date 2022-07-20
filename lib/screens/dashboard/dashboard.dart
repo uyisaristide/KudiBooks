@@ -31,10 +31,9 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      drawer: Drawers(dashboardScreen: widget.callBack),
-      body: Stack(
-        children: [
+        extendBodyBehindAppBar: true,
+        drawer: Drawers(dashboardScreen: widget.callBack),
+        body: Stack(children: [
           Positioned(
               top: 150,
               left: 250,
@@ -163,7 +162,6 @@ class _DashboardState extends State<Dashboard> {
                           ),
                         ],
                       ),
-                    ],),),
                     ),
                     // Container(
                     //   height: 73,
@@ -200,8 +198,11 @@ class _DashboardState extends State<Dashboard> {
                           borderRadius: BorderRadius.circular(5.0)),
                       child: DeveloperCharts(data: chartData),
                     ),
-                    const LignChartObject(),
-                    const CustomPieChart(),
+                    Container(
+                      padding: const EdgeInsets.only(top:30.0),
+                        child: const LignChartObject(),
+                    ),
+                    // const CustomPieChart(),
                     DoubleHeader(
                       rightSide: "Recent Transactions",
                       iconButton2: IconButton(
@@ -267,9 +268,7 @@ class _DashboardState extends State<Dashboard> {
                   ],
                 ),
               ))
-        ],
-      ),
-    );
+        ]));
   }
 
   _modalForMore(BuildContext context) {
