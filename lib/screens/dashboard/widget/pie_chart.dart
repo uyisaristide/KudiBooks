@@ -8,17 +8,27 @@ class CustomPieChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 400,
+      margin: const EdgeInsets.all(20),
+      height: 200,
+      child: PieChart(PieChartData(
+          sections: getSelections(),
+          borderData: FlBorderData(show: false),
+          // centerSpaceRadius: 50,
+          sectionsSpace: 0)),
     );
   }
 }
 
-// Map<int, PieChartSectionData> getSelections() => PieData.data
-//     .asMap()
-//     .map<int, PieChartSectionData>((index, data) {
-//       final value = PieChartSectionData(
-//           color: data.color, value: data.percent, title: data.month, titleStyle: TextStyle(fontSize: 17,fontWeight: FontWeight.bold,color: colors.blue));
-//       return MapEntry(index, value);
-//     })
-//     .values
-//     .toList;
+List<PieChartSectionData> getSelections() => PieData.data
+    .asMap()
+    .map<int, PieChartSectionData>((index, data) {
+      final value = PieChartSectionData(
+          color: data.color,
+          value: data.percent,
+          title: data.month,
+          titleStyle: const TextStyle(
+              fontSize: 17, fontWeight: FontWeight.bold, color: Colors.white));
+      return MapEntry(index, value);
+    })
+    .values
+    .toList();
