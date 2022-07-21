@@ -8,6 +8,8 @@ class LignChartObject extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
+    return Container(
+      padding: EdgeInsets.only(right: 10),
       height: 300,
       child: LineChart(
         LineChartData(

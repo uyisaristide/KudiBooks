@@ -7,6 +7,7 @@ import 'package:kudibooks_app/screens/dashboard/settings_screen.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/list_tile.dart';
+import 'package:kudibooks_app/screens/dashboard/widget/my_account_list_tile.dart';
 
 import 'widget/bottom_navigation.dart';
 
@@ -66,110 +67,99 @@ class MyAccountScreen extends StatelessWidget {
                       ),
                       const Text("Customer name",
                           style: TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.bold)),
+                              fontSize: 24,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                              fontFamily: 'Rubik')),
                       const SizedBox(
                         height: 20,
                       ),
                     ],
                   ),
                 ),
-                DoubleRowWidgets(
-                  leftSideWidget: IconButton(
-                    icon: const Icon(Icons.arrow_forward_ios),
-                    onPressed: () => Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                            builder: (context) => AccountTransfer())),
-                  ),
-                  rightSideText: 'Billing details',
-                  borderSidebottom: true,
-                ),
-                DoubleRowWidgets(
-                  leftSideWidget: IconButton(
-                    icon: const Icon(Icons.arrow_forward_ios),
-                    onPressed: () {},
-                  ),
-                  rightSideText: 'Company profile',
-                  borderSidebottom: true,
-                ),
-                DoubleRowWidgets(
-                  leftSideWidget: IconButton(
-                    icon: const Icon(Icons.arrow_forward_ios),
-                    onPressed: () => Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                            builder: (context) => const ChartAccount())),
-                  ),
-                  rightSideText: 'Chart of account',
-                  borderSidebottom: true,
-                ),
-                DoubleRowWidgets(
-                  leftSideWidget: IconButton(
-                    icon: const Icon(Icons.arrow_forward_ios),
-                    onPressed: () {},
-                  ),
-                  rightSideText: 'Refer & Earn',
-                  borderSidebottom: true,
-                ),
-                DoubleRowWidgets(
-                  leftSideWidget: IconButton(
-                    icon: const Icon(Icons.arrow_forward_ios),
-                    onPressed: () {},
-                  ),
-                  rightSideText: 'Edit profile',
-                  borderSidebottom: true,
-                ),
-                DoubleRowWidgets(
-                  leftSideWidget: IconButton(
-                    icon: const Icon(Icons.arrow_forward_ios),
-                    onPressed: () {},
-                  ),
-                  rightSideText: 'Change password',
-                  borderSidebottom: true,
-                ),
-                DoubleRowWidgets(
-                  leftSideWidget: IconButton(
-                    icon: const Icon(Icons.arrow_forward_ios),
-                    onPressed: () => Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                            builder: (context) => const Settings())),
-                  ),
-                  rightSideText: 'Settings',
-                  borderSidebottom: true,
-                ),
-                DoubleRowWidgets(
-                  leftSideWidget: IconButton(
-                      icon: const Icon(Icons.arrow_forward_ios),
-                      onPressed: () {}),
-                  rightSideText: 'Help',
-                  borderSidebottom: true,
-                ),
-                Container(
-                  padding: const EdgeInsets.only(bottom: 10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        "Logout",
-                        style: TextStyle(
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.w400,
-                            color: Color(0xffD16262)),
-                      ),
-                      Container(
-                        alignment: Alignment.centerRight,
-                        child: IconButton(
-                          icon: const Icon(Icons.arrow_forward_ios),
-                          onPressed: () => Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                  builder: (context) => const Login())),
-                        ),
-                      ),
-                    ],
-                  ),
+                // DoubleRowWidgets(
+                //   leftSideWidget: IconButton(
+                //     icon: const Icon(Icons.arrow_forward_ios),
+                //     onPressed: () => Navigator.push(
+                //         context,
+                //         CupertinoPageRoute(
+                //             builder: (context) => AccountTransfer())),
+                //   ),
+                //   rightSideText: 'Billing details',
+                //   borderSidebottom: true,
+                // ),
+                // DoubleRowWidgets(
+                //   leftSideWidget: IconButton(
+                //     icon: const Icon(Icons.arrow_forward_ios),
+                //     onPressed: () {},
+                //   ),
+                //   rightSideText: 'Company profile',
+                //   borderSidebottom: true,
+                // ),
+                // DoubleRowWidgets(
+                //   leftSideWidget: IconButton(
+                //     icon: const Icon(Icons.arrow_forward_ios),
+                //     onPressed: () => Navigator.push(
+                //         context,
+                //         CupertinoPageRoute(
+                //             builder: (context) => const ChartAccount())),
+                //   ),
+                //   rightSideText: 'Chart of account',
+                //   borderSidebottom: true,
+                // ),
+                // DoubleRowWidgets(
+                //   leftSideWidget: IconButton(
+                //     icon: const Icon(Icons.arrow_forward_ios),
+                //     onPressed: () {},
+                //   ),
+                //   rightSideText: 'Refer & Earn',
+                //   borderSidebottom: true,
+                // ),
+                // DoubleRowWidgets(
+                //   leftSideWidget: IconButton(
+                //     icon: const Icon(Icons.arrow_forward_ios),
+                //     onPressed: () {},
+                //   ),
+                //   rightSideText: 'Edit profile',
+                //   borderSidebottom: true,
+                // ),
+                const MyAccountLIstTiles(title: 'Billing Details'),
+                const MyAccountLIstTiles(title: 'Company Profile'),
+                const MyAccountLIstTiles(title: 'Chart of account'),
+                const MyAccountLIstTiles(title: 'Refer & Earn'),
+                const MyAccountLIstTiles(title: 'Edit Profile'),
+                const MyAccountLIstTiles(title: 'Change Password'),
+                const MyAccountLIstTiles(title: 'Setting'),
+                const MyAccountLIstTiles(title: 'Help'),
+                const MyAccountLIstTiles(
+                  title: 'Logout',
+                  color: Colors.red,
                 )
+                // Container(
+                //   padding: const EdgeInsets.only(bottom: 10.0),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       const Text(
+                //         "Logout",
+                //         style: TextStyle(
+                //             fontSize: 18.0,
+                //             fontWeight: FontWeight.w400,
+                //             color: Color(0xffD16262)),
+                //       ),
+                //       Container(
+                //         alignment: Alignment.centerRight,
+                //         child: IconButton(
+                //           icon: const Icon(Icons.arrow_forward_ios),
+                //           onPressed: () => Navigator.push(
+                //               context,
+                //               CupertinoPageRoute(
+                //                   builder: (context) => const Login())),
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // )
               ],
             ),
           ),
