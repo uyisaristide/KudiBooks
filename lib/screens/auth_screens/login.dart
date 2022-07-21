@@ -141,11 +141,6 @@ class _LoginState extends State<Login> {
             ),
             LoginButton(
               text: 'Login',
-
-              // validate: () => _formKey.currentState!.validate()
-              //     ? Navigator.pushNamed(context, '/')
-              //     : null,
-
               actionField: () {
                 if (_formKey.currentState!.validate()) {
                   var checkUser = _user.where((element) =>
@@ -160,7 +155,9 @@ class _LoginState extends State<Login> {
                     Navigator.pushReplacement(
                         context,
                         CupertinoPageRoute(
-                            builder: (context) => NavigationBottom(loggedUser: checkUser,)));
+                            builder: (context) => NavigationBottom(
+                                  loggedUser: checkUser.first.phoneOrEmail,
+                                )));
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                         SnackBars.snackBars(
