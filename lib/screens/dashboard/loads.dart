@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 
 class Loads extends StatelessWidget {
   Loads({Key? key}) : super(key: key);
-
+  final searchContent = TextEditingController();
   @override
   Widget build(BuildContext context) {
     InventoryProviders _inventoryProviders = Provider.of<InventoryProviders>(context);
@@ -58,7 +58,7 @@ class Loads extends StatelessWidget {
                     child: Container(
                         color: Theme.of(context).scaffoldBackgroundColor,
                         width: MediaQuery.of(context).size.width,
-                        child: SearchTextField()),
+                        child: SearchTextField(searchContent: searchContent,)),
                     maxHeight: 60,
                     minHeight: 60,
                   )),

@@ -9,6 +9,7 @@ import 'package:kudibooks_app/screens/dashboard/widget/line_chart.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/title_double.dart';
 
 import 'all_transaction.dart';
+import 'inventory_deduction.dart';
 
 class ProductDetails extends StatelessWidget {
   ProductModel productModel;
@@ -29,8 +30,8 @@ class ProductDetails extends StatelessWidget {
         title: 'Sell',
       ),
       ActionCard(
-        actionClick: () => Navigator.push(
-            context, CupertinoPageRoute(builder: (ctx) => ProductSale())),
+        actionClick: () => Navigator.push(context,
+            CupertinoPageRoute(builder: (ctx) => InventoryDeduction())),
         cardIcon: const Icon(
           Icons.shopping_cart_outlined,
           color: Colors.white,
@@ -39,8 +40,8 @@ class ProductDetails extends StatelessWidget {
         title: 'Sell',
       ),
       ActionCard(
-        actionClick: () => Navigator.push(
-            context, CupertinoPageRoute(builder: (ctx) => ProductSale())),
+        actionClick: () => Navigator.push(context,
+            CupertinoPageRoute(builder: (ctx) => InventoryDeduction())),
         cardIcon: const Icon(
           Icons.shopping_cart_outlined,
           color: Colors.white,
@@ -49,8 +50,8 @@ class ProductDetails extends StatelessWidget {
         title: 'Sell',
       ),
       ActionCard(
-        actionClick: () => Navigator.push(
-            context, CupertinoPageRoute(builder: (ctx) => ProductSale())),
+        actionClick: () => Navigator.push(context,
+            CupertinoPageRoute(builder: (ctx) => InventoryDeduction())),
         cardIcon: const Icon(
           Icons.shopping_cart_outlined,
           color: Colors.white,
@@ -63,13 +64,18 @@ class ProductDetails extends StatelessWidget {
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return [
-            const SliverAppBar(
+            SliverAppBar(
+              actions: [
+                IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.more_vert_outlined))
+              ],
               pinned: true,
               automaticallyImplyLeading: true,
               elevation: 0.0,
-              backgroundColor: Color(0xff157253),
+              backgroundColor: const Color(0xff157253),
               centerTitle: true,
-              title: Text("Product details",
+              title: const Text("Product details",
                   style: TextStyle(
                     fontSize: 20,
                   )),
@@ -182,7 +188,8 @@ class ProductDetails extends StatelessWidget {
                         title: 'Damaged',
                         isBordered: true,
                       ),
-                      ActionCard(isBoxShadow: true,
+                      ActionCard(
+                        isBoxShadow: true,
                         cardColor: Theme.of(context).scaffoldBackgroundColor,
                         actionClick: () => Navigator.push(
                             context,

@@ -4,9 +4,16 @@ class SearchTextField extends StatelessWidget {
   Function(String)? searchingContent;
   TextStyle? hintStyle;
   String? hintTexts;
+  Icon? fieldIcon;
+  TextEditingController searchContent;
 
   SearchTextField(
-      {this.hintStyle, this.hintTexts, this.searchingContent, Key? key})
+      {this.hintStyle,
+      required this.searchContent,
+      this.fieldIcon,
+      this.hintTexts,
+      this.searchingContent,
+      Key? key})
       : super(key: key);
 
   @override
@@ -18,9 +25,21 @@ class SearchTextField extends StatelessWidget {
           height: 50,
           width: MediaQuery.of(context).size.width,
           child: TextFormField(
+              validator: (value) {
+
+              },
+              controller: searchContent,
               style: hintStyle,
-              onChanged: searchingContent,
+              onChanged: (value){},
               decoration: InputDecoration(
+                suffixIcon: searchContent.text.isEmpty
+                    ? null
+                    : IconButton(
+                        onPressed: () => searchContent.clear(),
+                        icon: const Icon(
+                          Icons.close,
+                          color: Colors.grey,
+                        )),
                 filled: true,
                 hintText: hintTexts,
                 hintStyle: hintStyle,

@@ -15,10 +15,13 @@ import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/line_chart.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/title_double.dart';
 
+import '../../models/Users/user_model.dart';
+
 class Dashboard extends StatefulWidget {
   final VoidCallback? callBack;
+  Iterable<User>? loggedUser;
 
-  const Dashboard({this.callBack, Key? key}) : super(key: key);
+  Dashboard({this.loggedUser, this.callBack, Key? key}) : super(key: key);
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -29,6 +32,7 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.loggedUser);
     return Scaffold(
         extendBodyBehindAppBar: true,
         drawer: Drawers(dashboardScreen: widget.callBack),
@@ -118,6 +122,7 @@ class _DashboardState extends State<Dashboard> {
                             ),
                             cardColor: const Color(0xff157253),
                             title: 'Sell',
+                            titleColor: Colors.white,
                           ),
                           ActionCard(
                             actionClick: () => Navigator.push(
@@ -130,8 +135,10 @@ class _DashboardState extends State<Dashboard> {
                             ),
                             cardColor: const Color(0xffA70C4A),
                             title: 'New Load',
+                            titleColor: Colors.white,
                           ),
                           ActionCard(
+                            titleColor: Colors.white,
                             actionClick: () => Navigator.push(
                                 context,
                                 CupertinoPageRoute(
@@ -144,6 +151,7 @@ class _DashboardState extends State<Dashboard> {
                             title: 'Expenses',
                           ),
                           ActionCard(
+                            titleColor: Colors.white,
                             actionClick: () => showModalBottomSheet(
                                 isDismissible: true,
                                 shape: const RoundedRectangleBorder(
@@ -181,8 +189,8 @@ class _DashboardState extends State<Dashboard> {
                       child: DeveloperCharts(data: chartData),
                     ),
                     Container(
-                      padding: const EdgeInsets.only(top:30.0),
-                        child: const LignChartObject(),
+                      padding: const EdgeInsets.only(top: 30.0),
+                      child: const LignChartObject(),
                     ),
                     // const CustomPieChart(),
                     DoubleHeader(
