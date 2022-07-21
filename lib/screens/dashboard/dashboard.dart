@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kudibooks_app/models/transition_chart.dart';
+import 'package:kudibooks_app/providers/user_provider.dart';
 import 'package:kudibooks_app/screens/dashboard/account_transfer.dart';
 import 'package:kudibooks_app/screens/dashboard/all_transaction.dart';
 import 'package:kudibooks_app/screens/dashboard/client_deposit.dart';
@@ -14,12 +15,13 @@ import 'package:kudibooks_app/screens/dashboard/widget/business_movement_cart.da
 import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/line_chart.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/title_double.dart';
+import 'package:provider/provider.dart';
 
 import '../../models/Users/user_model.dart';
 
 class Dashboard extends StatefulWidget {
   final VoidCallback? callBack;
-  Iterable<User>? loggedUser;
+  String? loggedUser;
 
   Dashboard({this.loggedUser, this.callBack, Key? key}) : super(key: key);
 
@@ -32,10 +34,11 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.loggedUser);
+    UserProvider _userProvider = Provider.of<UserProvider>(context);
+    User? signedUser = _userProvider.allUsers.firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
     return Scaffold(
         extendBodyBehindAppBar: true,
-        drawer: Drawers(dashboardScreen: widget.callBack),
+        drawer: Drawers(dashboardScreen: widget.callBack, userInfo: signedUser),
         body: Stack(children: [
           Positioned(
               top: 150,

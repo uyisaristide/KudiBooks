@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kudibooks_app/models/Users/user_model.dart';
 import 'package:kudibooks_app/models/inventory_model.dart';
 import 'package:kudibooks_app/models/product_model.dart';
 import 'package:kudibooks_app/providers/inventory_provider.dart';
 import 'package:kudibooks_app/providers/product_provider.dart';
+import 'package:kudibooks_app/providers/user_provider.dart';
 import 'package:kudibooks_app/screens/dashboard/classes/sliver_delegate_search.dart';
 import 'package:kudibooks_app/screens/dashboard/new_product.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/bottom_navigation.dart';
@@ -19,8 +21,10 @@ import 'new_inventory.dart';
 
 class InventoryScreen extends StatefulWidget {
   VoidCallback? loadInventories;
+  String? loggedUser;
 
-  InventoryScreen({this.loadInventories, Key? key}) : super(key: key);
+  InventoryScreen({this.loggedUser, this.loadInventories, Key? key})
+      : super(key: key);
 
   @override
   State<InventoryScreen> createState() => _InventoryScreenState();
@@ -44,19 +48,21 @@ class _InventoryScreenState extends State<InventoryScreen> {
     InventoryProviders _inventoryProviders =
         Provider.of<InventoryProviders>(context);
     List<InventoryModel> _loadsList = _inventoryProviders.allInventories;
-
+    UserProvider _userProvider = Provider.of<UserProvider>(context);
+    User? signedUser = _userProvider.allUsers
+        .firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
     return WillPopScope(
-      onWillPop: () async {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => NavigationBottom()));
+        onWillPop: () async {
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => NavigationBottom()));
 
-        return false;
-      },
-      child: Scaffold(
-        drawer: Drawers(),
-        body: DefaultTabController(
-          length: 2,
-          child: NestedScrollView(
+          return false;
+        },
+        child: Scaffold(
+          drawer: Drawers(userInfo: signedUser),
+          body: DefaultTabController(
+            length: 2,
+            child: NestedScrollView(
               headerSliverBuilder:
                   (BuildContext context, bool innerBoxIsScrolled) {
                 return [
@@ -147,86 +153,88 @@ class _InventoryScreenState extends State<InventoryScreen> {
                 physics: const NeverScrollableScrollPhysics(),
                 children: [
                   SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Container(
-                          color: Theme.of(context).scaffoldBackgroundColor,
-                          padding:
-                              const EdgeInsets.only(left: 20.0, bottom: 20.0),
-                          child: isSearch == false
-                              ? Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const Text(
-                                      "Products",
-                                      style: TextStyle(
-                                          fontSize: 17.0,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        IconButton(
-                                          onPressed: () {
-                                            setState(
-                                                () => isSearch = !isSearch);
-                                          },
-                                          icon: const Icon(
-                                            Icons.search,
-                                            color: Colors.grey,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 15, right: 15),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Container(
+                            color: Theme.of(context).scaffoldBackgroundColor,
+                            padding:
+                                const EdgeInsets.only(left: 20.0, bottom: 20.0),
+                            child: isSearch == false
+                                ? Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const Text(
+                                        "Products",
+                                        style: TextStyle(
+                                            fontSize: 17.0,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          IconButton(
+                                            onPressed: () {
+                                              setState(
+                                                  () => isSearch = !isSearch);
+                                            },
+                                            icon: const Icon(
+                                              Icons.search,
+                                              color: Colors.grey,
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
+                                    ],
+                                  )
+                                : Container(
+                                    padding: const EdgeInsets.only(top: 10),
+                                    child: SearchTextField(
+                                      searchingContent: (value) {
+                                        print(value);
+                                      },
+                                      hintTexts: 'Search Product',
+                                      searchContent: searchContent,
                                     ),
-                                  ],
-                                )
-                              : Container(
-                                  padding: const EdgeInsets.only(top: 10),
-                                  child: SearchTextField(
-                                    searchingContent: (value) {
-                                      print(value);
-                                    },
-                                    hintTexts: 'Search Product',
-                                    searchContent: searchContent,
                                   ),
+                          ),
+                          _productList.isEmpty
+                              ? const Center(
+                                  child: Text("There is no product"),
+                                )
+                              : LimitedBox(
+                                  maxHeight: 1000,
+                                  child: ListView.separated(
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      itemBuilder: (context, index) =>
+                                          _productList.reversed.toList().isEmpty
+                                              ? const Center(
+                                                  child: Text(
+                                                      "There is no inventory"),
+                                                )
+                                              : ProductListTile(
+                                                  productList:
+                                                      _productList[index],
+                                                ),
+                                      // itemBuilder: (context, index) => const Text("Kigali"),
+                                      separatorBuilder: (_, idx) =>
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                      itemCount: _productList.isEmpty
+                                          ? 1
+                                          : _productList.length),
                                 ),
-                        ),
-                        _productList.isEmpty
-                            ? const Center(
-                                child: Text("There is no product"),
-                              )
-                            : LimitedBox(
-                                maxHeight: 1000,
-                                child: ListView.separated(
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    itemBuilder: (context, index) =>
-                                        _productList.reversed.toList().isEmpty
-                                            ? const Center(
-                                                child: Text(
-                                                    "There is no inventory"),
-                                              )
-                                            : ProductListTile(
-                                                productList:
-                                                    _productList[index],
-                                              ),
-                                    // itemBuilder: (context, index) => const Text("Kigali"),
-                                    separatorBuilder: (_, idx) =>
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                    itemCount: _productList.isEmpty
-                                        ? 1
-                                        : _productList.length),
-                              ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
                     child: Padding(
                       padding: const EdgeInsets.only(left: 15, right: 15),
                       child: Column(
@@ -305,9 +313,9 @@ class _InventoryScreenState extends State<InventoryScreen> {
                     ),
                   ),
                 ],
-              )),
-        ),
-      ),
-    );
+              ),
+            ),
+          ),
+        ));
   }
 }

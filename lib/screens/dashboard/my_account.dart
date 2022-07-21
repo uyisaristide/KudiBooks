@@ -1,32 +1,39 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kudibooks_app/screens/auth_screens/login.dart';
+import 'package:kudibooks_app/models/Users/user_model.dart';
+import 'package:kudibooks_app/providers/user_provider.dart';
 import 'package:kudibooks_app/screens/dashboard/account_transfer.dart';
 import 'package:kudibooks_app/screens/dashboard/chart_of_account.dart';
 import 'package:kudibooks_app/screens/dashboard/settings_screen.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/list_tile.dart';
+import 'package:provider/provider.dart';
 
 import 'widget/bottom_navigation.dart';
 
 class MyAccountScreen extends StatelessWidget {
+  String? loggedUser;
+
+  MyAccountScreen({this.loggedUser, Key? key}) : super(key: key);
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
+    UserProvider _userProvider = Provider.of<UserProvider>(context);
+    User? signedUser = _userProvider.allUsers
+        .firstWhere((user) => user.phoneOrEmail == loggedUser);
     return WillPopScope(
       onWillPop: () async {
-        print('cant pop');
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => NavigationBottom()));
         // Navigator.pop(context);
         return false;
       },
       child: Scaffold(
-        drawer: Drawers(),
+        drawer: Drawers(userInfo: signedUser),
         appBar: AppBarCommon.preferredSizeWidget(context, 'My Account'),
         body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: Container(
             margin: const EdgeInsets.all(15.0),
             child: Column(
@@ -64,112 +71,97 @@ class MyAccountScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const Text("Customer name",
-                          style: TextStyle(
+                      Text("${signedUser.firstName} ${signedUser.lastName}",
+                          style: const TextStyle(
                               fontSize: 24, fontWeight: FontWeight.bold)),
+                      Text(signedUser.phoneOrEmail,
+                          style: const TextStyle(
+                            fontSize: 16,
+                          )),
                       const SizedBox(
                         height: 20,
                       ),
                     ],
                   ),
                 ),
-                DoubleRowWidgets(
-                  leftSideWidget: IconButton(
-                    icon: const Icon(Icons.arrow_forward_ios),
-                    onPressed: () => Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                            builder: (context) => AccountTransfer())),
-                  ),
-                  rightSideText: 'Billing details',
-                  borderSidebottom: true,
+                ListTile(
+                  onTap: () => Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                          builder: (context) => AccountTransfer())),
+                  title: const Text('Billing details'),
+                  leading: const Icon(Icons.inventory),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                 ),
-                DoubleRowWidgets(
-                  leftSideWidget: IconButton(
-                    icon: const Icon(Icons.arrow_forward_ios),
-                    onPressed: () {},
-                  ),
-                  rightSideText: 'Company profile',
-                  borderSidebottom: true,
+                ListTile(
+                  onTap: () => Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                          builder: (context) => AccountTransfer())),
+                  title: const Text('Company profile'),
+                  leading: const Icon(Icons.inventory),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                 ),
-                DoubleRowWidgets(
-                  leftSideWidget: IconButton(
-                    icon: const Icon(Icons.arrow_forward_ios),
-                    onPressed: () => Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                            builder: (context) => const ChartAccount())),
-                  ),
-                  rightSideText: 'Chart of account',
-                  borderSidebottom: true,
+                ListTile(
+                  onTap: () => Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                          builder: (context) => const ChartAccount())),
+                  title: const Text('Chart of account'),
+                  leading: const Icon(Icons.inventory),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                 ),
-                DoubleRowWidgets(
-                  leftSideWidget: IconButton(
-                    icon: const Icon(Icons.arrow_forward_ios),
-                    onPressed: () {},
-                  ),
-                  rightSideText: 'Refer & Earn',
-                  borderSidebottom: true,
+                ListTile(
+                  onTap: () {},
+                  title: const Text('Refer & Earn'),
+                  leading: const Icon(Icons.inventory),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                 ),
-                DoubleRowWidgets(
-                  leftSideWidget: IconButton(
-                    icon: const Icon(Icons.arrow_forward_ios),
-                    onPressed: () {},
-                  ),
-                  rightSideText: 'Edit profile',
-                  borderSidebottom: true,
+                ListTile(
+                  onTap: () {},
+                  title: const Text('Edit profile'),
+                  leading: const Icon(Icons.inventory),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                 ),
-                DoubleRowWidgets(
-                  leftSideWidget: IconButton(
-                    icon: const Icon(Icons.arrow_forward_ios),
-                    onPressed: () {},
-                  ),
-                  rightSideText: 'Change password',
-                  borderSidebottom: true,
+                ListTile(
+                  onTap: () {},
+                  title: const Text('Change password'),
+                  leading: const Icon(Icons.inventory),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                 ),
-                DoubleRowWidgets(
-                  leftSideWidget: IconButton(
-                    icon: const Icon(Icons.arrow_forward_ios),
-                    onPressed: () => Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                            builder: (context) => const Settings())),
-                  ),
-                  rightSideText: 'Settings',
-                  borderSidebottom: true,
+                ListTile(
+                  onTap: () => Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                          builder: (context) => const Settings())),
+                  title: const Text('Settings'),
+                  leading: const Icon(Icons.inventory),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                 ),
-                DoubleRowWidgets(
-                  leftSideWidget: IconButton(
-                      icon: const Icon(Icons.arrow_forward_ios),
-                      onPressed: () {}),
-                  rightSideText: 'Help',
-                  borderSidebottom: true,
+                ListTile(
+                  onTap: () => Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                          builder: (context) => const Settings())),
+                  title: const Text('Help'),
+                  leading: const Icon(Icons.inventory),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                 ),
-                Container(
-                  padding: const EdgeInsets.only(bottom: 10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        "Logout",
-                        style: TextStyle(
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.w400,
-                            color: Color(0xffD16262)),
-                      ),
-                      Container(
-                        alignment: Alignment.centerRight,
-                        child: IconButton(
-                          icon: const Icon(Icons.arrow_forward_ios),
-                          onPressed: () => Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                  builder: (context) => const Login())),
-                        ),
-                      ),
-                    ],
+                ListTile(
+                  onTap: () => Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                          builder: (context) => const Settings())),
+                  title: const Text(
+                    "Logout",
+                    style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w400,
+                        color: Color(0xffD16262)),
                   ),
-                )
+                  leading: const Icon(Icons.inventory),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                ),
               ],
             ),
           ),

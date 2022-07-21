@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kudibooks_app/screens/dashboard/classes/sliver_delegate_search.dart';
-import 'package:kudibooks_app/screens/dashboard/client_deposit.dart';
 import 'package:kudibooks_app/screens/dashboard/new_client.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/progress_row.dart';
 import 'widget/progress_row.dart';
@@ -147,7 +146,7 @@ class ClientList extends StatelessWidget {
         children: [
           Container(
             padding:
-                const EdgeInsets.only(left: 20, right: 20.0, top: 9, bottom: 9),
+            const EdgeInsets.only(left: 20, right: 20.0, top: 9, bottom: 9),
             decoration: BoxDecoration(
                 color: const Color(0xffE6FDE6),
                 borderRadius: BorderRadius.circular(20.0)),
@@ -161,7 +160,7 @@ class ClientList extends StatelessWidget {
           ),
           Container(
             decoration:
-                BoxDecoration(borderRadius: BorderRadius.circular(20.0)),
+            BoxDecoration(borderRadius: BorderRadius.circular(20.0)),
             child: const Text(
               "\$25.99",
               style: TextStyle(fontSize: 15.0),
@@ -184,32 +183,49 @@ class ClientList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: NestedScrollView(
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return [
-            SliverAppBar(
-              pinned: true,
-              systemOverlayStyle:
-                  const SystemUiOverlayStyle(statusBarColor: Color(0xff157253)),
-              actions: [
-                IconButton(
-                  icon: const Icon(
-                    Icons.add,
-                  ),
-                  onPressed: () => Navigator.push(context,
-                      CupertinoPageRoute(builder: (context) => NewClient())),
-                )
-              ],
+        floatingActionButton: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+              primary: const Color(0xffFDAB30),
+              padding: const EdgeInsets.all(15.0),
               elevation: 0.0,
-              backgroundColor: const Color(0xff157253),
-              centerTitle: true,
-              title: const Text("Clients list",
-                  style: TextStyle(
-                    fontSize: 20,
-                  )),
-            ),
-            SliverPersistentHeader(
-                delegate: SearchBoxSliver(
+              shape: const CircleBorder()),
+          onPressed: () =>
+              Navigator.push(
+                  context,
+                  CupertinoPageRoute(builder: (context) => NewClient())),
+          child: const Text(
+            '+',
+            style: TextStyle(fontSize: 25),
+          ),
+        ),
+        body: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled)
+    {
+      return [
+        SliverAppBar(
+          pinned: true,
+          systemOverlayStyle:
+          const SystemUiOverlayStyle(statusBarColor: Color(0xff157253)),
+          actions: [
+            IconButton(
+              icon: const Icon(
+                Icons.add,
+              ),
+              onPressed: () =>
+                  Navigator.push(context,
+                      CupertinoPageRoute(builder: (context) => NewClient())),
+            )
+          ],
+          elevation: 0.0,
+          backgroundColor: const Color(0xff157253),
+          centerTitle: true,
+          title: const Text("Clients list",
+              style: TextStyle(
+                fontSize: 20,
+              )),
+        ),
+        SliverPersistentHeader(
+            delegate: SearchBoxSliver(
               maxHeight: 165,
               minHeight: 165,
               child: Padding(
@@ -217,15 +233,16 @@ class ClientList extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: statisticsCard
-                      .map((e) => Expanded(
-                            child: e,
-                          ))
+                      .map((e) =>
+                      Expanded(
+                        child: e,
+                      ))
                       .toList(),
                 ),
               ),
             )),
-            SliverPersistentHeader(
-                delegate: SearchBoxSliver(
+        SliverPersistentHeader(
+            delegate: SearchBoxSliver(
               maxHeight: 165,
               minHeight: 165,
               child: Padding(
@@ -271,116 +288,120 @@ class ClientList extends StatelessWidget {
                     ]),
               ),
             )),
-            SliverPersistentHeader(
-                pinned: true,
-                delegate: SearchBoxSliver(
-                  maxHeight: 50,
-                  minHeight: 50,
-                  child: Container(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 15, right: 15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        SliverPersistentHeader(
+            pinned: true,
+            delegate: SearchBoxSliver(
+              maxHeight: 50,
+              minHeight: 50,
+              child: Container(
+                color: Theme
+                    .of(context)
+                    .scaffoldBackgroundColor,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 15, right: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        padding:
+                        const EdgeInsets.only(top: 15.0, bottom: 15.0),
+                        child: const Text(
+                          "Clients list",
+                          style: TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey),
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Container(
-                            padding:
-                                const EdgeInsets.only(top: 15.0, bottom: 15.0),
-                            child: const Text(
-                              "Clients list",
-                              style: TextStyle(
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey),
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.search,
+                              color: Colors.grey,
                             ),
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              IconButton(
-                                onPressed: () {},
-                                icon: const Icon(
-                                  Icons.search,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                              IconButton(
-                                onPressed: () {},
-                                icon: const Icon(
-                                  Icons.sort,
-                                  color: Colors.grey,
-                                ),
-                              )
-                            ],
-                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.sort,
+                              color: Colors.grey,
+                            ),
+                          )
                         ],
                       ),
-                    ),
+                    ],
                   ),
-                )),
-          ];
-        },
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 15, right: 15),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                LimitedBox(
-                  child: ListView.separated(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) => ListTile(
-                            trailing: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, right: 20.0, top: 9, bottom: 9),
-                                  decoration: BoxDecoration(
-                                      color: const Color(0xffE6FDE6),
-                                      borderRadius:
-                                          BorderRadius.circular(20.0)),
-                                  child: const Text(
-                                    "Active",
-                                    style: TextStyle(
-                                        color: Colors.green,
-                                        fontSize: 9.0,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.circular(20.0)),
-                                  child: const Text(
-                                    "\$25.99",
-                                    style: TextStyle(fontSize: 15.0),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            leading: const CircleAvatar(
-                              radius: 25,
-                              child: Icon(Icons.person),
-                            ),
-                            subtitle: const Text("clientemail@gmail.com"),
-                            title: const Text(
-                              "Client name",
-                              style: TextStyle(
-                                  fontSize: 16.0, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                      separatorBuilder: (_, idx) => const SizedBox(
-                            height: 5,
-                          ),
-                      itemCount: 15),
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
+                ),
+              ),
+            )),
+      ];
+    },
+    body: SingleChildScrollView(
+    child: Padding(
+    padding: const EdgeInsets.only(left: 15, right: 15),
+    child: Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+    LimitedBox(
+    child: ListView.separated(
+    shrinkWrap: true,
+    physics: const NeverScrollableScrollPhysics(),
+    itemBuilder: (context, index) => ListTile(
+    trailing: Column(
+    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    children: [
+    Container(
+    padding: const EdgeInsets.only(
+    left: 20, right: 20.0, top: 9, bottom: 9),
+    decoration: BoxDecoration(
+    color: const Color(0xffE6FDE6),
+    borderRadius:
+    BorderRadius.circular(20.0)),
+    child: const Text(
+    "Active",
+    style: TextStyle(
+    color: Colors.green,
+    fontSize: 9.0,
+    fontWeight: FontWeight.bold),
+    ),
+    ),
+    Container(
+    decoration: BoxDecoration(
+    borderRadius:
+    BorderRadius.circular(20.0)),
+    child: const Text(
+    "\$25.99",
+    style: TextStyle(fontSize: 15.0),
+    ),
+    ),
+    ],
+    ),
+    leading: const CircleAvatar(
+    radius: 25,
+    child: Icon(Icons.person),
+    ),
+    subtitle: const Text("clientemail@gmail.com"),
+    title: const Text(
+    "Client name",
+    style: TextStyle(
+    fontSize: 16.0, fontWeight: FontWeight.bold),
+    ),
+    ),
+    separatorBuilder: (_, idx) => const SizedBox(
+    height: 5,
+    ),
+    itemCount: 15),
+    )
+    ],
+    ),
+    ),
+    )
+    ,
+    )
+    ,
     );
   }
 }
