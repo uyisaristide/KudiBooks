@@ -7,16 +7,31 @@ import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/double_header_two.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/inventory_card.dart';
 
-class InventoryDeduction extends StatelessWidget {
+class InventoryDeduction extends StatefulWidget {
   InventoryDeduction({Key? key}) : super(key: key);
+
+  @override
+  State<InventoryDeduction> createState() => _InventoryDeductionState();
+}
+
+class _InventoryDeductionState extends State<InventoryDeduction> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   final nameController = TextEditingController();
+
   final memoController = TextEditingController();
+
   final transactionController = TextEditingController();
+
   final transactionDateController = TextEditingController();
+
   final descriptionController = TextEditingController();
+
   final noteController = TextEditingController();
-  List<String> unitProduct = [];
+
+  List<String> unitProduct = ["Used", "Stolen", "Damaged", "Other"];
+
+  String? unitProductValue;
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +59,11 @@ class InventoryDeduction extends StatelessWidget {
               child: Column(
                 children: [
                   SelectInputType(
+                    selectedValue: (value) {
+                      setState(() {
+                        unitProductValue = value;
+                      });
+                    },
                     itemsToSelect: unitProduct,
                     dropDownHint: const Text(
                       'Used',

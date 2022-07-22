@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kudibooks_app/models/Users/user_model.dart';
 import 'package:kudibooks_app/screens/auth_screens/login.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
 import 'package:kudibooks_app/screens/dashboard/all_transaction.dart';
@@ -11,8 +12,9 @@ import 'package:kudibooks_app/screens/dashboard/settings_screen.dart';
 
 class Drawers extends StatelessWidget {
   VoidCallback? dashboardScreen;
+  User? userInfo;
 
-  Drawers({this.dashboardScreen, Key? key}) : super(key: key);
+  Drawers({this.dashboardScreen, this.userInfo, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,13 +40,13 @@ class Drawers extends StatelessWidget {
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     Text(
-                      "User Name",
-                      style: TextStyle(color: Colors.white),
+                      "${userInfo!.firstName} ${userInfo!.lastName}",
+                      style: const TextStyle(color: Colors.white),
                     ),
-                    Text("useremail@email.com",
-                        style: TextStyle(color: Colors.white))
+                    Text(userInfo!.phoneOrEmail,
+                        style: const TextStyle(color: Colors.white))
                   ],
                 ),
               ],
@@ -155,19 +157,19 @@ class Drawers extends StatelessWidget {
                           size: 15,
                         ),
                       ),
-                      const ListTile(
-                        leading: Icon(Icons.info_outline),
-                        title: Text("About"),
-                        trailing: Icon(
-                          Icons.arrow_forward_ios,
-                          size: 15,
-                        ),
-                      ),
+                      // const ListTile(
+                      //   leading: Icon(Icons.info_outline),
+                      //   title: Text("About"),
+                      //   trailing: Icon(
+                      //     Icons.arrow_forward_ios,
+                      //     size: 15,
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
                 const SizedBox(
-                  height: 30,
+                  height: 20,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(20.0),

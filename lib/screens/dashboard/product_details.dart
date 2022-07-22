@@ -4,9 +4,12 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:kudibooks_app/models/product_model.dart';
 import 'package:kudibooks_app/screens/dashboard/classes/sliver_delegate_search.dart';
 import 'package:kudibooks_app/screens/dashboard/product_sale.dart';
+import 'package:kudibooks_app/screens/dashboard/widget/action_card.dart';
+import 'package:kudibooks_app/screens/dashboard/widget/line_chart.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/title_double.dart';
 
 import 'all_transaction.dart';
+import 'inventory_deduction.dart';
 
 class ProductDetails extends StatelessWidget {
   ProductModel productModel;
@@ -16,165 +19,63 @@ class ProductDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> listOfSmallCards = [
-      InkWell(
-        onTap: () => Navigator.push(
-            context, CupertinoPageRoute(builder: (context) => ProductSale())),
-        child: Container(
-          margin: const EdgeInsets.only(right: 5),
-          height: 72,
-          width: 82,
-          decoration: BoxDecoration(
-              border: Border.all(width: 1.0),
-              boxShadow: [
-                // BoxShadow(
-                //   color: Colors.red.withOpacity(0.1),
-                //   spreadRadius: 1,
-                //   blurRadius: 1,
-                //   offset: const Offset(3, 7),
-                // )
-              ],
-              shape: BoxShape.rectangle,
-              borderRadius: const BorderRadius.all(Radius.circular(10.0))),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                child: const Icon(
-                  Icons.shopping_cart_outlined,
-                  color: Color(0xff157253),
-                ),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              const Text(
-                'Sell',
-              )
-            ],
-          ),
+      ActionCard(
+        actionClick: () => Navigator.push(
+            context, CupertinoPageRoute(builder: (ctx) => ProductSale())),
+        cardIcon: const Icon(
+          Icons.shopping_cart_outlined,
+          color: Colors.white,
         ),
+        cardColor: const Color(0xff157253),
+        title: 'Sell',
       ),
-      InkWell(
-        child: Container(
-          margin: const EdgeInsets.only(right: 5),
-          height: 72,
-          width: 82,
-          decoration: BoxDecoration(
-              border: Border.all(width: 1.0),
-              boxShadow: [
-                // BoxShadow(
-                //   color: Colors.grey.withOpacity(0.1),
-                //   spreadRadius: 1,
-                //   blurRadius: 1,
-                //   offset: const Offset(0, 0),
-                // )
-              ],
-              shape: BoxShape.rectangle,
-              borderRadius: const BorderRadius.all(Radius.circular(10.0))),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                child: const Icon(
-                  Icons.check_circle_outline_sharp,
-                  color: Colors.green,
-                ),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              const Text(
-                'Used',
-              )
-            ],
-          ),
+      ActionCard(
+        actionClick: () => Navigator.push(context,
+            CupertinoPageRoute(builder: (ctx) => InventoryDeduction())),
+        cardIcon: const Icon(
+          Icons.shopping_cart_outlined,
+          color: Colors.white,
         ),
+        cardColor: const Color(0xff157253),
+        title: 'Sell',
       ),
-      InkWell(
-        child: Container(
-          margin: const EdgeInsets.only(right: 5),
-          height: 72,
-          width: 82,
-          decoration: BoxDecoration(
-              border: Border.all(width: 1.0),
-              boxShadow: [
-                // BoxShadow(
-                //   color: Colors.grey.withOpacity(0.1),
-                //   spreadRadius: 1,
-                //   blurRadius: 1,
-                //   offset: const Offset(0, 0),
-                // )
-              ],
-              shape: BoxShape.rectangle,
-              borderRadius: const BorderRadius.all(Radius.circular(10.0))),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: const [
-              Icon(
-                Icons.remove_circle_outline_rounded,
-                color: Color(0xffA70C4A),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Text(
-                'Damaged',
-              )
-            ],
-          ),
+      ActionCard(
+        actionClick: () => Navigator.push(context,
+            CupertinoPageRoute(builder: (ctx) => InventoryDeduction())),
+        cardIcon: const Icon(
+          Icons.shopping_cart_outlined,
+          color: Colors.white,
         ),
+        cardColor: const Color(0xff157253),
+        title: 'Sell',
       ),
-      InkWell(
-        child: Container(
-          height: 72,
-          width: 82,
-          decoration: BoxDecoration(
-              border: Border.all(width: 1.0),
-              boxShadow: [
-                // BoxShadow(
-                //   color: Colors.grey.withOpacity(0.1),
-                //   spreadRadius: 1,
-                //   blurRadius: 1,
-                //   offset: const Offset(0, 0),
-                // )
-              ],
-              shape: BoxShape.rectangle,
-              borderRadius: const BorderRadius.all(Radius.circular(10.0))),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                child: const Icon(
-                  Icons.edit_outlined,
-                  color: Color(0xffFDAB30),
-                ),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              const Text(
-                'Edit',
-              )
-            ],
-          ),
+      ActionCard(
+        actionClick: () => Navigator.push(context,
+            CupertinoPageRoute(builder: (ctx) => InventoryDeduction())),
+        cardIcon: const Icon(
+          Icons.shopping_cart_outlined,
+          color: Colors.white,
         ),
+        cardColor: const Color(0xff157253),
+        title: 'Sell',
       ),
     ];
     return Scaffold(
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return [
-            const SliverAppBar(
+            SliverAppBar(
+              actions: [
+                IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.more_vert_outlined))
+              ],
               pinned: true,
               automaticallyImplyLeading: true,
               elevation: 0.0,
-              backgroundColor: Color(0xff157253),
+              backgroundColor: const Color(0xff157253),
               centerTitle: true,
-              title: Text("Product details",
+              title: const Text("Product details",
                   style: TextStyle(
                     fontSize: 20,
                   )),
@@ -182,7 +83,7 @@ class ProductDetails extends StatelessWidget {
             SliverPersistentHeader(
                 delegate: SearchBoxSliver(
               minHeight: 250,
-              maxHeight: 300,
+              maxHeight: 250,
               child: Container(
                 margin: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
                 child: Column(
@@ -227,7 +128,8 @@ class ProductDetails extends StatelessWidget {
                       child: Text(
                         productModel.productDescription.toString(),
                         textAlign: TextAlign.center,
-                        style: const TextStyle(color: Colors.grey, fontSize: 13),
+                        style:
+                            const TextStyle(color: Colors.grey, fontSize: 13),
                       ),
                     )
                   ],
@@ -238,17 +140,69 @@ class ProductDetails extends StatelessWidget {
                 pinned: true,
                 delegate: SearchBoxSliver(
                   maxHeight: 80,
-                  minHeight: 70,
+                  minHeight: 80,
                   child: Container(
                     color: Theme.of(context).scaffoldBackgroundColor,
                     padding:
                         const EdgeInsets.only(left: 15, right: 15, top: 10),
-                    child: Row(
-                        children: listOfSmallCards
-                            .map((e) => Expanded(
-                                  child: e,
-                                ))
-                            .toList()),
+                    child: Row(children: [
+                      ActionCard(
+                        isBoxShadow: true,
+                        actionClick: () => Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                                builder: (ctx) => ProductSale())),
+                        cardIcon: const Icon(
+                          Icons.shopping_cart_outlined,
+                          color: Color(0xff157253),
+                        ),
+                        cardColor: Theme.of(context).scaffoldBackgroundColor,
+                        title: 'Sell',
+                        isBordered: true,
+                      ),
+                      ActionCard(
+                        isBoxShadow: true,
+                        actionClick: () => Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                                builder: (ctx) => ProductSale())),
+                        cardIcon: const Icon(
+                          Icons.check_circle_outline_sharp,
+                          color: Colors.green,
+                        ),
+                        title: 'Used',
+                        isBordered: true,
+                        cardColor: Theme.of(context).scaffoldBackgroundColor,
+                      ),
+                      ActionCard(
+                        isBoxShadow: true,
+                        cardColor: Theme.of(context).scaffoldBackgroundColor,
+                        actionClick: () => Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                                builder: (ctx) => ProductSale())),
+                        cardIcon: const Icon(
+                          Icons.remove_circle_outline,
+                          color: Color(0xffA70C4A),
+                        ),
+                        title: 'Damaged',
+                        isBordered: true,
+                      ),
+                      ActionCard(
+                        isBoxShadow: true,
+                        cardColor: Theme.of(context).scaffoldBackgroundColor,
+                        actionClick: () => Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                                builder: (ctx) => ProductSale())),
+                        cardIcon: const Icon(
+                          Icons.edit_outlined,
+                          color: Colors.amber,
+                        ),
+                        title: 'Edit',
+                        isBordered: true,
+                      ),
+                    ]),
                   ),
                 )),
             SliverPersistentHeader(
@@ -286,6 +240,10 @@ class ProductDetails extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Container(
+                  padding: const EdgeInsets.only(top: 30.0),
+                  child: const LignChartObject(),
+                ),
                 LimitedBox(
                   child: ListView.separated(
                       shrinkWrap: true,

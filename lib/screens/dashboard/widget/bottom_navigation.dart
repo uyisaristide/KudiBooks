@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:kudibooks_app/models/Users/user_model.dart';
 import 'package:kudibooks_app/screens/dashboard/alert_screen.dart';
 import 'package:kudibooks_app/screens/dashboard/dashboard.dart';
 import 'package:kudibooks_app/screens/dashboard/inventory.dart';
 import 'package:kudibooks_app/screens/dashboard/my_account.dart';
 
 class NavigationBottom extends StatefulWidget {
-  NavigationBottom({Key? key}) : super(key: key);
+  String? loggedUser;
+  NavigationBottom({this.loggedUser, Key? key}) : super(key: key);
 
   @override
   State<NavigationBottom> createState() => _NavigationBottomState();
@@ -13,13 +15,13 @@ class NavigationBottom extends StatefulWidget {
 
 class _NavigationBottomState extends State<NavigationBottom> {
   List<Widget> get screens => [
-        Dashboard(
+        Dashboard(loggedUser: widget.loggedUser,
             callBack: () => setState(() {
                   _currentIndex = 0;
                 })),
-        InventoryScreen(),
-        const AlertScreen(),
-        MyAccountScreen(),
+        InventoryScreen(loggedUser: widget.loggedUser),
+        AlertScreen(loggedUser: widget.loggedUser),
+        MyAccountScreen(loggedUser: widget.loggedUser),
       ];
   static int _currentIndex = 0;
   late PageController _pageController;
