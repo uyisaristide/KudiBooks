@@ -66,9 +66,28 @@ class ProductDetails extends StatelessWidget {
           return [
             SliverAppBar(
               actions: [
-                IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.more_vert_outlined))
+                PopupMenuButton(itemBuilder: (contexts) {
+                  return [
+                    const PopupMenuItem(
+                      child: ListTile(
+                        title: Text("Edit"),
+                        leading: Icon(Icons.edit_outlined),
+                      ),
+                    ),
+                    const PopupMenuItem(
+                      child: ListTile(
+                        title: Text("Setting"),
+                        leading: Icon(Icons.settings),
+                      ),
+                    ),
+                    const PopupMenuItem(
+                      child: ListTile(
+                        title: Text("Help"),
+                        leading: Icon(Icons.help_outline),
+                      ),
+                    ),
+                  ];
+                }),
               ],
               pinned: true,
               automaticallyImplyLeading: true,

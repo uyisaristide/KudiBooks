@@ -152,7 +152,7 @@ class MyAccountScreen extends StatelessWidget {
                       CupertinoPageRoute(
                           builder: (context) => const Settings())),
                   title: const Text(
-                    "Logout",
+                    "Sign out",
                     style: TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.w400,
