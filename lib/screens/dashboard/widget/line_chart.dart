@@ -8,6 +8,9 @@ class LignChartObject extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+
+      margin: const EdgeInsets.only(top: 10),
+
       padding: const EdgeInsets.only(right: 10),
       height: 300,
       child: LineChart(
@@ -25,18 +28,28 @@ class LignChartObject extends StatelessWidget {
                   FlLine(color: Colors.grey, strokeWidth: 2),
             ),
             borderData: FlBorderData(show: true),
+            backgroundColor: Colors.black12,
             titlesData: LineTitles.getTitleData(),
             lineBarsData: [
               LineChartBarData(
                   spots: [
-                    const FlSpot(0, 4),
-                    const FlSpot(3, 2),
-                    const FlSpot(6, 4),
-                    const FlSpot(9, 6),
-                    const FlSpot(12, 3.2),
+
+                    const FlSpot(0, 3),
+                    const FlSpot(1, 3),
+                    const FlSpot(2, 4),
+                    const FlSpot(3, 3),
+                    const FlSpot(4, 4.3),
+                    const FlSpot(5, 4.7),
+                    const FlSpot(6, 3),
+                    const FlSpot(7, 5),
+                    const FlSpot(8, 5),
+                    const FlSpot(9, 3),
+                    const FlSpot(10, 4),
+                    const FlSpot(11, 4.5),
                   ],
                   isCurved: true,
-                  barWidth: 5,
+                  barWidth: 4,
+
                   dotData: FlDotData(show: true),
                   belowBarData: BarAreaData(
                     show: true,
