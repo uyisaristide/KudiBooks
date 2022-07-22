@@ -242,7 +242,7 @@ class ProductDetails extends StatelessWidget {
               children: [
                 Container(
                   padding: const EdgeInsets.only(top: 30.0),
-                  child: const LignChartObject(),
+                  child: LignChartObject(),
                 ),
                 LimitedBox(
                   child: ListView.separated(

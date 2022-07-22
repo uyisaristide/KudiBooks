@@ -14,6 +14,7 @@ import 'package:kudibooks_app/screens/dashboard/widget/action_card.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/business_movement_cart.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/line_chart.dart';
+import 'package:kudibooks_app/screens/dashboard/widget/line_chart_indicator.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/pie_chart.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/title_double.dart';
 import 'package:provider/provider.dart';
@@ -255,8 +256,9 @@ class _DashboardState extends State<Dashboard> {
                     ),
                     Container(
                       padding: const EdgeInsets.only(top: 30.0),
-                      child: const LignChartObject(),
+                      child: LignChartObject(),
                     ),
+                    const LineChartIndicator(),
                     const CustomPieChart(),
                     DoubleHeader(
                       rightSide: "Recent Transactions",
