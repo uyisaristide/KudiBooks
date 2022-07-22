@@ -10,8 +10,8 @@ class LignChartObject extends StatelessWidget {
     const Color.fromARGB(255, 211, 85, 2),
   ];
   final List<Color> profitGradientColors = [
-    Color.fromARGB(255, 41, 230, 35),
-    Color.fromARGB(255, 69, 121, 73),
+    const Color.fromARGB(255, 41, 230, 35),
+    const Color.fromARGB(255, 69, 121, 73),
   ];
 
   @override
