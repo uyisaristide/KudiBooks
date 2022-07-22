@@ -21,6 +21,8 @@ class ProductsScreen extends StatefulWidget {
 }
 
 class _ProductsScreenState extends State<ProductsScreen> {
+  final searchContent = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     ProductProvider _productProvider = Provider.of<ProductProvider>(context);
@@ -88,6 +90,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                         color: Theme.of(context).scaffoldBackgroundColor,
                         child: SearchTextField(
                           searchingContent: (value) {},
+                          searchContent: searchContent,
                         ),
                       ))),
             ];

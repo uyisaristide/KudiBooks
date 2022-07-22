@@ -7,6 +7,7 @@ import 'package:kudibooks_app/models/product_sale_model.dart';
 class ProductProvider extends ChangeNotifier {
   final List<ProductModel> _listProducts = [];
   final List<ProductInLoadModel> _productLoadModel = [];
+  static ProductProvider productProviderInstance = ProductProvider();
 
   final List<ProductToSell> _productToSell = [];
 

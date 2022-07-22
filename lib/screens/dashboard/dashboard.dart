@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kudibooks_app/models/transition_chart.dart';
+import 'package:kudibooks_app/providers/user_provider.dart';
 import 'package:kudibooks_app/screens/dashboard/account_transfer.dart';
 import 'package:kudibooks_app/screens/dashboard/all_transaction.dart';
 import 'package:kudibooks_app/screens/dashboard/client_deposit.dart';
@@ -13,13 +14,16 @@ import 'package:kudibooks_app/screens/dashboard/widget/action_card.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/business_movement_cart.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/line_chart.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/pie_chart.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/title_double.dart';
+import 'package:provider/provider.dart';
+
+import '../../models/Users/user_model.dart';
 
 class Dashboard extends StatefulWidget {
   final VoidCallback? callBack;
+  String? loggedUser;
 
-  const Dashboard({this.callBack, Key? key}) : super(key: key);
+  Dashboard({this.loggedUser, this.callBack, Key? key}) : super(key: key);
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -30,6 +34,7 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
+
     List actions = [
       ActionCard(
         actionClick: () => Navigator.push(
@@ -88,11 +93,13 @@ class _DashboardState extends State<Dashboard> {
         title: 'More',
       ),
     ];
+    UserProvider _userProvider = Provider.of<UserProvider>(context);
+    User? signedUser = _userProvider.allUsers.firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
+
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      drawer: Drawers(dashboardScreen: widget.callBack),
-      body: Stack(
-        children: [
+        extendBodyBehindAppBar: true,
+        drawer: Drawers(dashboardScreen: widget.callBack, userInfo: signedUser),
+        body: Stack(children: [
           Positioned(
               top: 150,
               left: 250,
@@ -178,6 +185,7 @@ class _DashboardState extends State<Dashboard> {
                             ),
                             cardColor: const Color(0xff157253),
                             title: 'Sell',
+                            titleColor: Colors.white,
                           ),
                           ActionCard(
                             actionClick: () => Navigator.push(
@@ -190,8 +198,10 @@ class _DashboardState extends State<Dashboard> {
                             ),
                             cardColor: const Color(0xffA70C4A),
                             title: 'New Load',
+                            titleColor: Colors.white,
                           ),
                           ActionCard(
+                            titleColor: Colors.white,
                             actionClick: () => Navigator.push(
                                 context,
                                 CupertinoPageRoute(
@@ -204,6 +214,7 @@ class _DashboardState extends State<Dashboard> {
                             title: 'Expenses',
                           ),
                           ActionCard(
+                            titleColor: Colors.white,
                             actionClick: () => showModalBottomSheet(
                                 isDismissible: true,
                                 shape: const RoundedRectangleBorder(
@@ -222,23 +233,6 @@ class _DashboardState extends State<Dashboard> {
                         ],
                       ),
                     ),
-                    // Container(
-                    //   height: 73,
-                    //   margin: const EdgeInsets.only(left: 10, right: 10),
-                    //   child: LimitedBox(
-                    //     maxHeight: 100,
-                    //     maxWidth: MediaQuery.of(context).size.width,
-                    //     child: ListView.separated(
-                    //         scrollDirection: Axis.horizontal,
-                    //         itemBuilder: (context, inx) {
-                    //           return actions[inx];
-                    //         },
-                    //         separatorBuilder: (_, ins) => const SizedBox(
-                    //               width: 3,
-                    //             ),
-                    //         itemCount: actions.length),
-                    //   ),
-                    // ),
                     Container(
                       padding: const EdgeInsets.only(
                           left: 15.0, top: 10, bottom: 10),
@@ -257,8 +251,11 @@ class _DashboardState extends State<Dashboard> {
                           borderRadius: BorderRadius.circular(5.0)),
                       child: DeveloperCharts(data: chartData),
                     ),
-                    const LignChartObject(),
-                    const CustomPieChart(),
+                    Container(
+                      padding: const EdgeInsets.only(top: 30.0),
+                      child: const LignChartObject(),
+                    ),
+                    // const CustomPieChart(),
                     DoubleHeader(
                       rightSide: "Recent Transactions",
                       iconButton2: IconButton(
@@ -324,9 +321,7 @@ class _DashboardState extends State<Dashboard> {
                   ],
                 ),
               ))
-        ],
-      ),
-    );
+        ]));
   }
 
   _modalForMore(BuildContext context) {

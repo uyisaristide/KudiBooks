@@ -1,14 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kudibooks_app/models/Users/user_model.dart';
+import 'package:kudibooks_app/providers/user_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/custom_devider.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/alert_box.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
+import 'package:provider/provider.dart';
 
 import 'widget/bottom_navigation.dart';
 
 class AlertScreen extends StatefulWidget {
-  const AlertScreen({Key? key}) : super(key: key);
+  String? loggedUser;
+
+  AlertScreen({this.loggedUser, Key? key}) : super(key: key);
 
   @override
   State<AlertScreen> createState() => _AlertScreenState();
@@ -17,6 +22,8 @@ class AlertScreen extends StatefulWidget {
 class _AlertScreenState extends State<AlertScreen> {
   @override
   Widget build(BuildContext context) {
+    UserProvider _userProvider = Provider.of<UserProvider>(context);
+    User? signedUser = _userProvider.allUsers.firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
     return WillPopScope(
       onWillPop: () async {
         print('cant pop');
@@ -27,7 +34,7 @@ class _AlertScreenState extends State<AlertScreen> {
       },
       child: Scaffold(
         drawerEnableOpenDragGesture: true,
-        drawer: Drawers(),
+        drawer: Drawers(userInfo: signedUser),
         appBar: AppBarCommon.preferredSizeWidget(context, "Alerts"),
         body: SingleChildScrollView(
           child: Container(

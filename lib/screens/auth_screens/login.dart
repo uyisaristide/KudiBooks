@@ -16,7 +16,6 @@ import 'package:kudibooks_app/screens/background.dart';
 import 'package:kudibooks_app/screens/dashboard/classes/snack_bars.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/bottom_navigation.dart';
 import 'package:provider/provider.dart';
-import 'package:collection/collection.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -142,11 +141,6 @@ class _LoginState extends State<Login> {
             ),
             LoginButton(
               text: 'Login',
-
-              // validate: () => _formKey.currentState!.validate()
-              //     ? Navigator.pushNamed(context, '/')
-              //     : null,
-
               actionField: () {
                 if (_formKey.currentState!.validate()) {
                   var checkUser = _user.where((element) =>
@@ -161,7 +155,9 @@ class _LoginState extends State<Login> {
                     Navigator.pushReplacement(
                         context,
                         CupertinoPageRoute(
-                            builder: (context) => NavigationBottom()));
+                            builder: (context) => NavigationBottom(
+                                  loggedUser: checkUser.first.phoneOrEmail,
+                                )));
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                         SnackBars.snackBars(
