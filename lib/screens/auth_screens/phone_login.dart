@@ -118,7 +118,7 @@ class _PhoneLoginState extends State<PhoneLogin> {
                     Navigator.pushReplacement(
                         context,
                         CupertinoPageRoute(
-                            builder: (context) => NavigationBottom()));
+                            builder: (context) => NavigationBottom(loggedUser: checkUser.first.phoneOrEmail,)));
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                         SnackBars.snackBars('Incorrect pin', Colors.redAccent));

@@ -21,9 +21,9 @@ import 'new_inventory.dart';
 
 class InventoryScreen extends StatefulWidget {
   VoidCallback? loadInventories;
-  String? loggedUser;
+  String loggedUser;
 
-  InventoryScreen({this.loggedUser, this.loadInventories, Key? key})
+  InventoryScreen({required this.loggedUser, this.loadInventories, Key? key})
       : super(key: key);
 
   @override
@@ -68,8 +68,12 @@ class _InventoryScreenState extends State<InventoryScreen>
         .firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
     return WillPopScope(
         onWillPop: () async {
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => NavigationBottom()));
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => NavigationBottom(
+                        loggedUser: widget.loggedUser,
+                      )));
           return false;
         },
         child: Scaffold(

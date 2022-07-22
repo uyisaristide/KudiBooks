@@ -21,9 +21,10 @@ import '../../models/Users/user_model.dart';
 
 class Dashboard extends StatefulWidget {
   final VoidCallback? callBack;
-  String? loggedUser;
+  String loggedUser;
 
-  Dashboard({this.loggedUser, this.callBack, Key? key}) : super(key: key);
+  Dashboard({required this.loggedUser, this.callBack, Key? key})
+      : super(key: key);
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -34,7 +35,6 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-
     List actions = [
       ActionCard(
         actionClick: () => Navigator.push(
@@ -94,7 +94,8 @@ class _DashboardState extends State<Dashboard> {
       ),
     ];
     UserProvider _userProvider = Provider.of<UserProvider>(context);
-    User? signedUser = _userProvider.allUsers.firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
+    User? signedUser = _userProvider.allUsers
+        .firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
 
     return Scaffold(
         extendBodyBehindAppBar: true,

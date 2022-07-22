@@ -11,9 +11,9 @@ import 'package:provider/provider.dart';
 import 'widget/bottom_navigation.dart';
 
 class AlertScreen extends StatefulWidget {
-  String? loggedUser;
+  String loggedUser;
 
-  AlertScreen({this.loggedUser, Key? key}) : super(key: key);
+  AlertScreen({required this.loggedUser, Key? key}) : super(key: key);
 
   @override
   State<AlertScreen> createState() => _AlertScreenState();
@@ -28,7 +28,7 @@ class _AlertScreenState extends State<AlertScreen> {
       onWillPop: () async {
         print('cant pop');
         Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => NavigationBottom()));
+            MaterialPageRoute(builder: (context) => NavigationBottom(loggedUser: widget.loggedUser,)));
         // Navigator.pop(context);
         return false;
       },
