@@ -11,9 +11,9 @@ import 'package:provider/provider.dart';
 import 'widget/bottom_navigation.dart';
 
 class MyAccountScreen extends StatelessWidget {
-  String? loggedUser;
+  String loggedUser;
 
-  MyAccountScreen({this.loggedUser, Key? key}) : super(key: key);
+  MyAccountScreen({required this.loggedUser, Key? key}) : super(key: key);
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
   @override
@@ -24,7 +24,7 @@ class MyAccountScreen extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async {
         Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => NavigationBottom()));
+            MaterialPageRoute(builder: (context) => NavigationBottom(loggedUser: loggedUser,)));
         // Navigator.pop(context);
         return false;
       },

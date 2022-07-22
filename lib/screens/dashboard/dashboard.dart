@@ -22,9 +22,10 @@ import '../../models/Users/user_model.dart';
 
 class Dashboard extends StatefulWidget {
   final VoidCallback? callBack;
-  String? loggedUser;
+  String loggedUser;
 
-  Dashboard({this.loggedUser, this.callBack, Key? key}) : super(key: key);
+  Dashboard({required this.loggedUser, this.callBack, Key? key})
+      : super(key: key);
 
   @override
   State<Dashboard> createState() => _DashboardState();
