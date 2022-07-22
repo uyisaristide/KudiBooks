@@ -39,56 +39,19 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 elevation: 0.0,
                 backgroundColor: Color(0xff157253),
                 centerTitle: true,
-                title: Text("Products",
+                title: Text("No-Inventory products",
                     style: TextStyle(
                       fontSize: 20,
                     )),
               ),
               SliverPersistentHeader(
-                  delegate: SearchBoxSliver(
-                maxHeight: 70,
-                minHeight: 60,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    BodyButton(
-                      onClickAction: () => Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                              builder: (context) => NewProduct())),
-                      buttonTitle: 'Add Products',
-                      suffixIcon: const Icon(
-                        Icons.shopping_cart_outlined,
-                        size: 20,
-                        color: Color(0xff157253),
-                      ),
-                    ),
-                    BodyButton(
-                      onClickAction: () => Navigator.push(
-                          context,
-                          (CupertinoPageRoute(
-                              builder: (context) => NewInventory()))),
-                      buttonTitle: 'New load',
-                      suffixIcon: const Icon(
-                        Icons.add,
-                        size: 20,
-                        color: Color(0xffA70C4A),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                  ],
-                ),
-              )),
-              SliverPersistentHeader(
                   pinned: true,
                   delegate: SearchBoxSliver(
-                      maxHeight: 60,
-                      minHeight: 60,
+                      maxHeight: 80,
+                      minHeight: 80,
                       child: Container(
                         color: Theme.of(context).scaffoldBackgroundColor,
-                        child: SearchTextField(
+                        child: SearchTextField(hintTexts: 'Search product',
                           searchingContent: (value) {},
                           searchContent: searchContent,
                         ),
@@ -100,15 +63,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Container(
-                  padding: const EdgeInsets.only(left: 15.0, top: 10),
-                  alignment: AlignmentDirectional.centerStart,
-                  child: const Text(
-                    "Products",
-                    style:
-                        TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold),
-                  ),
-                ),
                 LimitedBox(
                   maxHeight: 1000,
                   child: ListView.separated(
