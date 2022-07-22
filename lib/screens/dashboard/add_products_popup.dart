@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kudibooks_app/models/Users/ProductInLoad.dart';
+import 'package:kudibooks_app/models/Users/products_sold_model.dart';
 import 'package:kudibooks_app/models/product_model.dart';
 import 'package:kudibooks_app/providers/product_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
@@ -197,8 +198,8 @@ class _AddProductsPopupState extends State<AddProductsPopup> {
                       text: 'Save',
                       actionField: () {
                         if (_formKey.currentState!.validate()) {
-                          productProvider.addProductToInventory(
-                              ProductInLoadModel(
+                          productProvider.addProductToSales(
+                              ProductToSell(
                                   productId: productId,
                                   sellingMethods: selectedMethod,
                                   unit: unitProduct.text.isEmpty

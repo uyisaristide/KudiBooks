@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kudibooks_app/models/Users/ProductInLoad.dart';
+import 'package:kudibooks_app/models/Users/products_sold_model.dart';
 import 'package:kudibooks_app/models/product_model.dart';
 import 'package:kudibooks_app/models/product_sale_model.dart';
 import 'package:kudibooks_app/providers/product_provider.dart';
@@ -250,7 +251,7 @@ class _ProductSaleState extends State<ProductSale> {
         _salesProvider.productSalesList;
     ProductProvider productProvider = Provider.of<ProductProvider>(context);
     List<ProductModel> _productModel = productProvider.allProducts;
-    List<ProductInLoadModel> _productsToLoad = productProvider.allToLoadModel;
+    List<ProductToSell> _productsToSell = productProvider.allOnSaleList;
     return Form(
       key: _formKey,
       child: Column(
@@ -287,7 +288,7 @@ class _ProductSaleState extends State<ProductSale> {
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   String changeToInt =
-                      _productsToLoad[index].productId.toString();
+                      _productsToSell[index].productId.toString();
                   print(changeToInt);
                   var _names = _productModel.firstWhere(
                       (element) => element.id == int.parse(changeToInt));
@@ -304,7 +305,7 @@ class _ProductSaleState extends State<ProductSale> {
                             color: Color(0xffA34646),
                           ),
                           onPressed: () => setState(() => productProvider
-                              .removeLoadInModel(int.parse(changeToInt))),
+                              .removeProductToSales(int.parse(changeToInt))),
                         ),
                         bottomSize: 10,
                       ),
@@ -343,7 +344,7 @@ class _ProductSaleState extends State<ProductSale> {
                 separatorBuilder: (_, idx) => const SizedBox(
                       height: 2,
                     ),
-                itemCount: _productsToLoad.length),
+                itemCount: _productsToSell.length),
           ),
 
           // InventoryProductCard(
@@ -478,7 +479,7 @@ class _ProductSaleState extends State<ProductSale> {
                   style: TextStyle(fontSize: 16, color: Colors.grey),
                 ),
                 Text(
-                  "${_productsToLoad.length}",
+                  "${_productsToSell.length}",
                   style: const TextStyle(
                       fontSize: 16, fontWeight: FontWeight.bold),
                 ),
