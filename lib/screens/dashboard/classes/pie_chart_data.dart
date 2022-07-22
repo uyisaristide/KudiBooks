@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 
 class PieData {
   static List<Data> data = [
-    Data(month: 'jan', color: Colors.black, percent: 20),
-    Data(month: 'feb', color: Colors.blue, percent: 40),
-    Data(month: 'mar', color: Colors.yellow, percent: 30),
-    Data(month: 'aprl', color: Colors.red, percent: 10),
+    Data(month: '40%', color: Colors.orange, percent: 40),
+    Data(month: '30%', color: Colors.teal, percent: 30),
+    Data(month: '20%', color: Colors.yellow, percent: 20),
+    Data(month: '10%', color: Colors.red, percent: 10),
+    // Data(month: 'aprl', color: Colors.green, percent: 10),
   ];
 }
 

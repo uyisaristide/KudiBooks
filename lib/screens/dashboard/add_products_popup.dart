@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kudibooks_app/models/Users/ProductInLoad.dart';
+import 'package:kudibooks_app/models/Users/products_sold_model.dart';
 import 'package:kudibooks_app/models/product_model.dart';
 import 'package:kudibooks_app/providers/product_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
@@ -40,7 +41,6 @@ class _AddProductsPopupState extends State<AddProductsPopup> {
 
   selectedProduct(ProductModel productModel) {
     setState(() {
-      // print(productModel!.id);
       productId = productModel.id;
       productNames = productModel.productName;
       pricePerProduct = productModel.productPrice;
@@ -50,7 +50,6 @@ class _AddProductsPopupState extends State<AddProductsPopup> {
 
   @override
   Widget build(BuildContext context) {
-    // List<String> productLists = productList.map((item) => item.productName).toList();
     ProductProvider productProvider = Provider.of<ProductProvider>(context);
     List<ProductModel> productList = productProvider.allProducts;
     return SingleChildScrollView(
@@ -79,14 +78,9 @@ class _AddProductsPopupState extends State<AddProductsPopup> {
                     productList: productList,
                   ),
                   Container(
-                    // height: 350,
                     width: double.infinity,
                     margin: const EdgeInsets.symmetric(vertical: 8),
                     decoration: BoxDecoration(
-                        // border: Border.all(
-                        //   width: 1.0,
-                        //   color: Colors.grey,
-                        // ),
                         shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.circular(10.0)),
                     child: Column(
@@ -184,12 +178,6 @@ class _AddProductsPopupState extends State<AddProductsPopup> {
                           ],
                         ),
                         const Text('Tags')
-                        // CustomFormField(
-                        //     isEnabled: false,
-                        //     validators: (value) {},
-                        //     hintText: 'Total',
-                        //     fieldController: productNameController,
-                        //     isShown: false),
                       ],
                     ),
                   ),
@@ -197,19 +185,18 @@ class _AddProductsPopupState extends State<AddProductsPopup> {
                       text: 'Save',
                       actionField: () {
                         if (_formKey.currentState!.validate()) {
-                          productProvider.addProductToInventory(
-                              ProductInLoadModel(
-                                  productId: productId,
-                                  sellingMethods: selectedMethod,
-                                  unit: unitProduct.text.isEmpty
-                                      ? "Kg"
-                                      : unitProduct.text,
-                                  price: unitController.text.isEmpty
-                                      ? 1
-                                      : int.parse(priceController.text),
-                                  total: totalController.text.isEmpty
-                                      ? 1
-                                      : int.parse(totalController.text)));
+                          productProvider.addProductToSales(ProductToSell(
+                              productId: productId,
+                              sellingMethods: selectedMethod,
+                              unit: unitProduct.text.isEmpty
+                                  ? "Kg"
+                                  : unitProduct.text,
+                              price: unitController.text.isEmpty
+                                  ? 1
+                                  : int.parse(priceController.text),
+                              total: totalController.text.isEmpty
+                                  ? 1
+                                  : int.parse(totalController.text)));
                           Navigator.pop(context);
                         }
                       }),

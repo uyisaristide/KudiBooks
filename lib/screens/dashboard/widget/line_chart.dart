@@ -8,6 +8,7 @@ class LignChartObject extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.only(top: 10, left: 10),
       padding: const EdgeInsets.only(right: 10),
       height: 300,
       child: LineChart(
@@ -25,18 +26,26 @@ class LignChartObject extends StatelessWidget {
                   FlLine(color: Colors.grey, strokeWidth: 2),
             ),
             borderData: FlBorderData(show: true),
+            backgroundColor: Colors.black12,
             titlesData: LineTitles.getTitleData(),
             lineBarsData: [
               LineChartBarData(
                   spots: [
-                    const FlSpot(0, 4),
-                    const FlSpot(3, 2),
-                    const FlSpot(6, 4),
-                    const FlSpot(9, 6),
-                    const FlSpot(12, 3.2),
+                    const FlSpot(0, 3),
+                    const FlSpot(1, 3.4),
+                    const FlSpot(2, 4),
+                    const FlSpot(3, 3),
+                    const FlSpot(4, 4.3),
+                    const FlSpot(5, 4.7),
+                    const FlSpot(6, 4.5),
+                    const FlSpot(7, 5),
+                    const FlSpot(8, 5),
+                    const FlSpot(9, 3),
+                    const FlSpot(10, 4),
+                    const FlSpot(12, 4.5),
                   ],
                   isCurved: true,
-                  barWidth: 5,
+                  barWidth: 4,
                   dotData: FlDotData(show: true),
                   belowBarData: BarAreaData(
                     show: true,
@@ -48,31 +57,31 @@ class LignChartObject extends StatelessWidget {
   }
 }
 
-SideTitles get _bottomTitles => SideTitles(
-      showTitles: true,
-      reservedSize: 22,
-      margin: 10,
-      interval: 1,
-      getTextStyles: (context, value) => const TextStyle(
-        color: Colors.blueGrey,
-        fontWeight: FontWeight.bold,
-        fontSize: 16,
-      ),
-      getTitles: (value) {
-        switch (value.toInt()) {
-          case 1:
-            return 'Jan';
-          case 3:
-            return 'Mar';
-          case 5:
-            return 'May';
-          case 7:
-            return 'Jul';
-          case 9:
-            return 'Sep';
-          case 11:
-            return 'Nov';
-        }
-        return '';
-      },
-    );
+// SideTitles get _bottomTitles => SideTitles(
+//       showTitles: true,
+//       reservedSize: 22,
+//       margin: 10,
+//       interval: 1,
+//       getTextStyles: (context, value) => const TextStyle(
+//         color: Colors.blueGrey,
+//         fontWeight: FontWeight.bold,
+//         fontSize: 16,
+//       ),
+//       getTitles: (value) {
+//         switch (value.toInt()) {
+//           case 1:
+//             return 'Jan';
+//           case 3:
+//             return 'Mar';
+//           case 5:
+//             return 'May';
+//           case 7:
+//             return 'Jul';
+//           case 9:
+//             return 'Sep';
+//           case 11:
+//             return 'Nov';
+//         }
+//         return '';
+//       },
+//     );
