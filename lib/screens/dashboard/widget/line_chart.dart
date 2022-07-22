@@ -3,7 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:kudibooks_app/screens/dashboard/classes/fl_line_titles.dart';
 
 class LignChartObject extends StatelessWidget {
-  const LignChartObject({Key? key}) : super(key: key);
+  LignChartObject({Key? key}) : super(key: key);
+
+  final List<Color> lossGradientColors = [
+    const Color.fromARGB(255, 230, 35, 35),
+    const Color.fromARGB(255, 211, 85, 2),
+  ];
+  final List<Color> profitGradientColors = [
+    Color.fromARGB(255, 41, 230, 35),
+    Color.fromARGB(255, 69, 121, 73),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -45,10 +54,35 @@ class LignChartObject extends StatelessWidget {
                     const FlSpot(12, 4.5),
                   ],
                   isCurved: true,
+                  colors: lossGradientColors,
                   barWidth: 4,
                   dotData: FlDotData(show: true),
                   belowBarData: BarAreaData(
                     show: true,
+                    //  colors: Colors.teal.withOpacity(0.5)
+                  )),
+              LineChartBarData(
+                  spots: [
+                    const FlSpot(0, 4),
+                    const FlSpot(1, 3),
+                    const FlSpot(2, 3),
+                    const FlSpot(3, 4),
+                    const FlSpot(4, 4.3),
+                    const FlSpot(5, 3),
+                    const FlSpot(6, 2),
+                    const FlSpot(7, 4),
+                    const FlSpot(8, 5),
+                    const FlSpot(9, 6),
+                    const FlSpot(10, 5),
+                    const FlSpot(12, 5),
+                  ],
+                  isCurved: true,
+                  colors: profitGradientColors,
+                  barWidth: 4,
+                  dotData: FlDotData(show: true),
+                  belowBarData: BarAreaData(
+                    show: true,
+
                     //  colors: Colors.teal.withOpacity(0.5)
                   )),
             ]),
