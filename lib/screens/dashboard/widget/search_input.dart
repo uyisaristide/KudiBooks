@@ -30,7 +30,7 @@ class SearchTextField extends StatelessWidget {
               },
               controller: searchContent,
               style: hintStyle,
-              onChanged: (value){},
+              onChanged: searchingContent,
               decoration: InputDecoration(
                 suffixIcon: searchContent.text.isEmpty
                     ? null
