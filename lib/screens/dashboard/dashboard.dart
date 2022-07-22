@@ -14,6 +14,7 @@ import 'package:kudibooks_app/screens/dashboard/widget/action_card.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/business_movement_cart.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/line_chart.dart';
+import 'package:kudibooks_app/screens/dashboard/widget/pie_chart.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/title_double.dart';
 import 'package:provider/provider.dart';
 
@@ -34,7 +35,6 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-
     List actions = [
       ActionCard(
         actionClick: () => Navigator.push(
@@ -94,7 +94,8 @@ class _DashboardState extends State<Dashboard> {
       ),
     ];
     UserProvider _userProvider = Provider.of<UserProvider>(context);
-    User? signedUser = _userProvider.allUsers.firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
+    User? signedUser = _userProvider.allUsers
+        .firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
 
     return Scaffold(
         extendBodyBehindAppBar: true,
@@ -255,7 +256,7 @@ class _DashboardState extends State<Dashboard> {
                       padding: const EdgeInsets.only(top: 30.0),
                       child: const LignChartObject(),
                     ),
-                    // const CustomPieChart(),
+                    const CustomPieChart(),
                     DoubleHeader(
                       rightSide: "Recent Transactions",
                       iconButton2: IconButton(

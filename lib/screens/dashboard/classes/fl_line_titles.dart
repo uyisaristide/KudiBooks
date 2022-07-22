@@ -5,6 +5,26 @@ class LineTitles {
       show: true,
       topTitles: SideTitles(showTitles: false),
       rightTitles: SideTitles(showTitles: false),
+      leftTitles: SideTitles(
+        showTitles: true,
+        getTitles: (value) {
+          switch (value.toInt()) {
+            case 1:
+              return '10k';
+            case 2:
+              return '20k';
+            case 3:
+              return '30k';
+            case 4:
+              return '40k';
+            case 5:
+              return '50k';
+            case 6:
+              return '60k';
+          }
+          return '';
+        },
+      ),
       bottomTitles: SideTitles(
           showTitles: true,
           margin: 8,
