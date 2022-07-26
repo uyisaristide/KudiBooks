@@ -23,8 +23,12 @@ class MyAccountScreen extends StatelessWidget {
         .firstWhere((user) => user.phoneOrEmail == loggedUser);
     return WillPopScope(
       onWillPop: () async {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => NavigationBottom(loggedUser: loggedUser,)));
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => NavigationBottom(
+                      loggedUser: loggedUser,
+                    )));
         // Navigator.pop(context);
         return false;
       },
@@ -73,7 +77,10 @@ class MyAccountScreen extends StatelessWidget {
                       Text("${signedUser.firstName} ${signedUser.lastName}",
                           style: const TextStyle(
                               fontSize: 24, fontWeight: FontWeight.bold)),
-                      Text(signedUser.phoneOrEmail,
+                      Text(
+                          signedUser.phoneOrEmail == null
+                              ? ""
+                              : signedUser.phoneOrEmail!,
                           style: const TextStyle(
                             fontSize: 16,
                           )),

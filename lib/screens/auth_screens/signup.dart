@@ -90,7 +90,12 @@ class _SignUpState extends State<SignUp> {
               maxLength: 30,
               isHidden: isHiddens,
               passwordController: passwordController,
-              validators: (value) => Validators.validatePassword(value!),
+              validators: (value) {
+                if (value!.length < 8) {
+                  return "Much 8 charactor string";
+                }
+                return null;
+              },
               suffixIcon: IconButton(
                   onPressed: () => setState(() => isHiddens = !isHiddens),
                   icon: isHiddens
@@ -105,7 +110,14 @@ class _SignUpState extends State<SignUp> {
               maxLength: 30,
               isHidden: isHidden,
               passwordController: confirmController,
-              validators: (value) => Validators.validatePassword(value!),
+              validators: (value) {
+                if (value != passwordController.text) {
+                  return "Password not match";
+                } else if (value == '') {
+                  return 'Fill out this form';
+                }
+                return null;
+              },
               suffixIcon: IconButton(
                   onPressed: () => setState(() => isHidden = !isHidden),
                   icon: isHidden
@@ -127,7 +139,7 @@ class _SignUpState extends State<SignUp> {
                         lastName: lastNameController.text,
                         phoneOrEmail: emailController.text,
                         password: passwordController.text));
-                    Navigator.pushReplacementNamed(context, '/signup');
+                    Navigator.pushReplacementNamed(context, '/login');
                     ScaffoldMessenger.of(context).showSnackBar(
                         SnackBars.snackBars(
                             'User saved successfully', Colors.green.shade400));
@@ -136,6 +148,39 @@ class _SignUpState extends State<SignUp> {
                         SnackBars.snackBars(
                             'User already exist', Colors.redAccent.shade400));
                   }
+                }
+              },
+            ),
+            SizedBox(height: 5),
+            LoginButton(
+              text: 'Register now Net',
+              actionField: () {
+                var serverPassword = "${passwordController.text}+1234";
+                if (_formKey.currentState!.validate()) {
+                  var userSaving = _userProvider.createUserEmail(User(
+                      firstName: firstNameController.text,
+                      lastName: lastNameController.text,
+                      email: emailController.text,
+                      password: passwordController.text,
+                      passwordConfirm: passwordController.text));
+                  print("This is runtime type: $userSaving");
+                  if (userSaving.toString().isNotEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15)),
+                      duration: const Duration(seconds: 3),
+                      content: const Text(
+                        'User saved to network',
+                        style: TextStyle(
+                          fontSize: 17,
+                        ),
+                      ),
+                      padding: const EdgeInsets.all(20.0),
+                      backgroundColor: Colors.green,
+                    ));
+                    Navigator.pushReplacementNamed(context, '/login');
+                  }
+                  print("This is the future value $userSaving");
                 }
               },
             ),

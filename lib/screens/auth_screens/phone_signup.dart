@@ -154,7 +154,14 @@ class _PhoneSignupState extends State<PhoneSignup> {
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: pinController2,
                 maxLength: 4,
-                validator: (value) => Validators.validatePin(value!),
+                validator: (value) {
+                  if (value != pinController.text) {
+                    return "Pin not match";
+                  } else if (value == '') {
+                    return 'Fill out this form';
+                  }
+                  return null;
+                },
                 decoration: InputDecoration(
                     focusColor: const Color(0xff157253),
                     labelStyle: const TextStyle(
@@ -210,12 +217,28 @@ class _PhoneSignupState extends State<PhoneSignup> {
                     ScaffoldMessenger.of(context).showSnackBar(
                         SnackBars.snackBars(
                             'User saved successfully', Colors.green.shade400));
-                    Navigator.pushReplacementNamed(context, '/phoneSignup');
+                    Navigator.pushReplacementNamed(context, '/login');
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                         SnackBars.snackBars(
                             'User already exists', Colors.redAccent.shade400));
                   }
+                }
+              },
+            ),
+            SizedBox(height: 5),
+            LoginButton(
+              text: 'Register now Net',
+              actionField: () {
+                if (_formKey.currentState!.validate()) {
+                  var _phoneNumber = "+$_countryCodes${phoneController.text}";
+                  _userProvider.createUser(User(
+                      firstName: firstNameController.text,
+                      lastName: lastNameController.text,
+                      phoneOrEmail: _phoneNumber,
+                      password: pinController.text,
+                      passwordConfirm: pinController.text));
+                  Navigator.pushReplacementNamed(context, '/login');
                 }
               },
             ),

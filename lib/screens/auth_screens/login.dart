@@ -156,7 +156,7 @@ class _LoginState extends State<Login> {
                         context,
                         CupertinoPageRoute(
                             builder: (context) => NavigationBottom(
-                                  loggedUser: checkUser.first.phoneOrEmail,
+                                  loggedUser: checkUser.first.phoneOrEmail!,
                                 )));
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(

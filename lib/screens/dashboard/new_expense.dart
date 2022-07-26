@@ -21,7 +21,13 @@ class NewExpense extends StatefulWidget {
 
 class _NewExpenseState extends State<NewExpense> {
   DateTime time =
-      DateTime(DateTime.now().day, DateTime.now().month, DateTime.now().year);
+  DateTime(DateTime
+      .now()
+      .day, DateTime
+      .now()
+      .month, DateTime
+      .now()
+      .year);
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -32,15 +38,13 @@ class _NewExpenseState extends State<NewExpense> {
   final amountPaidExpensesController = TextEditingController();
 
   final nameController = TextEditingController();
-  Random _idRandom = Random();
+  final Random _idRandom = Random();
   final transactionDateController = TextEditingController(text: ''
-      // text:
-      //     '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}'
-      );
+    // text:
+    //     '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}'
+  );
 
   final memoController = TextEditingController();
-
-  List expensesForm = [];
 
   List<String> expenseAccountList = [
     'Expenses 1',
@@ -60,9 +64,155 @@ class _NewExpenseState extends State<NewExpense> {
 
   String? cashBankAccount;
 
+  addExpenseWidget(Widget widgets) {}
+
   @override
   Widget build(BuildContext context) {
     ExpensesProvider _expensesProvider = Provider.of<ExpensesProvider>(context);
+
+    List<Widget> listOfNewCard = [
+      Container(
+        width: double.infinity,
+        margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+        decoration: BoxDecoration(
+            border: Border.all(
+              width: 1.0,
+              color: Colors.grey,
+            ),
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.circular(10.0)),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SelectInputType(
+                dropDownHint: const Text('Expense account'),
+                selectedValue: (values) {
+                  expenseAccount = values;
+                },
+                validation: (expenseName) {
+                  if (expenseName == null) {
+                    return 'Select expense';
+                  }
+                  return null;
+                },
+                itemsToSelect: expenseAccountList),
+            Row(
+              children: [
+                Expanded(
+                  child: CustomFormField(
+                      inputType: TextInputType.number,
+                      validators: (value) {
+                        if (amountPaidExpensesController.text.isEmpty) {
+                          return 'Enter amount';
+                        }
+                        return null;
+                      },
+                      hintText: 'Amount paid',
+                      fieldController: amountPaidExpensesController,
+                      isShown: false),
+                ),
+                Expanded(
+                    child: Container(
+                      margin: const EdgeInsets.only(right: 15),
+                      padding: const EdgeInsets.all(15),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          border: Border.all(width: 1.0, color: Colors.grey),
+                          borderRadius: BorderRadius.circular(10.0)),
+                      child: InkWell(
+                        onTap: () =>
+                            showModalBottomSheet(
+                                elevation: 0.0,
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(10.0),
+                                        topRight: Radius.circular(10.0))),
+                                context: (context),
+                                builder: (index) => LoadTags()),
+                        child: const Text(
+                          "Add Tag",
+                          style: TextStyle(color: Color(0xffA70C4A)),
+                        ),
+                      ),
+                    ))
+              ],
+            ),
+          ],
+        ),
+      ),
+      Container(
+        width: double.infinity,
+        margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+        decoration: BoxDecoration(
+            border: Border.all(
+              width: 1.0,
+              color: Colors.grey,
+            ),
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.circular(10.0)),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SelectInputType(
+                dropDownHint: const Text('Expense account'),
+                selectedValue: (values) {
+                  expenseAccount = values;
+                },
+                validation: (expenseName) {
+                  if (expenseName == null) {
+                    return 'Select expense';
+                  }
+                  return null;
+                },
+                itemsToSelect: expenseAccountList),
+            Row(
+              children: [
+                Expanded(
+                  child: CustomFormField(
+                      inputType: TextInputType.number,
+                      validators: (value) {
+                        if (amountPaidExpensesController.text.isEmpty) {
+                          return 'Enter amount';
+                        }
+                        return null;
+                      },
+                      hintText: 'Amount paid',
+                      fieldController: amountPaidExpensesController,
+                      isShown: false),
+                ),
+                Expanded(
+                    child: Container(
+                      margin: const EdgeInsets.only(right: 15),
+                      padding: const EdgeInsets.all(15),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          border: Border.all(width: 1.0, color: Colors.grey),
+                          borderRadius: BorderRadius.circular(10.0)),
+                      child: InkWell(
+                        onTap: () =>
+                            showModalBottomSheet(
+                                elevation: 0.0,
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(10.0),
+                                        topRight: Radius.circular(10.0))),
+                                context: (context),
+                                builder: (index) => LoadTags()),
+                        child: const Text(
+                          "Add Tag",
+                          style: TextStyle(color: Color(0xffA70C4A)),
+                        ),
+                      ),
+                    ))
+              ],
+            ),
+          ],
+        ),
+      ),
+    ];
+
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
           color: Colors.transparent,
@@ -93,211 +243,225 @@ class _NewExpenseState extends State<NewExpense> {
       appBar: AppBarCommon.preferredSizeWidget(context, "New expense"),
       body: SingleChildScrollView(
           child: Container(
-        margin: const EdgeInsets.only(top: 20),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              Container(
-                width: double.infinity,
-                margin:
-                    const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 1.0,
-                      color: Colors.grey,
-                    ),
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.circular(10.0)),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SelectInputType(
-                        dropDownHint: const Text('Expense account'),
-                        selectedValue: (values) {
-                          expenseAccount = values;
-                        },
-                        validation: (expenseName) {
-                          if (expenseName == null) {
-                            return 'Select expense';
-                          }
-                          return null;
-                        },
-                        itemsToSelect: expenseAccountList),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: CustomFormField(
-                              inputType: TextInputType.number,
-                              validators: (value) {
-                                if (amountPaidExpensesController.text.isEmpty) {
-                                  return 'Enter amount';
-                                }
-                                return null;
-                              },
-                              hintText: 'Amount paid',
-                              fieldController: amountPaidExpensesController,
-                              isShown: false),
-                        ),
-                        Expanded(
-                            child: Container(
-                          margin: const EdgeInsets.only(right: 15),
-                          padding: const EdgeInsets.all(15),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.rectangle,
-                              border:
-                                  Border.all(width: 1.0, color: Colors.grey),
-                              borderRadius: BorderRadius.circular(10.0)),
-                          child: InkWell(
-                            onTap: () => showModalBottomSheet(
-                                elevation: 0.0,
-                                shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(10.0),
-                                        topRight: Radius.circular(10.0))),
-                                context: (context),
-                                builder: (index) => LoadTags()),
-                            child: const Text(
-                              "Add Tag",
-                              style: TextStyle(color: Color(0xffA70C4A)),
-                            ),
+            margin: const EdgeInsets.only(top: 20),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  LimitedBox(
+                    child: ListView.separated(
+                        shrinkWrap: true,
+                        itemBuilder: (context,
+                        indexCard) => listOfNewCard[indexCard],
+                        separatorBuilder: (_, idx) =>const SizedBox(height: 5,),
+                        itemCount: listOfNewCard.length),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(left: 15, right: 15),
+                    child: TwoSideHeader(
+                        textFontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        bottomSize: 20,
+                        leftSide: '',
+                        rightSide: TextButton(
+                          onPressed: () {
+                            print(listOfNewCard.length);
+                            return setState(() {
+                              listOfNewCard.add(
+                                Container(
+                                  width: double.infinity,
+                                  margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                        width: 1.0,
+                                        color: Colors.grey,
+                                      ),
+                                      shape: BoxShape.rectangle,
+                                      borderRadius: BorderRadius.circular(10.0)),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SelectInputType(
+                                          dropDownHint: const Text('Expense account'),
+                                          selectedValue: (values) {
+                                            expenseAccount = values;
+                                          },
+                                          validation: (expenseName) {
+                                            if (expenseName == null) {
+                                              return 'Select expense';
+                                            }
+                                            return null;
+                                          },
+                                          itemsToSelect: expenseAccountList),
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: CustomFormField(
+                                                inputType: TextInputType.number,
+                                                validators: (value) {
+                                                  if (amountPaidExpensesController.text.isEmpty) {
+                                                    return 'Enter amount';
+                                                  }
+                                                  return null;
+                                                },
+                                                hintText: 'Amount paid',
+                                                fieldController: amountPaidExpensesController,
+                                                isShown: false),
+                                          ),
+                                          Expanded(
+                                              child: Container(
+                                                margin: const EdgeInsets.only(right: 15),
+                                                padding: const EdgeInsets.all(15),
+                                                alignment: Alignment.center,
+                                                decoration: BoxDecoration(
+                                                    shape: BoxShape.rectangle,
+                                                    border: Border.all(width: 1.0, color: Colors.grey),
+                                                    borderRadius: BorderRadius.circular(10.0)),
+                                                child: InkWell(
+                                                  onTap: () =>
+                                                      showModalBottomSheet(
+                                                          elevation: 0.0,
+                                                          shape: const RoundedRectangleBorder(
+                                                              borderRadius: BorderRadius.only(
+                                                                  topLeft: Radius.circular(10.0),
+                                                                  topRight: Radius.circular(10.0))),
+                                                          context: (context),
+                                                          builder: (index) => LoadTags()),
+                                                  child: const Text(
+                                                    "Add Tag",
+                                                    style: TextStyle(color: Color(0xffA70C4A)),
+                                                  ),
+                                                ),
+                                              ))
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            });
+                          },
+                          child: const Text(
+                            "New expense",
+                            style: TextStyle(color: Colors.green, fontSize: 12),
                           ),
-                        ))
+                        )),
+                  ),
+                  Container(
+                    margin:
+                    const EdgeInsets.only(right: 15.0, bottom: 1.0, top: 30),
+                    alignment: Alignment.centerRight,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: const [
+                        Text(
+                          "Total Amount: ",
+                          style: TextStyle(fontSize: 16, color: Colors.grey),
+                        ),
+                        Text(
+                          "0.0",
+                          style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
                       ],
                     ),
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.only(left: 15, right: 15),
-                child: TwoSideHeader(
-                    textFontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    bottomSize: 20,
-                    leftSide: '',
-                    rightSide: TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        "New expense",
-                        style: TextStyle(color: Colors.green, fontSize: 12),
-                      ),
-                    )),
-              ),
-              Container(
-                margin:
-                    const EdgeInsets.only(right: 15.0, bottom: 1.0, top: 30),
-                alignment: Alignment.centerRight,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: const [
-                    Text(
-                      "Total Amount: ",
-                      style: TextStyle(fontSize: 16, color: Colors.grey),
-                    ),
-                    Text(
-                      "0.0",
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                margin:
+                  ),
+                  Container(
+                    width: double.infinity,
+                    margin:
                     const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 1.0,
-                      color: Colors.grey,
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          width: 1.0,
+                          color: Colors.grey,
+                        ),
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.circular(10.0)),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CustomFormField(
+                          validators: (value) {
+                            if (amountPaidController.text.isEmpty) {
+                              return 'Enter amount';
+                            }
+                            return null;
+                          },
+                          hintText: 'Amount',
+                          fieldController: amountPaidController,
+                          isShown: false,
+                        ),
+                        SelectInputType(
+                            validation: (account) {
+                              if (cashBankAccount == null) {
+                                return "Enter cash or bank";
+                              }
+                              return null;
+                            },
+                            selectedValue: (value) {
+                              setState(() {
+                                cashBankAccount = value;
+                              });
+                            },
+                            dropDownHint: const Text('Cash/Bank account'),
+                            itemsToSelect: cashBankAccountList),
+                      ],
                     ),
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.circular(10.0)),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CustomFormField(
+                  ),
+                  Container(
+                      margin: const EdgeInsets.only(right: 15.0, bottom: 15.0),
+                      alignment: Alignment.topRight,
+                      child: TextButton(
+                        child: const Text(
+                          "Add payment method",
+                          style: TextStyle(
+                              fontSize: 12, color: Color(0xffA70C4A)),
+                        ),
+                        onPressed: () {},
+                      )),
+                  CustomFormField(
                       validators: (value) {
-                        if (amountPaidController.text.isEmpty) {
-                          return 'Enter amount';
+                        if (nameController.text.isEmpty) {
+                          return 'Fill this field';
                         }
                         return null;
                       },
-                      hintText: 'Amount',
-                      fieldController: amountPaidController,
+                      hintText: 'Transaction name',
+                      fieldController: nameController,
                       isShown: false,
-                    ),
-                    SelectInputType(
-                        validation: (account) {
-                          if (cashBankAccount == null) {
-                            return "Enter cash or bank";
-                          }
-                          return null;
-                        },
-                        selectedValue: (value) {
-                          setState(() {
-                            cashBankAccount = value;
-                          });
-                        },
-                        dropDownHint: const Text('Cash/Bank account'),
-                        itemsToSelect: cashBankAccountList),
-                  ],
-                ),
-              ),
-              Container(
-                  margin: const EdgeInsets.only(right: 15.0, bottom: 15.0),
-                  alignment: Alignment.topRight,
-                  child: TextButton(
-                    child: const Text(
-                      "Add payment method",
-                      style: TextStyle(fontSize: 12, color: Color(0xffA70C4A)),
-                    ),
-                    onPressed: () {},
-                  )),
-              CustomFormField(
-                  validators: (value) {
-                    if (nameController.text.isEmpty) {
-                      return 'Fill this field';
-                    }
-                    return null;
-                  },
-                  hintText: 'Transaction name',
-                  fieldController: nameController,
-                  isShown: false,
-                  inputType: TextInputType.name),
-              CustomFormField(
-                  fieldIcon: const Icon(Icons.calendar_today_outlined),
-                  fieldIconbutton: IconButton(
-                      onPressed: () async {
-                        showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime(2000),
-                            lastDate: DateTime(2025));
+                      inputType: TextInputType.name),
+                  CustomFormField(
+                      fieldIcon: const Icon(Icons.calendar_today_outlined),
+                      fieldIconbutton: IconButton(
+                          onPressed: () async {
+                            showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(2000),
+                                lastDate: DateTime(2025));
+                          },
+                          icon: const Icon(Icons.calendar_today_outlined)),
+                      validators: (value) {
+                        Validators.validateName(value);
                       },
-                      icon: const Icon(Icons.calendar_today_outlined)),
-                  validators: (value) {
-                    Validators.validateName(value);
-                  },
-                  // initialText: '${time.day}/${time.month}',
-                  hintText: 'Transaction date',
-                  fieldController: transactionDateController,
-                  isShown: false,
-                  inputType: TextInputType.datetime),
-              CustomFormField(
-                  validators: (value) {
-                    Validators.validateName(value);
-                  },
-                  hintText: 'Memo',
-                  maxLining: 5,
-                  fieldController: memoController,
-                  isShown: false,
-                  inputType: TextInputType.multiline),
-            ],
-          ),
-        ),
-      )),
+                      // initialText: '${time.day}/${time.month}',
+                      hintText: 'Transaction date',
+                      fieldController: transactionDateController,
+                      isShown: false,
+                      inputType: TextInputType.datetime),
+                  CustomFormField(
+                      validators: (value) {
+                        Validators.validateName(value);
+                      },
+                      hintText: 'Memo',
+                      maxLining: 5,
+                      fieldController: memoController,
+                      isShown: false,
+                      inputType: TextInputType.multiline),
+                ],
+              ),
+            ),
+          )),
     );
   }
 }

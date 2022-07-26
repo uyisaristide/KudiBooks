@@ -59,7 +59,9 @@ class _InventoryScreenState extends State<InventoryScreen>
   @override
   Widget build(BuildContext context) {
     ProductProvider _productProvider = Provider.of<ProductProvider>(context);
-    List<ProductModel> _productList = _productProvider.allProducts;
+    List<ProductModel> _productList = _productProvider.allProducts
+        .where((productItem) => productItem.inventoryExpenseAccount != null)
+        .toList();
     InventoryProviders _inventoryProviders =
         Provider.of<InventoryProviders>(context);
     List<InventoryModel> _loadsList = _inventoryProviders.allInventories;
@@ -313,8 +315,8 @@ class _InventoryScreenState extends State<InventoryScreen>
                                         searchString == '' ||
                                         searchContent.text.isEmpty
                                     ? LimitedBox(
-                                        maxHeight: 1000,
                                         child: ListView.separated(
+                                            shrinkWrap: true,
                                             physics:
                                                 const NeverScrollableScrollPhysics(),
                                             itemBuilder: (context, index) =>
@@ -339,8 +341,8 @@ class _InventoryScreenState extends State<InventoryScreen>
                                                 : _productList.length),
                                       )
                                     : LimitedBox(
-                                        maxHeight: 1000,
                                         child: ListView.separated(
+                                            shrinkWrap: true,
                                             physics:
                                                 const NeverScrollableScrollPhysics(),
                                             itemBuilder: (context, index) =>
@@ -383,8 +385,8 @@ class _InventoryScreenState extends State<InventoryScreen>
                                         searchInventoryValue == '' ||
                                         searchContentInventory.text.isEmpty
                                     ? LimitedBox(
-                                        maxHeight: 1000,
                                         child: ListView.separated(
+                                            shrinkWrap: true,
                                             physics:
                                                 const NeverScrollableScrollPhysics(),
                                             itemBuilder: (context, load) =>
@@ -409,8 +411,8 @@ class _InventoryScreenState extends State<InventoryScreen>
                                                 : _loadsList.length),
                                       )
                                     : LimitedBox(
-                                        maxHeight: 1000,
                                         child: ListView.separated(
+                                            shrinkWrap: true,
                                             physics:
                                                 const NeverScrollableScrollPhysics(),
                                             itemBuilder: (context, load) =>

@@ -11,9 +11,11 @@ import 'package:provider/provider.dart';
 class Loads extends StatelessWidget {
   Loads({Key? key}) : super(key: key);
   final searchContent = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    InventoryProviders _inventoryProviders = Provider.of<InventoryProviders>(context);
+    InventoryProviders _inventoryProviders =
+        Provider.of<InventoryProviders>(context);
     List<InventoryModel> _loadsList = _inventoryProviders.allInventories;
     return Scaffold(
       floatingActionButton: ElevatedButton(
@@ -58,7 +60,10 @@ class Loads extends StatelessWidget {
                     child: Container(
                         color: Theme.of(context).scaffoldBackgroundColor,
                         width: MediaQuery.of(context).size.width,
-                        child: SearchTextField(searchContent: searchContent,)),
+                        child: SearchTextField(
+                          searchContent: searchContent,
+                          hintTexts: 'Search load',
+                        )),
                     maxHeight: 60,
                     minHeight: 60,
                   )),
