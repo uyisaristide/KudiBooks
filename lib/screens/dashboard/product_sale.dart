@@ -16,7 +16,7 @@ import 'package:kudibooks_app/screens/dashboard/widget/inventory_card.dart';
 import 'package:provider/provider.dart';
 
 class ProductSale extends StatefulWidget {
-  ProductSale({Key? key}) : super(key: key);
+  const ProductSale({Key? key}) : super(key: key);
 
   @override
   State<ProductSale> createState() => _ProductSaleState();
@@ -29,7 +29,9 @@ class _ProductSaleState extends State<ProductSale> {
 
   final transactionDateController = TextEditingController();
 
-  final memoController = TextEditingController();
+  final amountPaidController = TextEditingController();
+
+  final debtAmountController = TextEditingController();
 
   List<String> unitProduct = [
     "Account 1",
@@ -61,7 +63,12 @@ class _ProductSaleState extends State<ProductSale> {
 
   @override
   Widget build(BuildContext context) {
+    ProductSalesProvider productSalesProvider =
+        Provider.of<ProductSalesProvider>(context);
+
+    List<ProductSalesModel> salesList = productSalesProvider.productSalesList;
     return Scaffold(
+      appBar: AppBarCommon.preferredSizeWidget(context, "Products sale"),
       bottomNavigationBar: BottomAppBar(
           color: Colors.transparent,
           elevation: 0.0,
@@ -71,11 +78,21 @@ class _ProductSaleState extends State<ProductSale> {
                 text: 'Save',
                 actionField: () {
                   if (_formKey.currentState!.validate()) {
+                    productSalesProvider.addNewSale(ProductSalesModel(
+                        saleId: 11,
+                        transactionDate: transactionDateController.text,
+                        transactionName: productNameController.text,
+                        productSold: 'product1',
+                        amountPaid: double.parse(amountPaidController.text),
+                        paymentMethod: bankAccountsValue!,
+                        debtAmount: double.parse(debtAmountController.text),
+                        client: 'mehuii'));
+
+                    print(salesList.toList());
                     return Navigator.pop(context);
                   }
                 }),
           )),
-      appBar: AppBarCommon.preferredSizeWidget(context, "Products sale"),
       body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Container(
@@ -137,7 +154,7 @@ class _ProductSaleState extends State<ProductSale> {
                         CustomFormField(
                           validators: (value) => Validators.validateName(value),
                           hintText: 'Product name',
-                          fieldController: productNameController,
+                          fieldController: nameController,
                           isShown: false,
                         ),
                         Container(
@@ -245,10 +262,6 @@ class _ProductSaleState extends State<ProductSale> {
   }
 
   _addProductForm(BuildContext context) {
-    ProductSalesProvider _salesProvider =
-        Provider.of<ProductSalesProvider>(context);
-    List<ProductSalesModel> salesProvidersList =
-        _salesProvider.productSalesList;
     ProductProvider productProvider = Provider.of<ProductProvider>(context);
     List<ProductModel> _productModel = productProvider.allProducts;
     List<ProductToSell> _productsToSell = productProvider.allOnSaleList;
@@ -505,7 +518,7 @@ class _ProductSaleState extends State<ProductSale> {
                       return Validators.notEmpty(value);
                     },
                     hintText: 'Amount paid',
-                    fieldController: nameController,
+                    fieldController: amountPaidController,
                     isShown: false,
                     inputType: TextInputType.number),
                 SelectInputType(
@@ -541,7 +554,7 @@ class _ProductSaleState extends State<ProductSale> {
                       return Validators.notEmpty(value);
                     },
                     hintText: 'Debt amount',
-                    fieldController: nameController,
+                    fieldController: debtAmountController,
                     isShown: false,
                     inputType: TextInputType.number),
                 SelectInputType(

@@ -9,7 +9,8 @@ class ProductSalesProvider extends ChangeNotifier {
     _productsaleList.add(productSale);
     notifyListeners();
   }
-   removeSale(int saleId) {
+
+  removeSale(int saleId) {
     _productsaleList.removeWhere((element) => element.saleId == saleId);
     notifyListeners();
   }
