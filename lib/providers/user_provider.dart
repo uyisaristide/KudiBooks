@@ -1,8 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/Users/user_model.dart';
 
 import '../dio_services.dart';
+
+final userProvider = ChangeNotifierProvider((ref) => UserProvider());
 
 class UserProvider extends ChangeNotifier {
   final Dio dio = Dio();

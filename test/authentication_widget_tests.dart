@@ -3,7 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:kudibooks_app/screens/auth_screens/login.dart';
 import 'package:kudibooks_app/screens/auth_screens/phone_login.dart';
 import 'package:kudibooks_app/screens/auth_screens/phone_signup.dart';
-import 'package:kudibooks_app/screens/auth_screens/signup.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/circled_logo.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/custom_devider.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/hyperlink_text.dart';
@@ -50,33 +49,33 @@ void main() {
       expect(find.text("Or sign in with"), findsOneWidget);
     });
   });
-  group("sign up with email widgets tests", () {
-    testWidgets("Screen widgets tests", (testersWidget) async {
-      await testersWidget.pumpWidget(MaterialApp(
-        home: Scaffold(
-          body: MultiProvider(providers: [
-            ChangeNotifierProvider(create: (_) => UserProvider()),
-          ], child: SignUp()),
-        ),
-      ));
-      expect(find.byType(CustomFormField), findsNWidgets(3));
-      expect(find.byType(LoginButton), findsNWidgets(1));
-      expect(find.byType(HyperLinkText), findsNWidgets(1));
-      expect(find.byType(PageTitle), findsNWidgets(1));
-      expect(find.byType(CircledLogo), findsNWidgets(3));
-      expect(find.byType(PasswordField), findsNWidgets(2));
-      //Test texts on sign up screen
-      expect(find.text("Create new account"), findsOneWidget);
-      expect(find.text("First Name"), findsOneWidget);
-      expect(find.text("Last Name"), findsOneWidget);
-      expect(find.text("Email Address"), findsOneWidget);
-      expect(find.text("Password"), findsOneWidget);
-      expect(find.text("Confirm Password"), findsOneWidget);
-      expect(find.text("Register now"), findsOneWidget);
-      expect(find.text("Login instead"), findsOneWidget);
-      expect(find.text("Or sign in with"), findsOneWidget);
-    });
-  });
+  // group("sign up with email widgets tests", () {
+  //   testWidgets("Screen widgets tests", (testersWidget) async {
+  //     await testersWidget.pumpWidget(MaterialApp(
+  //       home: Scaffold(
+  //         body: MultiProvider(providers: [
+  //           ChangeNotifierProvider(create: (_) => UserProvider()),
+  //         ], child: SignUp()),
+  //       ),
+  //     ));
+  //     expect(find.byType(CustomFormField), findsNWidgets(3));
+  //     expect(find.byType(LoginButton), findsNWidgets(1));
+  //     expect(find.byType(HyperLinkText), findsNWidgets(1));
+  //     expect(find.byType(PageTitle), findsNWidgets(1));
+  //     expect(find.byType(CircledLogo), findsNWidgets(3));
+  //     expect(find.byType(PasswordField), findsNWidgets(2));
+  //     //Test texts on sign up screen
+  //     expect(find.text("Create new account"), findsOneWidget);
+  //     expect(find.text("First Name"), findsOneWidget);
+  //     expect(find.text("Last Name"), findsOneWidget);
+  //     expect(find.text("Email Address"), findsOneWidget);
+  //     expect(find.text("Password"), findsOneWidget);
+  //     expect(find.text("Confirm Password"), findsOneWidget);
+  //     expect(find.text("Register now"), findsOneWidget);
+  //     expect(find.text("Login instead"), findsOneWidget);
+  //     expect(find.text("Or sign in with"), findsOneWidget);
+  //   });
+  // });
   group("Sign up with phone widgets tests", () {
     testWidgets("widgets on sign up with phone screen",
         (testPhoneSignUp) async {

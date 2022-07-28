@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/Users/user_model.dart';
 import 'package:kudibooks_app/providers/user_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
@@ -10,19 +11,18 @@ import 'package:kudibooks_app/screens/auth_screens/widgets/page_title.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/phone_input.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
 import 'package:kudibooks_app/screens/background.dart';
-import 'package:provider/provider.dart';
 import 'package:collection/collection.dart';
 
 import '../dashboard/classes/snack_bars.dart';
 
-class PhoneSignup extends StatefulWidget {
-  PhoneSignup({Key? key}) : super(key: key);
+class PhoneSignup extends ConsumerStatefulWidget {
+  const PhoneSignup({Key? key}) : super(key: key);
 
   @override
-  State<PhoneSignup> createState() => _PhoneSignupState();
+  ConsumerState<PhoneSignup> createState() => _PhoneSignupState();
 }
 
-class _PhoneSignupState extends State<PhoneSignup> {
+class _PhoneSignupState extends ConsumerState<PhoneSignup> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final firstNameController = TextEditingController();
@@ -52,8 +52,7 @@ class _PhoneSignupState extends State<PhoneSignup> {
 
   @override
   Widget build(BuildContext context) {
-    UserProvider _userProvider = Provider.of<UserProvider>(context);
-    List<User> users = _userProvider.allUsers;
+    List<User> users = ref.watch(userProvider).allUsers;
     return BackgroundScreen(
       screens: Form(
         key: _formKey,
@@ -85,7 +84,7 @@ class _PhoneSignupState extends State<PhoneSignup> {
                 setState(() {
                   _countryCodes = country.dialCode;
                 });
-                print("Phone Number with country code");
+                debugPrint("Phone Number with country code");
               },
               fieldIcon: const Icon(Icons.phone, size: 18),
               phoneNumber: phoneController,
@@ -209,7 +208,7 @@ class _PhoneSignupState extends State<PhoneSignup> {
                   var checkUser = users.firstWhereOrNull((element) =>
                       element.phoneOrEmail == phoneController.text);
                   if (checkUser == null) {
-                    _userProvider.addUser(User(
+                    ref.watch(userProvider).addUser(User(
                         firstName: firstNameController.text,
                         lastName: lastNameController.text,
                         phoneOrEmail: _countryCodes + phoneController.text,
@@ -226,13 +225,13 @@ class _PhoneSignupState extends State<PhoneSignup> {
                 }
               },
             ),
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             LoginButton(
               text: 'Register now Net',
               actionField: () {
                 if (_formKey.currentState!.validate()) {
                   var _phoneNumber = "+$_countryCodes${phoneController.text}";
-                  _userProvider.createUser(User(
+                  ref.watch(userProvider).createUser(User(
                       firstName: firstNameController.text,
                       lastName: lastNameController.text,
                       phoneOrEmail: _phoneNumber,

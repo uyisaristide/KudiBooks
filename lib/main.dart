@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kudibooks_app/providers/expenses_provider.dart';
-import 'package:kudibooks_app/providers/inventory_provider.dart';
-import 'package:kudibooks_app/providers/product_provider.dart';
-import 'package:kudibooks_app/providers/products_sale_provider.dart';
 import 'package:kudibooks_app/providers/user_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/login.dart';
 import 'package:kudibooks_app/screens/auth_screens/otp_verification.dart';
@@ -11,16 +7,10 @@ import 'package:kudibooks_app/screens/auth_screens/phone_signup.dart';
 import 'package:kudibooks_app/screens/auth_screens/signup.dart';
 import 'package:kudibooks_app/screens/dashboard/loads.dart';
 import 'package:kudibooks_app/screens/splash_screen/green_splash_screen.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
-  runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(create: (_) => UserProvider()),
-    ChangeNotifierProvider(create: (_) => ProductSalesProvider()),
-    ChangeNotifierProvider(create: (_) => ProductProvider()),
-    ChangeNotifierProvider(create: (_) => InventoryProviders()),
-    ChangeNotifierProvider(create: (_) => ExpensesProvider()),
-  ], child: const MyApp()));
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {

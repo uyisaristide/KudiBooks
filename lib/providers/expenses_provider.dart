@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/expense_model.dart';
+
+final expenseProvider = ChangeNotifierProvider((ref) => ExpensesProvider());
 
 class ExpensesProvider extends ChangeNotifier {
   List<Expense> expensesList = [];

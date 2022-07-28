@@ -48,7 +48,8 @@ class BusinessMovement {
     BusinessMovement(
       months: "Sept",
       amounts: 29,
-      barColor: charts.ColorUtil.fromDartColor(Colors.deepOrangeAccent.shade400),
+      barColor:
+          charts.ColorUtil.fromDartColor(Colors.deepOrangeAccent.shade400),
     ),
     BusinessMovement(
       months: "Oct",

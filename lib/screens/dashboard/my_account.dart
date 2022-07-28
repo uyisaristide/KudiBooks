@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/Users/user_model.dart';
 import 'package:kudibooks_app/providers/user_provider.dart';
 import 'package:kudibooks_app/screens/dashboard/account_transfer.dart';
@@ -7,19 +8,19 @@ import 'package:kudibooks_app/screens/dashboard/chart_of_account.dart';
 import 'package:kudibooks_app/screens/dashboard/settings_screen.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
-import 'package:provider/provider.dart';
 import 'widget/bottom_navigation.dart';
 
-class MyAccountScreen extends StatelessWidget {
+class MyAccountScreen extends ConsumerWidget {
   String loggedUser;
 
   MyAccountScreen({required this.loggedUser, Key? key}) : super(key: key);
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
   @override
-  Widget build(BuildContext context) {
-    UserProvider _userProvider = Provider.of<UserProvider>(context);
-    User? signedUser = _userProvider.allUsers
+  Widget build(BuildContext context, WidgetRef loadUser) {
+    User? signedUser = loadUser
+        .watch(userProvider)
+        .allUsers
         .firstWhere((user) => user.phoneOrEmail == loggedUser);
     return WillPopScope(
       onWillPop: () async {

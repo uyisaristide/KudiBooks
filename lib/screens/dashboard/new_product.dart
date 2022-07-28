@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/product_model.dart';
 import 'package:kudibooks_app/providers/product_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
@@ -9,16 +10,15 @@ import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/double_header_two.dart';
-import 'package:provider/provider.dart';
 
-class NewProduct extends StatefulWidget {
+class NewProduct extends ConsumerStatefulWidget {
   NewProduct({Key? key}) : super(key: key);
 
   @override
-  State<NewProduct> createState() => _NewProductState();
+  ConsumerState<NewProduct> createState() => _NewProductState();
 }
 
-class _NewProductState extends State<NewProduct> {
+class _NewProductState extends ConsumerState<NewProduct> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _idRandom = Random();
 
@@ -49,8 +49,7 @@ class _NewProductState extends State<NewProduct> {
 
   @override
   Widget build(BuildContext context) {
-    ProductProvider productProvider = Provider.of<ProductProvider>(context);
-    List<ProductModel> _listProducts = productProvider.allProducts;
+    List<ProductModel> _listProducts = ref.watch(productProviders).allProducts;
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
           color: Colors.transparent,
@@ -61,7 +60,7 @@ class _NewProductState extends State<NewProduct> {
                 text: 'Add product',
                 actionField: () {
                   if (_formKey.currentState!.validate()) {
-                    productProvider.addProduct(ProductModel(
+                    ref.watch(productProviders).addProduct(ProductModel(
                         id: _idRandom.nextInt(300),
                         revenueAccount: revenueAccountValue,
                         inventoryExpenseAccount: expenseAccountValue,
