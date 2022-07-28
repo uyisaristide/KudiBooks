@@ -54,7 +54,7 @@ class LignChartObject extends StatelessWidget {
                     const FlSpot(12, 4.5),
                   ],
                   isCurved: true,
-                  colors: lossGradientColors,
+                  color: Colors.red,
                   barWidth: 4,
                   dotData: FlDotData(show: true),
                   belowBarData: BarAreaData(
@@ -77,7 +77,7 @@ class LignChartObject extends StatelessWidget {
                     const FlSpot(12, 5),
                   ],
                   isCurved: true,
-                  colors: profitGradientColors,
+                  color: Colors.green,
                   barWidth: 4,
                   dotData: FlDotData(show: true),
                   belowBarData: BarAreaData(
