@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/Users/user_model.dart';
 import 'package:kudibooks_app/models/inventory_model.dart';
 import 'package:kudibooks_app/models/product_model.dart';
@@ -15,11 +16,9 @@ import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/loads_card.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/product_listtile.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/search_input.dart';
-import 'package:provider/provider.dart';
-
 import 'new_inventory.dart';
 
-class InventoryScreen extends StatefulWidget {
+class InventoryScreen extends ConsumerStatefulWidget {
   VoidCallback? loadInventories;
   String loggedUser;
 
@@ -27,10 +26,10 @@ class InventoryScreen extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<InventoryScreen> createState() => _InventoryScreenState();
+  ConsumerState<InventoryScreen> createState() => _InventoryScreenState();
 }
 
-class _InventoryScreenState extends State<InventoryScreen>
+class _InventoryScreenState extends ConsumerState<InventoryScreen>
     with SingleTickerProviderStateMixin {
   bool isSearch = false;
   bool isSearchInventory = false;
@@ -58,13 +57,16 @@ class _InventoryScreenState extends State<InventoryScreen>
 
   @override
   Widget build(BuildContext context) {
-    ProductProvider _productProvider = Provider.of<ProductProvider>(context);
-    List<ProductModel> _productList = _productProvider.allProducts;
-    InventoryProviders _inventoryProviders =
-        Provider.of<InventoryProviders>(context);
-    List<InventoryModel> _loadsList = _inventoryProviders.allInventories;
-    UserProvider _userProvider = Provider.of<UserProvider>(context);
-    User? signedUser = _userProvider.allUsers
+    List<ProductModel> _productList = ref
+        .watch(productProviders)
+        .allProducts
+        .where((productItem) => productItem.inventoryExpenseAccount != null)
+        .toList();
+    List<InventoryModel> _loadsList =
+        ref.watch(inventoryProvider).allInventories;
+    User? signedUser = ref
+        .watch(userProvider)
+        .allUsers
         .firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
     return WillPopScope(
         onWillPop: () async {
@@ -218,7 +220,7 @@ class _InventoryScreenState extends State<InventoryScreen>
                                                       .contains(value))
                                                   .toList();
                                               if (results.isNotEmpty) {
-                                                print("Results found");
+                                                debugPrint("Results found");
                                                 searchResult = results;
                                                 searchString = value;
                                               }
@@ -313,8 +315,8 @@ class _InventoryScreenState extends State<InventoryScreen>
                                         searchString == '' ||
                                         searchContent.text.isEmpty
                                     ? LimitedBox(
-                                        maxHeight: 1000,
                                         child: ListView.separated(
+                                            shrinkWrap: true,
                                             physics:
                                                 const NeverScrollableScrollPhysics(),
                                             itemBuilder: (context, index) =>
@@ -339,8 +341,8 @@ class _InventoryScreenState extends State<InventoryScreen>
                                                 : _productList.length),
                                       )
                                     : LimitedBox(
-                                        maxHeight: 1000,
                                         child: ListView.separated(
+                                            shrinkWrap: true,
                                             physics:
                                                 const NeverScrollableScrollPhysics(),
                                             itemBuilder: (context, index) =>
@@ -383,8 +385,8 @@ class _InventoryScreenState extends State<InventoryScreen>
                                         searchInventoryValue == '' ||
                                         searchContentInventory.text.isEmpty
                                     ? LimitedBox(
-                                        maxHeight: 1000,
                                         child: ListView.separated(
+                                            shrinkWrap: true,
                                             physics:
                                                 const NeverScrollableScrollPhysics(),
                                             itemBuilder: (context, load) =>
@@ -409,8 +411,8 @@ class _InventoryScreenState extends State<InventoryScreen>
                                                 : _loadsList.length),
                                       )
                                     : LimitedBox(
-                                        maxHeight: 1000,
                                         child: ListView.separated(
+                                            shrinkWrap: true,
                                             physics:
                                                 const NeverScrollableScrollPhysics(),
                                             itemBuilder: (context, load) =>

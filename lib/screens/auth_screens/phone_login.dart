@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/Users/user_model.dart';
 import 'package:kudibooks_app/providers/user_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
@@ -11,19 +12,18 @@ import 'package:kudibooks_app/screens/auth_screens/widgets/page_title.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/password_field.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/phone_input.dart';
 import 'package:kudibooks_app/screens/background.dart';
-import 'package:provider/provider.dart';
 
 import '../dashboard/classes/snack_bars.dart';
 import '../dashboard/widget/bottom_navigation.dart';
 
-class PhoneLogin extends StatefulWidget {
-  PhoneLogin({Key? key}) : super(key: key);
+class PhoneLogin extends ConsumerStatefulWidget {
+  const PhoneLogin({Key? key}) : super(key: key);
 
   @override
-  State<PhoneLogin> createState() => _PhoneLoginState();
+  ConsumerState<PhoneLogin> createState() => _PhoneLoginState();
 }
 
-class _PhoneLoginState extends State<PhoneLogin> {
+class _PhoneLoginState extends ConsumerState<PhoneLogin> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final firstNameController = TextEditingController();
@@ -42,8 +42,7 @@ class _PhoneLoginState extends State<PhoneLogin> {
 
   @override
   Widget build(BuildContext context) {
-    UserProvider _userProvider = Provider.of<UserProvider>(context);
-    List<User> _users = _userProvider.allUsers;
+    List<User> _users = ref.watch(userProvider).allUsers;
     return BackgroundScreen(
       buttonWidget: Row(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -74,7 +73,7 @@ class _PhoneLoginState extends State<PhoneLogin> {
                   Validators.validatePhoneNumber(phoneController.text),
               countryCodes: (country) {
                 _countryCode = country.dialCode;
-                print(_countryCode);
+                debugPrint(_countryCode);
               },
               fieldIcon: const Icon(
                 Icons.phone,
@@ -118,14 +117,16 @@ class _PhoneLoginState extends State<PhoneLogin> {
                     Navigator.pushReplacement(
                         context,
                         CupertinoPageRoute(
-                            builder: (context) => NavigationBottom(loggedUser: checkUser.first.phoneOrEmail,)));
+                            builder: (context) => NavigationBottom(
+                                  loggedUser: checkUser.first.phoneOrEmail!,
+                                )));
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                         SnackBars.snackBars('Incorrect pin', Colors.redAccent));
-                    print(
+                    debugPrint(
                         "Printed successfully ${checkUser.first.phoneOrEmail} and password is: ${checkUser.first.password}");
                   }
-                  print(
+                  debugPrint(
                       "Country code is: ${_countryCode + phoneController.text}");
                 }
               },

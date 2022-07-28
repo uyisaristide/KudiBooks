@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/product_model.dart';
 import 'package:kudibooks_app/providers/product_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
@@ -9,16 +10,15 @@ import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/double_header_two.dart';
-import 'package:provider/provider.dart';
 
-class NewProduct extends StatefulWidget {
+class NewProduct extends ConsumerStatefulWidget {
   NewProduct({Key? key}) : super(key: key);
 
   @override
-  State<NewProduct> createState() => _NewProductState();
+  ConsumerState<NewProduct> createState() => _NewProductState();
 }
 
-class _NewProductState extends State<NewProduct> {
+class _NewProductState extends ConsumerState<NewProduct> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _idRandom = Random();
 
@@ -49,8 +49,7 @@ class _NewProductState extends State<NewProduct> {
 
   @override
   Widget build(BuildContext context) {
-    ProductProvider productProvider = Provider.of<ProductProvider>(context);
-    List<ProductModel> _listProducts = productProvider.allProducts;
+    List<ProductModel> _listProducts = ref.watch(productProviders).allProducts;
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
           color: Colors.transparent,
@@ -61,7 +60,7 @@ class _NewProductState extends State<NewProduct> {
                 text: 'Add product',
                 actionField: () {
                   if (_formKey.currentState!.validate()) {
-                    productProvider.addProduct(ProductModel(
+                    ref.watch(productProviders).addProduct(ProductModel(
                         id: _idRandom.nextInt(300),
                         revenueAccount: revenueAccountValue,
                         inventoryExpenseAccount: expenseAccountValue,
@@ -87,6 +86,12 @@ class _NewProductState extends State<NewProduct> {
           child: Column(
             children: [
               SelectInputType(
+                  validation: (value) {
+                    if (value == null) {
+                      return 'This field is required';
+                    }
+                    return null;
+                  },
                   selectedValue: (value) {
                     setState(() {
                       revenueAccountValue = value;
@@ -111,6 +116,12 @@ class _NewProductState extends State<NewProduct> {
               ),
               isItInInventory
                   ? SelectInputType(
+                      validation: (value) {
+                        if (isItInInventory && value == null) {
+                          return "Fill out this field";
+                        }
+                        return null;
+                      },
                       selectedValue: (value) {
                         setState(() {
                           expenseAccountValue = value;
@@ -142,7 +153,6 @@ class _NewProductState extends State<NewProduct> {
               ),
               soldInSubUnits
                   ? Container(
-                      height: 200,
                       width: double.infinity,
                       margin: const EdgeInsets.symmetric(
                           vertical: 15, horizontal: 15),
@@ -160,10 +170,16 @@ class _NewProductState extends State<NewProduct> {
                             children: [
                               Expanded(
                                 child: SelectInputType(
+                                  validation: (value) {
+                                    if (soldInSubUnits == true &&
+                                        value == null) {
+                                      return "Required fields";
+                                    }
+                                    return null;
+                                  },
                                   selectedValue: (value) {
                                     setState(() {
                                       unitType = value;
-                                      print("Sub unit is: $value");
                                     });
                                   },
                                   itemsToSelect: unitOfProduct,
@@ -173,7 +189,11 @@ class _NewProductState extends State<NewProduct> {
                               Expanded(
                                 child: CustomFormField(
                                     validators: (value) {
-                                      Validators.validateName(value);
+                                      if (soldInSubUnits == true &&
+                                          value == '') {
+                                        return "Fill this field";
+                                      }
+                                      return null;
                                     },
                                     hintText: 'Sub units',
                                     fieldController: numberOfSubUnits,
@@ -183,12 +203,22 @@ class _NewProductState extends State<NewProduct> {
                           ),
                           CustomFormField(
                               inputType: TextInputType.number,
-                              validators: (value) {},
+                              validators: (value) {
+                                if (soldInSubUnits == true && value == '') {
+                                  return "Fill this field";
+                                }
+                                return null;
+                              },
                               hintText: 'Sub-unit price',
                               fieldController: subUnitPrice,
                               isShown: false),
                           CustomFormField(
-                              validators: (value) {},
+                              validators: (value) {
+                                if (soldInSubUnits == true && value == '') {
+                                  return "Fill this field";
+                                }
+                                return null;
+                              },
                               hintText: 'Sub-unit name',
                               fieldController: subUnitName,
                               isShown: false),
@@ -197,6 +227,12 @@ class _NewProductState extends State<NewProduct> {
                     )
                   : Container(),
               SelectInputType(
+                validation: (values) {
+                  if (values == null) {
+                    return "This field is required";
+                  }
+                  return null;
+                },
                 selectedValue: (value) {
                   setState(() {
                     defaultSellingMethodValue = value;
@@ -206,7 +242,12 @@ class _NewProductState extends State<NewProduct> {
                 dropDownHint: const Text("Default selling method"),
               ),
               CustomFormField(
-                  validators: (value) {},
+                  validators: (val) {
+                    if (val == null) {
+                      return "This field is required";
+                    }
+                    return null;
+                  },
                   hintText: 'Product price',
                   inputType: TextInputType.number,
                   fieldController: priceController,

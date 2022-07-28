@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:kudibooks_app/models/Users/ProductInLoad.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:kudibooks_app/models/Users/products_sold_model.dart';
 import 'package:kudibooks_app/models/product_model.dart';
-import 'package:kudibooks_app/models/product_sale_model.dart';
 import 'package:kudibooks_app/providers/product_provider.dart';
-import 'package:kudibooks_app/providers/products_sale_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/drop_down_widget.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
@@ -13,16 +12,15 @@ import 'package:kudibooks_app/screens/dashboard/add_products_popup.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/double_header_two.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/inventory_card.dart';
-import 'package:provider/provider.dart';
 
-class ProductSale extends StatefulWidget {
-  ProductSale({Key? key}) : super(key: key);
+class ProductSale extends ConsumerStatefulWidget {
+  const ProductSale({Key? key}) : super(key: key);
 
   @override
-  State<ProductSale> createState() => _ProductSaleState();
+  ConsumerState<ProductSale> createState() => _ProductSaleState();
 }
 
-class _ProductSaleState extends State<ProductSale> {
+class _ProductSaleState extends ConsumerState<ProductSale> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final nameController = TextEditingController();
@@ -245,18 +243,28 @@ class _ProductSaleState extends State<ProductSale> {
   }
 
   _addProductForm(BuildContext context) {
-    ProductSalesProvider _salesProvider =
-        Provider.of<ProductSalesProvider>(context);
-    List<ProductSalesModel> salesProvidersList =
-        _salesProvider.productSalesList;
-    ProductProvider productProvider = Provider.of<ProductProvider>(context);
-    List<ProductModel> _productModel = productProvider.allProducts;
-    List<ProductToSell> _productsToSell = productProvider.allOnSaleList;
+    List<ProductModel> _productModel = ref.watch(productProviders).allProducts;
+    List<ProductToSell> _productsToSell =
+        ref.watch(productProviders).allOnSaleList;
     return Form(
       key: _formKey,
       child: Column(
         children: [
           CustomFormField(
+              calendarPicker: () async {
+                // FocusScope.of(context).requestFocus(FocusNode());
+                await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(2017),
+                        lastDate: DateTime(2040))
+                    .then((selectedDate) {
+                  if (selectedDate != null) {
+                    transactionDateController.text =
+                        DateFormat('yyyy-MM-dd').format(selectedDate);
+                  }
+                });
+              },
               fieldIcon: const Icon(Icons.calendar_today_outlined),
               validators: (value) {
                 return Validators.notEmpty(value!);
@@ -289,7 +297,7 @@ class _ProductSaleState extends State<ProductSale> {
                 itemBuilder: (context, index) {
                   String changeToInt =
                       _productsToSell[index].productId.toString();
-                  print(changeToInt);
+                  debugPrint(changeToInt);
                   var _names = _productModel.firstWhere(
                       (element) => element.id == int.parse(changeToInt));
 
@@ -304,7 +312,8 @@ class _ProductSaleState extends State<ProductSale> {
                             Icons.close,
                             color: Color(0xffA34646),
                           ),
-                          onPressed: () => setState(() => productProvider
+                          onPressed: () => setState(() => ref
+                              .watch(productProviders)
                               .removeProductToSales(int.parse(changeToInt))),
                         ),
                         bottomSize: 10,

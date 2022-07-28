@@ -1,10 +1,11 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:kudibooks_app/models/Users/ProductInLoad.dart';
 import 'package:kudibooks_app/models/inventory_model.dart';
 import 'package:kudibooks_app/models/product_model.dart';
-import 'package:kudibooks_app/providers/inventory_provider.dart';
 import 'package:kudibooks_app/providers/product_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/drop_down_widget.dart';
@@ -14,16 +15,17 @@ import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/double_header_two.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/inventory_card.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/load_product.dart';
-import 'package:provider/provider.dart';
 
-class NewInventory extends StatefulWidget {
-  NewInventory({Key? key}) : super(key: key);
+import '../../providers/inventory_provider.dart';
+
+class NewInventory extends ConsumerStatefulWidget {
+  const NewInventory({Key? key}) : super(key: key);
 
   @override
-  State<NewInventory> createState() => _NewInventoryState();
+  ConsumerState<NewInventory> createState() => _NewInventoryState();
 }
 
-class _NewInventoryState extends State<NewInventory> {
+class _NewInventoryState extends ConsumerState<NewInventory> {
   final _randNumber = Random();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   var nameController = TextEditingController();
@@ -39,13 +41,9 @@ class _NewInventoryState extends State<NewInventory> {
 
   @override
   Widget build(BuildContext context) {
-    InventoryProviders _inventoryProviders =
-        Provider.of<InventoryProviders>(context);
-    List<InventoryModel> inventoryProvidersList =
-        _inventoryProviders.allInventories;
-    ProductProvider productProvider = Provider.of<ProductProvider>(context);
-    List<ProductModel> _productModel = productProvider.allProducts;
-    List<ProductInLoadModel> _productsToLoad = productProvider.allToLoadModel;
+    List<ProductModel> _productModel = ref.watch(productProviders).allProducts;
+    List<ProductInLoadModel> _productsToLoad =
+        ref.watch(productProviders).allToLoadModel;
 
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
@@ -57,7 +55,7 @@ class _NewInventoryState extends State<NewInventory> {
                 text: 'Save',
                 actionField: () {
                   if (_formKey.currentState!.validate()) {
-                    _inventoryProviders.addInventory(InventoryModel(
+                    ref.watch(inventoryProvider).addInventory(InventoryModel(
                         id: _randNumber.nextInt(500),
                         bulkName: nameController.text,
                         productList: _productsToLoad,
@@ -69,7 +67,7 @@ class _NewInventoryState extends State<NewInventory> {
                         transactionDate: transactionDateController.text,
                         memoInventory: memoController.text));
                     _productsToLoad.clear();
-                    print("Saved");
+                    debugPrint("Saved");
                     Navigator.pop(context);
                   }
                 }),
@@ -84,7 +82,7 @@ class _NewInventoryState extends State<NewInventory> {
             children: [
               CustomFormField(
                   validators: (value) {
-                    if(nameController.text.isEmpty){
+                    if (nameController.text.isEmpty) {
                       return 'Enter user name';
                     }
                     return null;
@@ -108,7 +106,7 @@ class _NewInventoryState extends State<NewInventory> {
                     itemBuilder: (context, index) {
                       String changeToInt =
                           _productsToLoad[index].productId.toString();
-                      print(changeToInt);
+                      debugPrint(changeToInt);
                       var _names = _productModel.firstWhere(
                           (element) => element.id == int.parse(changeToInt));
 
@@ -123,7 +121,8 @@ class _NewInventoryState extends State<NewInventory> {
                                 Icons.close,
                                 color: Color(0xffA34646),
                               ),
-                              onPressed: () => setState(() => productProvider
+                              onPressed: () => setState(() => ref
+                                  .watch(productProviders)
                                   .removeLoadInModel(int.parse(changeToInt))),
                             ),
                             bottomSize: 10,
@@ -270,7 +269,7 @@ class _NewInventoryState extends State<NewInventory> {
               ),
               CustomFormField(
                   validators: (value) {
-                    if(transactionNameController.text.isEmpty){
+                    if (transactionNameController.text.isEmpty) {
                       return 'Enter user name';
                     }
                   },
@@ -279,11 +278,25 @@ class _NewInventoryState extends State<NewInventory> {
                   isShown: false,
                   inputType: TextInputType.name),
               CustomFormField(
+                  calendarPicker: () async {
+                    // FocusScope.of(context).requestFocus(FocusNode());
+                    await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2017),
+                            lastDate: DateTime(2040))
+                        .then((selectedDate) {
+                      if (selectedDate != null) {
+                        transactionDateController.text =
+                            DateFormat('yyyy-MM-dd').format(selectedDate);
+                      }
+                    });
+                  },
                   fieldIcon: const Icon(Icons.calendar_today_outlined),
                   validators: (value) {
                     Validators.validateName(value);
                   },
-                  hintText: 'Transaction date',
+                  hintText: 'Transaction dates',
                   fieldController: transactionDateController,
                   isShown: false,
                   inputType: TextInputType.datetime),

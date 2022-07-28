@@ -1,30 +1,36 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/Users/user_model.dart';
 import 'package:kudibooks_app/providers/user_provider.dart';
+import 'package:kudibooks_app/screens/auth_screens/login.dart';
 import 'package:kudibooks_app/screens/dashboard/account_transfer.dart';
 import 'package:kudibooks_app/screens/dashboard/chart_of_account.dart';
 import 'package:kudibooks_app/screens/dashboard/settings_screen.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
-import 'package:provider/provider.dart';
 import 'widget/bottom_navigation.dart';
 
-class MyAccountScreen extends StatelessWidget {
+class MyAccountScreen extends ConsumerWidget {
   String loggedUser;
 
   MyAccountScreen({required this.loggedUser, Key? key}) : super(key: key);
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
   @override
-  Widget build(BuildContext context) {
-    UserProvider _userProvider = Provider.of<UserProvider>(context);
-    User? signedUser = _userProvider.allUsers
+  Widget build(BuildContext context, WidgetRef loadUser) {
+    User? signedUser = loadUser
+        .watch(userProvider)
+        .allUsers
         .firstWhere((user) => user.phoneOrEmail == loggedUser);
     return WillPopScope(
       onWillPop: () async {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => NavigationBottom(loggedUser: loggedUser,)));
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => NavigationBottom(
+                      loggedUser: loggedUser,
+                    )));
         // Navigator.pop(context);
         return false;
       },
@@ -73,7 +79,10 @@ class MyAccountScreen extends StatelessWidget {
                       Text("${signedUser.firstName} ${signedUser.lastName}",
                           style: const TextStyle(
                               fontSize: 24, fontWeight: FontWeight.bold)),
-                      Text(signedUser.phoneOrEmail,
+                      Text(
+                          signedUser.phoneOrEmail == null
+                              ? ""
+                              : signedUser.phoneOrEmail!,
                           style: const TextStyle(
                             fontSize: 16,
                           )),
@@ -147,10 +156,8 @@ class MyAccountScreen extends StatelessWidget {
                   trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                 ),
                 ListTile(
-                  onTap: () => Navigator.push(
-                      context,
-                      CupertinoPageRoute(
-                          builder: (context) => const Settings())),
+                  onTap: () => Navigator.push(context,
+                      CupertinoPageRoute(builder: (context) => const Login())),
                   title: const Text(
                     "Sign out",
                     style: TextStyle(

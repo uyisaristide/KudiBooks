@@ -1,20 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/inventory_model.dart';
 import 'package:kudibooks_app/providers/inventory_provider.dart';
 import 'package:kudibooks_app/screens/dashboard/classes/sliver_delegate_search.dart';
 import 'package:kudibooks_app/screens/dashboard/new_inventory.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/loads_card.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/search_input.dart';
-import 'package:provider/provider.dart';
 
-class Loads extends StatelessWidget {
+class Loads extends ConsumerWidget {
   Loads({Key? key}) : super(key: key);
   final searchContent = TextEditingController();
+
   @override
-  Widget build(BuildContext context) {
-    InventoryProviders _inventoryProviders = Provider.of<InventoryProviders>(context);
-    List<InventoryModel> _loadsList = _inventoryProviders.allInventories;
+  Widget build(BuildContext context, WidgetRef refs) {
+    List<InventoryModel> _loadsList =
+        refs.watch(inventoryProvider).allInventories;
     return Scaffold(
       floatingActionButton: ElevatedButton(
         style: ElevatedButton.styleFrom(
@@ -22,8 +23,8 @@ class Loads extends StatelessWidget {
             padding: const EdgeInsets.all(15.0),
             elevation: 0.0,
             shape: const CircleBorder()),
-        onPressed: () => Navigator.push(
-            context, CupertinoPageRoute(builder: (context) => NewInventory())),
+        onPressed: () => Navigator.push(context,
+            CupertinoPageRoute(builder: (context) => const NewInventory())),
         child: const Text(
           '+',
           style: TextStyle(fontSize: 25),
@@ -58,7 +59,10 @@ class Loads extends StatelessWidget {
                     child: Container(
                         color: Theme.of(context).scaffoldBackgroundColor,
                         width: MediaQuery.of(context).size.width,
-                        child: SearchTextField(searchContent: searchContent,)),
+                        child: SearchTextField(
+                          searchContent: searchContent,
+                          hintTexts: 'Search load',
+                        )),
                     maxHeight: 60,
                     minHeight: 60,
                   )),

@@ -1,8 +1,10 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/Users/ProductInLoad.dart';
 import 'package:kudibooks_app/models/Users/products_sold_model.dart';
 import 'package:kudibooks_app/models/product_model.dart';
-import 'package:kudibooks_app/models/product_sale_model.dart';
+
+final productProviders = ChangeNotifierProvider((ref) => ProductProvider());
 
 class ProductProvider extends ChangeNotifier {
   final List<ProductModel> _listProducts = [];
@@ -15,7 +17,7 @@ class ProductProvider extends ChangeNotifier {
 
   List<ProductInLoadModel> get allToLoadModel => _productLoadModel;
 
-  List<ProductToSell> get allOnSaleList => _productToSell ;
+  List<ProductToSell> get allOnSaleList => _productToSell;
 
   addProduct(ProductModel productModel) {
     _listProducts.add(productModel);
@@ -43,7 +45,7 @@ class ProductProvider extends ChangeNotifier {
   }
 
   removeProductToSales(int productTosell) {
-    _productToSell
-        .removeWhere((element) => element.productId == productTosell);
+    _productToSell.removeWhere((element) => element.productId == productTosell);
+    notifyListeners();
   }
 }

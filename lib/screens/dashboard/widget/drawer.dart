@@ -45,7 +45,10 @@ class Drawers extends StatelessWidget {
                       "${userInfo!.firstName} ${userInfo!.lastName}",
                       style: const TextStyle(color: Colors.white),
                     ),
-                    Text(userInfo!.phoneOrEmail,
+                    Text(
+                        userInfo!.phoneOrEmail == null
+                            ? ""
+                            : userInfo!.phoneOrEmail!,
                         style: const TextStyle(color: Colors.white))
                   ],
                 ),

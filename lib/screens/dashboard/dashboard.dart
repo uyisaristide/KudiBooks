@@ -17,11 +17,11 @@ import 'package:kudibooks_app/screens/dashboard/widget/line_chart.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/line_chart_indicator.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/pie_chart.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/title_double.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../models/Users/user_model.dart';
 
-class Dashboard extends StatefulWidget {
+class Dashboard extends ConsumerStatefulWidget {
   final VoidCallback? callBack;
   String loggedUser;
 
@@ -29,16 +29,17 @@ class Dashboard extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<Dashboard> createState() => _DashboardState();
+  ConsumerState<Dashboard> createState() => _DashboardState();
 }
 
-class _DashboardState extends State<Dashboard> {
+class _DashboardState extends ConsumerState<Dashboard> {
   final List<BusinessMovement> chartData = BusinessMovement.data;
 
   @override
   Widget build(BuildContext context) {
-    UserProvider _userProvider = Provider.of<UserProvider>(context);
-    User? signedUser = _userProvider.allUsers
+    User? signedUser = ref
+        .watch(userProvider)
+        .allUsers
         .firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
 
     return Scaffold(
@@ -141,7 +142,7 @@ class _DashboardState extends State<Dashboard> {
                             actionClick: () => Navigator.push(
                                 context,
                                 CupertinoPageRoute(
-                                    builder: (ctx) => ProductSale())),
+                                    builder: (ctx) => const ProductSale())),
                             cardIcon: const Icon(
                               Icons.shopping_cart_outlined,
                               color: Colors.white,

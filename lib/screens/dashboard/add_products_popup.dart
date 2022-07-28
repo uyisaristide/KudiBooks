@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kudibooks_app/models/Users/ProductInLoad.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/Users/products_sold_model.dart';
 import 'package:kudibooks_app/models/product_model.dart';
 import 'package:kudibooks_app/providers/product_provider.dart';
@@ -9,16 +9,15 @@ import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart'
 import 'package:kudibooks_app/screens/dashboard/classes/selectItem.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/double_header_two.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/inventory_card.dart';
-import 'package:provider/provider.dart';
 
-class AddProductsPopup extends StatefulWidget {
+class AddProductsPopup extends ConsumerStatefulWidget {
   const AddProductsPopup({Key? key}) : super(key: key);
 
   @override
-  State<AddProductsPopup> createState() => _AddProductsPopupState();
+  ConsumerState<AddProductsPopup> createState() => _AddProductsPopupState();
 }
 
-class _AddProductsPopupState extends State<AddProductsPopup> {
+class _AddProductsPopupState extends ConsumerState<AddProductsPopup> {
   late int productId;
   String? productNames;
   String? selectedMethod = "byProduct";
@@ -50,8 +49,7 @@ class _AddProductsPopupState extends State<AddProductsPopup> {
 
   @override
   Widget build(BuildContext context) {
-    ProductProvider productProvider = Provider.of<ProductProvider>(context);
-    List<ProductModel> productList = productProvider.allProducts;
+    List<ProductModel> productList = ref.watch(productProviders).allProducts;
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -185,18 +183,19 @@ class _AddProductsPopupState extends State<AddProductsPopup> {
                       text: 'Save',
                       actionField: () {
                         if (_formKey.currentState!.validate()) {
-                          productProvider.addProductToSales(ProductToSell(
-                              productId: productId,
-                              sellingMethods: selectedMethod,
-                              unit: unitProduct.text.isEmpty
-                                  ? "Kg"
-                                  : unitProduct.text,
-                              price: unitController.text.isEmpty
-                                  ? 1
-                                  : int.parse(priceController.text),
-                              total: totalController.text.isEmpty
-                                  ? 1
-                                  : int.parse(totalController.text)));
+                          ref.watch(productProviders).addProductToSales(
+                              ProductToSell(
+                                  productId: productId,
+                                  sellingMethods: selectedMethod,
+                                  unit: unitProduct.text.isEmpty
+                                      ? "Kg"
+                                      : unitProduct.text,
+                                  price: unitController.text.isEmpty
+                                      ? 1
+                                      : int.parse(priceController.text),
+                                  total: totalController.text.isEmpty
+                                      ? 1
+                                      : int.parse(totalController.text)));
                           Navigator.pop(context);
                         }
                       }),
