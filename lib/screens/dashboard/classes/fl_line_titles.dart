@@ -1,60 +1,67 @@
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/material.dart';
 
 class LineTitles {
   static getTitleData() => FlTitlesData(
       show: true,
-      topTitles: SideTitles(showTitles: false),
-      rightTitles: SideTitles(showTitles: false),
-      leftTitles: SideTitles(
+      topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+      rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+      
+      leftTitles:AxisTitles( sideTitles: SideTitles(
         showTitles: true,
-        getTitles: (value) {
+        
+        getTitlesWidget: (double value, TitleMeta met) {
+
+          
+
           switch (value.toInt()) {
             case 1:
-              return '10k';
+              return const Text('10k');
             case 2:
-              return '20k';
+              return const Text('20k');
             case 3:
-              return '30k';
+              return const Text('30k');
             case 4:
-              return '40k';
+              return const Text('40k');
             case 5:
-              return '50k';
+              return const Text('50k');
             case 6:
-              return '60k';
+              return const Text('60k');
           }
-          return '';
+          return const Text('');
         },
       ),
-      bottomTitles: SideTitles(
+       ),
+       bottomTitles:AxisTitles(sideTitles: SideTitles(
           showTitles: true,
-          margin: 8,
-          getTitles: (value) {
+          
+          getTitlesWidget: (double value, TitleMeta meta) {
             switch (value.toInt()) {
               case 0:
-                return 'Jan';
+                return const Text('Jan');
               case 1:
-                return 'Feb';
+                return const Text('Feb');
               case 2:
-                return 'Mar';
+                return const Text('Mar');
               case 3:
-                return 'Apr';
+                return const Text('Apr');
               case 4:
-                return 'May';
+                return const Text('May');
               case 5:
-                return 'Jun';
+                return const Text('Jun');
               case 6:
-                return 'Jul';
+                return const Text('Jul');
               case 7:
-                return 'Aug';
+                return const Text('Aug');
               case 8:
-                return 'Sep';
+                return const Text('Sep');
               case 9:
-                return 'Oct';
+                return const Text('Oct');
               case 10:
-                return 'Nov';
+                return const Text('Nov');
               case 11:
-                return 'Dec';
+                return const Text('Dec');
             }
-            return '';
-          }));
+            return const Text('');
+          })));
 }
