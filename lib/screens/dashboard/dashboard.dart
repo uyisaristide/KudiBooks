@@ -37,6 +37,64 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
+    List actions = [
+      ActionCard(
+        actionClick: () => Navigator.push(
+            context, CupertinoPageRoute(builder: (ctx) => ProductSale())),
+        cardIcon: const Icon(
+          Icons.shopping_cart_outlined,
+          color: Colors.white,
+        ),
+        cardColor: const Color(0xff157253),
+        title: 'Sell',
+      ),
+      ActionCard(
+        actionClick: () => Navigator.push(
+            context, CupertinoPageRoute(builder: (ctx) => ProductSale())),
+        cardIcon: const Icon(
+          Icons.shopping_cart_outlined,
+          color: Colors.white,
+        ),
+        cardColor: const Color(0xff157253),
+        title: 'test',
+      ),
+      ActionCard(
+        actionClick: () => Navigator.push(
+            context, CupertinoPageRoute(builder: (ctx) => NewInventory())),
+        cardIcon: const Icon(
+          Icons.shopping_cart_outlined,
+          color: Colors.white,
+        ),
+        cardColor: const Color(0xffA70C4A),
+        title: 'New Load',
+      ),
+      ActionCard(
+        actionClick: () => Navigator.push(
+            context, CupertinoPageRoute(builder: (ctx) => NewExpense())),
+        cardIcon: const Icon(
+          Icons.shopping_cart_outlined,
+          color: Colors.white,
+        ),
+        cardColor: const Color(0xffFDAB30),
+        title: 'Expenses',
+      ),
+      ActionCard(
+        actionClick: () => showModalBottomSheet(
+            isDismissible: true,
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(15),
+                    topLeft: Radius.circular(15))),
+            context: context,
+            builder: (context) => _modalForMore(context)),
+        cardIcon: const Icon(
+          Icons.shopping_cart_outlined,
+          color: Colors.white,
+        ),
+        cardColor: const Color(0xff61B76B),
+        title: 'More',
+      ),
+    ];
     UserProvider _userProvider = Provider.of<UserProvider>(context);
     User? signedUser = _userProvider.allUsers
         .firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
@@ -80,24 +138,6 @@ class _DashboardState extends State<Dashboard> {
                   (BuildContext context, bool innerBoxIsScrolled) {
                 return [
                   SliverAppBar(
-                      actions: [
-                        PopupMenuButton(itemBuilder: (contexts) {
-                          return [
-                            const PopupMenuItem(
-                              child: ListTile(
-                                title: Text("Setting"),
-                                leading: Icon(Icons.settings),
-                              ),
-                            ),
-                            const PopupMenuItem(
-                              child: ListTile(
-                                title: Text("Help"),
-                                leading: Icon(Icons.help_outline),
-                              ),
-                            ),
-                          ];
-                        }),
-                      ],
                       pinned: innerBoxIsScrolled ? true : false,
                       iconTheme: IconThemeData(
                           color: innerBoxIsScrolled
