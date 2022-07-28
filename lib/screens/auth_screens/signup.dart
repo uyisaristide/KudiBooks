@@ -151,39 +151,39 @@ class _SignUpStateState extends ConsumerState<SignUp> {
                 }
               },
             ),
-            const SizedBox(height: 5),
-            LoginButton(
-              text: 'Register now Net',
-              actionField: () {
-                var serverPassword = "${passwordController.text}+1234";
-                if (_formKey.currentState!.validate()) {
-                  var userSaving = ref.watch(userProvider).createUserEmail(User(
-                      firstName: firstNameController.text,
-                      lastName: lastNameController.text,
-                      email: emailController.text,
-                      password: passwordController.text,
-                      passwordConfirm: passwordController.text));
-                  print("This is runtime type: $userSaving");
-                  if (userSaving.toString().isNotEmpty) {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)),
-                      duration: const Duration(seconds: 3),
-                      content: const Text(
-                        'User saved to network',
-                        style: TextStyle(
-                          fontSize: 17,
-                        ),
-                      ),
-                      padding: const EdgeInsets.all(20.0),
-                      backgroundColor: Colors.green,
-                    ));
-                    Navigator.pushReplacementNamed(context, '/login');
-                  }
-                  print("This is the future value $userSaving");
-                }
-              },
-            ),
+            // const SizedBox(height: 5),
+            // LoginButton(
+            //   text: 'Register now Net',
+            //   actionField: () {
+            //     var serverPassword = "${passwordController.text}+1234";
+            //     if (_formKey.currentState!.validate()) {
+            //       var userSaving = ref.watch(userProvider).createUserEmail(User(
+            //           firstName: firstNameController.text,
+            //           lastName: lastNameController.text,
+            //           email: emailController.text,
+            //           password: passwordController.text,
+            //           passwordConfirm: passwordController.text));
+            //       print("This is runtime type: $userSaving");
+            //       if (userSaving.toString().isNotEmpty) {
+            //         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            //           shape: RoundedRectangleBorder(
+            //               borderRadius: BorderRadius.circular(15)),
+            //           duration: const Duration(seconds: 3),
+            //           content: const Text(
+            //             'User saved to network',
+            //             style: TextStyle(
+            //               fontSize: 17,
+            //             ),
+            //           ),
+            //           padding: const EdgeInsets.all(20.0),
+            //           backgroundColor: Colors.green,
+            //         ));
+            //         Navigator.pushReplacementNamed(context, '/login');
+            //       }
+            //       print("This is the future value $userSaving");
+            //     }
+            //   },
+            // ),
             HyperLinkText(
               directingText: 'Login instead',
               actions: () =>

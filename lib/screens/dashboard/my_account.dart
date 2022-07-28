@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/Users/user_model.dart';
 import 'package:kudibooks_app/providers/user_provider.dart';
+import 'package:kudibooks_app/screens/auth_screens/login.dart';
 import 'package:kudibooks_app/screens/dashboard/account_transfer.dart';
 import 'package:kudibooks_app/screens/dashboard/chart_of_account.dart';
 import 'package:kudibooks_app/screens/dashboard/settings_screen.dart';
@@ -155,10 +156,8 @@ class MyAccountScreen extends ConsumerWidget {
                   trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                 ),
                 ListTile(
-                  onTap: () => Navigator.push(
-                      context,
-                      CupertinoPageRoute(
-                          builder: (context) => const Settings())),
+                  onTap: () => Navigator.push(context,
+                      CupertinoPageRoute(builder: (context) => const Login())),
                   title: const Text(
                     "Sign out",
                     style: TextStyle(

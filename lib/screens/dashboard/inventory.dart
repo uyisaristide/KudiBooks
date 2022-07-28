@@ -220,7 +220,7 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen>
                                                       .contains(value))
                                                   .toList();
                                               if (results.isNotEmpty) {
-                                                print("Results found");
+                                                debugPrint("Results found");
                                                 searchResult = results;
                                                 searchString = value;
                                               }

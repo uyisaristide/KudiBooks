@@ -225,22 +225,22 @@ class _PhoneSignupState extends ConsumerState<PhoneSignup> {
                 }
               },
             ),
-            const SizedBox(height: 5),
-            LoginButton(
-              text: 'Register now Net',
-              actionField: () {
-                if (_formKey.currentState!.validate()) {
-                  var _phoneNumber = "+$_countryCodes${phoneController.text}";
-                  ref.watch(userProvider).createUser(User(
-                      firstName: firstNameController.text,
-                      lastName: lastNameController.text,
-                      phoneOrEmail: _phoneNumber,
-                      password: pinController.text,
-                      passwordConfirm: pinController.text));
-                  Navigator.pushReplacementNamed(context, '/login');
-                }
-              },
-            ),
+            // const SizedBox(height: 5),
+            // LoginButton(
+            //   text: 'Register now Net',
+            //   actionField: () {
+            //     if (_formKey.currentState!.validate()) {
+            //       var _phoneNumber = "+$_countryCodes${phoneController.text}";
+            //       ref.watch(userProvider).createUser(User(
+            //           firstName: firstNameController.text,
+            //           lastName: lastNameController.text,
+            //           phoneOrEmail: _phoneNumber,
+            //           password: pinController.text,
+            //           passwordConfirm: pinController.text));
+            //       Navigator.pushReplacementNamed(context, '/login');
+            //     }
+            //   },
+            // ),
             HyperLinkText(
               directingText: 'Login instead',
               actions: () => Navigator.pushReplacementNamed(context, '/login'),

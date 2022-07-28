@@ -8,7 +8,6 @@ import 'package:kudibooks_app/screens/auth_screens/widgets/product_list_card.dar
 import 'package:kudibooks_app/screens/dashboard/classes/sliver_delegate_search.dart';
 import 'package:kudibooks_app/screens/dashboard/new_product.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/search_input.dart';
-import 'package:provider/provider.dart';
 
 class ProductsScreen extends ConsumerStatefulWidget {
   VoidCallback? loadProducts;
@@ -21,6 +20,7 @@ class ProductsScreen extends ConsumerStatefulWidget {
 
 class _ProductsScreenState extends ConsumerState<ProductsScreen> {
   final searchContent = TextEditingController();
+  List<ProductModel> _searchResults = [];
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +68,16 @@ class _ProductsScreenState extends ConsumerState<ProductsScreen> {
                         color: Theme.of(context).scaffoldBackgroundColor,
                         child: SearchTextField(
                           hintTexts: 'Search non-inventory product',
-                          searchingContent: (value) {},
+                          searchingContent: (value) {
+                            final _resultS = _productList
+                                .where((productItem) => productItem.productName
+                                    .toLowerCase()
+                                    .contains(value))
+                                .toList();
+                            if (_resultS.isNotEmpty) {
+                              _searchResults = _resultS;
+                            }
+                          },
                           searchContent: searchContent,
                         ),
                       ))),
