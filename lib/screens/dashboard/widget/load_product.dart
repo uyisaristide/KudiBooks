@@ -47,7 +47,7 @@ class _ProductInLoadState extends ConsumerState<ProductInLoad> {
 
   @override
   Widget build(BuildContext context) {
-    List<ProductModel> productList = ref.watch(productProviders).allProducts;
+    List<ProductModel> productList = ref.watch(productProviders);
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -164,8 +164,9 @@ class _ProductInLoadState extends ConsumerState<ProductInLoad> {
                       text: 'Save',
                       actionField: () {
                         if (_formKey.currentState!.validate()) {
-                          ref.watch(productProviders).addProductToInventory(
-                              ProductInLoadModel(
+                          ref
+                              .watch(productInLoadProviders.notifier)
+                              .addProductToInventory(ProductInLoadModel(
                                   productId: productId,
                                   sellingMethods: selectedMethod,
                                   unit: unitProduct.text.isEmpty

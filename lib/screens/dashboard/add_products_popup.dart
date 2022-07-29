@@ -49,7 +49,7 @@ class _AddProductsPopupState extends ConsumerState<AddProductsPopup> {
 
   @override
   Widget build(BuildContext context) {
-    List<ProductModel> productList = ref.watch(productProviders).allProducts;
+    List<ProductModel> productList = ref.watch(productProviders);
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -183,7 +183,7 @@ class _AddProductsPopupState extends ConsumerState<AddProductsPopup> {
                       text: 'Save',
                       actionField: () {
                         if (_formKey.currentState!.validate()) {
-                          ref.watch(productProviders).addProductToSales(
+                          ref.read(productToSell.notifier).addProductToSales(
                               ProductToSell(
                                   productId: productId,
                                   sellingMethods: selectedMethod,

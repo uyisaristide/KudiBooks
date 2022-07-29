@@ -1,23 +1,19 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/product_sale_model.dart';
 
 final productSaleProvider =
-    ChangeNotifierProvider((ref) => ProductSalesProvider());
+    StateNotifierProvider<ProductSalesProvider, List<ProductSalesModel>>(
+        (ref) => ProductSalesProvider());
 
-class ProductSalesProvider extends ChangeNotifier {
-  final List<ProductSalesModel> _productsaleList = [];
-
-  List<ProductSalesModel> get productSalesList => _productsaleList;
+class ProductSalesProvider extends StateNotifier<List<ProductSalesModel>> {
+  ProductSalesProvider() : super([]);
 
   addNewSale(ProductSalesModel productSale) {
-    _productsaleList.add(productSale);
-    notifyListeners();
+    state = [...state, productSale];
   }
 
   removeSale(int saleId) {
-    _productsaleList.removeWhere((element) => element.saleId == saleId);
-    notifyListeners();
+    state.removeWhere((element) => element.saleId == saleId);
   }
 }
 

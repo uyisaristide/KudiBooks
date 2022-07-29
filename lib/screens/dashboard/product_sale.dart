@@ -243,9 +243,8 @@ class _ProductSaleState extends ConsumerState<ProductSale> {
   }
 
   _addProductForm(BuildContext context) {
-    List<ProductModel> _productModel = ref.watch(productProviders).allProducts;
-    List<ProductToSell> _productsToSell =
-        ref.watch(productProviders).allOnSaleList;
+    List<ProductModel> _productModel = ref.watch(productProviders);
+    List<ProductToSell> _productsToSell = ref.watch(productToSell);
     return Form(
       key: _formKey,
       child: Column(
@@ -313,7 +312,7 @@ class _ProductSaleState extends ConsumerState<ProductSale> {
                             color: Color(0xffA34646),
                           ),
                           onPressed: () => setState(() => ref
-                              .watch(productProviders)
+                              .read(productToSell.notifier)
                               .removeProductToSales(int.parse(changeToInt))),
                         ),
                         bottomSize: 10,

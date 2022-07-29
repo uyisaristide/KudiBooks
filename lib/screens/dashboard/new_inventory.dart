@@ -41,9 +41,9 @@ class _NewInventoryState extends ConsumerState<NewInventory> {
 
   @override
   Widget build(BuildContext context) {
-    List<ProductModel> _productModel = ref.watch(productProviders).allProducts;
+    List<ProductModel> _productModel = ref.watch(productProviders);
     List<ProductInLoadModel> _productsToLoad =
-        ref.watch(productProviders).allToLoadModel;
+        ref.watch(productInLoadProviders);
 
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
@@ -55,17 +55,18 @@ class _NewInventoryState extends ConsumerState<NewInventory> {
                 text: 'Save',
                 actionField: () {
                   if (_formKey.currentState!.validate()) {
-                    ref.watch(inventoryProvider).addInventory(InventoryModel(
-                        id: _randNumber.nextInt(500),
-                        bulkName: nameController.text,
-                        productList: _productsToLoad,
-                        amountPaid: double.parse(amountPaid.text),
-                        bankAccount: bankAccountsValue,
-                        deptAmount: double.parse(debtAmount.text),
-                        vendor: vendorListValue,
-                        transactionName: transactionNameController.text,
-                        transactionDate: transactionDateController.text,
-                        memoInventory: memoController.text));
+                    ref.read(inventoryProvider.notifier).addInventory(
+                        InventoryModel(
+                            id: _randNumber.nextInt(500),
+                            bulkName: nameController.text,
+                            productList: _productsToLoad,
+                            amountPaid: double.parse(amountPaid.text),
+                            bankAccount: bankAccountsValue,
+                            deptAmount: double.parse(debtAmount.text),
+                            vendor: vendorListValue,
+                            transactionName: transactionNameController.text,
+                            transactionDate: transactionDateController.text,
+                            memoInventory: memoController.text));
                     _productsToLoad.clear();
                     debugPrint("Saved");
                     Navigator.pop(context);
@@ -122,7 +123,7 @@ class _NewInventoryState extends ConsumerState<NewInventory> {
                                 color: Color(0xffA34646),
                               ),
                               onPressed: () => setState(() => ref
-                                  .watch(productProviders)
+                                  .watch(productInLoadProviders.notifier)
                                   .removeLoadInModel(int.parse(changeToInt))),
                             ),
                             bottomSize: 10,

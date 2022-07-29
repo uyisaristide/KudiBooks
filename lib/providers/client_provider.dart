@@ -1,16 +1,13 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/client_model.dart';
 
-class ClientProvider extends ChangeNotifier {
-  List<ClientModel> _clientList = [];
+final clientProvider = StateNotifierProvider<ClientProvider, List<ClientModel>>(
+    (ref) => ClientProvider());
 
-  List<ClientModel> get allClients => _clientList;
-  static final ClientProvider clientInstance = ClientProvider();
-
-  //static ClientProvider get clientInstances => _clientInstance;
+class ClientProvider extends StateNotifier<List<ClientModel>> {
+  ClientProvider() : super([]);
 
   addClient(ClientModel clientModel) {
-    _clientList.add(clientModel);
-    notifyListeners();
+    state = [...state, clientModel];
   }
 }

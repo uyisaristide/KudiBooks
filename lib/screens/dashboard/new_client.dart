@@ -1,7 +1,7 @@
 import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/client_model.dart';
 import 'package:kudibooks_app/providers/client_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/drop_down_widget.dart';
@@ -10,14 +10,14 @@ import 'package:kudibooks_app/screens/auth_screens/widgets/phone_input.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
 
-class NewClient extends StatefulWidget {
-  NewClient({Key? key}) : super(key: key);
+class NewClient extends ConsumerStatefulWidget {
+  const NewClient({Key? key}) : super(key: key);
 
   @override
-  State<NewClient> createState() => _NewClientState();
+  ConsumerState<NewClient> createState() => _NewClientState();
 }
 
-class _NewClientState extends State<NewClient> {
+class _NewClientState extends ConsumerState<NewClient> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final Random _randomId = Random();
@@ -55,7 +55,7 @@ class _NewClientState extends State<NewClient> {
                 text: 'Add product',
                 actionField: () {
                   if (_formKey.currentState!.validate()) {
-                    ClientProvider.clientInstance.addClient(ClientModel(
+                    ref.read(clientProvider.notifier).addClient(ClientModel(
                         _randomId.nextInt(500),
                         nameController.text,
                         int.parse(idNumberController.text),
@@ -65,7 +65,7 @@ class _NewClientState extends State<NewClient> {
                         addressController.text,
                         clientStatusOption.toString(),
                         noteController.text));
-                    print(countryCode.toString() + phoneController.text);
+                    debugPrint(countryCode.toString() + phoneController.text);
                     ScaffoldMessenger.of(context)
                       ..removeCurrentSnackBar()
                       ..showSnackBar(SnackBar(
@@ -175,7 +175,6 @@ class _NewClientState extends State<NewClient> {
                     selectedValue: (value) {
                       clientStatusOption = value;
                     },
-                    validation: (value) {},
                     itemsToSelect: clientStatus,
                   ),
                   CustomFormField(

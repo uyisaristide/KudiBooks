@@ -2,20 +2,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/expense_model.dart';
 
-final expenseProvider = ChangeNotifierProvider((ref) => ExpensesProvider());
+final expenseProvider = StateNotifierProvider<ExpensesProvider, List<Expense>>(
+    (ref) => ExpensesProvider());
 
-class ExpensesProvider extends ChangeNotifier {
-  List<Expense> expensesList = [];
-
-  List<Expense> get allExpenses => expensesList;
+class ExpensesProvider extends StateNotifier<List<Expense>> {
+  ExpensesProvider() : super([]);
 
   addExpense(Expense expense) {
-    expensesList.add(expense);
-    notifyListeners();
+    state = [...state, expense];
   }
 
   removeExpense(Expense expense) {
-    expensesList.removeWhere((element) => element.id == expense.id);
-    notifyListeners();
+    state.removeWhere((element) => element.id == expense.id);
   }
 }

@@ -14,8 +14,7 @@ class Loads extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef refs) {
-    List<InventoryModel> _loadsList =
-        refs.watch(inventoryProvider).allInventories;
+    List<InventoryModel> _loadsList = refs.watch(inventoryProvider);
     return Scaffold(
       floatingActionButton: ElevatedButton(
         style: ElevatedButton.styleFrom(

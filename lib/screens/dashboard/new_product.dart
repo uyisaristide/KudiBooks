@@ -49,7 +49,7 @@ class _NewProductState extends ConsumerState<NewProduct> {
 
   @override
   Widget build(BuildContext context) {
-    List<ProductModel> _listProducts = ref.watch(productProviders).allProducts;
+    List<ProductModel> _listProducts = ref.watch(productProviders);
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
           color: Colors.transparent,
@@ -60,7 +60,7 @@ class _NewProductState extends ConsumerState<NewProduct> {
                 text: 'Add product',
                 actionField: () {
                   if (_formKey.currentState!.validate()) {
-                    ref.watch(productProviders).addProduct(ProductModel(
+                    ref.read(productProviders.notifier).addProduct(ProductModel(
                         id: _idRandom.nextInt(300),
                         revenueAccount: revenueAccountValue,
                         inventoryExpenseAccount: expenseAccountValue,
@@ -95,7 +95,8 @@ class _NewProductState extends ConsumerState<NewProduct> {
                   selectedValue: (value) {
                     setState(() {
                       revenueAccountValue = value;
-                      print("This is the revenue account $revenueAccountValue");
+                      debugPrint(
+                          "This is the revenue account $revenueAccountValue");
                     });
                   },
                   dropDownHint: const Text('Revenue account'),
@@ -125,7 +126,7 @@ class _NewProductState extends ConsumerState<NewProduct> {
                       selectedValue: (value) {
                         setState(() {
                           expenseAccountValue = value;
-                          print(expenseAccountValue);
+                          debugPrint(expenseAccountValue);
                         });
                       },
                       dropDownHint: const Text('Inventory expense account'),

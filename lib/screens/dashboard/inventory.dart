@@ -59,11 +59,9 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen>
   Widget build(BuildContext context) {
     List<ProductModel> _productList = ref
         .watch(productProviders)
-        .allProducts
         .where((productItem) => productItem.inventoryExpenseAccount != null)
         .toList();
-    List<InventoryModel> _loadsList =
-        ref.watch(inventoryProvider).allInventories;
+    List<InventoryModel> _loadsList = ref.watch(inventoryProvider);
     User? signedUser = ref
         .watch(userProvider)
         .firstWhere((user) => user.phoneOrEmail == widget.loggedUser);

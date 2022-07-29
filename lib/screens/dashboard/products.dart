@@ -26,7 +26,6 @@ class _ProductsScreenState extends ConsumerState<ProductsScreen> {
   Widget build(BuildContext context) {
     List<ProductModel> _productList = ref
         .watch(productProviders)
-        .allProducts
         .where((element) => element.inventoryExpenseAccount == null)
         .toList();
     return Scaffold(
