@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/Users/user_model.dart';
 import 'package:kudibooks_app/models/inventory_model.dart';
 import 'package:kudibooks_app/models/product_model.dart';
+import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/providers/inventory_provider.dart';
 import 'package:kudibooks_app/providers/product_provider.dart';
 import 'package:kudibooks_app/providers/user_provider.dart';
@@ -19,7 +21,7 @@ import 'package:provider/provider.dart';
 
 import 'new_inventory.dart';
 
-class InventoryScreen extends StatefulWidget {
+class InventoryScreen extends ConsumerStatefulWidget {
   VoidCallback? loadInventories;
   String loggedUser;
 
@@ -27,10 +29,10 @@ class InventoryScreen extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<InventoryScreen> createState() => _InventoryScreenState();
+  ConsumerState<InventoryScreen> createState() => _InventoryScreenState();
 }
 
-class _InventoryScreenState extends State<InventoryScreen>
+class _InventoryScreenState extends ConsumerState<InventoryScreen>
     with SingleTickerProviderStateMixin {
   bool isSearch = false;
   bool isSearchInventory = false;
@@ -58,13 +60,12 @@ class _InventoryScreenState extends State<InventoryScreen>
 
   @override
   Widget build(BuildContext context) {
-    ProductProvider _productProvider = Provider.of<ProductProvider>(context);
-    List<ProductModel> _productList = _productProvider.allProducts;
-    InventoryProviders _inventoryProviders =
-        Provider.of<InventoryProviders>(context);
-    List<InventoryModel> _loadsList = _inventoryProviders.allInventories;
-    UserProvider _userProvider = Provider.of<UserProvider>(context);
-    User? signedUser = _userProvider.allUsers
+    
+    List<ProductModel> _productList = ref.watch(productProvider);
+    
+    List<InventoryModel> _loadsList = ref.watch(inventoryProvider);
+    
+    User? signedUser = ref.watch(usersProvider)
         .firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
     return WillPopScope(
         onWillPop: () async {

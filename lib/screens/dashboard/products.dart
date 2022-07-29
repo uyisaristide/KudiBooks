@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/product_model.dart';
+import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/providers/product_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/product_list_card.dart';
 import 'package:kudibooks_app/screens/dashboard/classes/sliver_delegate_search.dart';
@@ -11,22 +13,22 @@ import 'package:kudibooks_app/screens/dashboard/widget/button_widget.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/search_input.dart';
 import 'package:provider/provider.dart';
 
-class ProductsScreen extends StatefulWidget {
+class ProductsScreen extends ConsumerStatefulWidget {
   VoidCallback? loadProducts;
 
   ProductsScreen({this.loadProducts, Key? key}) : super(key: key);
 
   @override
-  State<ProductsScreen> createState() => _ProductsScreenState();
+  ConsumerState<ProductsScreen> createState() => _ProductsScreenState();
 }
 
-class _ProductsScreenState extends State<ProductsScreen> {
+class _ProductsScreenState extends ConsumerState<ProductsScreen> {
   final searchContent = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    ProductProvider _productProvider = Provider.of<ProductProvider>(context);
-    List<ProductModel> _productList = _productProvider.allProducts;
+    
+    List<ProductModel> _productList = ref.watch(productProvider);
     return Scaffold(
       body: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {

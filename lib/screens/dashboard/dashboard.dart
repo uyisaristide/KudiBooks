@@ -1,7 +1,9 @@
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/transition_chart.dart';
+import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/providers/user_provider.dart';
 import 'package:kudibooks_app/screens/dashboard/account_transfer.dart';
 import 'package:kudibooks_app/screens/dashboard/all_transaction.dart';
@@ -21,7 +23,7 @@ import 'package:provider/provider.dart';
 
 import '../../models/Users/user_model.dart';
 
-class Dashboard extends StatefulWidget {
+class Dashboard extends ConsumerStatefulWidget {
   final VoidCallback? callBack;
   String loggedUser;
 
@@ -29,10 +31,10 @@ class Dashboard extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<Dashboard> createState() => _DashboardState();
+  ConsumerState<Dashboard> createState() => _DashboardState();
 }
 
-class _DashboardState extends State<Dashboard> {
+class _DashboardState extends ConsumerState<Dashboard> {
   final List<BusinessMovement> chartData = BusinessMovement.data;
 
   @override
@@ -95,8 +97,8 @@ class _DashboardState extends State<Dashboard> {
         title: 'More',
       ),
     ];
-    UserProvider _userProvider = Provider.of<UserProvider>(context);
-    User? signedUser = _userProvider.allUsers
+    
+    User? signedUser = ref.watch(usersProvider)
         .firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
 
     return Scaffold(

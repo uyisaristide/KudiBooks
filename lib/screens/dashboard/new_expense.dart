@@ -1,7 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/expense_model.dart';
+import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/providers/expenses_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/drop_down_widget.dart';
@@ -12,14 +14,14 @@ import 'package:provider/provider.dart';
 import '../auth_screens/widgets/text_form_field.dart';
 import 'classes/snack_bars.dart';
 
-class NewExpense extends StatefulWidget {
-  NewExpense({Key? key}) : super(key: key);
+class NewExpense extends ConsumerStatefulWidget {
+  const NewExpense({Key? key}) : super(key: key);
 
   @override
-  State<NewExpense> createState() => _NewExpenseState();
+  ConsumerState<NewExpense> createState() => _NewExpenseState();
 }
 
-class _NewExpenseState extends State<NewExpense> {
+class _NewExpenseState extends ConsumerState<NewExpense> {
   DateTime time =
       DateTime(DateTime.now().day, DateTime.now().month, DateTime.now().year);
 
@@ -62,7 +64,7 @@ class _NewExpenseState extends State<NewExpense> {
 
   @override
   Widget build(BuildContext context) {
-    ExpensesProvider _expensesProvider = Provider.of<ExpensesProvider>(context);
+    
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
           color: Colors.transparent,
@@ -73,7 +75,7 @@ class _NewExpenseState extends State<NewExpense> {
                 text: 'Save',
                 actionField: () {
                   if (_formKey.currentState!.validate()) {
-                    _expensesProvider.addExpense(Expense(
+                    ref.read(expencesProvider.notifier).addExpense(Expense(
                         _idRandom.nextInt(100),
                         expenseAccount.toString(),
                         double.parse(amountPaidExpensesController.text),

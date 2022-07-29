@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/Users/user_model.dart';
+import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/providers/user_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/circled_logo.dart';
@@ -16,14 +18,14 @@ import 'package:provider/provider.dart';
 import '../dashboard/classes/snack_bars.dart';
 import '../dashboard/widget/bottom_navigation.dart';
 
-class PhoneLogin extends StatefulWidget {
+class PhoneLogin extends ConsumerStatefulWidget {
   PhoneLogin({Key? key}) : super(key: key);
 
   @override
-  State<PhoneLogin> createState() => _PhoneLoginState();
+  ConsumerState<PhoneLogin> createState() => _PhoneLoginState();
 }
 
-class _PhoneLoginState extends State<PhoneLogin> {
+class _PhoneLoginState extends ConsumerState<PhoneLogin> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final firstNameController = TextEditingController();
@@ -42,8 +44,8 @@ class _PhoneLoginState extends State<PhoneLogin> {
 
   @override
   Widget build(BuildContext context) {
-    UserProvider _userProvider = Provider.of<UserProvider>(context);
-    List<User> _users = _userProvider.allUsers;
+    
+    List<User> _users = ref.watch(usersProvider);
     return BackgroundScreen(
       buttonWidget: Row(
         mainAxisAlignment: MainAxisAlignment.end,

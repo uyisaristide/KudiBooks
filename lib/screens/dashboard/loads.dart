@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/inventory_model.dart';
+import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/providers/inventory_provider.dart';
 import 'package:kudibooks_app/screens/dashboard/classes/sliver_delegate_search.dart';
 import 'package:kudibooks_app/screens/dashboard/new_inventory.dart';
@@ -8,13 +10,13 @@ import 'package:kudibooks_app/screens/dashboard/widget/loads_card.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/search_input.dart';
 import 'package:provider/provider.dart';
 
-class Loads extends StatelessWidget {
+class Loads extends ConsumerWidget {
   Loads({Key? key}) : super(key: key);
   final searchContent = TextEditingController();
   @override
-  Widget build(BuildContext context) {
-    InventoryProviders _inventoryProviders = Provider.of<InventoryProviders>(context);
-    List<InventoryModel> _loadsList = _inventoryProviders.allInventories;
+  Widget build(BuildContext context, WidgetRef ref) {
+    
+    List<InventoryModel> _loadsList = ref.watch(inventoryProvider);
     return Scaffold(
       floatingActionButton: ElevatedButton(
         style: ElevatedButton.styleFrom(

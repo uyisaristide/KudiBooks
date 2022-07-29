@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/product_sale_model.dart';
+import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/providers/products_sale_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/drop_down_widget.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
@@ -7,18 +9,17 @@ import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/title_double.dart';
 import 'package:provider/provider.dart';
 
-class AllTransaction extends StatelessWidget {
+class AllTransaction extends ConsumerWidget {
   AllTransaction({Key? key}) : super(key: key);
   List<String> transactionList = [];
   final dateFrom = TextEditingController();
   final dateTo = TextEditingController();
 
   @override
-  Widget build(BuildContext context) {
-    ProductSalesProvider productSalesProvider =
-        Provider.of<ProductSalesProvider>(context);
+  Widget build(BuildContext context, WidgetRef ref) {
+    
 
-    List<ProductSalesModel> salesList = productSalesProvider.productSalesList;
+    List<ProductSalesModel> salesList = ref.watch(salesProvider);
 
     return Scaffold(
       appBar: AppBarCommon.preferredSizeWidget(context, 'All Transactions'),

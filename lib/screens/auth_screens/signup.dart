@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/Users/user_model.dart';
+import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/providers/user_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/circled_logo.dart';
@@ -15,14 +17,14 @@ import 'package:collection/collection.dart';
 
 import 'widgets/password_field.dart';
 
-class SignUp extends StatefulWidget {
+class SignUp extends ConsumerStatefulWidget {
   SignUp({Key? key}) : super(key: key);
 
   @override
-  State<SignUp> createState() => _SignUpState();
+  ConsumerState<SignUp> createState() => _SignUpState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _SignUpState extends ConsumerState<SignUp> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final firstNameController = TextEditingController();
@@ -53,9 +55,9 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
-    UserProvider _userProvider = Provider.of<UserProvider>(context);
-    List<User> _users = _userProvider.allUsers;
-    print(_users.length);
+    
+    List<User> _users = ref.watch(usersProvider);
+   
     return BackgroundScreen(
       paddingSize: 150,
       screens: Form(
@@ -122,7 +124,7 @@ class _SignUpState extends State<SignUp> {
                   var checkUser = _users.firstWhereOrNull((element) =>
                       element.phoneOrEmail == emailController.text);
                   if (checkUser == null) {
-                    _userProvider.addUser(User(
+                    ref.read(usersProvider.notifier).addUser(User(
                         firstName: firstNameController.text,
                         lastName: lastNameController.text,
                         phoneOrEmail: emailController.text,

@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/Users/user_model.dart';
+import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/providers/user_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/custom_devider.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/alert_box.dart';
@@ -10,20 +12,20 @@ import 'package:provider/provider.dart';
 
 import 'widget/bottom_navigation.dart';
 
-class AlertScreen extends StatefulWidget {
+class AlertScreen extends ConsumerStatefulWidget {
   String loggedUser;
 
   AlertScreen({required this.loggedUser, Key? key}) : super(key: key);
 
   @override
-  State<AlertScreen> createState() => _AlertScreenState();
+  ConsumerState<AlertScreen> createState() => _AlertScreenState();
 }
 
-class _AlertScreenState extends State<AlertScreen> {
+class _AlertScreenState extends ConsumerState<AlertScreen> {
   @override
   Widget build(BuildContext context) {
-    UserProvider _userProvider = Provider.of<UserProvider>(context);
-    User? signedUser = _userProvider.allUsers.firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
+    
+    User? signedUser = ref.watch(usersProvider).firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
     return WillPopScope(
       onWillPop: () async {
         print('cant pop');

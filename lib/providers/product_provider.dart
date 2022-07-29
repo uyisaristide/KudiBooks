@@ -1,48 +1,46 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/Users/ProductInLoad.dart';
 import 'package:kudibooks_app/models/Users/products_sold_model.dart';
 import 'package:kudibooks_app/models/product_model.dart';
-import 'package:kudibooks_app/models/product_sale_model.dart';
 
-class ProductProvider extends ChangeNotifier {
-  final List<ProductModel> _listProducts = [];
-  final List<ProductInLoadModel> _productLoadModel = [];
-  static ProductProvider productProviderInstance = ProductProvider();
-
-  final List<ProductToSell> _productToSell = [];
-
-  List<ProductModel> get allProducts => _listProducts;
-
-  List<ProductInLoadModel> get allToLoadModel => _productLoadModel;
-
-  List<ProductToSell> get allOnSaleList => _productToSell;
+class ProductProvider extends StateNotifier<List<ProductModel>> {
+  ProductProvider() : super([]);
 
   addProduct(ProductModel productModel) {
-    _listProducts.add(productModel);
-    notifyListeners();
-  }
-
-  addProductToInventory(ProductInLoadModel productInLoadModel) {
-    _productLoadModel.add(productInLoadModel);
-    notifyListeners();
-  }
-
-  removeLoadInModel(int idLoadModel) {
-    _productLoadModel
-        .removeWhere((element) => element.productId == idLoadModel);
+    state = [...state, productModel];
   }
 
   removeProduct(int productId) {
-    _listProducts.removeWhere((element) => element.id == productId);
-    notifyListeners();
+    state = state
+        .where((currentProduct) => currentProduct.id != productId)
+        .toList();
+  }
+}
+
+class ProductInLoadProvider extends StateNotifier<List<ProductInLoadModel>> {
+  ProductInLoadProvider() : super([]);
+  addProductToInventory(ProductInLoadModel productInLoadModel) {
+    state = [...state, productInLoadModel];
   }
 
+  removeLoadInModel(int loadId) {
+    state = state
+        .where(
+            (productInLoad) => productInLoad.productId != loadId)
+        .toList();
+  }
+}
+
+class AddProductToSalesNotifier extends StateNotifier<List<ProductToSell>> {
+  AddProductToSalesNotifier() : super([]);
   addProductToSales(ProductToSell productToSell) {
-    _productToSell.add(productToSell);
-    notifyListeners();
+    state = [...state, productToSell];
   }
 
-  removeProductToSales(int productTosell) {
-    _productToSell.removeWhere((element) => element.productId == productTosell);
+  removeProductToSales(int productTosellId) {
+    state = state
+        .where((deleteSell) => deleteSell.productId != productTosellId)
+        .toList();
   }
 }

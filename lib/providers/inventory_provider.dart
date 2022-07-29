@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/inventory_model.dart';
 
-class InventoryProviders extends ChangeNotifier {
-  final List<InventoryModel> _listInventory = [];
-
-  List<InventoryModel> get allInventories => _listInventory;
+class InventoryProviders extends StateNotifier<List<InventoryModel>> {
+  InventoryProviders() : super([]);
 
   addInventory(InventoryModel inventoryModel) {
-    _listInventory.add(inventoryModel);
-    notifyListeners();
+    state = [...state, inventoryModel];
   }
 
-  removeInventory(int inventoryId) {
-    _listInventory.removeWhere((element) => element.id == inventoryId);
-    notifyListeners();
+  removeInventory(InventoryModel inventoryId) {
+    state = state.where((invernt) => invernt.id != inventoryId.id).toList();
   }
 }
+
+
+
+ 

@@ -2,7 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/client_model.dart';
+import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/providers/client_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/drop_down_widget.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
@@ -10,14 +12,14 @@ import 'package:kudibooks_app/screens/auth_screens/widgets/phone_input.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
 
-class NewClient extends StatefulWidget {
+class NewClient extends ConsumerStatefulWidget {
   NewClient({Key? key}) : super(key: key);
 
   @override
-  State<NewClient> createState() => _NewClientState();
+  ConsumerState<NewClient> createState() => _NewClientState();
 }
 
-class _NewClientState extends State<NewClient> {
+class _NewClientState extends ConsumerState<NewClient> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final Random _randomId = Random();
@@ -55,7 +57,7 @@ class _NewClientState extends State<NewClient> {
                 text: 'Add product',
                 actionField: () {
                   if (_formKey.currentState!.validate()) {
-                    ClientProvider.clientInstance.addClient(ClientModel(
+                    ref.read(clientProvider.notifier).addClient(ClientModel(
                         _randomId.nextInt(500),
                         nameController.text,
                         int.parse(idNumberController.text),

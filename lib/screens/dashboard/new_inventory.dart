@@ -1,9 +1,11 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/Users/ProductInLoad.dart';
 import 'package:kudibooks_app/models/inventory_model.dart';
 import 'package:kudibooks_app/models/product_model.dart';
+import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/providers/inventory_provider.dart';
 import 'package:kudibooks_app/providers/product_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
@@ -16,14 +18,14 @@ import 'package:kudibooks_app/screens/dashboard/widget/inventory_card.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/load_product.dart';
 import 'package:provider/provider.dart';
 
-class NewInventory extends StatefulWidget {
+class NewInventory extends ConsumerStatefulWidget {
   NewInventory({Key? key}) : super(key: key);
 
   @override
-  State<NewInventory> createState() => _NewInventoryState();
+  ConsumerState<NewInventory> createState() => _NewInventoryState();
 }
 
-class _NewInventoryState extends State<NewInventory> {
+class _NewInventoryState extends ConsumerState<NewInventory> {
   final _randNumber = Random();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   var nameController = TextEditingController();
@@ -39,13 +41,12 @@ class _NewInventoryState extends State<NewInventory> {
 
   @override
   Widget build(BuildContext context) {
-    InventoryProviders _inventoryProviders =
-        Provider.of<InventoryProviders>(context);
+    
     List<InventoryModel> inventoryProvidersList =
-        _inventoryProviders.allInventories;
-    ProductProvider productProvider = Provider.of<ProductProvider>(context);
-    List<ProductModel> _productModel = productProvider.allProducts;
-    List<ProductInLoadModel> _productsToLoad = productProvider.allToLoadModel;
+        ref.watch(inventoryProvider);
+    
+    List<ProductModel> _productModel = ref.watch(productProvider);
+    List<ProductInLoadModel> _productsToLoad = ref.watch(productToLoadProvider);
 
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
@@ -57,7 +58,7 @@ class _NewInventoryState extends State<NewInventory> {
                 text: 'Save',
                 actionField: () {
                   if (_formKey.currentState!.validate()) {
-                    _inventoryProviders.addInventory(InventoryModel(
+                    ref.read(inventoryProvider.notifier).addInventory(InventoryModel(
                         id: _randNumber.nextInt(500),
                         bulkName: nameController.text,
                         productList: _productsToLoad,
@@ -123,7 +124,7 @@ class _NewInventoryState extends State<NewInventory> {
                                 Icons.close,
                                 color: Color(0xffA34646),
                               ),
-                              onPressed: () => setState(() => productProvider
+                              onPressed: () => setState(() => ref.read(productToLoadProvider.notifier)
                                   .removeLoadInModel(int.parse(changeToInt))),
                             ),
                             bottomSize: 10,

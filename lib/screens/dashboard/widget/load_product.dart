@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/Users/ProductInLoad.dart';
 import 'package:kudibooks_app/models/product_model.dart';
+import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/providers/product_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
@@ -11,14 +13,14 @@ import 'package:provider/provider.dart';
 
 import 'double_header_two.dart';
 
-class ProductInLoad extends StatefulWidget {
+class ProductInLoad extends ConsumerStatefulWidget {
   const ProductInLoad({Key? key}) : super(key: key);
 
   @override
-  State<ProductInLoad> createState() => _ProductInLoadState();
+  ConsumerState<ProductInLoad> createState() => _ProductInLoadState();
 }
 
-class _ProductInLoadState extends State<ProductInLoad> {
+class _ProductInLoadState extends ConsumerState<ProductInLoad> {
   late int productId;
   String? productNames;
   String? selectedMethod = "byProduct";
@@ -46,9 +48,8 @@ class _ProductInLoadState extends State<ProductInLoad> {
 
   @override
   Widget build(BuildContext context) {
-    // List<String> productLists = productList.map((item) => item.productName).toList();
-    ProductProvider productProvider = Provider.of<ProductProvider>(context);
-    List<ProductModel> productList = productProvider.allProducts;
+    
+    List<ProductModel> productList = ref.watch(productProvider);
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -165,7 +166,7 @@ class _ProductInLoadState extends State<ProductInLoad> {
                       text: 'Save',
                       actionField: () {
                         if (_formKey.currentState!.validate()) {
-                          productProvider.addProductToInventory(
+                          ref.read(productToLoadProvider.notifier).addProductToInventory(
                               ProductInLoadModel(
                                   productId: productId,
                                   sellingMethods: selectedMethod,

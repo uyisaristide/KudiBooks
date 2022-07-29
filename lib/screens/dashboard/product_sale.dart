@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/Users/ProductInLoad.dart';
 import 'package:kudibooks_app/models/Users/products_sold_model.dart';
 import 'package:kudibooks_app/models/product_model.dart';
 import 'package:kudibooks_app/models/product_sale_model.dart';
+import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/providers/product_provider.dart';
 import 'package:kudibooks_app/providers/products_sale_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
@@ -15,14 +17,14 @@ import 'package:kudibooks_app/screens/dashboard/widget/double_header_two.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/inventory_card.dart';
 import 'package:provider/provider.dart';
 
-class ProductSale extends StatefulWidget {
+class ProductSale extends ConsumerStatefulWidget {
   const ProductSale({Key? key}) : super(key: key);
 
   @override
-  State<ProductSale> createState() => _ProductSaleState();
+  ConsumerState<ProductSale> createState() => _ProductSaleState();
 }
 
-class _ProductSaleState extends State<ProductSale> {
+class _ProductSaleState extends ConsumerState<ProductSale> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final nameController = TextEditingController();
@@ -63,10 +65,10 @@ class _ProductSaleState extends State<ProductSale> {
 
   @override
   Widget build(BuildContext context) {
-    ProductSalesProvider productSalesProvider =
-        Provider.of<ProductSalesProvider>(context);
+    
 
-    List<ProductSalesModel> salesList = productSalesProvider.productSalesList;
+    List<ProductSalesModel> salesList = ref.watch(salesProvider);
+
     return Scaffold(
       appBar: AppBarCommon.preferredSizeWidget(context, "Products sale"),
       bottomNavigationBar: BottomAppBar(
@@ -78,7 +80,7 @@ class _ProductSaleState extends State<ProductSale> {
                 text: 'Save',
                 actionField: () {
                   if (_formKey.currentState!.validate()) {
-                    productSalesProvider.addNewSale(ProductSalesModel(
+                    ref.read(salesProvider.notifier).addNewSale(ProductSalesModel(
                         saleId: 11,
                         transactionDate: transactionDateController.text,
                         transactionName: productNameController.text,
@@ -262,9 +264,9 @@ class _ProductSaleState extends State<ProductSale> {
   }
 
   _addProductForm(BuildContext context) {
-    ProductProvider productProvider = Provider.of<ProductProvider>(context);
-    List<ProductModel> _productModel = productProvider.allProducts;
-    List<ProductToSell> _productsToSell = productProvider.allOnSaleList;
+    
+    List<ProductModel> _productModel = ref.watch(productProvider);
+    List<ProductToSell> _productsToSell = ref.watch(productToSalesProvide);
     return Form(
       key: _formKey,
       child: Column(
@@ -317,7 +319,7 @@ class _ProductSaleState extends State<ProductSale> {
                             Icons.close,
                             color: Color(0xffA34646),
                           ),
-                          onPressed: () => setState(() => productProvider
+                          onPressed: () => setState(() => ref.read(productToSalesProvide.notifier)
                               .removeProductToSales(int.parse(changeToInt))),
                         ),
                         bottomSize: 10,
