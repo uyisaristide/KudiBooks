@@ -1,26 +1,17 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/Users/user_model.dart';
 
 import '../dio_services.dart';
 
-final userProvider = ChangeNotifierProvider((ref) => UserProvider());
+final userProvider = StateNotifierProvider<UserProvider, List<User>>((ref) => UserProvider());
 
-class UserProvider extends ChangeNotifier {
+class UserProvider extends StateNotifier<List<User>> {
+  UserProvider() : super([]);
   final Dio dio = Dio();
-  final List<User> _listUser = [];
-
-  List<User> _listFromJson(List<dynamic> lists) =>
-      List<User>.from(lists.map((e) => User.fromJson(e)));
-
-  List<User> get allUsers => _listUser;
-
-  static final UserProvider userProviderInstance = UserProvider();
 
   void addUser(User user) {
-    _listUser.add(user);
-    notifyListeners();
+    state = [...state, user];
   }
 
   Future<Response> createUser(User user) async {

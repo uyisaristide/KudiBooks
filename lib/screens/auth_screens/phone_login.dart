@@ -42,7 +42,7 @@ class _PhoneLoginState extends ConsumerState<PhoneLogin> {
 
   @override
   Widget build(BuildContext context) {
-    List<User> _users = ref.watch(userProvider).allUsers;
+    List<User> _users = ref.watch(userProvider);
     return BackgroundScreen(
       buttonWidget: Row(
         mainAxisAlignment: MainAxisAlignment.end,

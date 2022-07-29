@@ -25,7 +25,6 @@ class _AlertScreenState extends ConsumerState<AlertScreen> {
   Widget build(BuildContext context) {
     User? signedUser = ref
         .watch(userProvider)
-        .allUsers
         .firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
     return WillPopScope(
       onWillPop: () async {

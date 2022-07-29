@@ -52,7 +52,7 @@ class _PhoneSignupState extends ConsumerState<PhoneSignup> {
 
   @override
   Widget build(BuildContext context) {
-    List<User> users = ref.watch(userProvider).allUsers;
+    List<User> users = ref.watch(userProvider);
     return BackgroundScreen(
       screens: Form(
         key: _formKey,
@@ -208,7 +208,7 @@ class _PhoneSignupState extends ConsumerState<PhoneSignup> {
                   var checkUser = users.firstWhereOrNull((element) =>
                       element.phoneOrEmail == phoneController.text);
                   if (checkUser == null) {
-                    ref.watch(userProvider).addUser(User(
+                    ref.watch(userProvider.notifier).addUser(User(
                         firstName: firstNameController.text,
                         lastName: lastNameController.text,
                         phoneOrEmail: _countryCodes + phoneController.text,

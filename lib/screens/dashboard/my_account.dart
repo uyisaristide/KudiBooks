@@ -21,7 +21,6 @@ class MyAccountScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef loadUser) {
     User? signedUser = loadUser
         .watch(userProvider)
-        .allUsers
         .firstWhere((user) => user.phoneOrEmail == loggedUser);
     return WillPopScope(
       onWillPop: () async {

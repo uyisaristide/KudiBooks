@@ -39,7 +39,6 @@ class _DashboardState extends ConsumerState<Dashboard> {
   Widget build(BuildContext context) {
     User? signedUser = ref
         .watch(userProvider)
-        .allUsers
         .firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
 
     return Scaffold(

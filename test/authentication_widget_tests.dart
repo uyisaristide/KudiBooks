@@ -8,21 +8,15 @@ import 'package:kudibooks_app/screens/auth_screens/widgets/custom_devider.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/hyperlink_text.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/page_title.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/password_field.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/phone_input.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
 import 'package:kudibooks_app/screens/background.dart';
-import 'package:kudibooks_app/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() {
   group("Login with email Widget testing", () {
     testWidgets("Login with email Screen", (WidgetTester tester) async {
-      await tester.pumpWidget(MaterialApp(
-          home: Scaffold(
-              body: MultiProvider(providers: [
-        ChangeNotifierProvider(create: (_) => UserProvider())
-      ], child: const Login()))));
+      await tester.pumpWidget(const MaterialApp(home: Scaffold(body: Login())));
       expect(find.byType(CustomFormField), findsNWidgets(1));
       expect(find.byType(LoginButton), findsNWidgets(1));
       expect(find.byType(TextFormField), findsNWidgets(2));
@@ -31,11 +25,8 @@ void main() {
   });
   group("Login with phone Widget testing", () {
     testWidgets("Login with phone Screen", (WidgetTester testLoginPhone) async {
-      await testLoginPhone.pumpWidget(MaterialApp(
-          home: Scaffold(
-              body: MultiProvider(providers: [
-        ChangeNotifierProvider(create: (_) => UserProvider())
-      ], child: PhoneLogin()))));
+      await testLoginPhone
+          .pumpWidget(const MaterialApp(home: Scaffold(body: PhoneLogin())));
       expect(find.byType(CustomDevider), findsNWidgets(1));
       expect(find.byType(CircledLogo), findsNWidgets(3));
       expect(find.byType(PhoneField), findsOneWidget);
@@ -82,7 +73,7 @@ void main() {
       await testPhoneSignUp.pumpWidget(MaterialApp(
         home: Scaffold(
           body: MultiProvider(providers: [
-            ChangeNotifierProvider(create: (_) => UserProvider()),
+            // ChangeNotifierProvider(create: (_) => UserProvider()),
           ], child: PhoneSignup()),
         ),
       ));

@@ -66,7 +66,6 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen>
         ref.watch(inventoryProvider).allInventories;
     User? signedUser = ref
         .watch(userProvider)
-        .allUsers
         .firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
     return WillPopScope(
         onWillPop: () async {

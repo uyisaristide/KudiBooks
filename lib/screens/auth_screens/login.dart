@@ -41,7 +41,7 @@ class _LoginState extends ConsumerState<Login> {
 
   @override
   Widget build(BuildContext context) {
-    List<User> _user = ref.watch(userProvider).allUsers;
+    List<User> _user = ref.watch(userProvider);
     return BackgroundScreen(
       buttonWidget: Row(
         mainAxisAlignment: MainAxisAlignment.end,

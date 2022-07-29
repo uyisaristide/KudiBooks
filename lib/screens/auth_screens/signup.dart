@@ -54,7 +54,7 @@ class _SignUpStateState extends ConsumerState<SignUp> {
 
   @override
   Widget build(BuildContext context) {
-    List<User> _users = ref.watch(userProvider).allUsers;
+    List<User> _users = ref.watch(userProvider);
     debugPrint("${_users.length}");
     return BackgroundScreen(
       paddingSize: 150,
@@ -134,7 +134,7 @@ class _SignUpStateState extends ConsumerState<SignUp> {
                   var checkUser = _users.firstWhereOrNull((element) =>
                       element.phoneOrEmail == emailController.text);
                   if (checkUser == null) {
-                    ref.watch(userProvider).addUser(User(
+                    ref.read(userProvider.notifier).addUser(User(
                         firstName: firstNameController.text,
                         lastName: lastNameController.text,
                         phoneOrEmail: emailController.text,
