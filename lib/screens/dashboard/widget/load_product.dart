@@ -165,7 +165,7 @@ class _ProductInLoadState extends ConsumerState<ProductInLoad> {
                       actionField: () {
                         if (_formKey.currentState!.validate()) {
                           ref
-                              .watch(productInLoadProviders.notifier)
+                              .read(productInLoadProviders.notifier)
                               .addProductToInventory(ProductInLoadModel(
                                   productId: productId,
                                   sellingMethods: selectedMethod,

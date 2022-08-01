@@ -123,7 +123,7 @@ class _NewInventoryState extends ConsumerState<NewInventory> {
                                 color: Color(0xffA34646),
                               ),
                               onPressed: () => setState(() => ref
-                                  .watch(productInLoadProviders.notifier)
+                                  .read(productInLoadProviders.notifier)
                                   .removeLoadInModel(int.parse(changeToInt))),
                             ),
                             bottomSize: 10,

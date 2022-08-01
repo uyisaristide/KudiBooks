@@ -18,7 +18,7 @@ class ProductListCard extends ConsumerWidget {
         ListTile(
           onLongPress: () {
             sentProduct
-                .watch(productProviders.notifier)
+                .read(productProviders.notifier)
                 .removeProduct(productModel.id);
             print("Deleted ${productModel.id}");
           },
