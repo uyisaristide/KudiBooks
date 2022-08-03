@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kudibooks_app/models/Users/ProductInLoad.dart';
 import 'package:kudibooks_app/models/product_model.dart';
+import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/providers/product_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
@@ -47,7 +48,8 @@ class _ProductInLoadState extends ConsumerState<ProductInLoad> {
 
   @override
   Widget build(BuildContext context) {
-    List<ProductModel> productList = ref.watch(productProviders);
+    
+    List<ProductModel> productList = ref.watch(productProvider);
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -164,9 +166,8 @@ class _ProductInLoadState extends ConsumerState<ProductInLoad> {
                       text: 'Save',
                       actionField: () {
                         if (_formKey.currentState!.validate()) {
-                          ref
-                              .read(productInLoadProviders.notifier)
-                              .addProductToInventory(ProductInLoadModel(
+                          ref.read(productToLoadProvider.notifier).addProductToInventory(
+                              ProductInLoadModel(
                                   productId: productId,
                                   sellingMethods: selectedMethod,
                                   unit: unitProduct.text.isEmpty

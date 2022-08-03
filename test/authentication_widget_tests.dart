@@ -23,23 +23,6 @@ void main() {
       expect(find.byType(BackgroundScreen), findsNWidgets(1));
     });
   });
-  group("Login with phone Widget testing", () {
-    testWidgets("Login with phone Screen", (WidgetTester testLoginPhone) async {
-      await testLoginPhone
-          .pumpWidget(const MaterialApp(home: Scaffold(body: PhoneLogin())));
-      expect(find.byType(CustomDevider), findsNWidgets(1));
-      expect(find.byType(CircledLogo), findsNWidgets(3));
-      expect(find.byType(PhoneField), findsOneWidget);
-
-      //Tests phone number screen texts
-
-      expect(find.text("Phone Number"), findsOneWidget);
-      expect(find.text("Password"), findsOneWidget);
-      expect(find.text("Login"), findsOneWidget);
-      expect(find.text("Sign up"), findsOneWidget);
-      expect(find.text("Or sign in with"), findsOneWidget);
-    });
-  });
   // group("sign up with email widgets tests", () {
   //   testWidgets("Screen widgets tests", (testersWidget) async {
   //     await testersWidget.pumpWidget(MaterialApp(

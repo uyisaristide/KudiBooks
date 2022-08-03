@@ -1,13 +1,15 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/transition_chart.dart';
+import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/providers/user_provider.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/action_card.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/business_movement_cart.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/line_chart.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/line_chart_indicator.dart';
+
 import 'package:kudibooks_app/screens/dashboard/widget/pie_chart.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/title_double.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -31,7 +33,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
   @override
   Widget build(BuildContext context) {
     User? signedUser = ref
-        .watch(userProvider)
+        .watch(usersProvider)
         .firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
 
     return Scaffold(
@@ -73,24 +75,6 @@ class _DashboardState extends ConsumerState<Dashboard> {
                   (BuildContext context, bool innerBoxIsScrolled) {
                 return [
                   SliverAppBar(
-                      actions: [
-                        PopupMenuButton(itemBuilder: (contexts) {
-                          return [
-                            const PopupMenuItem(
-                              child: ListTile(
-                                title: Text("Setting"),
-                                leading: Icon(Icons.settings),
-                              ),
-                            ),
-                            const PopupMenuItem(
-                              child: ListTile(
-                                title: Text("Help"),
-                                leading: Icon(Icons.help_outline),
-                              ),
-                            ),
-                          ];
-                        }),
-                      ],
                       pinned: innerBoxIsScrolled ? true : false,
                       iconTheme: IconThemeData(
                           color: innerBoxIsScrolled
@@ -204,7 +188,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
                       padding: const EdgeInsets.only(top: 30.0),
                       child: LignChartObject(),
                     ),
-                    const LineChartIndicator(),
+                    // const LineChartIndicator(),
                     const CustomPieChart(),
                     DoubleHeader(
                       rightSide: "Recent Transactions",

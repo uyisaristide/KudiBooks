@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kudibooks_app/models/product_model.dart';
+import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/providers/product_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/product_list_card.dart';
 import 'package:kudibooks_app/screens/dashboard/classes/sliver_delegate_search.dart';
@@ -23,10 +24,8 @@ class _ProductsScreenState extends ConsumerState<ProductsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<ProductModel> _productList = ref
-        .watch(productProviders)
-        .where((element) => element.inventoryExpenseAccount == null)
-        .toList();
+    
+    List<ProductModel> _productList = ref.watch(productProvider);
     return Scaffold(
       floatingActionButton: ElevatedButton(
         style: ElevatedButton.styleFrom(

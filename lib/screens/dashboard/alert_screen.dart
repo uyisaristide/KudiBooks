@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kudibooks_app/models/Users/user_model.dart';
+import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/providers/user_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/custom_devider.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/alert_box.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
+
+import 'widget/bottom_navigation.dart';
 
 class AlertScreen extends ConsumerStatefulWidget {
   String loggedUser;
@@ -21,7 +24,7 @@ class _AlertScreenState extends ConsumerState<AlertScreen> {
   @override
   Widget build(BuildContext context) {
     User? signedUser = ref
-        .watch(userProvider)
+        .watch(usersProvider)
         .firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
     return Scaffold(
       drawerEnableOpenDragGesture: true,

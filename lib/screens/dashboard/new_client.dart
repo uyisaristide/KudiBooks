@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/client_model.dart';
+import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/providers/client_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/drop_down_widget.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
@@ -11,7 +12,7 @@ import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart'
 import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
 
 class NewClient extends ConsumerStatefulWidget {
-  const NewClient({Key? key}) : super(key: key);
+  NewClient({Key? key}) : super(key: key);
 
   @override
   ConsumerState<NewClient> createState() => _NewClientState();

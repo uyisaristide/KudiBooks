@@ -9,14 +9,14 @@ class ProductSalesModel {
   final String client;
 
   ProductSalesModel(
-      this.saleId,
-      this.transactionDate,
-      this.transactionName,
-      this.productSold,
-      this.amountPaid,
-      this.paymentMethod,
-      this.debtAmount,
-      this.client);
+      {required this.saleId,
+      required this.transactionDate,
+      required this.transactionName,
+      required this.productSold,
+      required this.amountPaid,
+      required this.paymentMethod,
+      required this.debtAmount,
+      required this.client});
 
   static List<ProductSalesModel> generateSales() => [];
 }

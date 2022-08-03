@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kudibooks_app/models/inventory_model.dart';
+import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/providers/inventory_provider.dart';
 import 'package:kudibooks_app/screens/dashboard/classes/sliver_delegate_search.dart';
 import 'package:kudibooks_app/screens/dashboard/new_inventory.dart';
@@ -14,8 +15,9 @@ class Loads extends ConsumerWidget {
   final searchContent = TextEditingController();
 
   @override
-  Widget build(BuildContext context, WidgetRef refs) {
-    List<InventoryModel> _loadsList = refs.watch(inventoryProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    
+    List<InventoryModel> _loadsList = ref.watch(inventoryProvider);
     return Scaffold(
       floatingActionButton: ElevatedButton(
         style: ElevatedButton.styleFrom(

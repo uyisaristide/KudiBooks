@@ -1,9 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/product_sale_model.dart';
-
-final productSaleProvider =
-    StateNotifierProvider<ProductSalesProvider, List<ProductSalesModel>>(
-        (ref) => ProductSalesProvider());
 
 class ProductSalesProvider extends StateNotifier<List<ProductSalesModel>> {
   ProductSalesProvider() : super([]);
@@ -12,9 +9,10 @@ class ProductSalesProvider extends StateNotifier<List<ProductSalesModel>> {
     state = [...state, productSale];
   }
 
-  removeSale(int saleId) {
-    state.removeWhere((element) => element.saleId == saleId);
-  }
+  // removeSale(int saleId) {
+  //   _productsaleList.removeWhere((element) => element.saleId == saleId);
+  //   notifyListeners();
+  // }
 }
 
 // class InventoryProviders extends ChangeNotifier {
