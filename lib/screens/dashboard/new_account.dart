@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/drop_down_widget.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
@@ -23,7 +24,7 @@ class NewAccount extends StatelessWidget {
                 text: 'Save account',
                 actionField: () {
                   if (_formKey.currentState!.validate()) {
-                    Navigator.pop(context);
+                    context.pop();
                   }
                 }),
           )),

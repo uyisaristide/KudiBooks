@@ -1,10 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kudibooks_app/models/services_model.dart';
-import 'package:kudibooks_app/screens/auth_screens/login.dart';
-import 'package:kudibooks_app/screens/auth_screens/signup.dart';
 import 'package:kudibooks_app/screens/welcome/widgets/carousel_card.dart';
-
 import 'widgets/background_stack.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -80,8 +77,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         padding: const EdgeInsets.only(top: 15, bottom: 15),
                         primary: const Color(0xff157253),
                         minimumSize: const Size(254, 45)),
-                    onPressed: () => Navigator.pushReplacement(context,
-                        CupertinoPageRoute(builder: (context) => SignUp())),
+                    onPressed: () => context.goNamed('signup'),
                     child: const Text(
                       "Start your 30-day trial",
                       style: TextStyle(
@@ -102,12 +98,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             width: 1.0, color: Colors.grey.withOpacity(0.7)),
                         primary: const Color(0xff157253),
                         minimumSize: const Size(254, 45)),
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                          context,
-                          CupertinoPageRoute(
-                              builder: (context) => const Login()));
-                    },
+                    onPressed: () => context.goNamed('signin'),
                     child: const Text(
                       "Login",
                       style: TextStyle(

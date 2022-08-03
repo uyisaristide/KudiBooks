@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/client_model.dart';
@@ -67,7 +66,7 @@ class _NewClientState extends ConsumerState<NewClient> {
                         addressController.text,
                         clientStatusOption.toString(),
                         noteController.text));
-                    print(countryCode.toString() + phoneController.text);
+                    debugPrint(countryCode.toString() + phoneController.text);
                     ScaffoldMessenger.of(context)
                       ..removeCurrentSnackBar()
                       ..showSnackBar(SnackBar(
@@ -177,7 +176,6 @@ class _NewClientState extends ConsumerState<NewClient> {
                     selectedValue: (value) {
                       clientStatusOption = value;
                     },
-                    validation: (value) {},
                     itemsToSelect: clientStatus,
                   ),
                   CustomFormField(

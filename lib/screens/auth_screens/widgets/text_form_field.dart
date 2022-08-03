@@ -16,6 +16,7 @@ class CustomFormField extends StatelessWidget {
   final void Function(String)? onChangeAction;
   final Widget? countryCode;
   final int? maximumLength;
+  final Function()? calendarPicker;
   final TextEditingController fieldController;
 
   const CustomFormField(
@@ -35,7 +36,7 @@ class CustomFormField extends StatelessWidget {
       required this.fieldController,
       this.labelText,
       required this.isShown,
-      this.maxLining})
+      this.maxLining, this.calendarPicker})
       : super(key: key);
 
   @override
@@ -43,6 +44,7 @@ class CustomFormField extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5.0),
       child: TextFormField(
+        onTap: calendarPicker,
         initialValue: initialValues,
         enabled: isEnabled,
         maxLines: maxLining,

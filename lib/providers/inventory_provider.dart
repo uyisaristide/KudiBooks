@@ -9,8 +9,8 @@ class InventoryProviders extends StateNotifier<List<InventoryModel>> {
     state = [...state, inventoryModel];
   }
 
-  removeInventory(InventoryModel inventoryId) {
-    state = state.where((invernt) => invernt.id != inventoryId.id).toList();
+  removeInventory(int inventoryId) {
+    state.removeWhere((element) => element.id == inventoryId);
   }
 }
 

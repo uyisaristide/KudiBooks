@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:kudibooks_app/models/expense_model.dart';
 import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/providers/expenses_provider.dart';
@@ -10,7 +12,6 @@ import 'package:kudibooks_app/screens/auth_screens/widgets/drop_down_widget.dart
 import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/double_header_two.dart';
-import 'package:provider/provider.dart';
 import '../auth_screens/widgets/text_form_field.dart';
 import 'classes/snack_bars.dart';
 
@@ -34,15 +35,13 @@ class _NewExpenseState extends ConsumerState<NewExpense> {
   final amountPaidExpensesController = TextEditingController();
 
   final nameController = TextEditingController();
-  Random _idRandom = Random();
+  final Random _idRandom = Random();
   final transactionDateController = TextEditingController(text: ''
       // text:
       //     '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}'
       );
 
   final memoController = TextEditingController();
-
-  List expensesForm = [];
 
   List<String> expenseAccountList = [
     'Expenses 1',
@@ -62,9 +61,151 @@ class _NewExpenseState extends ConsumerState<NewExpense> {
 
   String? cashBankAccount;
 
+  addExpenseWidget(Widget widgets) {}
+
   @override
   Widget build(BuildContext context) {
-    
+    List<Widget> listOfNewCard = [
+      Container(
+        width: double.infinity,
+        margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+        decoration: BoxDecoration(
+            border: Border.all(
+              width: 1.0,
+              color: Colors.grey,
+            ),
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.circular(10.0)),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SelectInputType(
+                dropDownHint: const Text('Expense account'),
+                selectedValue: (values) {
+                  expenseAccount = values;
+                },
+                validation: (expenseName) {
+                  if (expenseName == null) {
+                    return 'Select expense';
+                  }
+                  return null;
+                },
+                itemsToSelect: expenseAccountList),
+            Row(
+              children: [
+                Expanded(
+                  child: CustomFormField(
+                      inputType: TextInputType.number,
+                      validators: (value) {
+                        if (amountPaidExpensesController.text.isEmpty) {
+                          return 'Enter amount';
+                        }
+                        return null;
+                      },
+                      hintText: 'Amount paid',
+                      fieldController: amountPaidExpensesController,
+                      isShown: false),
+                ),
+                Expanded(
+                    child: Container(
+                  margin: const EdgeInsets.only(right: 15),
+                  padding: const EdgeInsets.all(15),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      border: Border.all(width: 1.0, color: Colors.grey),
+                      borderRadius: BorderRadius.circular(10.0)),
+                  child: InkWell(
+                    onTap: () => showModalBottomSheet(
+                        elevation: 0.0,
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10.0),
+                                topRight: Radius.circular(10.0))),
+                        context: (context),
+                        builder: (index) => LoadTags()),
+                    child: const Text(
+                      "Add Tag",
+                      style: TextStyle(color: Color(0xffA70C4A)),
+                    ),
+                  ),
+                ))
+              ],
+            ),
+          ],
+        ),
+      ),
+      Container(
+        width: double.infinity,
+        margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+        decoration: BoxDecoration(
+            border: Border.all(
+              width: 1.0,
+              color: Colors.grey,
+            ),
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.circular(10.0)),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SelectInputType(
+                dropDownHint: const Text('Expense account'),
+                selectedValue: (values) {
+                  expenseAccount = values;
+                },
+                validation: (expenseName) {
+                  if (expenseName == null) {
+                    return 'Select expense';
+                  }
+                  return null;
+                },
+                itemsToSelect: expenseAccountList),
+            Row(
+              children: [
+                Expanded(
+                  child: CustomFormField(
+                      inputType: TextInputType.number,
+                      validators: (value) {
+                        if (amountPaidExpensesController.text.isEmpty) {
+                          return 'Enter amount';
+                        }
+                        return null;
+                      },
+                      hintText: 'Amount paid',
+                      fieldController: amountPaidExpensesController,
+                      isShown: false),
+                ),
+                Expanded(
+                    child: Container(
+                  margin: const EdgeInsets.only(right: 15),
+                  padding: const EdgeInsets.all(15),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      border: Border.all(width: 1.0, color: Colors.grey),
+                      borderRadius: BorderRadius.circular(10.0)),
+                  child: InkWell(
+                    onTap: () => showModalBottomSheet(
+                        elevation: 0.0,
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10.0),
+                                topRight: Radius.circular(10.0))),
+                        context: (context),
+                        builder: (index) => LoadTags()),
+                    child: const Text(
+                      "Add Tag",
+                      style: TextStyle(color: Color(0xffA70C4A)),
+                    ),
+                  ),
+                ))
+              ],
+            ),
+          ],
+        ),
+      ),
+    ];
+
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
           color: Colors.transparent,
@@ -88,7 +229,7 @@ class _NewExpenseState extends ConsumerState<NewExpense> {
                       ..removeCurrentSnackBar()
                       ..showSnackBar(SnackBars.snackBars(
                           'Expense saved successfully', Colors.green.shade400));
-                    Navigator.pop(context);
+                    context.pop();
                   }
                 }),
           )),
@@ -171,6 +312,16 @@ class _NewExpenseState extends ConsumerState<NewExpense> {
                   ],
                 ),
               ),
+              // LimitedBox(
+              //   child: ListView.separated(
+              //       shrinkWrap: true,
+              //       itemBuilder: (context, indexCard) =>
+              //           listOfNewCard[indexCard],
+              //       separatorBuilder: (_, idx) => const SizedBox(
+              //             height: 5,
+              //           ),
+              //       itemCount: listOfNewCard.length),
+              // ),
               Container(
                 padding: const EdgeInsets.only(left: 15, right: 15),
                 child: TwoSideHeader(
@@ -179,7 +330,96 @@ class _NewExpenseState extends ConsumerState<NewExpense> {
                     bottomSize: 20,
                     leftSide: '',
                     rightSide: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        debugPrint("${listOfNewCard.length}");
+                        return setState(() {
+                          listOfNewCard.add(
+                            Container(
+                              width: double.infinity,
+                              margin: const EdgeInsets.symmetric(
+                                  vertical: 15, horizontal: 15),
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                    width: 1.0,
+                                    color: Colors.grey,
+                                  ),
+                                  shape: BoxShape.rectangle,
+                                  borderRadius: BorderRadius.circular(10.0)),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SelectInputType(
+                                      dropDownHint:
+                                          const Text('Expense account'),
+                                      selectedValue: (values) {
+                                        expenseAccount = values;
+                                      },
+                                      validation: (expenseName) {
+                                        if (expenseName == null) {
+                                          return 'Select expense';
+                                        }
+                                        return null;
+                                      },
+                                      itemsToSelect: expenseAccountList),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: CustomFormField(
+                                            inputType: TextInputType.number,
+                                            validators: (value) {
+                                              if (amountPaidExpensesController
+                                                  .text.isEmpty) {
+                                                return 'Enter amount';
+                                              }
+                                              return null;
+                                            },
+                                            hintText: 'Amount paid',
+                                            fieldController:
+                                                amountPaidExpensesController,
+                                            isShown: false),
+                                      ),
+                                      Expanded(
+                                          child: Container(
+                                        margin:
+                                            const EdgeInsets.only(right: 15),
+                                        padding: const EdgeInsets.all(15),
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.rectangle,
+                                            border: Border.all(
+                                                width: 1.0, color: Colors.grey),
+                                            borderRadius:
+                                                BorderRadius.circular(10.0)),
+                                        child: InkWell(
+                                          onTap: () => showModalBottomSheet(
+                                              elevation: 0.0,
+                                              shape:
+                                                  const RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                              topLeft: Radius
+                                                                  .circular(
+                                                                      10.0),
+                                                              topRight: Radius
+                                                                  .circular(
+                                                                      10.0))),
+                                              context: (context),
+                                              builder: (index) => LoadTags()),
+                                          child: const Text(
+                                            "Add Tag",
+                                            style: TextStyle(
+                                                color: Color(0xffA70C4A)),
+                                          ),
+                                        ),
+                                      ))
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        });
+                      },
                       child: const Text(
                         "New expense",
                         style: TextStyle(color: Colors.green, fontSize: 12),
@@ -220,6 +460,7 @@ class _NewExpenseState extends ConsumerState<NewExpense> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     CustomFormField(
+                      inputType: TextInputType.number,
                       validators: (value) {
                         if (amountPaidController.text.isEmpty) {
                           return 'Enter amount';
@@ -269,6 +510,20 @@ class _NewExpenseState extends ConsumerState<NewExpense> {
                   isShown: false,
                   inputType: TextInputType.name),
               CustomFormField(
+                  calendarPicker: () async {
+                    // FocusScope.of(context).requestFocus(FocusNode());
+                    await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2017),
+                            lastDate: DateTime(2040))
+                        .then((selectedDate) {
+                      if (selectedDate != null) {
+                        transactionDateController.text =
+                            DateFormat('yyyy-MM-dd').format(selectedDate);
+                      }
+                    });
+                  },
                   fieldIcon: const Icon(Icons.calendar_today_outlined),
                   fieldIconbutton: IconButton(
                       onPressed: () async {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/drop_down_widget.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
@@ -26,7 +27,7 @@ class ClientDeposit extends StatelessWidget {
                 text: 'Deposit',
                 actionField: () {
                   if (_formKey.currentState!.validate()) {
-                    Navigator.pop(context);
+                    context.pop();
                   }
                 }),
           )),

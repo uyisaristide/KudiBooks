@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kudibooks_app/models/Users/ProductInLoad.dart';
 import 'package:kudibooks_app/models/product_model.dart';
 import 'package:kudibooks_app/providers/all_providers_list.dart';
@@ -9,7 +10,6 @@ import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
 import 'package:kudibooks_app/screens/dashboard/classes/selectItem.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/inventory_card.dart';
-import 'package:provider/provider.dart';
 
 import 'double_header_two.dart';
 
@@ -55,7 +55,7 @@ class _ProductInLoadState extends ConsumerState<ProductInLoad> {
         children: [
           ListTile(
               trailing: IconButton(
-                onPressed: () => Navigator.pop(context),
+                onPressed: () => context.pop(),
                 icon: const Icon(Icons.close),
               ),
               title: const Text(
@@ -179,7 +179,7 @@ class _ProductInLoadState extends ConsumerState<ProductInLoad> {
                                   total: unitPrice.text.isEmpty
                                       ? 1
                                       : int.parse(unitPrice.text)));
-                          Navigator.pop(context);
+                          context.pop();
                         }
                       }),
                 ],

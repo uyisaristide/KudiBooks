@@ -15,8 +15,6 @@ class ProductSalesProvider extends StateNotifier<List<ProductSalesModel>> {
   // }
 }
 
-
-
 // class InventoryProviders extends ChangeNotifier {
 //   final List<InventoryModel> _listInventory = [];
 

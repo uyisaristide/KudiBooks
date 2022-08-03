@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kudibooks_app/models/Users/user_model.dart';
 import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/providers/user_provider.dart';
@@ -12,9 +13,7 @@ import 'package:kudibooks_app/screens/auth_screens/widgets/page_title.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
 import 'package:kudibooks_app/screens/background.dart';
 import 'package:kudibooks_app/screens/dashboard/classes/snack_bars.dart';
-import 'package:provider/provider.dart';
 import 'package:collection/collection.dart';
-
 import 'widgets/password_field.dart';
 
 class SignUp extends ConsumerStatefulWidget {
@@ -36,6 +35,7 @@ class _SignUpState extends ConsumerState<SignUp> {
   final secretController = TextEditingController();
 
   final passwordController = TextEditingController();
+
   final confirmController = TextEditingController();
 
   @override
@@ -51,6 +51,7 @@ class _SignUpState extends ConsumerState<SignUp> {
   }
 
   bool isHiddens = true;
+
   bool isHidden = true;
 
   @override
@@ -92,7 +93,12 @@ class _SignUpState extends ConsumerState<SignUp> {
               maxLength: 30,
               isHidden: isHiddens,
               passwordController: passwordController,
-              validators: (value) => Validators.validatePassword(value!),
+              validators: (value) {
+                if (value!.length < 8) {
+                  return "Much 8 charactor string";
+                }
+                return null;
+              },
               suffixIcon: IconButton(
                   onPressed: () => setState(() => isHiddens = !isHiddens),
                   icon: isHiddens
@@ -107,7 +113,14 @@ class _SignUpState extends ConsumerState<SignUp> {
               maxLength: 30,
               isHidden: isHidden,
               passwordController: confirmController,
-              validators: (value) => Validators.validatePassword(value!),
+              validators: (value) {
+                if (value != passwordController.text) {
+                  return "Password not match";
+                } else if (value == '') {
+                  return 'Fill out this form';
+                }
+                return null;
+              },
               suffixIcon: IconButton(
                   onPressed: () => setState(() => isHidden = !isHidden),
                   icon: isHidden
@@ -129,7 +142,7 @@ class _SignUpState extends ConsumerState<SignUp> {
                         lastName: lastNameController.text,
                         phoneOrEmail: emailController.text,
                         password: passwordController.text));
-                    Navigator.pushReplacementNamed(context, '/signup');
+                    context.goNamed('signin');
                     ScaffoldMessenger.of(context).showSnackBar(
                         SnackBars.snackBars(
                             'User saved successfully', Colors.green.shade400));
@@ -141,10 +154,42 @@ class _SignUpState extends ConsumerState<SignUp> {
                 }
               },
             ),
+            const SizedBox(height: 5),
+            // LoginButton(
+            //   text: 'Register now Net',
+            //   actionField: () {
+            //     var serverPassword = "${passwordController.text}+1234";
+            //     if (_formKey.currentState!.validate()) {
+            //       var userSaving = ref.read(userProvider.notifier).createUserEmail(User(
+            //           firstName: firstNameController.text,
+            //           lastName: lastNameController.text,
+            //           email: emailController.text,
+            //           password: passwordController.text,
+            //           passwordConfirm: passwordController.text));
+            //       print("This is runtime type: $userSaving");
+            //       if (userSaving.toString().isNotEmpty) {
+            //         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            //           shape: RoundedRectangleBorder(
+            //               borderRadius: BorderRadius.circular(15)),
+            //           duration: const Duration(seconds: 3),
+            //           content: const Text(
+            //             'User saved to network',
+            //             style: TextStyle(
+            //               fontSize: 17,
+            //             ),
+            //           ),
+            //           padding: const EdgeInsets.all(20.0),
+            //           backgroundColor: Colors.green,
+            //         ));
+            //         Navigator.pushReplacementNamed(context, '/login');
+            //       }
+            //       print("This is the future value $userSaving");
+            //     }
+            //   },
+            // ),
             HyperLinkText(
               directingText: 'Login instead',
-              actions: () =>
-                  Navigator.pushReplacementNamed(context, ('/login')),
+              actions: () => context.goNamed('signin'),
             ),
             CustomDevider(
               middleText: 'Or sign in with',
@@ -158,9 +203,7 @@ class _SignUpState extends ConsumerState<SignUp> {
                 children: [
                   CircledLogo(
                     logo: 'assets/images/categories/logoutIcon.png',
-                    navigateTo: () {
-                      Navigator.pushReplacementNamed(context, ('/phoneSignup'));
-                    },
+                    navigateTo: () =>context.goNamed('signupPhone'),
                   ),
                   CircledLogo(
                     navigateTo: () {},

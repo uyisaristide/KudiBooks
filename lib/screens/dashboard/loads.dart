@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kudibooks_app/models/inventory_model.dart';
 import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/providers/inventory_provider.dart';
@@ -8,11 +9,11 @@ import 'package:kudibooks_app/screens/dashboard/classes/sliver_delegate_search.d
 import 'package:kudibooks_app/screens/dashboard/new_inventory.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/loads_card.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/search_input.dart';
-import 'package:provider/provider.dart';
 
 class Loads extends ConsumerWidget {
   Loads({Key? key}) : super(key: key);
   final searchContent = TextEditingController();
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     
@@ -24,8 +25,7 @@ class Loads extends ConsumerWidget {
             padding: const EdgeInsets.all(15.0),
             elevation: 0.0,
             shape: const CircleBorder()),
-        onPressed: () => Navigator.push(
-            context, CupertinoPageRoute(builder: (context) => NewInventory())),
+        onPressed: () => context.pushNamed('createInventory'),
         child: const Text(
           '+',
           style: TextStyle(fontSize: 25),
@@ -35,21 +35,13 @@ class Loads extends ConsumerWidget {
         child: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return [
-              SliverAppBar(
+              const SliverAppBar(
                 pinned: true,
                 automaticallyImplyLeading: true,
-                actions: [
-                  IconButton(
-                      onPressed: () => Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                              builder: (context) => NewInventory())),
-                      icon: const Icon(Icons.add))
-                ],
                 elevation: 0.0,
-                backgroundColor: const Color(0xff157253),
+                backgroundColor: Color(0xff157253),
                 centerTitle: true,
-                title: const Text("Inventory loads",
+                title: Text("Inventory loads",
                     style: TextStyle(
                       fontSize: 20,
                     )),
@@ -60,7 +52,10 @@ class Loads extends ConsumerWidget {
                     child: Container(
                         color: Theme.of(context).scaffoldBackgroundColor,
                         width: MediaQuery.of(context).size.width,
-                        child: SearchTextField(searchContent: searchContent,)),
+                        child: SearchTextField(
+                          searchContent: searchContent,
+                          hintTexts: 'Search load',
+                        )),
                     maxHeight: 60,
                     minHeight: 60,
                   )),

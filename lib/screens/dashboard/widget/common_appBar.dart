@@ -1,8 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AppBarCommon {
-  static preferredSizeWidget(context, titleTransaction, ) {
+  static preferredSizeWidget(
+    context,
+    titleTransaction,
+  ) {
     return PreferredSize(
       preferredSize: const Size.fromHeight(56.0),
       child: Column(
