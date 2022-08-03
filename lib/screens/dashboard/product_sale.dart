@@ -3,6 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:kudibooks_app/models/Users/products_sold_model.dart';
 import 'package:kudibooks_app/models/product_model.dart';
+import 'package:kudibooks_app/models/Users/ProductInLoad.dart';
+import 'package:kudibooks_app/models/Users/products_sold_model.dart';
+import 'package:kudibooks_app/models/product_model.dart';
+import 'package:kudibooks_app/models/product_sale_model.dart';
+import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/providers/product_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/drop_down_widget.dart';
@@ -27,7 +32,9 @@ class _ProductSaleState extends ConsumerState<ProductSale> {
 
   final transactionDateController = TextEditingController();
 
-  final memoController = TextEditingController();
+  final amountPaidController = TextEditingController();
+
+  final debtAmountController = TextEditingController();
 
   List<String> unitProduct = [
     "Account 1",
@@ -59,7 +66,12 @@ class _ProductSaleState extends ConsumerState<ProductSale> {
 
   @override
   Widget build(BuildContext context) {
+    
+
+    List<ProductSalesModel> salesList = ref.watch(salesProvider);
+
     return Scaffold(
+      appBar: AppBarCommon.preferredSizeWidget(context, "Products sale"),
       bottomNavigationBar: BottomAppBar(
           color: Colors.transparent,
           elevation: 0.0,
@@ -69,11 +81,21 @@ class _ProductSaleState extends ConsumerState<ProductSale> {
                 text: 'Save',
                 actionField: () {
                   if (_formKey.currentState!.validate()) {
+                    ref.read(salesProvider.notifier).addNewSale(ProductSalesModel(
+                        saleId: 11,
+                        transactionDate: transactionDateController.text,
+                        transactionName: productNameController.text,
+                        productSold: 'product1',
+                        amountPaid: double.parse(amountPaidController.text),
+                        paymentMethod: bankAccountsValue!,
+                        debtAmount: double.parse(debtAmountController.text),
+                        client: 'mehuii'));
+
+                    print(salesList.toList());
                     return Navigator.pop(context);
                   }
                 }),
           )),
-      appBar: AppBarCommon.preferredSizeWidget(context, "Products sale"),
       body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Container(
@@ -135,7 +157,7 @@ class _ProductSaleState extends ConsumerState<ProductSale> {
                         CustomFormField(
                           validators: (value) => Validators.validateName(value),
                           hintText: 'Product name',
-                          fieldController: productNameController,
+                          fieldController: nameController,
                           isShown: false,
                         ),
                         Container(
@@ -243,8 +265,9 @@ class _ProductSaleState extends ConsumerState<ProductSale> {
   }
 
   _addProductForm(BuildContext context) {
-    List<ProductModel> _productModel = ref.watch(productProviders);
-    List<ProductToSell> _productsToSell = ref.watch(productToSell);
+    
+    List<ProductModel> _productModel = ref.watch(productProvider);
+    List<ProductToSell> _productsToSell = ref.watch(productToSalesProvide);
     return Form(
       key: _formKey,
       child: Column(
@@ -311,8 +334,7 @@ class _ProductSaleState extends ConsumerState<ProductSale> {
                             Icons.close,
                             color: Color(0xffA34646),
                           ),
-                          onPressed: () => setState(() => ref
-                              .read(productToSell.notifier)
+                          onPressed: () => setState(() => ref.read(productToSalesProvide.notifier)
                               .removeProductToSales(int.parse(changeToInt))),
                         ),
                         bottomSize: 10,
@@ -513,7 +535,7 @@ class _ProductSaleState extends ConsumerState<ProductSale> {
                       return Validators.notEmpty(value);
                     },
                     hintText: 'Amount paid',
-                    fieldController: nameController,
+                    fieldController: amountPaidController,
                     isShown: false,
                     inputType: TextInputType.number),
                 SelectInputType(
@@ -549,7 +571,7 @@ class _ProductSaleState extends ConsumerState<ProductSale> {
                       return Validators.notEmpty(value);
                     },
                     hintText: 'Debt amount',
-                    fieldController: nameController,
+                    fieldController: debtAmountController,
                     isShown: false,
                     inputType: TextInputType.number),
                 SelectInputType(

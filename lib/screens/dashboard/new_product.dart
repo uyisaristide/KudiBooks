@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kudibooks_app/models/product_model.dart';
+import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/providers/product_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/drop_down_widget.dart';
@@ -49,7 +50,8 @@ class _NewProductState extends ConsumerState<NewProduct> {
 
   @override
   Widget build(BuildContext context) {
-    List<ProductModel> _listProducts = ref.watch(productProviders);
+    
+    List<ProductModel> _listProducts = ref.watch(productProvider);
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
           color: Colors.transparent,
@@ -60,7 +62,7 @@ class _NewProductState extends ConsumerState<NewProduct> {
                 text: 'Add product',
                 actionField: () {
                   if (_formKey.currentState!.validate()) {
-                    ref.read(productProviders.notifier).addProduct(ProductModel(
+                    ref.read(productProvider.notifier).addProduct(ProductModel(
                         id: _idRandom.nextInt(300),
                         revenueAccount: revenueAccountValue,
                         inventoryExpenseAccount: expenseAccountValue,

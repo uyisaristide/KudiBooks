@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:kudibooks_app/models/expense_model.dart';
+import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/providers/expenses_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/drop_down_widget.dart';
@@ -215,7 +216,7 @@ class _NewExpenseState extends ConsumerState<NewExpense> {
                 text: 'Save',
                 actionField: () {
                   if (_formKey.currentState!.validate()) {
-                    ref.read(expenseProvider.notifier).addExpense(Expense(
+                    ref.read(expencesProvider.notifier).addExpense(Expense(
                         _idRandom.nextInt(100),
                         expenseAccount.toString(),
                         double.parse(amountPaidExpensesController.text),

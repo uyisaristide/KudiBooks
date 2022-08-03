@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kudibooks_app/models/Users/user_model.dart';
+import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/providers/user_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/circled_logo.dart';
@@ -16,13 +17,13 @@ import 'package:collection/collection.dart';
 import 'widgets/password_field.dart';
 
 class SignUp extends ConsumerStatefulWidget {
-  const SignUp({Key? key}) : super(key: key);
+  SignUp({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<SignUp> createState() => _SignUpStateState();
+  ConsumerState<SignUp> createState() => _SignUpState();
 }
 
-class _SignUpStateState extends ConsumerState<SignUp> {
+class _SignUpState extends ConsumerState<SignUp> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final firstNameController = TextEditingController();
@@ -55,8 +56,9 @@ class _SignUpStateState extends ConsumerState<SignUp> {
 
   @override
   Widget build(BuildContext context) {
-    List<User> _users = ref.watch(userProvider);
-    debugPrint("${_users.length}");
+    
+    List<User> _users = ref.watch(usersProvider);
+   
     return BackgroundScreen(
       paddingSize: 150,
       screens: Form(
@@ -135,7 +137,7 @@ class _SignUpStateState extends ConsumerState<SignUp> {
                   var checkUser = _users.firstWhereOrNull((element) =>
                       element.phoneOrEmail == emailController.text);
                   if (checkUser == null) {
-                    ref.read(userProvider.notifier).addUser(User(
+                    ref.read(usersProvider.notifier).addUser(User(
                         firstName: firstNameController.text,
                         lastName: lastNameController.text,
                         phoneOrEmail: emailController.text,

@@ -7,6 +7,11 @@ import 'package:intl/intl.dart';
 import 'package:kudibooks_app/models/Users/ProductInLoad.dart';
 import 'package:kudibooks_app/models/inventory_model.dart';
 import 'package:kudibooks_app/models/product_model.dart';
+import 'package:kudibooks_app/models/Users/ProductInLoad.dart';
+import 'package:kudibooks_app/models/inventory_model.dart';
+import 'package:kudibooks_app/models/product_model.dart';
+import 'package:kudibooks_app/providers/all_providers_list.dart';
+import 'package:kudibooks_app/providers/inventory_provider.dart';
 import 'package:kudibooks_app/providers/product_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/drop_down_widget.dart';
@@ -17,10 +22,8 @@ import 'package:kudibooks_app/screens/dashboard/widget/double_header_two.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/inventory_card.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/load_product.dart';
 
-import '../../providers/inventory_provider.dart';
-
 class NewInventory extends ConsumerStatefulWidget {
-  const NewInventory({Key? key}) : super(key: key);
+  NewInventory({Key? key}) : super(key: key);
 
   @override
   ConsumerState<NewInventory> createState() => _NewInventoryState();
@@ -42,9 +45,12 @@ class _NewInventoryState extends ConsumerState<NewInventory> {
 
   @override
   Widget build(BuildContext context) {
-    List<ProductModel> _productModel = ref.watch(productProviders);
-    List<ProductInLoadModel> _productsToLoad =
-        ref.watch(productInLoadProviders);
+    
+    List<InventoryModel> inventoryProvidersList =
+        ref.watch(inventoryProvider);
+    
+    List<ProductModel> _productModel = ref.watch(productProvider);
+    List<ProductInLoadModel> _productsToLoad = ref.watch(productToLoadProvider);
 
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
@@ -56,18 +62,17 @@ class _NewInventoryState extends ConsumerState<NewInventory> {
                 text: 'Save',
                 actionField: () {
                   if (_formKey.currentState!.validate()) {
-                    ref.read(inventoryProvider.notifier).addInventory(
-                        InventoryModel(
-                            id: _randNumber.nextInt(500),
-                            bulkName: nameController.text,
-                            productList: _productsToLoad,
-                            amountPaid: double.parse(amountPaid.text),
-                            bankAccount: bankAccountsValue,
-                            deptAmount: double.parse(debtAmount.text),
-                            vendor: vendorListValue,
-                            transactionName: transactionNameController.text,
-                            transactionDate: transactionDateController.text,
-                            memoInventory: memoController.text));
+                    ref.read(inventoryProvider.notifier).addInventory(InventoryModel(
+                        id: _randNumber.nextInt(500),
+                        bulkName: nameController.text,
+                        productList: _productsToLoad,
+                        amountPaid: double.parse(amountPaid.text),
+                        bankAccount: bankAccountsValue,
+                        deptAmount: double.parse(debtAmount.text),
+                        vendor: vendorListValue,
+                        transactionName: transactionNameController.text,
+                        transactionDate: transactionDateController.text,
+                        memoInventory: memoController.text));
                     _productsToLoad.clear();
                     debugPrint("Saved");
                     context.pop();
@@ -123,8 +128,7 @@ class _NewInventoryState extends ConsumerState<NewInventory> {
                                 Icons.close,
                                 color: Color(0xffA34646),
                               ),
-                              onPressed: () => setState(() => ref
-                                  .read(productInLoadProviders.notifier)
+                              onPressed: () => setState(() => ref.read(productToLoadProvider.notifier)
                                   .removeLoadInModel(int.parse(changeToInt))),
                             ),
                             bottomSize: 10,

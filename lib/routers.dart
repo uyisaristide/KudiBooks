@@ -57,7 +57,7 @@ GoRouter router = GoRouter(
       GoRoute(
           name: 'signup',
           path: '/createUserEmail',
-          builder: (context, state) => const SignUp()),
+          builder: (context, state) =>  SignUp()),
       GoRoute(
           name: 'signin',
           path: '/login',
@@ -65,11 +65,11 @@ GoRouter router = GoRouter(
       GoRoute(
           name: 'loginPhone',
           path: '/signinPhone',
-          builder: (context, state) => const PhoneLogin()),
+          builder: (context, state) =>  PhoneLogin()),
       GoRoute(
           name: 'signupPhone',
           path: '/createUserPhone',
-          builder: (context, state) => const PhoneSignup()),
+          builder: (context, state) =>  PhoneSignup()),
 
       //Dashboard screen routes
       GoRoute(
@@ -84,7 +84,7 @@ GoRouter router = GoRouter(
       GoRoute(
           name: 'createInventory',
           path: '/newInventory',
-          builder: (context, state) => const NewInventory()),
+          builder: (context, state) => NewInventory()),
       GoRoute(
           name: 'createExpense',
           path: '/newExpense',
@@ -132,7 +132,7 @@ GoRouter router = GoRouter(
       GoRoute(
           name: 'newClient',
           path: '/createClient',
-          builder: (context, state) => const NewClient()),
+          builder: (context, state) => NewClient()),
       GoRoute(
           name: 'reports',
           path: '/reportsScreen',

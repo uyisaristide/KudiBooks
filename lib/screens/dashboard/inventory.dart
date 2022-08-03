@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:kudibooks_app/models/Users/user_model.dart';
 import 'package:kudibooks_app/models/inventory_model.dart';
 import 'package:kudibooks_app/models/product_model.dart';
+import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/providers/inventory_provider.dart';
 import 'package:kudibooks_app/providers/product_provider.dart';
 import 'package:kudibooks_app/providers/user_provider.dart';
@@ -14,6 +15,8 @@ import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/loads_card.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/product_listtile.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/search_input.dart';
+
+import 'new_inventory.dart';
 
 class InventoryScreen extends ConsumerStatefulWidget {
   VoidCallback? loadInventories;
@@ -55,13 +58,12 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen>
 
   @override
   Widget build(BuildContext context) {
-    List<ProductModel> _productList = ref
-        .watch(productProviders)
-        .where((productItem) => productItem.inventoryExpenseAccount != null)
-        .toList();
+    
+    List<ProductModel> _productList = ref.watch(productProvider);
+    
     List<InventoryModel> _loadsList = ref.watch(inventoryProvider);
-    User? signedUser = ref
-        .watch(userProvider)
+    
+    User? signedUser = ref.watch(usersProvider)
         .firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
     return Scaffold(
       drawer: Drawers(userInfo: signedUser),
