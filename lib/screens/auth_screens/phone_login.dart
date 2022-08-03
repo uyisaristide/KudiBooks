@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kudibooks_app/models/Users/user_model.dart';
 import 'package:kudibooks_app/providers/user_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
@@ -49,7 +50,7 @@ class _PhoneLoginState extends ConsumerState<PhoneLogin> {
         children: [
           TextButton(
             onPressed: () {
-              Navigator.pushReplacementNamed(context, '/signup');
+              context.goNamed("signin");
             },
             child: const Text(
               "Sign up",
@@ -144,7 +145,7 @@ class _PhoneLoginState extends ConsumerState<PhoneLogin> {
                   CircledLogo(
                     logo: 'assets/images/categories/emailIcon.png',
                     navigateTo: () =>
-                        Navigator.pushReplacementNamed(context, '/login'),
+                        context.goNamed('signin'),
                   ),
                   CircledLogo(
                     navigateTo: () {},

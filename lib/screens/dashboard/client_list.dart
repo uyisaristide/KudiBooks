@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kudibooks_app/screens/dashboard/classes/sliver_delegate_search.dart';
-import 'package:kudibooks_app/screens/dashboard/new_client.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/progress_row.dart';
 import 'widget/progress_row.dart';
 
@@ -189,8 +188,7 @@ class ClientList extends StatelessWidget {
             padding: const EdgeInsets.all(15.0),
             elevation: 0.0,
             shape: const CircleBorder()),
-        onPressed: () => Navigator.push(
-            context, CupertinoPageRoute(builder: (context) => NewClient())),
+        onPressed: () => context.pushNamed('newClient'),
         child: const Text(
           '+',
           style: TextStyle(fontSize: 25),
@@ -199,23 +197,14 @@ class ClientList extends StatelessWidget {
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return [
-            SliverAppBar(
+            const SliverAppBar(
               pinned: true,
               systemOverlayStyle:
-                  const SystemUiOverlayStyle(statusBarColor: Color(0xff157253)),
-              actions: [
-                IconButton(
-                  icon: const Icon(
-                    Icons.add,
-                  ),
-                  onPressed: () => Navigator.push(context,
-                      CupertinoPageRoute(builder: (context) => NewClient())),
-                )
-              ],
+                  SystemUiOverlayStyle(statusBarColor: Color(0xff157253)),
               elevation: 0.0,
-              backgroundColor: const Color(0xff157253),
+              backgroundColor: Color(0xff157253),
               centerTitle: true,
-              title: const Text("Clients list",
+              title: Text("Clients list",
                   style: TextStyle(
                     fontSize: 20,
                   )),

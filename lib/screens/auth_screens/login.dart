@@ -1,8 +1,6 @@
-import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kudibooks_app/models/Users/user_model.dart';
 import 'package:kudibooks_app/providers/user_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
@@ -15,7 +13,6 @@ import 'package:kudibooks_app/screens/auth_screens/widgets/page_title.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
 import 'package:kudibooks_app/screens/background.dart';
 import 'package:kudibooks_app/screens/dashboard/classes/snack_bars.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/bottom_navigation.dart';
 
 class Login extends ConsumerStatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -47,9 +44,7 @@ class _LoginState extends ConsumerState<Login> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           TextButton(
-            onPressed: () {
-              Navigator.pushReplacementNamed(context, '/signup');
-            },
+            onPressed: () => context.goNamed('signup'),
             child: const Text(
               "Sign up",
               style: TextStyle(
@@ -151,12 +146,14 @@ class _LoginState extends ConsumerState<Login> {
                   } else if (checkUser.first.phoneOrEmail ==
                           emailController.text &&
                       checkUser.first.password == passwordController.text) {
-                    Navigator.pushReplacement(
-                        context,
-                        CupertinoPageRoute(
-                            builder: (context) => NavigationBottom(
-                                  loggedUser: checkUser.first.phoneOrEmail!,
-                                )));
+                    context.goNamed('dashboard',
+                        extra: checkUser.first.phoneOrEmail!);
+                    // Navigator.pushReplacement(
+                    //     context,
+                    //     CupertinoPageRoute(
+                    //         builder: (context) => NavigationBottom(
+                    //               loggedUser: checkUser.first.phoneOrEmail!,
+                    //             )));
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                         SnackBars.snackBars(
@@ -180,7 +177,7 @@ class _LoginState extends ConsumerState<Login> {
                   CircledLogo(
                     logo: 'assets/images/categories/logoutIcon.png',
                     navigateTo: () {
-                      Navigator.pushReplacementNamed(context, "/phoneLogin");
+                      context.goNamed("loginPhone");
                     },
                   ),
                   const CircledLogo(

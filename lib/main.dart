@@ -1,12 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kudibooks_app/providers/user_provider.dart';
-import 'package:kudibooks_app/screens/auth_screens/login.dart';
-import 'package:kudibooks_app/screens/auth_screens/otp_verification.dart';
-import 'package:kudibooks_app/screens/auth_screens/phone_login.dart';
-import 'package:kudibooks_app/screens/auth_screens/phone_signup.dart';
-import 'package:kudibooks_app/screens/auth_screens/signup.dart';
-import 'package:kudibooks_app/screens/dashboard/loads.dart';
-import 'package:kudibooks_app/screens/splash_screen/green_splash_screen.dart';
+import 'package:kudibooks_app/routers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
@@ -19,22 +12,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       theme: ThemeData(),
       darkTheme: ThemeData.dark(),
       themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
       title: 'KudiBooks',
-      home: const GreenSplashScreen(),
-      initialRoute: '/',
-      routes: {
-        '/login': (context) => const Login(),
-        '/phoneLogin': (context) => PhoneLogin(),
-        '/signup': (context) => SignUp(),
-        '/phoneSignup': (context) => PhoneSignup(),
-        '/otp': (context) => const OtpVerification(),
-        '/loadInventories': (context) => Loads(),
-      },
+      routerDelegate: router.routerDelegate,
+      routeInformationParser: router.routeInformationParser,
+      routeInformationProvider: router.routeInformationProvider,
     );
   }
 }

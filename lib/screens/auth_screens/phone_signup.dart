@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kudibooks_app/models/Users/user_model.dart';
 import 'package:kudibooks_app/providers/user_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
@@ -216,7 +217,7 @@ class _PhoneSignupState extends ConsumerState<PhoneSignup> {
                     ScaffoldMessenger.of(context).showSnackBar(
                         SnackBars.snackBars(
                             'User saved successfully', Colors.green.shade400));
-                    Navigator.pushReplacementNamed(context, '/login');
+                    context.goNamed('signin');
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                         SnackBars.snackBars(
@@ -243,7 +244,7 @@ class _PhoneSignupState extends ConsumerState<PhoneSignup> {
             // ),
             HyperLinkText(
               directingText: 'Login instead',
-              actions: () => Navigator.pushReplacementNamed(context, '/login'),
+              actions: () => context.goNamed('signin'),
             ),
             CustomDevider(
               middleText: 'Or sign up with',
@@ -257,8 +258,7 @@ class _PhoneSignupState extends ConsumerState<PhoneSignup> {
                 children: [
                   CircledLogo(
                     logo: 'assets/images/categories/emailIcon.png',
-                    navigateTo: () =>
-                        Navigator.pushReplacementNamed(context, ("/signup")),
+                    navigateTo: () => context.goNamed('signup'),
                   ),
                   CircledLogo(
                     navigateTo: () {},

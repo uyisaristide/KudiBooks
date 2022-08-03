@@ -1,12 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kudibooks_app/models/product_model.dart';
 import 'package:kudibooks_app/providers/product_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/product_list_card.dart';
 import 'package:kudibooks_app/screens/dashboard/classes/sliver_delegate_search.dart';
-import 'package:kudibooks_app/screens/dashboard/new_product.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/search_input.dart';
 
 class ProductsScreen extends ConsumerStatefulWidget {
@@ -35,8 +34,7 @@ class _ProductsScreenState extends ConsumerState<ProductsScreen> {
             padding: const EdgeInsets.all(15.0),
             elevation: 0.0,
             shape: const CircleBorder()),
-        onPressed: () => Navigator.push(
-            context, CupertinoPageRoute(builder: (context) => NewProduct())),
+        onPressed: () => context.pushNamed('newProduct'),
         child: const Text(
           '+',
           style: TextStyle(fontSize: 25),

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kudibooks_app/screens/dashboard/classes/snack_bars.dart';
-import 'package:kudibooks_app/screens/dashboard/new_account.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
 
@@ -17,8 +17,7 @@ class ChartAccount extends StatelessWidget {
             padding: const EdgeInsets.all(15.0),
             elevation: 0.0,
             shape: const CircleBorder()),
-        onPressed: () => Navigator.push(
-            context, CupertinoPageRoute(builder: (context) => NewAccount())),
+        onPressed: () => context.goNamed('newChartAccount'),
         child: const Text(
           '+',
           style: TextStyle(fontSize: 25),

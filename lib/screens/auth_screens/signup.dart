@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kudibooks_app/models/Users/user_model.dart';
 import 'package:kudibooks_app/providers/user_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
@@ -139,7 +140,7 @@ class _SignUpStateState extends ConsumerState<SignUp> {
                         lastName: lastNameController.text,
                         phoneOrEmail: emailController.text,
                         password: passwordController.text));
-                    Navigator.pushReplacementNamed(context, '/login');
+                    context.goNamed('signin');
                     ScaffoldMessenger.of(context).showSnackBar(
                         SnackBars.snackBars(
                             'User saved successfully', Colors.green.shade400));
@@ -151,13 +152,13 @@ class _SignUpStateState extends ConsumerState<SignUp> {
                 }
               },
             ),
-            // const SizedBox(height: 5),
+            const SizedBox(height: 5),
             // LoginButton(
             //   text: 'Register now Net',
             //   actionField: () {
             //     var serverPassword = "${passwordController.text}+1234";
             //     if (_formKey.currentState!.validate()) {
-            //       var userSaving = ref.watch(userProvider).createUserEmail(User(
+            //       var userSaving = ref.read(userProvider.notifier).createUserEmail(User(
             //           firstName: firstNameController.text,
             //           lastName: lastNameController.text,
             //           email: emailController.text,
@@ -186,8 +187,7 @@ class _SignUpStateState extends ConsumerState<SignUp> {
             // ),
             HyperLinkText(
               directingText: 'Login instead',
-              actions: () =>
-                  Navigator.pushReplacementNamed(context, ('/login')),
+              actions: () => context.goNamed('signin'),
             ),
             CustomDevider(
               middleText: 'Or sign in with',
@@ -201,9 +201,7 @@ class _SignUpStateState extends ConsumerState<SignUp> {
                 children: [
                   CircledLogo(
                     logo: 'assets/images/categories/logoutIcon.png',
-                    navigateTo: () {
-                      Navigator.pushReplacementNamed(context, ('/phoneSignup'));
-                    },
+                    navigateTo: () =>context.goNamed('signupPhone'),
                   ),
                   CircledLogo(
                     navigateTo: () {},

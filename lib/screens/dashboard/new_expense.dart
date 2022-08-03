@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:kudibooks_app/models/expense_model.dart';
 import 'package:kudibooks_app/providers/expenses_provider.dart';
@@ -14,7 +15,7 @@ import '../auth_screens/widgets/text_form_field.dart';
 import 'classes/snack_bars.dart';
 
 class NewExpense extends ConsumerStatefulWidget {
-  NewExpense({Key? key}) : super(key: key);
+  const NewExpense({Key? key}) : super(key: key);
 
   @override
   ConsumerState<NewExpense> createState() => _NewExpenseState();
@@ -227,7 +228,7 @@ class _NewExpenseState extends ConsumerState<NewExpense> {
                       ..removeCurrentSnackBar()
                       ..showSnackBar(SnackBars.snackBars(
                           'Expense saved successfully', Colors.green.shade400));
-                    Navigator.pop(context);
+                    context.pop();
                   }
                 }),
           )),
