@@ -4,7 +4,8 @@ import 'package:kudibooks_app/models/Users/user_model.dart';
 
 import '../dio_services.dart';
 
-final userProvider = StateNotifierProvider<UserProvider, List<User>>((ref) => UserProvider());
+final userProvider =
+    StateNotifierProvider<UserProvider, List<User>>((ref) => UserProvider());
 
 class UserProvider extends StateNotifier<List<User>> {
   UserProvider() : super([]);
@@ -37,4 +38,8 @@ class UserProvider extends StateNotifier<List<User>> {
       throw e;
     }
   }
+
+  // Future<Response> loginEmail() {}
+  //
+  // Future<Response> loginPhone() {}
 }

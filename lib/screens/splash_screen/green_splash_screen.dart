@@ -1,7 +1,6 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:kudibooks_app/screens/splash_screen/white_splash_screen.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kudibooks_app/screens/splash_screen/widgets/splash.dart';
 
 class GreenSplashScreen extends StatefulWidget {
@@ -15,9 +14,10 @@ class _GreenSplashScreenState extends State<GreenSplashScreen> {
   _GreenSplashScreenState() {
     Timer(const Duration(milliseconds: 3000), () {
       setState(() {
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => const WhiteSplashScreen()),
-                (route) => false);
+        context.goNamed("whiteSplash");
+        // Navigator.of(context).pushAndRemoveUntil(
+        //     MaterialPageRoute(builder: (context) => const WhiteSplashScreen()),
+        //         (route) => false);
       });
     });
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kudibooks_app/models/product_model.dart';
 import 'package:kudibooks_app/screens/dashboard/classes/sliver_delegate_search.dart';
 import 'package:kudibooks_app/screens/dashboard/product_sale.dart';
@@ -20,8 +21,7 @@ class ProductDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> listOfSmallCards = [
       ActionCard(
-        actionClick: () => Navigator.push(
-            context, CupertinoPageRoute(builder: (ctx) => ProductSale())),
+        actionClick: () => context.pushNamed('sell'),
         cardIcon: const Icon(
           Icons.shopping_cart_outlined,
           color: Colors.white,
@@ -30,8 +30,7 @@ class ProductDetails extends StatelessWidget {
         title: 'Sell',
       ),
       ActionCard(
-        actionClick: () => Navigator.push(context,
-            CupertinoPageRoute(builder: (ctx) => InventoryDeduction())),
+        actionClick: () => context.goNamed('inventoryDeduction'),
         cardIcon: const Icon(
           Icons.shopping_cart_outlined,
           color: Colors.white,
@@ -40,8 +39,7 @@ class ProductDetails extends StatelessWidget {
         title: 'Sell',
       ),
       ActionCard(
-        actionClick: () => Navigator.push(context,
-            CupertinoPageRoute(builder: (ctx) => InventoryDeduction())),
+        actionClick: () => context.goNamed('inventoryDeduction'),
         cardIcon: const Icon(
           Icons.shopping_cart_outlined,
           color: Colors.white,
@@ -50,8 +48,7 @@ class ProductDetails extends StatelessWidget {
         title: 'Sell',
       ),
       ActionCard(
-        actionClick: () => Navigator.push(context,
-            CupertinoPageRoute(builder: (ctx) => InventoryDeduction())),
+        actionClick: () => context.goNamed('inventoryDeduction'),
         cardIcon: const Icon(
           Icons.shopping_cart_outlined,
           color: Colors.white,
@@ -167,10 +164,7 @@ class ProductDetails extends StatelessWidget {
                     child: Row(children: [
                       ActionCard(
                         isBoxShadow: true,
-                        actionClick: () => Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                                builder: (ctx) => ProductSale())),
+                        actionClick: () => context.goNamed('sell'),
                         cardIcon: const Icon(
                           Icons.shopping_cart_outlined,
                           color: Color(0xff157253),
@@ -181,10 +175,7 @@ class ProductDetails extends StatelessWidget {
                       ),
                       ActionCard(
                         isBoxShadow: true,
-                        actionClick: () => Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                                builder: (ctx) => ProductSale())),
+                        actionClick: () => context.goNamed('sell'),
                         cardIcon: const Icon(
                           Icons.check_circle_outline_sharp,
                           color: Colors.green,
@@ -196,10 +187,7 @@ class ProductDetails extends StatelessWidget {
                       ActionCard(
                         isBoxShadow: true,
                         cardColor: Theme.of(context).scaffoldBackgroundColor,
-                        actionClick: () => Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                                builder: (ctx) => ProductSale())),
+                        actionClick: () => context.goNamed('sell'),
                         cardIcon: const Icon(
                           Icons.remove_circle_outline,
                           color: Color(0xffA70C4A),
@@ -210,10 +198,7 @@ class ProductDetails extends StatelessWidget {
                       ActionCard(
                         isBoxShadow: true,
                         cardColor: Theme.of(context).scaffoldBackgroundColor,
-                        actionClick: () => Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                                builder: (ctx) => ProductSale())),
+                        actionClick: () => context.goNamed('sell'),
                         cardIcon: const Icon(
                           Icons.edit_outlined,
                           color: Colors.amber,
@@ -242,11 +227,7 @@ class ProductDetails extends StatelessWidget {
                         icon: const Icon(Icons.arrow_forward_ios),
                       ),
                       iconButton: TextButton(
-                          onPressed: () => Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                  builder: (BuildContext context) =>
-                                      AllTransaction())),
+                          onPressed: () => context.goNamed('transactionsAll'),
                           child: const Text("View all")),
                     ),
                   ),

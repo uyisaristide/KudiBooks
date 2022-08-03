@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:kudibooks_app/models/Users/ProductInLoad.dart';
 import 'package:kudibooks_app/models/inventory_model.dart';
@@ -69,7 +70,7 @@ class _NewInventoryState extends ConsumerState<NewInventory> {
                             memoInventory: memoController.text));
                     _productsToLoad.clear();
                     debugPrint("Saved");
-                    Navigator.pop(context);
+                    context.pop();
                   }
                 }),
           )),
@@ -213,7 +214,9 @@ class _NewInventoryState extends ConsumerState<NewInventory> {
                   children: [
                     CustomFormField(
                         validators: (value) {
-                          Validators.validateName(value);
+                          if (value == '') {
+                            return "This is required";
+                          }
                         },
                         hintText: 'Amount paid',
                         fieldController: amountPaid,
@@ -241,7 +244,9 @@ class _NewInventoryState extends ConsumerState<NewInventory> {
                   children: [
                     CustomFormField(
                         validators: (value) {
-                          Validators.validateName(value);
+                          if (value == '') {
+                            return "This is required";
+                          }
                         },
                         hintText: 'Debt amount',
                         fieldController: debtAmount,

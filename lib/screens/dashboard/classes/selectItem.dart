@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:kudibooks_app/models/product_model.dart';
-import 'package:kudibooks_app/providers/product_provider.dart';
-import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
-import 'package:provider/provider.dart';
 
 class SelectItemDynamic extends StatelessWidget {
   Function(ProductModel?)? selectValue;
