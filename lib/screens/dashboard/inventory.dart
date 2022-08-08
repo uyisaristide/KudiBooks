@@ -20,9 +20,9 @@ import 'new_inventory.dart';
 
 class InventoryScreen extends ConsumerStatefulWidget {
   VoidCallback? loadInventories;
-  String loggedUser;
+  String? loggedUser;
 
-  InventoryScreen({required this.loggedUser, this.loadInventories, Key? key})
+  InventoryScreen({this.loggedUser, this.loadInventories, Key? key})
       : super(key: key);
 
   @override

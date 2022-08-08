@@ -26,7 +26,6 @@ class _LoginState extends ConsumerState<Login> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final emailController = TextEditingController();
-
   final passwordController = TextEditingController();
   bool isHidden = true;
 
@@ -39,8 +38,8 @@ class _LoginState extends ConsumerState<Login> {
 
   @override
   Widget build(BuildContext context) {
-    
     List<User> _user = ref.watch(usersProvider);
+    debugPrint("Logged user is: $myToken");
     return BackgroundScreen(
       buttonWidget: Row(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -139,29 +138,49 @@ class _LoginState extends ConsumerState<Login> {
               text: 'Login',
               actionField: () {
                 if (_formKey.currentState!.validate()) {
-                  var checkUser = _user.where((element) =>
-                      element.phoneOrEmail == emailController.text);
-                  if (checkUser.isEmpty) {
+                  context.goNamed('dashboard');
+                  // var checkUser = _user.where((element) =>
+                  //     element.phoneOrEmail == emailController.text);
+                  // if (checkUser.isEmpty) {
+                  //   ScaffoldMessenger.of(context).showSnackBar(
+                  //       SnackBars.snackBars(
+                  //           'This user not found', Colors.redAccent));
+                  // } else if (checkUser.first.phoneOrEmail ==
+                  //         emailController.text &&
+                  //     checkUser.first.password == passwordController.text) {
+                  //   context.goNamed('dashboard',
+                  //       extra: checkUser.first.phoneOrEmail!);
+                  //   // Navigator.pushReplacement(
+                  //   //     context,
+                  //   //     CupertinoPageRoute(
+                  //   //         builder: (context) => NavigationBottom(
+                  //   //               loggedUser: checkUser.first.phoneOrEmail!,
+                  //   //             )));
+                  // } else {
+                  //   ScaffoldMessenger.of(context).showSnackBar(
+                  //       SnackBars.snackBars(
+                  //           'Incorrect password', Colors.redAccent));
+                  //   print(
+                  //       "Printed successfully ${checkUser.first.phoneOrEmail} and password is: ${checkUser.first.password}");
+                  // }
+                }
+              },
+            ),
+            LoginButton(
+              text: 'Login net',
+              actionField: () async {
+                if (_formKey.currentState!.validate()) {
+                  String? check = await ref
+                      .read(usersProvider.notifier)
+                      .loginEmail(
+                          emailController.text, passwordController.text);
+                  if (check == "success") {
+                    context.goNamed('dashboard');
+                  } else if (check == "fail") {
                     ScaffoldMessenger.of(context).showSnackBar(
                         SnackBars.snackBars(
-                            'This user not found', Colors.redAccent));
-                  } else if (checkUser.first.phoneOrEmail ==
-                          emailController.text &&
-                      checkUser.first.password == passwordController.text) {
-                    context.goNamed('dashboard',
-                        extra: checkUser.first.phoneOrEmail!);
-                    // Navigator.pushReplacement(
-                    //     context,
-                    //     CupertinoPageRoute(
-                    //         builder: (context) => NavigationBottom(
-                    //               loggedUser: checkUser.first.phoneOrEmail!,
-                    //             )));
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBars.snackBars(
-                            'Incorrect password', Colors.redAccent));
-                    print(
-                        "Printed successfully ${checkUser.first.phoneOrEmail} and password is: ${checkUser.first.password}");
+                            "${ref.read(usersProvider.notifier).wrongCred}",
+                            Colors.redAccent));
                   }
                 }
               },

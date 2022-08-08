@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kudibooks_app/models/Users/user_model.dart';
 import 'package:kudibooks_app/providers/all_providers_list.dart';
-import 'package:kudibooks_app/providers/user_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/circled_logo.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/custom_devider.dart';
@@ -72,8 +71,9 @@ class _PhoneLoginState extends ConsumerState<PhoneLogin> {
             const LockIcon(),
             const PageTitle(title: 'Account Sign In'),
             PhoneField(
-              validators: () =>
-                  Validators.validatePhoneNumber(phoneController.text),
+              validators: (value) {
+
+              },
               countryCodes: (country) {
                 _countryCode = country.dialCode;
                 debugPrint(_countryCode);
@@ -117,12 +117,7 @@ class _PhoneLoginState extends ConsumerState<PhoneLogin> {
                   } else if (checkUser.first.phoneOrEmail ==
                           _countryCode + phoneController.text &&
                       checkUser.first.password == pinController.text) {
-                    Navigator.pushReplacement(
-                        context,
-                        CupertinoPageRoute(
-                            builder: (context) => NavigationBottom(
-                                  loggedUser: checkUser.first.phoneOrEmail!,
-                                )));
+                    context.goNamed('dashboard');
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                         SnackBars.snackBars('Incorrect pin', Colors.redAccent));
@@ -131,6 +126,35 @@ class _PhoneLoginState extends ConsumerState<PhoneLogin> {
                   }
                   debugPrint(
                       "Country code is: ${_countryCode + phoneController.text}");
+                }
+              },
+            ),
+            LoginButton(
+              text: 'Login Net',
+              actionField: () {
+                if (_formKey.currentState!.validate()) {
+
+
+
+                  // var checkUser = _users.where((element) =>
+                  //     element.phoneOrEmail ==
+                  //     _countryCode + phoneController.text);
+                  // if (checkUser.isEmpty) {
+                  //   ScaffoldMessenger.of(context).showSnackBar(
+                  //       SnackBars.snackBars(
+                  //           'This user not found', Colors.redAccent));
+                  // } else if (checkUser.first.phoneOrEmail ==
+                  //         _countryCode + phoneController.text &&
+                  //     checkUser.first.password == pinController.text) {
+                  //   context.goNamed('dashboard');
+                  // } else {
+                  //   ScaffoldMessenger.of(context).showSnackBar(
+                  //       SnackBars.snackBars('Incorrect pin', Colors.redAccent));
+                  //   debugPrint(
+                  //       "Printed successfully ${checkUser.first.phoneOrEmail} and password is: ${checkUser.first.password}");
+                  // }
+                  // debugPrint(
+                  //     "Country code is: ${_countryCode + phoneController.text}");
                 }
               },
             ),

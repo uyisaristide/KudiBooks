@@ -5,6 +5,7 @@ import 'package:kudibooks_app/screens/auth_screens/login.dart';
 import 'package:kudibooks_app/screens/auth_screens/phone_login.dart';
 import 'package:kudibooks_app/screens/auth_screens/phone_signup.dart';
 import 'package:kudibooks_app/screens/auth_screens/signup.dart';
+import 'package:kudibooks_app/screens/company/new_company.dart';
 import 'package:kudibooks_app/screens/dashboard/account_transfer.dart';
 import 'package:kudibooks_app/screens/dashboard/all_transaction.dart';
 import 'package:kudibooks_app/screens/dashboard/chart_of_account.dart';
@@ -57,7 +58,7 @@ GoRouter router = GoRouter(
       GoRoute(
           name: 'signup',
           path: '/createUserEmail',
-          builder: (context, state) =>  SignUp()),
+          builder: (context, state) => SignUp()),
       GoRoute(
           name: 'signin',
           path: '/login',
@@ -65,18 +66,17 @@ GoRouter router = GoRouter(
       GoRoute(
           name: 'loginPhone',
           path: '/signinPhone',
-          builder: (context, state) =>  PhoneLogin()),
+          builder: (context, state) => PhoneLogin()),
       GoRoute(
           name: 'signupPhone',
           path: '/createUserPhone',
-          builder: (context, state) =>  PhoneSignup()),
+          builder: (context, state) => PhoneSignup()),
 
       //Dashboard screen routes
       GoRoute(
           name: 'dashboard',
           path: '/homeScreen',
-          builder: (context, state) =>
-              NavigationBottom(loggedUser: state.extra as String)),
+          builder: (context, state) => NavigationBottom()),
       GoRoute(
           name: 'sell',
           path: '/sellProduct',
@@ -146,4 +146,8 @@ GoRouter router = GoRouter(
           name: 'settingScreens',
           path: '/settings',
           builder: (context, state) => const Settings()),
+      GoRoute(
+          name: 'newCompany',
+          path: '/createCompany',
+          builder: (context, state) => const NewCompany()),
     ]);

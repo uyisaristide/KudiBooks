@@ -36,7 +36,8 @@ class CustomFormField extends StatelessWidget {
       required this.fieldController,
       this.labelText,
       required this.isShown,
-      this.maxLining, this.calendarPicker})
+      this.maxLining,
+      this.calendarPicker})
       : super(key: key);
 
   @override

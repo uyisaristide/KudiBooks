@@ -1,8 +1,13 @@
 import 'package:dio/dio.dart';
+import 'package:kudibooks_app/providers/user_provider.dart';
 
 class DioServices {
   Dio dioInstance = Dio();
   static const baseUrl = "http://68.183.25.174/api/mobile/";
+  static Map<String, String> mainHeader = {
+    "Content-type": "application/json",
+    "Authorization": "Bearer $myToken"
+  };
 
   DioServices() {
     dioInstance.interceptors

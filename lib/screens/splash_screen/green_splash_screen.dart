@@ -15,6 +15,7 @@ class _GreenSplashScreenState extends State<GreenSplashScreen> {
     Timer(const Duration(milliseconds: 3000), () {
       setState(() {
         context.goNamed("whiteSplash");
+
         // Navigator.of(context).pushAndRemoveUntil(
         //     MaterialPageRoute(builder: (context) => const WhiteSplashScreen()),
         //         (route) => false);

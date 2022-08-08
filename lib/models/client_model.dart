@@ -1,22 +1,50 @@
 class ClientModel {
-  int id;
+  int? id;
   String clientName;
-  int idNumber;
-  String personContactName;
-  String email;
-  String phoneNumber;
-  String addresses;
-  String clientStatus;
-  String clientNote;
+  bool status;
+  String? clientTin;
+  String? contactPersonFirstName;
+  String? contactPersonLastName;
+  String? email;
+  String? phoneNumber;
+  String? physicalAddress;
+  String? note;
 
   ClientModel(
-      this.id,
-      this.clientName,
-      this.idNumber,
-      this.personContactName,
+      {this.id,
+      required this.clientName,
+      required this.status,
+      this.clientTin,
+      this.contactPersonFirstName,
+      this.contactPersonLastName,
       this.email,
       this.phoneNumber,
-      this.addresses,
-      this.clientStatus,
-      this.clientNote);
+      this.physicalAddress,
+      this.note});
+
+  factory ClientModel.fromJson(Map<dynamic, dynamic> fromJson) {
+    return ClientModel(
+        clientName: fromJson["clientName"],
+        status: fromJson["status"],
+        clientTin: fromJson["clientTIN"],
+        contactPersonFirstName: fromJson["contactPersonF"],
+        contactPersonLastName: fromJson["contactPersonL"],
+        email: fromJson["email"],
+        phoneNumber: fromJson["phoneNumber"],
+        physicalAddress: fromJson["physicalAddress"],
+        note: fromJson["note"]);
+  }
+
+  Map<dynamic, dynamic> clientToJson() {
+    return {
+      "clientName": clientName,
+      "status": status,
+      "clientTIN": clientTin,
+      "contactPersonF": contactPersonFirstName,
+      "contactPersonL": contactPersonLastName,
+      "email": email,
+      "phoneNumber": phoneNumber,
+      "physicalAddress": physicalAddress,
+    };
+  }
 }
