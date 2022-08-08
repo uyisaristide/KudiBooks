@@ -5,9 +5,8 @@ import 'package:kudibooks_app/screens/dashboard/inventory.dart';
 import 'package:kudibooks_app/screens/dashboard/my_account.dart';
 
 class NavigationBottom extends StatefulWidget {
-  String loggedUser;
 
-  NavigationBottom({required this.loggedUser, Key? key}) : super(key: key);
+  NavigationBottom({Key? key}) : super(key: key);
 
   @override
   State<NavigationBottom> createState() => _NavigationBottomState();
@@ -15,12 +14,10 @@ class NavigationBottom extends StatefulWidget {
 
 class _NavigationBottomState extends State<NavigationBottom> {
   List<Widget> get screens => [
-        Dashboard(
-          loggedUser: widget.loggedUser.toString(),
-        ),
-        InventoryScreen(loggedUser: widget.loggedUser.toString()),
-        AlertScreen(loggedUser: widget.loggedUser.toString()),
-        MyAccountScreen(loggedUser: widget.loggedUser.toString()),
+        const Dashboard(),
+        InventoryScreen(),
+        AlertScreen(),
+        MyAccountScreen(),
       ];
   static int _currentIndex = 0;
   late PageController _pageController;

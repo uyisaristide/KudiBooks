@@ -3,25 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/transition_chart.dart';
-import 'package:kudibooks_app/providers/all_providers_list.dart';
-import 'package:kudibooks_app/providers/user_provider.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/action_card.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/business_movement_cart.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/line_chart.dart';
-
 import 'package:kudibooks_app/screens/dashboard/widget/pie_chart.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/title_double.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../models/Users/user_model.dart';
+import '../../providers/user_provider.dart';
 
 class Dashboard extends ConsumerStatefulWidget {
-  final VoidCallback? callBack;
-  String loggedUser;
-
-  Dashboard({required this.loggedUser, this.callBack, Key? key})
-      : super(key: key);
+  const Dashboard({Key? key}) : super(key: key);
 
   @override
   ConsumerState<Dashboard> createState() => _DashboardState();
@@ -32,13 +23,10 @@ class _DashboardState extends ConsumerState<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    User? signedUser = ref
-        .watch(usersProvider)
-        .firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
-
+    debugPrint("Logged user is: $myToken");
     return Scaffold(
         extendBodyBehindAppBar: true,
-        drawer: Drawers(dashboardScreen: widget.callBack, userInfo: signedUser),
+        drawer: Drawers(),
         body: Stack(children: [
           Positioned(
               top: 150,

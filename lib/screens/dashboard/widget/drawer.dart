@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kudibooks_app/models/Users/user_model.dart';
+import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
 
-class Drawers extends StatelessWidget {
+class Drawers extends ConsumerWidget {
   VoidCallback? dashboardScreen;
   User? userInfo;
 
   Drawers({this.dashboardScreen, this.userInfo, Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     return Drawer(
       elevation: 0.0,
       child: ListView(
@@ -33,16 +35,12 @@ class Drawers extends StatelessWidget {
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: const [
                     Text(
-                      "${userInfo!.firstName} ${userInfo!.lastName}",
-                      style: const TextStyle(color: Colors.white),
+                      "User Name",
+                      style: TextStyle(color: Colors.white),
                     ),
-                    Text(
-                        userInfo!.phoneOrEmail == null
-                            ? ""
-                            : userInfo!.phoneOrEmail!,
-                        style: const TextStyle(color: Colors.white))
+                    Text("Email", style: TextStyle(color: Colors.white))
                   ],
                 ),
               ],
@@ -154,8 +152,23 @@ class Drawers extends StatelessWidget {
                   padding: const EdgeInsets.all(20.0),
                   child: LoginButton(
                     text: 'Logout',
+                    actionField: () async {
+                      String? response =
+                          await ref.read(usersProvider.notifier).logout();
+                      if (response == 'success') {
+                        context.goNamed('signin');
+                      } else {
+                        debugPrint("$response");
+                      }
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: LoginButton(
+                    text: 'Bank Login',
                     actionField: () {
-                      context.goNamed('signin');
+                      context.pushNamed('newCompany');
                     },
                   ),
                 ),

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/client_model.dart';
 import 'package:kudibooks_app/providers/all_providers_list.dart';
-import 'package:kudibooks_app/providers/client_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/drop_down_widget.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/phone_input.dart';
@@ -21,13 +20,12 @@ class NewClient extends ConsumerStatefulWidget {
 class _NewClientState extends ConsumerState<NewClient> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  final Random _randomId = Random();
-
   final nameController = TextEditingController();
 
-  final idNumberController = TextEditingController();
+  final tinNumberController = TextEditingController();
 
   final contactPersonName = TextEditingController();
+  final contactPersonLastName = TextEditingController();
 
   final emailController = TextEditingController();
 
@@ -37,7 +35,7 @@ class _NewClientState extends ConsumerState<NewClient> {
 
   final noteController = TextEditingController();
 
-  String? countryCode;
+  String countryCode = '250';
 
   List<String> clientStatus = ['Active', 'Inactive'];
 
@@ -53,19 +51,22 @@ class _NewClientState extends ConsumerState<NewClient> {
           child: Container(
             margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             child: LoginButton(
-                text: 'Add product',
+                text: 'Save Client',
                 actionField: () {
                   if (_formKey.currentState!.validate()) {
-                    ref.read(clientProvider.notifier).addClient(ClientModel(
-                        _randomId.nextInt(500),
-                        nameController.text,
-                        int.parse(idNumberController.text),
-                        contactPersonName.text,
-                        emailController.text,
-                        countryCode.toString() + phoneController.text,
-                        addressController.text,
-                        clientStatusOption.toString(),
-                        noteController.text));
+                    ref.read(clientProvider.notifier).registerClient(
+                        ClientModel(
+                            clientName: nameController.text,
+                            status:
+                                clientStatusOption == "Active" ? true : false,
+                            clientTin: tinNumberController.text,
+                            contactPersonFirstName: contactPersonName.text,
+                            contactPersonLastName: contactPersonLastName.text,
+                            email: emailController.text,
+                            phoneNumber:
+                                countryCode.toString() + phoneController.text,
+                            physicalAddress: addressController.text,
+                            note: noteController.text));
                     debugPrint(countryCode.toString() + phoneController.text);
                     ScaffoldMessenger.of(context)
                       ..removeCurrentSnackBar()
@@ -108,42 +109,51 @@ class _NewClientState extends ConsumerState<NewClient> {
                       hintText: 'Client name',
                       fieldController: nameController,
                       isShown: false),
+                  SelectInputType(
+                    validation: (value) {
+                      if (value == null) {
+                        return "Select status";
+                      }
+                      return null;
+                    },
+                    dropDownHint: const Text(
+                      'Client Status',
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                    selectedValue: (value) {
+                      clientStatusOption = value;
+                    },
+                    itemsToSelect: clientStatus,
+                  ),
                   CustomFormField(
-                      validators: (value) {
-                        if (idNumberController.text.isEmpty) {
-                          return 'Enter Id Number';
-                        } else if (idNumberController.text.length < 16) {
-                          return 'Match 16 digits';
-                        }
-                        return null;
-                      },
-                      hintText: 'Identification',
-                      fieldController: idNumberController,
-                      isShown: false,
-                      inputType: TextInputType.number),
+                    validators: (value) {},
+                    hintText: 'Tin Number',
+                    fieldController: tinNumberController,
+                    isShown: false,
+                  ),
                   CustomFormField(
-                      validators: (value) {
-                        if (value == '') {
-                          return "Enter person name";
-                        }
-                        return null;
-                      },
-                      hintText: 'Contact person’s names',
+                      validators: (value) {},
+                      hintText: 'Contact person’s First Name',
                       fieldController: contactPersonName,
                       isShown: false,
                       inputType: TextInputType.name),
                   CustomFormField(
-                      validators: (value) {
-                        final RegExp regex = RegExp(
-                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-                        if (emailController.text.isEmpty) {
-                          return 'Enter email address';
-                        } else if (!regex.hasMatch(value)) {
-                          return 'Invalid Phone number';
-                        } else {
-                          return null;
-                        }
-                      },
+                      validators: (value) {},
+                      hintText: 'Contact person’s Last Name',
+                      fieldController: contactPersonLastName,
+                      isShown: false,
+                      inputType: TextInputType.name),
+                  CustomFormField(
+                      validators: (value) {},
+                      // validators: (value) {
+                      //   final RegExp regex = RegExp(
+                      //       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+                      //   if (!regex.hasMatch(value)) {
+                      //     return 'Invalid Phone number';
+                      //   } else {
+                      //     return null;
+                      //   }
+                      // },
                       hintText: 'Email',
                       fieldController: emailController,
                       isShown: false,
@@ -158,26 +168,11 @@ class _NewClientState extends ConsumerState<NewClient> {
                         });
                       }),
                   CustomFormField(
-                      validators: (value) {
-                        if (addressController.text.isEmpty) {
-                          return 'Enter email address';
-                        }
-                        return null;
-                      },
+                      validators: (value) {},
                       hintText: 'Address',
                       fieldController: addressController,
                       isShown: false,
                       inputType: TextInputType.streetAddress),
-                  SelectInputType(
-                    dropDownHint: const Text(
-                      'Client Status',
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                    selectedValue: (value) {
-                      clientStatusOption = value;
-                    },
-                    itemsToSelect: clientStatus,
-                  ),
                   CustomFormField(
                       validators: (value) {},
                       hintText: 'Note',

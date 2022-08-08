@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kudibooks_app/models/Users/user_model.dart';
 import 'package:kudibooks_app/providers/all_providers_list.dart';
-import 'package:kudibooks_app/providers/user_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/circled_logo.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/custom_devider.dart';
@@ -12,8 +11,6 @@ import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/page_title.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
 import 'package:kudibooks_app/screens/background.dart';
-import 'package:kudibooks_app/screens/dashboard/classes/snack_bars.dart';
-import 'package:collection/collection.dart';
 import 'widgets/password_field.dart';
 
 class SignUp extends ConsumerStatefulWidget {
@@ -133,60 +130,63 @@ class _SignUpState extends ConsumerState<SignUp> {
             LoginButton(
               text: 'Register now',
               actionField: () {
-                if (_formKey.currentState!.validate()) {
-                  var checkUser = _users.firstWhereOrNull((element) =>
-                      element.phoneOrEmail == emailController.text);
-                  if (checkUser == null) {
-                    ref.read(usersProvider.notifier).addUser(User(
-                        firstName: firstNameController.text,
-                        lastName: lastNameController.text,
-                        phoneOrEmail: emailController.text,
-                        password: passwordController.text));
-                    context.goNamed('signin');
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBars.snackBars(
-                            'User saved successfully', Colors.green.shade400));
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBars.snackBars(
-                            'User already exist', Colors.redAccent.shade400));
-                  }
-                }
+
+                context.goNamed('');
+
+                // if (_formKey.currentState!.validate()) {
+                //   var checkUser = _users.firstWhereOrNull((element) =>
+                //       element.phoneOrEmail == emailController.text);
+                //   if (checkUser == null) {
+                //     ref.read(usersProvider.notifier).addUser(User(
+                //         firstName: firstNameController.text,
+                //         lastName: lastNameController.text,
+                //         phoneOrEmail: emailController.text,
+                //         password: passwordController.text));
+                //     context.goNamed('signin');
+                //     ScaffoldMessenger.of(context).showSnackBar(
+                //         SnackBars.snackBars(
+                //             'User saved successfully', Colors.green.shade400));
+                //   } else {
+                //     ScaffoldMessenger.of(context).showSnackBar(
+                //         SnackBars.snackBars(
+                //             'User already exist', Colors.redAccent.shade400));
+                //   }
+                // }
               },
             ),
             const SizedBox(height: 5),
-            // LoginButton(
-            //   text: 'Register now Net',
-            //   actionField: () {
-            //     var serverPassword = "${passwordController.text}+1234";
-            //     if (_formKey.currentState!.validate()) {
-            //       var userSaving = ref.read(userProvider.notifier).createUserEmail(User(
-            //           firstName: firstNameController.text,
-            //           lastName: lastNameController.text,
-            //           email: emailController.text,
-            //           password: passwordController.text,
-            //           passwordConfirm: passwordController.text));
-            //       print("This is runtime type: $userSaving");
-            //       if (userSaving.toString().isNotEmpty) {
-            //         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            //           shape: RoundedRectangleBorder(
-            //               borderRadius: BorderRadius.circular(15)),
-            //           duration: const Duration(seconds: 3),
-            //           content: const Text(
-            //             'User saved to network',
-            //             style: TextStyle(
-            //               fontSize: 17,
-            //             ),
-            //           ),
-            //           padding: const EdgeInsets.all(20.0),
-            //           backgroundColor: Colors.green,
-            //         ));
-            //         Navigator.pushReplacementNamed(context, '/login');
-            //       }
-            //       print("This is the future value $userSaving");
-            //     }
-            //   },
-            // ),
+            LoginButton(
+              text: 'Register now Net',
+              actionField: () {
+                var serverPassword = "${passwordController.text}+1234";
+                if (_formKey.currentState!.validate()) {
+                  var userSaving = ref.read(usersProvider.notifier).createUserEmail(User(
+                      firstName: firstNameController.text,
+                      lastName: lastNameController.text,
+                      email: emailController.text,
+                      password: passwordController.text,
+                      passwordConfirm: passwordController.text));
+                  print("This is runtime type: $userSaving");
+                  if (userSaving.toString().isNotEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15)),
+                      duration: const Duration(seconds: 3),
+                      content: const Text(
+                        'User saved to network',
+                        style: TextStyle(
+                          fontSize: 17,
+                        ),
+                      ),
+                      padding: const EdgeInsets.all(20.0),
+                      backgroundColor: Colors.green,
+                    ));
+                    context.goNamed('signin');
+                  }
+                  print("This is the future value $userSaving");
+                }
+              },
+            ),
             HyperLinkText(
               directingText: 'Login instead',
               actions: () => context.goNamed('signin'),

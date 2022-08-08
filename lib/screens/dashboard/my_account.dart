@@ -8,9 +8,9 @@ import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
 
 class MyAccountScreen extends ConsumerWidget {
-  String loggedUser;
+  String? loggedUser;
 
-  MyAccountScreen({required this.loggedUser, Key? key}) : super(key: key);
+  MyAccountScreen({this.loggedUser, Key? key}) : super(key: key);
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
   @override

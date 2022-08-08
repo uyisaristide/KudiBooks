@@ -16,15 +16,17 @@ class User {
       this.email,
       this.passwordConfirm});
 
-  factory User.fromJson(Map<dynamic, dynamic> fromJson) => User(
-        id: fromJson["id"],
-        firstName: fromJson["firstName"],
-        lastName: fromJson["lastName"],
-        phoneOrEmail: fromJson["email"],
-        password: fromJson["password"],
-        passwordConfirm: fromJson["password_confirmation"],
-        email: fromJson["email"],
-      );
+  factory User.fromJson(Map<dynamic, dynamic> fromJson) {
+    return User(
+      id: fromJson["id"],
+      firstName: fromJson["firstName"],
+      lastName: fromJson["lastName"],
+      phoneOrEmail: fromJson["email"],
+      password: fromJson["password"],
+      passwordConfirm: fromJson["password_confirmation"],
+      email: fromJson["email"],
+    );
+  }
 
   Map<String, String> toJson() {
     return {
@@ -36,6 +38,7 @@ class User {
       "password_confirmation": password,
     };
   }
+
   Map<String, String> toJsonEmail() {
     return {
       "id": id.toString(),
@@ -44,6 +47,17 @@ class User {
       "password": password,
       "password_confirmation": password,
       "email": email.toString()
+    };
+  }
+
+  Map<String, String> toJsonPhone() {
+    return {
+      "id": id.toString(),
+      "firstName": firstName,
+      "lastName": lastName,
+      "password": password,
+      "password_confirmation": password,
+      "phoneNumber": phoneOrEmail.toString()
     };
   }
 

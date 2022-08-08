@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kudibooks_app/models/Users/user_model.dart';
 import 'package:kudibooks_app/providers/all_providers_list.dart';
-import 'package:kudibooks_app/providers/user_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/circled_logo.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/custom_devider.dart';
@@ -54,7 +53,6 @@ class _PhoneSignupState extends ConsumerState<PhoneSignup> {
 
   @override
   Widget build(BuildContext context) {
-    
     List<User> users = ref.watch(usersProvider);
     return BackgroundScreen(
       screens: Form(
@@ -91,7 +89,7 @@ class _PhoneSignupState extends ConsumerState<PhoneSignup> {
               },
               fieldIcon: const Icon(Icons.phone, size: 18),
               phoneNumber: phoneController,
-              validators: () {},
+              validators: (value) {},
             ),
             Padding(
               padding: const EdgeInsets.only(
@@ -228,22 +226,27 @@ class _PhoneSignupState extends ConsumerState<PhoneSignup> {
                 }
               },
             ),
-            // const SizedBox(height: 5),
-            // LoginButton(
-            //   text: 'Register now Net',
-            //   actionField: () {
-            //     if (_formKey.currentState!.validate()) {
-            //       var _phoneNumber = "+$_countryCodes${phoneController.text}";
-            //       ref.watch(userProvider).createUser(User(
-            //           firstName: firstNameController.text,
-            //           lastName: lastNameController.text,
-            //           phoneOrEmail: _phoneNumber,
-            //           password: pinController.text,
-            //           passwordConfirm: pinController.text));
-            //       Navigator.pushReplacementNamed(context, '/login');
-            //     }
-            //   },
-            // ),
+            const SizedBox(height: 5),
+            LoginButton(
+              text: 'Register now Net',
+              actionField: () async{
+                if (_formKey.currentState!.validate()) {
+                  var _phoneNumber = "+$_countryCodes${phoneController.text}";
+                  var phoneRegister = await ref
+                      .read(usersProvider.notifier)
+                      .createUserPhone(User(
+                          firstName: firstNameController.text,
+                          lastName: lastNameController.text,
+                          phoneOrEmail: _phoneNumber,
+                          password: pinController.text,
+                          passwordConfirm: pinController.text));
+                  if(phoneRegister == 'success'){
+                    context.goNamed('dashboard');
+                  }
+                  debugPrint("Kigali rwanda");
+                }
+              },
+            ),
             HyperLinkText(
               directingText: 'Login instead',
               actions: () => context.goNamed('signin'),

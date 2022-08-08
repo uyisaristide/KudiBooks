@@ -3,11 +3,13 @@ import 'package:kudibooks_app/models/Users/ProductInLoad.dart';
 import 'package:kudibooks_app/models/Users/products_sold_model.dart';
 import 'package:kudibooks_app/models/Users/user_model.dart';
 import 'package:kudibooks_app/models/client_model.dart';
+import 'package:kudibooks_app/models/company_model.dart';
 import 'package:kudibooks_app/models/expense_model.dart';
 import 'package:kudibooks_app/models/inventory_model.dart';
 import 'package:kudibooks_app/models/product_model.dart';
 import 'package:kudibooks_app/models/product_sale_model.dart';
 import 'package:kudibooks_app/providers/client_provider.dart';
+import 'package:kudibooks_app/providers/company_provider.dart';
 import 'package:kudibooks_app/providers/expenses_provider.dart';
 import 'package:kudibooks_app/providers/inventory_provider.dart';
 import 'package:kudibooks_app/providers/product_provider.dart';
@@ -39,3 +41,5 @@ final productToLoadProvider =
 final salesProvider =
     StateNotifierProvider<ProductSalesProvider, List<ProductSalesModel>>(
         (ref) => ProductSalesProvider());
+final companyProvider = StateNotifierProvider<CompanyProvider, List<Company>>(
+    (ref) => CompanyProvider());
