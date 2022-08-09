@@ -134,40 +134,40 @@ class _LoginState extends ConsumerState<Login> {
                 print("Need to recover");
               },
             ),
+            // LoginButton(
+            //   text: 'Login',
+            //   actionField: () {
+            //     if (_formKey.currentState!.validate()) {
+            //       context.goNamed('dashboard');
+            //       var checkUser = _user.where((element) =>
+            //           element.phoneOrEmail == emailController.text);
+            //       if (checkUser.isEmpty) {
+            //         ScaffoldMessenger.of(context).showSnackBar(
+            //             SnackBars.snackBars(
+            //                 'This user not found', Colors.redAccent));
+            //       } else if (checkUser.first.phoneOrEmail ==
+            //               emailController.text &&
+            //           checkUser.first.password == passwordController.text) {
+            //         context.goNamed('dashboard',
+            //             extra: checkUser.first.phoneOrEmail!);
+            //         // Navigator.pushReplacement(
+            //         //     context,
+            //         //     CupertinoPageRoute(
+            //         //         builder: (context) => NavigationBottom(
+            //         //               loggedUser: checkUser.first.phoneOrEmail!,
+            //         //             )));
+            //       } else {
+            //         ScaffoldMessenger.of(context).showSnackBar(
+            //             SnackBars.snackBars(
+            //                 'Incorrect password', Colors.redAccent));
+            //         print(
+            //             "Printed successfully ${checkUser.first.phoneOrEmail} and password is: ${checkUser.first.password}");
+            //       }
+            //     }
+            //   },
+            // ),
             LoginButton(
               text: 'Login',
-              actionField: () {
-                if (_formKey.currentState!.validate()) {
-                  context.goNamed('dashboard');
-                  // var checkUser = _user.where((element) =>
-                  //     element.phoneOrEmail == emailController.text);
-                  // if (checkUser.isEmpty) {
-                  //   ScaffoldMessenger.of(context).showSnackBar(
-                  //       SnackBars.snackBars(
-                  //           'This user not found', Colors.redAccent));
-                  // } else if (checkUser.first.phoneOrEmail ==
-                  //         emailController.text &&
-                  //     checkUser.first.password == passwordController.text) {
-                  //   context.goNamed('dashboard',
-                  //       extra: checkUser.first.phoneOrEmail!);
-                  //   // Navigator.pushReplacement(
-                  //   //     context,
-                  //   //     CupertinoPageRoute(
-                  //   //         builder: (context) => NavigationBottom(
-                  //   //               loggedUser: checkUser.first.phoneOrEmail!,
-                  //   //             )));
-                  // } else {
-                  //   ScaffoldMessenger.of(context).showSnackBar(
-                  //       SnackBars.snackBars(
-                  //           'Incorrect password', Colors.redAccent));
-                  //   print(
-                  //       "Printed successfully ${checkUser.first.phoneOrEmail} and password is: ${checkUser.first.password}");
-                  // }
-                }
-              },
-            ),
-            LoginButton(
-              text: 'Login net',
               actionField: () async {
                 if (_formKey.currentState!.validate()) {
                   String? check = await ref

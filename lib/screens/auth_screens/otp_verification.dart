@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/hyperlink_text.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/page_title.dart';
 import 'package:kudibooks_app/screens/background.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-class OtpVerification extends StatefulWidget {
-  const OtpVerification({Key? key}) : super(key: key);
+class OtpVerification extends ConsumerStatefulWidget {
+  String phoneNumber;
+
+  OtpVerification({required this.phoneNumber, Key? key}) : super(key: key);
 
   @override
-  State<OtpVerification> createState() => _OtpVerificationState();
+  ConsumerState<OtpVerification> createState() => _OtpVerificationState();
 }
 
-class _OtpVerificationState extends State<OtpVerification>
+class _OtpVerificationState extends ConsumerState<OtpVerification>
     with TickerProviderStateMixin {
   late AnimationController controller;
 
@@ -35,6 +40,7 @@ class _OtpVerificationState extends State<OtpVerification>
 
   @override
   Widget build(BuildContext context) {
+    print("This is the number ${widget.phoneNumber}");
     controller.reverse(from: controller.value == 0 ? 1.0 : controller.value);
     return BackgroundScreen(
       screens: SingleChildScrollView(
@@ -55,10 +61,19 @@ class _OtpVerificationState extends State<OtpVerification>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 50),
               child: PinCodeTextField(
+                onCompleted: ((value) async {
+                  var response = await ref
+                      .read(authProvider.notifier)
+                      .verifyOTP(value, widget.phoneNumber);
+                  if (response == "success") {
+                    debugPrint("This is response $response");
+                    context.go('/recoverScreens?phoneNumber=${widget.phoneNumber}?otps = $value');
+                  }
+                }),
                 keyboardType: TextInputType.number,
                 appContext: context,
                 length: 4,
-                onChanged: (value) => {},
+                onChanged: (value) => {debugPrint(value)},
                 onSubmitted: (pin) => {},
                 pinTheme: PinTheme(
                     shape: PinCodeFieldShape.box,

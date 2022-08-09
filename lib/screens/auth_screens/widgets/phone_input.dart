@@ -10,6 +10,7 @@ class PhoneField extends StatelessWidget {
   final Icon? fieldIcon;
   final VoidCallback? onChangeAction;
   final TextEditingController phoneNumber;
+  final String? initialString;
   final void Function(Country)? countryCodes;
 
   const PhoneField(
@@ -18,7 +19,8 @@ class PhoneField extends StatelessWidget {
       this.onChangeAction,
       Key? key,
       required this.phoneNumber,
-      this.countryCodes})
+      this.countryCodes,
+      this.initialString})
       : super(key: key);
 
   @override
@@ -26,6 +28,7 @@ class PhoneField extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5.0),
       child: IntlPhoneField(
+        initialValue: initialString,
         controller: phoneNumber,
         initialCountryCode: "RW",
         validator: validators,

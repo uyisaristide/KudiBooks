@@ -16,6 +16,8 @@ import 'package:kudibooks_app/providers/product_provider.dart';
 import 'package:kudibooks_app/providers/products_sale_provider.dart';
 import 'package:kudibooks_app/providers/user_provider.dart';
 
+import 'authentication/auth_provider.dart';
+
 final productProvider =
     StateNotifierProvider<ProductProvider, List<ProductModel>>(
         (ref) => ProductProvider());
@@ -43,3 +45,5 @@ final salesProvider =
         (ref) => ProductSalesProvider());
 final companyProvider = StateNotifierProvider<CompanyProvider, List<Company>>(
     (ref) => CompanyProvider());
+final authProvider =
+    StateNotifierProvider<AuthProvider, List<User>>((ref) => AuthProvider());

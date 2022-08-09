@@ -103,11 +103,11 @@ class UserProvider extends StateNotifier<List<User>> {
     }
   }
 
-  Future<String?> loginPhone(String phoneNumber, String password) async {
+  Future<String?> loginPhone({required String phoneNumber, required String pin}) async {
     Response loginResponse;
     try {
       loginResponse = await _dio.post('${DioServices.baseUrl}auth/login',
-          data: {"email": phoneNumber, "password": password});
+          data: {"phoneNumber": phoneNumber, "password": pin});
       if (loginResponse.statusCode == 200) {
         wrongCred = null;
         myToken = loginResponse.data["token"];
@@ -117,7 +117,8 @@ class UserProvider extends StateNotifier<List<User>> {
       return "fail";
     } catch (e) {
       if (e is DioError) {
-        throw e.response?.data['errors'][0] ?? "Error";
+        print(e.response?.data["message"]);
+        throw e.response?.data['errors']?? "Error $e";
       } else {
         throw Exception(e);
       }

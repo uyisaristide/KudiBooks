@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kudibooks_app/models/product_model.dart';
 import 'package:kudibooks_app/screens/auth_screens/login.dart';
+import 'package:kudibooks_app/screens/auth_screens/otp_verification.dart';
 import 'package:kudibooks_app/screens/auth_screens/phone_login.dart';
+import 'package:kudibooks_app/screens/auth_screens/phone_reset_screen.dart';
 import 'package:kudibooks_app/screens/auth_screens/phone_signup.dart';
+import 'package:kudibooks_app/screens/auth_screens/reset_pin.dart';
 import 'package:kudibooks_app/screens/auth_screens/signup.dart';
 import 'package:kudibooks_app/screens/company/new_company.dart';
 import 'package:kudibooks_app/screens/dashboard/account_transfer.dart';
@@ -150,4 +153,28 @@ GoRouter router = GoRouter(
           name: 'newCompany',
           path: '/createCompany',
           builder: (context, state) => const NewCompany()),
+      GoRoute(
+        name: 'forget',
+        path: '/forgetPassword',
+        builder: (context, state) =>
+            PhoneReset(sentPhoneNumber: state.extra as String),
+      ),
+      GoRoute(
+        name: 'otpVerification',
+        path: '/verifyOTP',
+        builder: (context, state) =>
+            OtpVerification(phoneNumber: state.extra.toString()),
+      ),
+      GoRoute(
+          name: 'recoverScreen',
+          path: '/recoverScreens',
+          builder: (context, state) {
+            final phoneNumber = state.queryParams["phoneNumber"];
+            final otps = state.queryParams["otps"];
+            print("$phoneNumber and OTP is: ${otps}");
+            return ResetPin(
+              phoneNumber: phoneNumber,
+              sentOTP: otps,
+            );
+          }),
     ]);
