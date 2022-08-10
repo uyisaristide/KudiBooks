@@ -108,7 +108,20 @@ class AuthProvider extends StateNotifier<List<User>> {
       required String password,
       required String password_confirmation}) async {
     try {
-      Response response = await _dioInstance.post('${DioServices.baseUrl}');
+      Map<String, dynamic> resetEmailData = {
+        "token": token,
+        "email": email,
+        "password": password,
+        "password_confirmation": password
+      };
+      Response response = await _dioInstance.post(
+          '${DioServices.baseUrl}auth/reset-password/email',
+          data: resetEmailData);
+      if (response.statusCode == 200) {
+        return 'success';
+      } else {
+        return "fail";
+      }
     } catch (e) {
       if (e is DioError) {
         debugPrint("This is email error: ${e.response?.data["errors"] ?? e}");

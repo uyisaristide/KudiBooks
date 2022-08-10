@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/lock_icon.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
@@ -7,6 +9,8 @@ import 'package:kudibooks_app/screens/auth_screens/widgets/page_title.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/password_field.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
 import 'package:kudibooks_app/screens/background.dart';
+
+import '../dashboard/classes/snack_bars.dart';
 
 class ResetEmailPassword extends ConsumerStatefulWidget {
   String? token;
@@ -132,6 +136,24 @@ class _PhoneResetState extends ConsumerState<ResetEmailPassword> {
               actionField: () async {
                 if (_formKey.currentState!.validate()) {
                   debugPrint("able to reset");
+                  String response = ref
+                      .read(authProvider.notifier)
+                      .resetEmailPassword(
+                          token: widget.token.toString(),
+                          email: emailController.text,
+                          password: passwordController.text,
+                          password_confirmation:
+                              confirmPasswordController.text);
+                  if (response == "success") {
+                    context.goNamed('signin');
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBars.snackBars(
+                            'Reseted successfully', Colors.green.shade400));
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBars.snackBars(
+                            'Reseted successfully', Colors.red.shade400));
+                  }
                 }
               },
             ),
