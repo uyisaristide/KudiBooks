@@ -74,8 +74,45 @@ class AuthProvider extends StateNotifier<List<User>> {
       }
     } catch (e) {
       if (e is DioError) {
-        debugPrint("${e.response?.data["message"]}");
+        debugPrint("${e.response?.data["errors"]}");
         throw e.response?.data["errors"] ?? e;
+      } else {
+        throw Exception(e);
+      }
+    }
+  }
+
+  forgotPassword({required String email, required String device}) async {
+    try {
+      Response response = await _dioInstance.post(
+          '${DioServices.baseUrl}auth/forgot-password',
+          data: {"email": email, "device": device});
+      if (response.statusCode == 200) {
+        return "success";
+      } else {
+        return "fail";
+      }
+    } catch (e) {
+      if (e is DioError) {
+        debugPrint("${e.response?.data["errors"] ?? e}");
+        throw e.response?.data["errors"] ?? e;
+      } else {
+        throw Exception(e);
+      }
+    }
+  }
+
+  resetEmailPassword(
+      {required String token,
+      required String email,
+      required String password,
+      required String password_confirmation}) async {
+    try {
+      Response response = await _dioInstance.post('${DioServices.baseUrl}');
+    } catch (e) {
+      if (e is DioError) {
+        debugPrint("This is email error: ${e.response?.data["errors"] ?? e}");
+        throw "This is email error: ${e.response?.data["errors"] ?? e}";
       } else {
         throw Exception(e);
       }

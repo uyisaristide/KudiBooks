@@ -1,38 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/circled_logo.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/custom_devider.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/lock_icon.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/page_title.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/phone_input.dart';
+import 'package:kudibooks_app/screens/auth_screens/widgets/password_field.dart';
 import 'package:kudibooks_app/screens/background.dart';
 
-import '../../providers/all_providers_list.dart';
+class ResetEmailPassword extends ConsumerStatefulWidget {
+  String? token;
+  String? recoverEmail;
 
-class PhoneReset extends ConsumerStatefulWidget {
-  String? sentPhoneNumber;
-
-  PhoneReset({this.sentPhoneNumber, Key? key}) : super(key: key);
+  ResetEmailPassword({this.recoverEmail, this.token, Key? key}) : super(key: key);
 
   @override
-  ConsumerState<PhoneReset> createState() => _PhoneResetState();
+  ConsumerState<ResetEmailPassword> createState() => _PhoneResetState();
 }
 
-class _PhoneResetState extends ConsumerState<PhoneReset> {
-  String? phoneNumbers;
+class _PhoneResetState extends ConsumerState<ResetEmailPassword> {
+  String? myEmail;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  late TextEditingController phoneController;
-  var _countryCode = '250';
+  late TextEditingController emailController;
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
   bool isHidden = true;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    phoneNumbers = widget.sentPhoneNumber;
-    phoneController = TextEditingController(text: phoneNumbers);
+    myEmail = widget.recoverEmail;
   }
 
   @override
@@ -45,18 +40,52 @@ class _PhoneResetState extends ConsumerState<PhoneReset> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const LockIcon(),
-            const PageTitle(title: 'Reset pin'),
-            PhoneField(
-              validators: (value) {},
-              countryCodes: (country) {
-                _countryCode = country.dialCode;
-                debugPrint(_countryCode);
+            const PageTitle(title: 'Reset your password'),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: Text("$myEmail"),
+            ),
+            PasswordField(
+              hintText: "New Password",
+              maxLength: 30,
+              isHidden: isHidden,
+              passwordController: passwordController,
+              validators: (value) {
+                if (value!.length < 8) {
+                  return "Much 8 charactor string";
+                }
+                return null;
               },
-              fieldIcon: const Icon(
-                Icons.phone,
-                size: 17,
-              ),
-              phoneNumber: phoneController,
+              suffixIcon: IconButton(
+                  onPressed: () => setState(() => isHidden = !isHidden),
+                  icon: isHidden
+                      ? const Icon(
+                          Icons.visibility,
+                          color: Colors.grey,
+                        )
+                      : const Icon(Icons.visibility_off)),
+            ),
+            PasswordField(
+              hintText: "Confirm Password",
+              maxLength: 30,
+              isHidden: isHidden,
+              passwordController: confirmPasswordController,
+              validators: (value) {
+                if (value != passwordController.text) {
+                  return "Password not match";
+                } else if (value == '') {
+                  return 'Fill out this form';
+                }
+                return null;
+              },
+              suffixIcon: IconButton(
+                  onPressed: () => setState(() => isHidden = !isHidden),
+                  icon: isHidden
+                      ? const Icon(
+                          Icons.visibility,
+                          color: Colors.grey,
+                        )
+                      : const Icon(Icons.visibility_off)),
             ),
             const SizedBox(
               height: 10,
@@ -88,21 +117,10 @@ class _PhoneResetState extends ConsumerState<PhoneReset> {
             //   },
             // ),
             LoginButton(
-              text: 'Send OTP',
+              text: 'Reset',
               actionField: () async {
-                debugPrint("+$_countryCode${phoneController.text} Kigali controller");
                 if (_formKey.currentState!.validate()) {
-                  context.pushNamed('recoverScreen');
-                  // print("+$_countryCode${phoneController.text}");
-                  var phoneNumbers = "+$_countryCode${phoneController.text}";
-                  String otpResponse = await ref
-                      .read(authProvider.notifier)
-                      .requestOTP(phoneNumbers: phoneNumbers);
-                  if (otpResponse == "success") {
-                    context.pushNamed('recoverScreen');
-                  } else {
-                    debugPrint("This is OTP Error: $otpResponse");
-                  }
+                  debugPrint("able to reset");
                 }
               },
             ),

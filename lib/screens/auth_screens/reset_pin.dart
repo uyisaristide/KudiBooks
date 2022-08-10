@@ -168,31 +168,6 @@ class _PhoneResetState extends ConsumerState<ResetPin> {
                 }
               },
             ),
-            CustomDevider(
-              middleText: 'Or sign in with',
-              horizotalPadding: 40.0,
-              verticalPadding: 15.0,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  CircledLogo(
-                    logo: 'assets/images/categories/emailIcon.png',
-                    navigateTo: () => context.goNamed('signin'),
-                  ),
-                  CircledLogo(
-                    navigateTo: () {},
-                    logo: 'assets/images/categories/googleIcon.png',
-                  ),
-                  CircledLogo(
-                    navigateTo: () {},
-                    logo: 'assets/images/categories/appleIcon.png',
-                  )
-                ],
-              ),
-            )
           ],
         ),
       ),

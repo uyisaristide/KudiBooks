@@ -146,7 +146,6 @@ class _PhoneLoginState extends ConsumerState<PhoneLogin> {
                     context.goNamed('dashboard');
                   } else {
                     debugPrint("Incorrect pin: $result");
-
                   }
                 }
               },

@@ -15,15 +15,23 @@ class UserProvider extends StateNotifier<List<User>> {
     state = [...state, user];
   }
 
-  Future<Response> createUserEmail(User user) async {
+  createUserEmail(User user) async {
     Response response;
     try {
       response = await _dio.post('${DioServices.baseUrl}auth/register',
           data: user.toJsonEmail());
-      return response;
-    } on DioError catch (e) {
-      print('There is error named in this way ${e.response}');
-      throw e;
+      if (response.statusCode == 200) {
+        return "success";
+      } else {
+        return "fail";
+      }
+    } catch (e) {
+      if (e is DioError) {
+        debugPrint("${e.response?.data["errors"]} is an error");
+        throw e.response?.data["errors"] ?? e;
+      } else {
+        throw Exception(e);
+      }
     }
   }
 
@@ -103,7 +111,8 @@ class UserProvider extends StateNotifier<List<User>> {
     }
   }
 
-  Future<String?> loginPhone({required String phoneNumber, required String pin}) async {
+  Future<String?> loginPhone(
+      {required String phoneNumber, required String pin}) async {
     Response loginResponse;
     try {
       loginResponse = await _dio.post('${DioServices.baseUrl}auth/login',
@@ -118,7 +127,7 @@ class UserProvider extends StateNotifier<List<User>> {
     } catch (e) {
       if (e is DioError) {
         print(e.response?.data["message"]);
-        throw e.response?.data['errors']?? "Error $e";
+        throw e.response?.data['errors'] ?? "Error $e";
       } else {
         throw Exception(e);
       }
