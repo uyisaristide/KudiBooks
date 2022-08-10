@@ -159,7 +159,7 @@ class _PhoneResetState extends ConsumerState<ResetPin> {
                   if (otpResponse == "success") {
                     context.pushNamed('loginPhone');
                     ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBars.snackBars('', Colors.green.shade400));
+                        SnackBars.snackBars('OTP Sent', Colors.green.shade400));
                   } else {
                     debugPrint("This is OTP Error: $otpResponse");
                     ScaffoldMessenger.of(context).showSnackBar(

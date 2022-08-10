@@ -104,7 +104,8 @@ class UserProvider extends StateNotifier<List<User>> {
       return "fail";
     } catch (e) {
       if (e is DioError) {
-        throw e.response?.data['errors'][0] ?? "Error";
+        debugPrint("Login email error: ${e.response?.data["message"]}");
+        throw e.response?.data['errors'] ?? e;
       } else {
         throw Exception(e);
       }

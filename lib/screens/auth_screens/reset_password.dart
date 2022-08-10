@@ -135,8 +135,7 @@ class _PhoneResetState extends ConsumerState<ResetEmailPassword> {
               text: 'Reset',
               actionField: () async {
                 if (_formKey.currentState!.validate()) {
-                  debugPrint("able to reset");
-                  String response = ref
+                  var responses = await ref
                       .read(authProvider.notifier)
                       .resetEmailPassword(
                           token: widget.token.toString(),
@@ -144,11 +143,12 @@ class _PhoneResetState extends ConsumerState<ResetEmailPassword> {
                           password: passwordController.text,
                           password_confirmation:
                               confirmPasswordController.text);
-                  if (response == "success") {
+                  debugPrint("able to reset ${responses.runtimeType}");
+                  if (responses == "success") {
                     context.goNamed('signin');
                     ScaffoldMessenger.of(context).showSnackBar(
                         SnackBars.snackBars(
-                            'Reseted successfully', Colors.green.shade400));
+                            'Rested successfully', Colors.green.shade400));
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                         SnackBars.snackBars(

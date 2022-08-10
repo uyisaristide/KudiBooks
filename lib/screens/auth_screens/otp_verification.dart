@@ -7,6 +7,8 @@ import 'package:kudibooks_app/screens/auth_screens/widgets/page_title.dart';
 import 'package:kudibooks_app/screens/background.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
+import '../dashboard/classes/snack_bars.dart';
+
 class OtpVerification extends ConsumerStatefulWidget {
   String phoneNumber;
 
@@ -66,8 +68,13 @@ class _OtpVerificationState extends ConsumerState<OtpVerification>
                       .read(authProvider.notifier)
                       .verifyOTP(value, widget.phoneNumber);
                   if (response == "success") {
-                    debugPrint("This is response $response");
-                    context.go('/recoverScreens?phoneNumber=${widget.phoneNumber}?otps = $value');
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBars.snackBars(
+                            'Verfied successfully', Colors.green.shade400));
+                    context.goNamed("signin");
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBars.snackBars('Wrong OTP', Colors.red.shade400));
                   }
                 }),
                 keyboardType: TextInputType.number,
@@ -92,7 +99,12 @@ class _OtpVerificationState extends ConsumerState<OtpVerification>
                     const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
-            const HyperLinkText(directingText: 'Resend the code ?')
+            HyperLinkText(
+              directingText: 'Resend the code ?',
+              actions: (){
+                context.goNamed('forget');
+              },
+            )
           ],
         ),
       ),

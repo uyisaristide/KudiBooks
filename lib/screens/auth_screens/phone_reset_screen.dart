@@ -90,7 +90,8 @@ class _PhoneResetState extends ConsumerState<PhoneReset> {
             LoginButton(
               text: 'Send OTP',
               actionField: () async {
-                debugPrint("+$_countryCode${phoneController.text} Kigali controller");
+                debugPrint(
+                    "+$_countryCode${phoneController.text} Kigali controller");
                 if (_formKey.currentState!.validate()) {
                   context.pushNamed('recoverScreen');
                   // print("+$_countryCode${phoneController.text}");
