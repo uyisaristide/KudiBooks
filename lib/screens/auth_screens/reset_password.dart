@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/lock_icon.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/page_title.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/password_field.dart';
+import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
 import 'package:kudibooks_app/screens/background.dart';
 
 class ResetEmailPassword extends ConsumerStatefulWidget {
   String? token;
   String? recoverEmail;
 
-  ResetEmailPassword({this.recoverEmail, this.token, Key? key}) : super(key: key);
+  ResetEmailPassword({this.recoverEmail, this.token, Key? key})
+      : super(key: key);
 
   @override
   ConsumerState<ResetEmailPassword> createState() => _PhoneResetState();
@@ -28,6 +31,7 @@ class _PhoneResetState extends ConsumerState<ResetEmailPassword> {
   void initState() {
     super.initState();
     myEmail = widget.recoverEmail;
+    emailController = TextEditingController(text: myEmail);
   }
 
   @override
@@ -44,6 +48,13 @@ class _PhoneResetState extends ConsumerState<ResetEmailPassword> {
             Padding(
               padding: const EdgeInsets.only(bottom: 10),
               child: Text("$myEmail"),
+            ),
+            CustomFormField(
+              fieldController: emailController,
+              fieldIcon: const Icon(Icons.email),
+              hintText: 'Email Address',
+              validators: (value) => Validators.validateEmail(value),
+              isShown: false,
             ),
             PasswordField(
               hintText: "New Password",
