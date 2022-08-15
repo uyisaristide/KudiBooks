@@ -74,7 +74,8 @@ class ActionCard extends StatelessWidget {
                 ),
                 Text(
                   title,
-                  style: TextStyle(fontWeight: FontWeight.w600, color: titleColor),
+                  style:
+                      TextStyle(fontWeight: FontWeight.w600, color: titleColor),
                 )
               ],
             ),

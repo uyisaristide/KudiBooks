@@ -2,6 +2,11 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
+import 'package:kudibooks_app/models/Users/ProductInLoad.dart';
+import 'package:kudibooks_app/models/inventory_model.dart';
+import 'package:kudibooks_app/models/product_model.dart';
 import 'package:kudibooks_app/models/Users/ProductInLoad.dart';
 import 'package:kudibooks_app/models/inventory_model.dart';
 import 'package:kudibooks_app/models/product_model.dart';
@@ -16,7 +21,6 @@ import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/double_header_two.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/inventory_card.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/load_product.dart';
-import 'package:provider/provider.dart';
 
 class NewInventory extends ConsumerStatefulWidget {
   NewInventory({Key? key}) : super(key: key);
@@ -70,8 +74,8 @@ class _NewInventoryState extends ConsumerState<NewInventory> {
                         transactionDate: transactionDateController.text,
                         memoInventory: memoController.text));
                     _productsToLoad.clear();
-                    print("Saved");
-                    Navigator.pop(context);
+                    debugPrint("Saved");
+                    context.pop();
                   }
                 }),
           )),
@@ -85,7 +89,7 @@ class _NewInventoryState extends ConsumerState<NewInventory> {
             children: [
               CustomFormField(
                   validators: (value) {
-                    if(nameController.text.isEmpty){
+                    if (nameController.text.isEmpty) {
                       return 'Enter user name';
                     }
                     return null;
@@ -109,7 +113,7 @@ class _NewInventoryState extends ConsumerState<NewInventory> {
                     itemBuilder: (context, index) {
                       String changeToInt =
                           _productsToLoad[index].productId.toString();
-                      print(changeToInt);
+                      debugPrint(changeToInt);
                       var _names = _productModel.firstWhere(
                           (element) => element.id == int.parse(changeToInt));
 
@@ -214,7 +218,9 @@ class _NewInventoryState extends ConsumerState<NewInventory> {
                   children: [
                     CustomFormField(
                         validators: (value) {
-                          Validators.validateName(value);
+                          if (value == '') {
+                            return "This is required";
+                          }
                         },
                         hintText: 'Amount paid',
                         fieldController: amountPaid,
@@ -242,7 +248,9 @@ class _NewInventoryState extends ConsumerState<NewInventory> {
                   children: [
                     CustomFormField(
                         validators: (value) {
-                          Validators.validateName(value);
+                          if (value == '') {
+                            return "This is required";
+                          }
                         },
                         hintText: 'Debt amount',
                         fieldController: debtAmount,
@@ -271,7 +279,7 @@ class _NewInventoryState extends ConsumerState<NewInventory> {
               ),
               CustomFormField(
                   validators: (value) {
-                    if(transactionNameController.text.isEmpty){
+                    if (transactionNameController.text.isEmpty) {
                       return 'Enter user name';
                     }
                   },
@@ -280,11 +288,25 @@ class _NewInventoryState extends ConsumerState<NewInventory> {
                   isShown: false,
                   inputType: TextInputType.name),
               CustomFormField(
+                  calendarPicker: () async {
+                    // FocusScope.of(context).requestFocus(FocusNode());
+                    await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2017),
+                            lastDate: DateTime(2040))
+                        .then((selectedDate) {
+                      if (selectedDate != null) {
+                        transactionDateController.text =
+                            DateFormat('yyyy-MM-dd').format(selectedDate);
+                      }
+                    });
+                  },
                   fieldIcon: const Icon(Icons.calendar_today_outlined),
                   validators: (value) {
                     Validators.validateName(value);
                   },
-                  hintText: 'Transaction date',
+                  hintText: 'Transaction dates',
                   fieldController: transactionDateController,
                   isShown: false,
                   inputType: TextInputType.datetime),

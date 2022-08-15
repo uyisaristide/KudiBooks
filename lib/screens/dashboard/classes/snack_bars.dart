@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kudibooks_app/screens/dashboard/new_account.dart';
 
 class SnackBars {
   Function()? floatingAction;

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kudibooks_app/models/product_model.dart';
 import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/providers/product_provider.dart';
@@ -22,12 +23,7 @@ class ProductListCard extends ConsumerWidget {
             ref.read(productProvider.notifier).removeProduct(productModel.id);
             print("Deleted ${productModel.id}");
           },
-          onTap: () => Navigator.push(
-              context,
-              CupertinoPageRoute(
-                  builder: (context) => ProductDetails(
-                        productModel: productModel,
-                      ))),
+          onTap: () => context.pushNamed('pDetails'),
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: [

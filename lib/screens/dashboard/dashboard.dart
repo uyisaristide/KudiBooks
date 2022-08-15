@@ -1,34 +1,18 @@
 import 'dart:ui';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/transition_chart.dart';
-import 'package:kudibooks_app/providers/all_providers_list.dart';
-import 'package:kudibooks_app/providers/user_provider.dart';
-import 'package:kudibooks_app/screens/dashboard/account_transfer.dart';
-import 'package:kudibooks_app/screens/dashboard/all_transaction.dart';
-import 'package:kudibooks_app/screens/dashboard/client_deposit.dart';
-import 'package:kudibooks_app/screens/dashboard/inventory_deduction.dart';
-import 'package:kudibooks_app/screens/dashboard/new_expense.dart';
-import 'package:kudibooks_app/screens/dashboard/new_inventory.dart';
-import 'package:kudibooks_app/screens/dashboard/product_sale.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/action_card.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/business_movement_cart.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/line_chart.dart';
-
 import 'package:kudibooks_app/screens/dashboard/widget/pie_chart.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/title_double.dart';
-import 'package:provider/provider.dart';
-
-import '../../models/Users/user_model.dart';
+import '../../providers/user_provider.dart';
 
 class Dashboard extends ConsumerStatefulWidget {
-  final VoidCallback? callBack;
-  String loggedUser;
-
-  Dashboard({required this.loggedUser, this.callBack, Key? key})
-      : super(key: key);
+  const Dashboard({Key? key}) : super(key: key);
 
   @override
   ConsumerState<Dashboard> createState() => _DashboardState();
@@ -39,71 +23,10 @@ class _DashboardState extends ConsumerState<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    List actions = [
-      ActionCard(
-        actionClick: () => Navigator.push(
-            context, CupertinoPageRoute(builder: (ctx) => ProductSale())),
-        cardIcon: const Icon(
-          Icons.shopping_cart_outlined,
-          color: Colors.white,
-        ),
-        cardColor: const Color(0xff157253),
-        title: 'Sell',
-      ),
-      ActionCard(
-        actionClick: () => Navigator.push(
-            context, CupertinoPageRoute(builder: (ctx) => ProductSale())),
-        cardIcon: const Icon(
-          Icons.shopping_cart_outlined,
-          color: Colors.white,
-        ),
-        cardColor: const Color(0xff157253),
-        title: 'test',
-      ),
-      ActionCard(
-        actionClick: () => Navigator.push(
-            context, CupertinoPageRoute(builder: (ctx) => NewInventory())),
-        cardIcon: const Icon(
-          Icons.shopping_cart_outlined,
-          color: Colors.white,
-        ),
-        cardColor: const Color(0xffA70C4A),
-        title: 'New Load',
-      ),
-      ActionCard(
-        actionClick: () => Navigator.push(
-            context, CupertinoPageRoute(builder: (ctx) => NewExpense())),
-        cardIcon: const Icon(
-          Icons.shopping_cart_outlined,
-          color: Colors.white,
-        ),
-        cardColor: const Color(0xffFDAB30),
-        title: 'Expenses',
-      ),
-      ActionCard(
-        actionClick: () => showModalBottomSheet(
-            isDismissible: true,
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(15),
-                    topLeft: Radius.circular(15))),
-            context: context,
-            builder: (context) => _modalForMore(context)),
-        cardIcon: const Icon(
-          Icons.shopping_cart_outlined,
-          color: Colors.white,
-        ),
-        cardColor: const Color(0xff61B76B),
-        title: 'More',
-      ),
-    ];
-    
-    User? signedUser = ref.watch(usersProvider)
-        .firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
-
+    debugPrint("Logged user is: $myToken");
     return Scaffold(
         extendBodyBehindAppBar: true,
-        drawer: Drawers(dashboardScreen: widget.callBack, userInfo: signedUser),
+        drawer: Drawers(),
         body: Stack(children: [
           Positioned(
               top: 150,
@@ -180,10 +103,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           ActionCard(
-                            actionClick: () => Navigator.push(
-                                context,
-                                CupertinoPageRoute(
-                                    builder: (ctx) => ProductSale())),
+                            actionClick: () => context.pushNamed('sell'),
                             cardIcon: const Icon(
                               Icons.shopping_cart_outlined,
                               color: Colors.white,
@@ -193,10 +113,8 @@ class _DashboardState extends ConsumerState<Dashboard> {
                             titleColor: Colors.white,
                           ),
                           ActionCard(
-                            actionClick: () => Navigator.push(
-                                context,
-                                CupertinoPageRoute(
-                                    builder: (ctx) => NewInventory())),
+                            actionClick: () =>
+                                context.pushNamed('createInventory'),
                             cardIcon: const Icon(
                               Icons.shopping_cart_outlined,
                               color: Colors.white,
@@ -207,10 +125,8 @@ class _DashboardState extends ConsumerState<Dashboard> {
                           ),
                           ActionCard(
                             titleColor: Colors.white,
-                            actionClick: () => Navigator.push(
-                                context,
-                                CupertinoPageRoute(
-                                    builder: (ctx) => NewExpense())),
+                            actionClick: () =>
+                                context.pushNamed('createExpense'),
                             cardIcon: const Icon(
                               Icons.shopping_cart_outlined,
                               color: Colors.white,
@@ -269,10 +185,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
                         icon: const Icon(Icons.arrow_forward_ios),
                       ),
                       iconButton: InkWell(
-                          onTap: () => Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                  builder: (context) => AllTransaction())),
+                          onTap: () => context.pushNamed('transactionsAll'),
                           child: const Text("View all")),
                     ),
                     LimitedBox(
@@ -343,12 +256,10 @@ class _DashboardState extends ConsumerState<Dashboard> {
               ),
             ),
             trailing: IconButton(
-                onPressed: () => Navigator.pop(context),
-                icon: const Icon(Icons.close)),
+                onPressed: () => context.pop(), icon: const Icon(Icons.close)),
           ),
           ListTile(
-            onTap: () => Navigator.push(context,
-                CupertinoPageRoute(builder: (context) => InventoryDeduction())),
+            onTap: () => context.pushNamed('inventoryDeduction'),
             leading: const Icon(Icons.create_new_folder_outlined),
             title: const Text(
               "Inventory reduction",
@@ -358,8 +269,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
             ),
           ),
           ListTile(
-            onTap: () => Navigator.push(context,
-                CupertinoPageRoute(builder: (context) => ClientDeposit())),
+            onTap: () => context.pushNamed('depositClient'),
             leading: const Icon(Icons.credit_card),
             title: const Text(
               "Client deposit",
@@ -378,8 +288,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
             ),
           ),
           ListTile(
-            onTap: () => Navigator.push(context,
-                CupertinoPageRoute(builder: (context) => AccountTransfer())),
+            onTap: () => context.pushNamed('accountTransfer'),
             leading: const Icon(Icons.create_new_folder_outlined),
             title: const Text(
               "Account transfer",

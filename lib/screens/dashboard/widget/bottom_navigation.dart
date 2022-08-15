@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:kudibooks_app/models/Users/user_model.dart';
 import 'package:kudibooks_app/screens/dashboard/alert_screen.dart';
 import 'package:kudibooks_app/screens/dashboard/dashboard.dart';
 import 'package:kudibooks_app/screens/dashboard/inventory.dart';
 import 'package:kudibooks_app/screens/dashboard/my_account.dart';
 
 class NavigationBottom extends StatefulWidget {
-  String loggedUser;
 
-  NavigationBottom({required this.loggedUser, Key? key}) : super(key: key);
+  NavigationBottom({Key? key}) : super(key: key);
 
   @override
   State<NavigationBottom> createState() => _NavigationBottomState();
@@ -16,14 +14,10 @@ class NavigationBottom extends StatefulWidget {
 
 class _NavigationBottomState extends State<NavigationBottom> {
   List<Widget> get screens => [
-        Dashboard(
-            loggedUser: widget.loggedUser.toString(),
-            callBack: () => setState(() {
-                  _currentIndex = 0;
-                })),
-        InventoryScreen(loggedUser: widget.loggedUser.toString()),
-        AlertScreen(loggedUser: widget.loggedUser.toString()),
-        MyAccountScreen(loggedUser: widget.loggedUser.toString()),
+        const Dashboard(),
+        InventoryScreen(),
+        AlertScreen(),
+        MyAccountScreen(),
       ];
   static int _currentIndex = 0;
   late PageController _pageController;
@@ -45,37 +39,48 @@ class _NavigationBottomState extends State<NavigationBottom> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: PageView(
-          controller: _pageController,
-          children: screens,
-          onPageChanged: (newPage) => setState(() {
-                _currentIndex = newPage;
-              })),
-      // body: screens[currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-          elevation: 0.0,
-          type: BottomNavigationBarType.fixed,
-          fixedColor: const Color(0xff157253),
-          currentIndex: _currentIndex,
-          onTap: (index) {
-            _pageController.animateToPage(index,
-                duration: const Duration(milliseconds: 10),
-                curve: Curves.easeInOut);
-          },
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.inventory_2_outlined),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.folder), label: 'Inventory'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.add_moderator), label: 'Alerts'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.person_outline), label: 'Account'),
-          ]),
-      extendBodyBehindAppBar: true,
+    return WillPopScope(
+      onWillPop: () async {
+        if (_currentIndex != 0) {
+          setState(() {
+            _currentIndex = 0;
+          });
+          return false;
+        }
+        return true;
+      },
+      child: Scaffold(
+        body: PageView(
+            controller: _pageController,
+            children: screens,
+            onPageChanged: (newPage) => setState(() {
+                  _currentIndex = newPage;
+                })),
+        // body: screens[currentIndex],
+        bottomNavigationBar: BottomNavigationBar(
+            elevation: 0.0,
+            type: BottomNavigationBarType.fixed,
+            fixedColor: const Color(0xff157253),
+            currentIndex: _currentIndex,
+            onTap: (index) {
+              _pageController.animateToPage(index,
+                  duration: const Duration(milliseconds: 10),
+                  curve: Curves.easeInOut);
+            },
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.inventory_2_outlined),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.folder), label: 'Inventory'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.add_moderator), label: 'Alerts'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.person_outline), label: 'Account'),
+            ]),
+        extendBodyBehindAppBar: true,
+      ),
     );
   }
 }

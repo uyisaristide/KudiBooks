@@ -1,23 +1,18 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kudibooks_app/models/Users/user_model.dart';
-import 'package:kudibooks_app/screens/auth_screens/login.dart';
+import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
-import 'package:kudibooks_app/screens/dashboard/all_transaction.dart';
-import 'package:kudibooks_app/screens/dashboard/client_list.dart';
-import 'package:kudibooks_app/screens/dashboard/loads.dart';
-import 'package:kudibooks_app/screens/dashboard/products.dart';
-import 'package:kudibooks_app/screens/dashboard/reports.dart';
-import 'package:kudibooks_app/screens/dashboard/settings_screen.dart';
 
-class Drawers extends StatelessWidget {
+class Drawers extends ConsumerWidget {
   VoidCallback? dashboardScreen;
   User? userInfo;
 
   Drawers({this.dashboardScreen, this.userInfo, Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     return Drawer(
       elevation: 0.0,
       child: ListView(
@@ -40,13 +35,12 @@ class Drawers extends StatelessWidget {
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: const [
                     Text(
-                      "${userInfo!.firstName} ${userInfo!.lastName}",
-                      style: const TextStyle(color: Colors.white),
+                      "User Name",
+                      style: TextStyle(color: Colors.white),
                     ),
-                    Text(userInfo!.phoneOrEmail,
-                        style: const TextStyle(color: Colors.white))
+                    Text("Email", style: TextStyle(color: Colors.white))
                   ],
                 ),
               ],
@@ -62,20 +56,16 @@ class Drawers extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ListTile(
-                        onTap: () => Navigator.pop(context),
-                        leading: const Icon(Icons.home),
-                        title: const Text("Home"),
-                        trailing: const Icon(
+                      const ListTile(
+                        leading: Icon(Icons.home),
+                        title: Text("Home"),
+                        trailing: Icon(
                           Icons.arrow_forward_ios,
                           size: 15,
                         ),
                       ),
                       ListTile(
-                        onTap: () => Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                                builder: (context) => ProductsScreen())),
+                        onTap: () => context.pushNamed('screenProducts'),
                         leading: const Icon(Icons.shopping_cart_outlined),
                         title: const Text("Products"),
                         trailing: const Icon(
@@ -84,20 +74,16 @@ class Drawers extends StatelessWidget {
                         ),
                       ),
                       ListTile(
-                        onTap: () => Navigator.push(context,
-                            CupertinoPageRoute(builder: (context) => Loads())),
+                        onTap: () => context.pushNamed('loadsScreens'),
                         leading: const Icon(Icons.people),
-                        title: const Text("Load Iventory"),
+                        title: const Text("Load Inventory"),
                         trailing: const Icon(
                           Icons.arrow_forward_ios,
                           size: 15,
                         ),
                       ),
                       ListTile(
-                        onTap: () => Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                                builder: (context) => ClientList())),
+                        onTap: () => context.pushNamed('clientList'),
                         leading: const Icon(Icons.people),
                         title: const Text("Clients"),
                         trailing: const Icon(
@@ -106,10 +92,7 @@ class Drawers extends StatelessWidget {
                         ),
                       ),
                       ListTile(
-                        onTap: () => Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                                builder: (context) => AllTransaction())),
+                        onTap: () => context.pushNamed('transactionAll'),
                         leading: const Icon(Icons.credit_card),
                         title: const Text("Transaction"),
                         trailing: const Icon(
@@ -126,10 +109,7 @@ class Drawers extends StatelessWidget {
                         ),
                       ),
                       ListTile(
-                        onTap: () => Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                                builder: (context) => const Reports())),
+                        onTap: () => context.pushNamed('reports'),
                         leading: const Icon(Icons.bar_chart_outlined),
                         title: const Text("Reports"),
                         trailing: const Icon(
@@ -138,10 +118,7 @@ class Drawers extends StatelessWidget {
                         ),
                       ),
                       ListTile(
-                        onTap: () => Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                                builder: (context) => const Settings())),
+                        onTap: () => context.pushNamed('settingScreens'),
                         leading: const Icon(Icons.notifications),
                         title: const Text("Settings"),
                         trailing: const Icon(
@@ -175,11 +152,23 @@ class Drawers extends StatelessWidget {
                   padding: const EdgeInsets.all(20.0),
                   child: LoginButton(
                     text: 'Logout',
+                    actionField: () async {
+                      String? response =
+                          await ref.read(usersProvider.notifier).logout();
+                      if (response == 'success') {
+                        context.goNamed('signin');
+                      } else {
+                        debugPrint("$response");
+                      }
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: LoginButton(
+                    text: 'Bank Login',
                     actionField: () {
-                      Navigator.pushReplacement(
-                          context,
-                          CupertinoPageRoute(
-                              builder: (context) => const Login()));
+                      context.pushNamed('newCompany');
                     },
                   ),
                 ),

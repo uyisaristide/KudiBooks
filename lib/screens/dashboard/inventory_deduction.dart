@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/drop_down_widget.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
@@ -45,7 +46,7 @@ class _InventoryDeductionState extends State<InventoryDeduction> {
                 text: 'Save',
                 actionField: () {
                   if (_formKey.currentState!.validate()) {
-                    Navigator.pop(context);
+                    context.pop();
                   }
                 }),
           )),
@@ -235,7 +236,7 @@ class _InventoryDeductionState extends State<InventoryDeduction> {
                 children: [
                   ListTile(
                       trailing: IconButton(
-                        onPressed: () => Navigator.pop(context),
+                        onPressed: () => context.pop(),
                         icon: const Icon(Icons.close),
                       ),
                       title: const Text(
@@ -369,8 +370,7 @@ class _InventoryDeductionState extends State<InventoryDeduction> {
                               fieldController: noteController,
                               isShown: false),
                           LoginButton(
-                              text: 'Add',
-                              actionField: () => Navigator.pop(context))
+                              text: 'Add', actionField: () => context.pop())
                         ],
                       ),
                     ),

@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:flutter/material.dart';
+import 'package:intl_phone_field/phone_number.dart';
 
 class PhoneField extends StatelessWidget {
-  final Function validators;
+  final FutureOr<String?> Function(PhoneNumber?)? validators;
   final Icon? fieldIcon;
   final VoidCallback? onChangeAction;
   final TextEditingController phoneNumber;
@@ -25,7 +28,7 @@ class PhoneField extends StatelessWidget {
       child: IntlPhoneField(
         controller: phoneNumber,
         initialCountryCode: "RW",
-        validator: (value) => validators(value),
+        validator: validators,
         onCountryChanged: countryCodes,
         decoration: InputDecoration(
             suffixIcon: phoneNumber.text.isEmpty

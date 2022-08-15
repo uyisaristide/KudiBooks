@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
+import 'package:kudibooks_app/models/Users/products_sold_model.dart';
+import 'package:kudibooks_app/models/product_model.dart';
 import 'package:kudibooks_app/models/Users/ProductInLoad.dart';
 import 'package:kudibooks_app/models/Users/products_sold_model.dart';
 import 'package:kudibooks_app/models/product_model.dart';
 import 'package:kudibooks_app/models/product_sale_model.dart';
 import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/providers/product_provider.dart';
-import 'package:kudibooks_app/providers/products_sale_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/drop_down_widget.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
@@ -15,7 +17,6 @@ import 'package:kudibooks_app/screens/dashboard/add_products_popup.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/double_header_two.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/inventory_card.dart';
-import 'package:provider/provider.dart';
 
 class ProductSale extends ConsumerStatefulWidget {
   const ProductSale({Key? key}) : super(key: key);
@@ -272,6 +273,20 @@ class _ProductSaleState extends ConsumerState<ProductSale> {
       child: Column(
         children: [
           CustomFormField(
+              calendarPicker: () async {
+                // FocusScope.of(context).requestFocus(FocusNode());
+                await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(2017),
+                        lastDate: DateTime(2040))
+                    .then((selectedDate) {
+                  if (selectedDate != null) {
+                    transactionDateController.text =
+                        DateFormat('yyyy-MM-dd').format(selectedDate);
+                  }
+                });
+              },
               fieldIcon: const Icon(Icons.calendar_today_outlined),
               validators: (value) {
                 return Validators.notEmpty(value!);
@@ -304,7 +319,7 @@ class _ProductSaleState extends ConsumerState<ProductSale> {
                 itemBuilder: (context, index) {
                   String changeToInt =
                       _productsToSell[index].productId.toString();
-                  print(changeToInt);
+                  debugPrint(changeToInt);
                   var _names = _productModel.firstWhere(
                       (element) => element.id == int.parse(changeToInt));
 

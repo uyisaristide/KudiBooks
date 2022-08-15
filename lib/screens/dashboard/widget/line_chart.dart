@@ -1,6 +1,5 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:kudibooks_app/screens/dashboard/classes/fl_line_titles.dart';
 
 class LignChartObject extends StatelessWidget {
   LignChartObject({Key? key}) : super(key: key);
@@ -36,7 +35,7 @@ class LignChartObject extends StatelessWidget {
             ),
             borderData: FlBorderData(show: true),
             backgroundColor: Colors.black12,
-            titlesData: LineTitles.getTitleData(),
+            // titlesData: LineTitles.getTitleData(),
             lineBarsData: [
               LineChartBarData(
                   spots: [
@@ -77,11 +76,8 @@ class LignChartObject extends StatelessWidget {
                     const FlSpot(12, 5),
                   ],
                   isCurved: true,
-                  color: Colors.green,
-                  barWidth: 4,
-                  dotData: FlDotData(show: true),
+                  color: profitGradientColors[0],
                   belowBarData: BarAreaData(
-                    show: true,
 
                     //  colors: Colors.teal.withOpacity(0.5)
                   )),

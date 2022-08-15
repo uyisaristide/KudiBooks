@@ -1,17 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kudibooks_app/models/product_model.dart';
 import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/providers/product_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/product_list_card.dart';
 import 'package:kudibooks_app/screens/dashboard/classes/sliver_delegate_search.dart';
-import 'package:kudibooks_app/screens/dashboard/new_inventory.dart';
-import 'package:kudibooks_app/screens/dashboard/new_product.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/button_widget.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/search_input.dart';
-import 'package:provider/provider.dart';
 
 class ProductsScreen extends ConsumerStatefulWidget {
   VoidCallback? loadProducts;
@@ -24,12 +20,25 @@ class ProductsScreen extends ConsumerStatefulWidget {
 
 class _ProductsScreenState extends ConsumerState<ProductsScreen> {
   final searchContent = TextEditingController();
+  List<ProductModel> _searchResults = [];
 
   @override
   Widget build(BuildContext context) {
     
     List<ProductModel> _productList = ref.watch(productProvider);
     return Scaffold(
+      floatingActionButton: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            primary: const Color(0xffFDAB30),
+            padding: const EdgeInsets.all(15.0),
+            elevation: 0.0,
+            shape: const CircleBorder()),
+        onPressed: () => context.pushNamed('newProduct'),
+        child: const Text(
+          '+',
+          style: TextStyle(fontSize: 25),
+        ),
+      ),
       body: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return [
@@ -53,8 +62,18 @@ class _ProductsScreenState extends ConsumerState<ProductsScreen> {
                       minHeight: 80,
                       child: Container(
                         color: Theme.of(context).scaffoldBackgroundColor,
-                        child: SearchTextField(hintTexts: 'Search product',
-                          searchingContent: (value) {},
+                        child: SearchTextField(
+                          hintTexts: 'Search non-inventory product',
+                          searchingContent: (value) {
+                            final _resultS = _productList
+                                .where((productItem) => productItem.productName
+                                    .toLowerCase()
+                                    .contains(value))
+                                .toList();
+                            if (_resultS.isNotEmpty) {
+                              _searchResults = _resultS;
+                            }
+                          },
                           searchContent: searchContent,
                         ),
                       ))),
@@ -66,8 +85,8 @@ class _ProductsScreenState extends ConsumerState<ProductsScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 LimitedBox(
-                  maxHeight: 1000,
                   child: ListView.separated(
+                      shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       // itemBuilder: (context, index) => ProductListCard(index: index),
                       itemBuilder: (context, index) => ProductListCard(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kudibooks_app/models/Users/ProductInLoad.dart';
 import 'package:kudibooks_app/models/Users/products_sold_model.dart';
 import 'package:kudibooks_app/models/product_model.dart';
@@ -11,7 +12,6 @@ import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart'
 import 'package:kudibooks_app/screens/dashboard/classes/selectItem.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/double_header_two.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/inventory_card.dart';
-import 'package:provider/provider.dart';
 
 class AddProductsPopup extends ConsumerStatefulWidget {
   const AddProductsPopup({Key? key}) : super(key: key);
@@ -59,7 +59,7 @@ class _AddProductsPopupState extends ConsumerState<AddProductsPopup> {
         children: [
           ListTile(
               trailing: IconButton(
-                onPressed: () => Navigator.pop(context),
+                onPressed: () => context.pop(),
                 icon: const Icon(Icons.close),
               ),
               title: const Text(

@@ -1,8 +1,6 @@
-import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kudibooks_app/models/Users/user_model.dart';
 import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/providers/user_provider.dart';
@@ -16,8 +14,6 @@ import 'package:kudibooks_app/screens/auth_screens/widgets/page_title.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
 import 'package:kudibooks_app/screens/background.dart';
 import 'package:kudibooks_app/screens/dashboard/classes/snack_bars.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/bottom_navigation.dart';
-import 'package:provider/provider.dart';
 
 class Login extends ConsumerStatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -30,7 +26,6 @@ class _LoginState extends ConsumerState<Login> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final emailController = TextEditingController();
-
   final passwordController = TextEditingController();
   bool isHidden = true;
 
@@ -43,16 +38,14 @@ class _LoginState extends ConsumerState<Login> {
 
   @override
   Widget build(BuildContext context) {
-    
     List<User> _user = ref.watch(usersProvider);
+    debugPrint("Logged user is: $myToken");
     return BackgroundScreen(
       buttonWidget: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           TextButton(
-            onPressed: () {
-              Navigator.pushReplacementNamed(context, '/signup');
-            },
+            onPressed: () => context.goNamed('signup'),
             child: const Text(
               "Sign up",
               style: TextStyle(
@@ -145,27 +138,26 @@ class _LoginState extends ConsumerState<Login> {
               text: 'Login',
               actionField: () {
                 if (_formKey.currentState!.validate()) {
-                  var checkUser = _user.where((element) =>
-                      element.phoneOrEmail == emailController.text);
-                  if (checkUser.isEmpty) {
+                  context.goNamed('dashboard');
+                  
+                }
+              },
+            ),
+            LoginButton(
+              text: 'Login net',
+              actionField: () async {
+                if (_formKey.currentState!.validate()) {
+                  String? check = await ref
+                      .read(usersProvider.notifier)
+                      .loginEmail(
+                          emailController.text, passwordController.text);
+                  if (check == "success") {
+                    context.goNamed('dashboard');
+                  } else if (check == "fail") {
                     ScaffoldMessenger.of(context).showSnackBar(
                         SnackBars.snackBars(
-                            'This user not found', Colors.redAccent));
-                  } else if (checkUser.first.phoneOrEmail ==
-                          emailController.text &&
-                      checkUser.first.password == passwordController.text) {
-                    Navigator.pushReplacement(
-                        context,
-                        CupertinoPageRoute(
-                            builder: (context) => NavigationBottom(
-                                  loggedUser: checkUser.first.phoneOrEmail,
-                                )));
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBars.snackBars(
-                            'Incorrect password', Colors.redAccent));
-                    print(
-                        "Printed successfully ${checkUser.first.phoneOrEmail} and password is: ${checkUser.first.password}");
+                            "${ref.read(usersProvider.notifier).wrongCred}",
+                            Colors.redAccent));
                   }
                 }
               },
@@ -183,7 +175,7 @@ class _LoginState extends ConsumerState<Login> {
                   CircledLogo(
                     logo: 'assets/images/categories/logoutIcon.png',
                     navigateTo: () {
-                      Navigator.pushReplacementNamed(context, "/phoneLogin");
+                      context.goNamed("loginPhone");
                     },
                   ),
                   const CircledLogo(

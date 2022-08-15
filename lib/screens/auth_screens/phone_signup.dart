@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kudibooks_app/models/Users/user_model.dart';
 import 'package:kudibooks_app/providers/all_providers_list.dart';
-import 'package:kudibooks_app/providers/user_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/circled_logo.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/custom_devider.dart';
@@ -12,7 +12,6 @@ import 'package:kudibooks_app/screens/auth_screens/widgets/page_title.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/phone_input.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
 import 'package:kudibooks_app/screens/background.dart';
-import 'package:provider/provider.dart';
 import 'package:collection/collection.dart';
 
 import '../dashboard/classes/snack_bars.dart';
@@ -54,7 +53,6 @@ class _PhoneSignupState extends ConsumerState<PhoneSignup> {
 
   @override
   Widget build(BuildContext context) {
-    
     List<User> users = ref.watch(usersProvider);
     return BackgroundScreen(
       screens: Form(
@@ -87,11 +85,11 @@ class _PhoneSignupState extends ConsumerState<PhoneSignup> {
                 setState(() {
                   _countryCodes = country.dialCode;
                 });
-                print("Phone Number with country code");
+                debugPrint("Phone Number with country code");
               },
               fieldIcon: const Icon(Icons.phone, size: 18),
               phoneNumber: phoneController,
-              validators: () {},
+              validators: (value) {},
             ),
             Padding(
               padding: const EdgeInsets.only(
@@ -156,7 +154,14 @@ class _PhoneSignupState extends ConsumerState<PhoneSignup> {
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: pinController2,
                 maxLength: 4,
-                validator: (value) => Validators.validatePin(value!),
+                validator: (value) {
+                  if (value != pinController.text) {
+                    return "Pin not match";
+                  } else if (value == '') {
+                    return 'Fill out this form';
+                  }
+                  return null;
+                },
                 decoration: InputDecoration(
                     focusColor: const Color(0xff157253),
                     labelStyle: const TextStyle(
@@ -212,7 +217,7 @@ class _PhoneSignupState extends ConsumerState<PhoneSignup> {
                     ScaffoldMessenger.of(context).showSnackBar(
                         SnackBars.snackBars(
                             'User saved successfully', Colors.green.shade400));
-                    Navigator.pushReplacementNamed(context, '/phoneSignup');
+                    context.goNamed('signin');
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                         SnackBars.snackBars(
@@ -221,9 +226,30 @@ class _PhoneSignupState extends ConsumerState<PhoneSignup> {
                 }
               },
             ),
+            const SizedBox(height: 5),
+            LoginButton(
+              text: 'Register now Net',
+              actionField: () async{
+                if (_formKey.currentState!.validate()) {
+                  var _phoneNumber = "+$_countryCodes${phoneController.text}";
+                  var phoneRegister = await ref
+                      .read(usersProvider.notifier)
+                      .createUserPhone(User(
+                          firstName: firstNameController.text,
+                          lastName: lastNameController.text,
+                          phoneOrEmail: _phoneNumber,
+                          password: pinController.text,
+                          passwordConfirm: pinController.text));
+                  if(phoneRegister == 'success'){
+                    context.goNamed('dashboard');
+                  }
+                  debugPrint("Kigali rwanda");
+                }
+              },
+            ),
             HyperLinkText(
               directingText: 'Login instead',
-              actions: () => Navigator.pushReplacementNamed(context, '/login'),
+              actions: () => context.goNamed('signin'),
             ),
             CustomDevider(
               middleText: 'Or sign up with',
@@ -237,8 +263,7 @@ class _PhoneSignupState extends ConsumerState<PhoneSignup> {
                 children: [
                   CircledLogo(
                     logo: 'assets/images/categories/emailIcon.png',
-                    navigateTo: () =>
-                        Navigator.pushReplacementNamed(context, ("/signup")),
+                    navigateTo: () => context.goNamed('signup'),
                   ),
                   CircledLogo(
                     navigateTo: () {},

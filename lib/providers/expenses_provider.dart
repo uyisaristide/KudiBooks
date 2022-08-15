@@ -9,7 +9,7 @@ class ExpensesProvider extends StateNotifier<List<Expense>> {
     state = [...state, expense];
   }
 
-  removeExpense(Expense currentExpense) {
-    state = state.where((expense) => expense.id != currentExpense.id).toList();
+  removeExpense(Expense expense) {
+    state.removeWhere((element) => element.id == expense.id);
   }
 }
