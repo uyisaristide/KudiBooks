@@ -4,11 +4,13 @@ class SelectInputType extends StatelessWidget {
   List<String> itemsToSelect;
   Widget? dropDownHint;
   Function(String?)? selectedValue;
+  Function()? tapSelect;
   String? Function(String?)? validation;
 
   SelectInputType(
       {this.dropDownHint,
       this.validation,
+        this.tapSelect,
       required this.itemsToSelect,
       this.selectedValue,
       Key? key})

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:kudibooks_app/models/Users/ProductInLoad.dart';
 import 'package:kudibooks_app/models/product_model.dart';
 import 'package:kudibooks_app/providers/all_providers_list.dart';
@@ -55,7 +54,7 @@ class _ProductInLoadState extends ConsumerState<ProductInLoad> {
         children: [
           ListTile(
               trailing: IconButton(
-                onPressed: () => context.pop(),
+                onPressed: () => Navigator.pop(context),
                 icon: const Icon(Icons.close),
               ),
               title: const Text(
@@ -179,7 +178,7 @@ class _ProductInLoadState extends ConsumerState<ProductInLoad> {
                                   total: unitPrice.text.isEmpty
                                       ? 1
                                       : int.parse(unitPrice.text)));
-                          context.pop();
+                          Navigator.pop(context);
                         }
                       }),
                 ],
