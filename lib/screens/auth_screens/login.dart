@@ -96,9 +96,9 @@ class _LoginState extends ConsumerState<Login> {
                         onPressed: () => setState(() => isHidden = !isHidden),
                         icon: isHidden
                             ? const Icon(
-                                Icons.visibility,
-                                color: Colors.grey,
-                              )
+                          Icons.visibility,
+                          color: Colors.grey,
+                        )
                             : const Icon(Icons.visibility_off)),
                     focusedBorder: OutlineInputBorder(
                         borderSide: const BorderSide(
@@ -107,15 +107,15 @@ class _LoginState extends ConsumerState<Login> {
                     focusedErrorBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                             color: Validators.validatePassword(
-                                        passwordController.text) ==
-                                    null
+                                passwordController.text) ==
+                                null
                                 ? Colors.grey
                                 : Colors.red,
                             width: 1.0),
                         borderRadius: BorderRadius.circular(10.0)),
                     enabledBorder: OutlineInputBorder(
                         borderSide:
-                            const BorderSide(color: Colors.grey, width: 1.0),
+                        const BorderSide(color: Colors.grey, width: 1.0),
                         borderRadius: BorderRadius.circular(10.0)),
                     errorBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
@@ -131,55 +131,57 @@ class _LoginState extends ConsumerState<Login> {
             HyperLinkText(
               directingText: 'Forgot Password ?',
               actions: () {
-                print("Need to recover");
+                context.pushNamed('requestTokenEmail', extra: emailController.text);
               },
             ),
+            // LoginButton(
+            //   text: 'Login',
+            //   actionField: () {
+            //     if (_formKey.currentState!.validate()) {
+            //       context.goNamed('dashboard');
+            //       var checkUser = _user.where((element) =>
+            //           element.phoneOrEmail == emailController.text);
+            //       if (checkUser.isEmpty) {
+            //         ScaffoldMessenger.of(context).showSnackBar(
+            //             SnackBars.snackBars(
+            //                 'This user not found', Colors.redAccent));
+            //       } else if (checkUser.first.phoneOrEmail ==
+            //               emailController.text &&
+            //           checkUser.first.password == passwordController.text) {
+            //         context.goNamed('dashboard',
+            //             extra: checkUser.first.phoneOrEmail!);
+            //         // Navigator.pushReplacement(
+            //         //     context,
+            //         //     CupertinoPageRoute(
+            //         //         builder: (context) => NavigationBottom(
+            //         //               loggedUser: checkUser.first.phoneOrEmail!,
+            //         //             )));
+            //       } else {
+            //         ScaffoldMessenger.of(context).showSnackBar(
+            //             SnackBars.snackBars(
+            //                 'Incorrect password', Colors.redAccent));
+            //         print(
+            //             "Printed successfully ${checkUser.first.phoneOrEmail} and password is: ${checkUser.first.password}");
+            //       }
+            //     }
+            //   },
+            // ),
             LoginButton(
               text: 'Login',
-              actionField: () {
-                if (_formKey.currentState!.validate()) {
-                  context.goNamed('dashboard');
-                  // var checkUser = _user.where((element) =>
-                  //     element.phoneOrEmail == emailController.text);
-                  // if (checkUser.isEmpty) {
-                  //   ScaffoldMessenger.of(context).showSnackBar(
-                  //       SnackBars.snackBars(
-                  //           'This user not found', Colors.redAccent));
-                  // } else if (checkUser.first.phoneOrEmail ==
-                  //         emailController.text &&
-                  //     checkUser.first.password == passwordController.text) {
-                  //   context.goNamed('dashboard',
-                  //       extra: checkUser.first.phoneOrEmail!);
-                  //   // Navigator.pushReplacement(
-                  //   //     context,
-                  //   //     CupertinoPageRoute(
-                  //   //         builder: (context) => NavigationBottom(
-                  //   //               loggedUser: checkUser.first.phoneOrEmail!,
-                  //   //             )));
-                  // } else {
-                  //   ScaffoldMessenger.of(context).showSnackBar(
-                  //       SnackBars.snackBars(
-                  //           'Incorrect password', Colors.redAccent));
-                  //   print(
-                  //       "Printed successfully ${checkUser.first.phoneOrEmail} and password is: ${checkUser.first.password}");
-                  // }
-                }
-              },
-            ),
-            LoginButton(
-              text: 'Login net',
               actionField: () async {
                 if (_formKey.currentState!.validate()) {
                   String? check = await ref
                       .read(usersProvider.notifier)
                       .loginEmail(
-                          emailController.text, passwordController.text);
+                      emailController.text, passwordController.text);
                   if (check == "success") {
                     context.goNamed('dashboard');
                   } else if (check == "fail") {
                     ScaffoldMessenger.of(context).showSnackBar(
                         SnackBars.snackBars(
-                            "${ref.read(usersProvider.notifier).wrongCred}",
+                            "${ref
+                                .read(usersProvider.notifier)
+                                .wrongCred}",
                             Colors.redAccent));
                   }
                 }

@@ -15,15 +15,23 @@ class UserProvider extends StateNotifier<List<User>> {
     state = [...state, user];
   }
 
-  Future<Response> createUserEmail(User user) async {
+  createUserEmail(User user) async {
     Response response;
     try {
       response = await _dio.post('${DioServices.baseUrl}auth/register',
           data: user.toJsonEmail());
-      return response;
-    } on DioError catch (e) {
-      print('There is error named in this way ${e.response}');
-      throw e;
+      if (response.statusCode == 200) {
+        return "success";
+      } else {
+        return "fail";
+      }
+    } catch (e) {
+      if (e is DioError) {
+        debugPrint("${e.response?.data["errors"]} is an error");
+        throw e.response?.data["errors"] ?? e;
+      } else {
+        throw Exception(e);
+      }
     }
   }
 
@@ -96,18 +104,20 @@ class UserProvider extends StateNotifier<List<User>> {
       return "fail";
     } catch (e) {
       if (e is DioError) {
-        throw e.response?.data['errors'][0] ?? "Error";
+        debugPrint("Login email error: ${e.response?.data["message"]}");
+        throw e.response?.data['errors'] ?? e;
       } else {
         throw Exception(e);
       }
     }
   }
 
-  Future<String?> loginPhone(String phoneNumber, String password) async {
+  Future<String?> loginPhone(
+      {required String phoneNumber, required String pin}) async {
     Response loginResponse;
     try {
       loginResponse = await _dio.post('${DioServices.baseUrl}auth/login',
-          data: {"email": phoneNumber, "password": password});
+          data: {"phoneNumber": phoneNumber, "password": pin});
       if (loginResponse.statusCode == 200) {
         wrongCred = null;
         myToken = loginResponse.data["token"];
@@ -117,7 +127,8 @@ class UserProvider extends StateNotifier<List<User>> {
       return "fail";
     } catch (e) {
       if (e is DioError) {
-        throw e.response?.data['errors'][0] ?? "Error";
+        print(e.response?.data["message"]);
+        throw e.response?.data['errors'] ?? "Error $e";
       } else {
         throw Exception(e);
       }

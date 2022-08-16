@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kudibooks_app/models/product_model.dart';
 import 'package:kudibooks_app/screens/auth_screens/login.dart';
+import 'package:kudibooks_app/screens/auth_screens/otp_verification.dart';
 import 'package:kudibooks_app/screens/auth_screens/phone_login.dart';
+import 'package:kudibooks_app/screens/auth_screens/phone_reset_screen.dart';
 import 'package:kudibooks_app/screens/auth_screens/phone_signup.dart';
+import 'package:kudibooks_app/screens/auth_screens/request_token_email_screen.dart';
+import 'package:kudibooks_app/screens/auth_screens/reset_password.dart';
+import 'package:kudibooks_app/screens/auth_screens/reset_pin.dart';
 import 'package:kudibooks_app/screens/auth_screens/signup.dart';
 import 'package:kudibooks_app/screens/company/new_company.dart';
 import 'package:kudibooks_app/screens/dashboard/account_transfer.dart';
@@ -29,6 +34,7 @@ import 'package:kudibooks_app/screens/splash_screen/white_splash_screen.dart';
 import 'package:kudibooks_app/screens/welcome/welcome_screen.dart';
 
 GoRouter router = GoRouter(
+    urlPathStrategy: UrlPathStrategy.path,
     initialLocation: '/',
     errorBuilder: (context, state) => MaterialApp(
             home: Scaffold(
@@ -150,4 +156,43 @@ GoRouter router = GoRouter(
           name: 'newCompany',
           path: '/createCompany',
           builder: (context, state) => const NewCompany()),
+      GoRoute(
+        name: 'forget',
+        path: '/forgetPassword',
+        builder: (context, state) =>
+            PhoneReset(sentPhoneNumber: state.extra as String),
+      ),
+      GoRoute(
+        name: 'otpVerification',
+        path: '/verifyOTP',
+        builder: (context, state) =>
+            OtpVerification(phoneNumber: state.extra.toString()),
+      ),
+      GoRoute(
+          name: 'recoverScreen',
+          path: '/recoverScreens',
+          builder: (context, state) {
+            final phoneNumber = state.queryParams["phoneNumber"];
+            final otps = state.queryParams["otps"];
+            return ResetPin(
+              phoneNumber: phoneNumber,
+              sentOTP: otps,
+            );
+          }),
+      GoRoute(
+          name: 'requestTokenEmail',
+          path: '/requestEmail',
+          builder: (context, state) => EmailReset(
+                sentEmail: state.extra.toString(),
+              )),
+      GoRoute(
+          path: '/password/reset/:token',
+          builder: (context, state) {
+            final token = state.params["token"];
+            final email = state.queryParams["email"];
+            return ResetEmailPassword(
+              recoverEmail: email,
+              token: token,
+            );
+          })
     ]);
