@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive/hive.dart';
 import 'package:kudibooks_app/models/transition_chart.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/action_card.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/business_movement_cart.dart';
@@ -23,7 +24,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("Logged user is: $myToken");
+    debugPrint("Logged user is: ${Hive.box('tokens').get('token')}");
     return Scaffold(
         extendBodyBehindAppBar: true,
         drawer: Drawers(),

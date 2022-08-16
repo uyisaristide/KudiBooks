@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:hive/hive.dart';
 import 'package:kudibooks_app/providers/user_provider.dart';
 
 class DioServices {
@@ -6,7 +7,7 @@ class DioServices {
   static const baseUrl = "http://68.183.25.174/api/mobile/";
   static Map<String, String> mainHeader = {
     "Content-type": "application/json",
-    "Authorization": "Bearer $myToken"
+    "Authorization": "Bearer ${Hive.box('tokens').get('token')}"
   };
 
   DioServices() {

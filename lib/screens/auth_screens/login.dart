@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive/hive.dart';
 import 'package:kudibooks_app/models/Users/user_model.dart';
 import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/providers/user_provider.dart';
@@ -96,9 +97,9 @@ class _LoginState extends ConsumerState<Login> {
                         onPressed: () => setState(() => isHidden = !isHidden),
                         icon: isHidden
                             ? const Icon(
-                          Icons.visibility,
-                          color: Colors.grey,
-                        )
+                                Icons.visibility,
+                                color: Colors.grey,
+                              )
                             : const Icon(Icons.visibility_off)),
                     focusedBorder: OutlineInputBorder(
                         borderSide: const BorderSide(
@@ -107,15 +108,15 @@ class _LoginState extends ConsumerState<Login> {
                     focusedErrorBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                             color: Validators.validatePassword(
-                                passwordController.text) ==
-                                null
+                                        passwordController.text) ==
+                                    null
                                 ? Colors.grey
                                 : Colors.red,
                             width: 1.0),
                         borderRadius: BorderRadius.circular(10.0)),
                     enabledBorder: OutlineInputBorder(
                         borderSide:
-                        const BorderSide(color: Colors.grey, width: 1.0),
+                            const BorderSide(color: Colors.grey, width: 1.0),
                         borderRadius: BorderRadius.circular(10.0)),
                     errorBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
@@ -131,7 +132,8 @@ class _LoginState extends ConsumerState<Login> {
             HyperLinkText(
               directingText: 'Forgot Password ?',
               actions: () {
-                context.pushNamed('requestTokenEmail', extra: emailController.text);
+                context.pushNamed('requestTokenEmail',
+                    extra: emailController.text);
               },
             ),
             // LoginButton(
@@ -173,15 +175,15 @@ class _LoginState extends ConsumerState<Login> {
                   String? check = await ref
                       .read(usersProvider.notifier)
                       .loginEmail(
-                      emailController.text, passwordController.text);
+                          emailController.text, passwordController.text);
                   if (check == "success") {
+                    var tokenHive = await Hive.box('tokens').get('token');
+                    debugPrint("In Hive token: $tokenHive}");
                     context.goNamed('dashboard');
                   } else if (check == "fail") {
                     ScaffoldMessenger.of(context).showSnackBar(
                         SnackBars.snackBars(
-                            "${ref
-                                .read(usersProvider.notifier)
-                                .wrongCred}",
+                            "${ref.read(usersProvider.notifier).wrongCred}",
                             Colors.redAccent));
                   }
                 }

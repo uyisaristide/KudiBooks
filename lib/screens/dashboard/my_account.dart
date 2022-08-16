@@ -15,11 +15,11 @@ class MyAccountScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef loadUser) {
-    User? signedUser = loadUser
-        .watch(usersProvider)
-        .firstWhere((user) => user.phoneOrEmail == loggedUser);
+    // User? signedUser = loadUser
+    //     .watch(usersProvider)
+    //     .firstWhere((user) => user.phoneOrEmail == loggedUser);
     return Scaffold(
-      drawer: Drawers(userInfo: signedUser),
+      drawer: Drawers(),
       appBar: AppBarCommon.preferredSizeWidget(context, 'My Account'),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -59,14 +59,21 @@ class MyAccountScreen extends ConsumerWidget {
                         ),
                       ),
                     ),
-                    Text("${signedUser.firstName} ${signedUser.lastName}",
-                        style: const TextStyle(
+                    // Text("${signedUser.firstName} ${signedUser.lastName}",
+                    //     style: const TextStyle(
+                    //         fontSize: 24, fontWeight: FontWeight.bold)),
+                    const Text("Firstname Lastname",
+                        style: TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold)),
-                    Text(
-                        signedUser.phoneOrEmail == null
-                            ? ""
-                            : signedUser.phoneOrEmail!,
-                        style: const TextStyle(
+                    // Text(
+                    //     signedUser.phoneOrEmail == null
+                    //         ? ""
+                    //         : signedUser.phoneOrEmail!,
+                    //     style: const TextStyle(
+                    //       fontSize: 16,
+                    //     )),
+                    const Text("Phone and Email",
+                        style: TextStyle(
                           fontSize: 16,
                         )),
                     const SizedBox(

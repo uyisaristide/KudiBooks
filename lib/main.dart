@@ -1,9 +1,16 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:kudibooks_app/routers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
 
-void main() {
-  runApp(ProviderScope(child: MyApp()));
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Directory directory = await path_provider.getApplicationDocumentsDirectory();
+  Hive.init(directory.path);
+  await Hive.openBox('tokens');
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {

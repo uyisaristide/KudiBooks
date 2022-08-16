@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive/hive.dart';
 import 'package:kudibooks_app/models/Users/user_model.dart';
 import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
@@ -14,6 +15,8 @@ import 'package:kudibooks_app/screens/auth_screens/widgets/page_title.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/password_field.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/phone_input.dart';
 import 'package:kudibooks_app/screens/background.dart';
+
+import '../dashboard/classes/snack_bars.dart';
 
 class PhoneLogin extends ConsumerStatefulWidget {
   PhoneLogin({Key? key}) : super(key: key);
@@ -99,40 +102,40 @@ class _PhoneLoginState extends ConsumerState<PhoneLogin> {
             const SizedBox(
               height: 10,
             ),
-
             HyperLinkText(
               directingText: 'Forgot Pin ?',
               actions: () {
                 context.pushNamed('forget', extra: phoneController.text);
               },
             ),
-
-            // LoginButton(
-            //   text: 'Login',
-            //   actionField: () {
-            //     if (_formKey.currentState!.validate()) {
-            //       var checkUser = _users.where((element) =>
-            //           element.phoneOrEmail ==
-            //           _countryCode + phoneController.text);
-            //       if (checkUser.isEmpty) {
-            //         ScaffoldMessenger.of(context).showSnackBar(
-            //             SnackBars.snackBars(
-            //                 'This user not found', Colors.redAccent));
-            //       } else if (checkUser.first.phoneOrEmail ==
-            //               _countryCode + phoneController.text &&
-            //           checkUser.first.password == pinController.text) {
-            //         context.goNamed('dashboard');
-            //       } else {
-            //         ScaffoldMessenger.of(context).showSnackBar(
-            //             SnackBars.snackBars('Incorrect pin', Colors.redAccent));
-            //         debugPrint(
-            //             "Printed successfully ${checkUser.first.phoneOrEmail} and password is: ${checkUser.first.password}");
-            //       }
-            //       debugPrint(
-            //           "Country code is: ${_countryCode + phoneController.text}");
-            //     }
-            //   },
-            // ),
+            LoginButton(
+              text: 'Login local',
+              actionField: () {
+                // debugPrint("${Hive.box('tokens').get('token')}");
+                context.pushNamed('dashboard');
+                // if (_formKey.currentState!.validate()) {
+                //   var checkUser = _users.where((element) =>
+                //       element.phoneOrEmail ==
+                //       _countryCode + phoneController.text);
+                //   if (checkUser.isEmpty) {
+                //     ScaffoldMessenger.of(context).showSnackBar(
+                //         SnackBars.snackBars(
+                //             'This user not found', Colors.redAccent));
+                //   } else if (checkUser.first.phoneOrEmail ==
+                //           _countryCode + phoneController.text &&
+                //       checkUser.first.password == pinController.text) {
+                //     context.goNamed('dashboard');
+                //   } else {
+                //     ScaffoldMessenger.of(context).showSnackBar(
+                //         SnackBars.snackBars('Incorrect pin', Colors.redAccent));
+                //     debugPrint(
+                //         "Printed successfully ${checkUser.first.phoneOrEmail} and password is: ${checkUser.first.password}");
+                //   }
+                //   debugPrint(
+                //       "Country code is: ${_countryCode + phoneController.text}");
+                // }
+              },
+            ),
             LoginButton(
               text: 'Login',
               actionField: () async {
@@ -143,6 +146,8 @@ class _PhoneLoginState extends ConsumerState<PhoneLogin> {
                       .loginPhone(
                           phoneNumber: phoneNumber, pin: pinController.text);
                   if (result == "success") {
+                    var tokenHive = await Hive.box('tokens').get('token');
+                    debugPrint("In Hive token: $tokenHive}");
                     context.goNamed('dashboard');
                   } else {
                     debugPrint("Incorrect pin: $result");

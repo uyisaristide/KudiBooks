@@ -17,7 +17,7 @@ class ChartAccount extends StatelessWidget {
             padding: const EdgeInsets.all(15.0),
             elevation: 0.0,
             shape: const CircleBorder()),
-        onPressed: () => context.goNamed('newChartAccount'),
+        onPressed: () => context.pushNamed('newChartAccount'),
         child: const Text(
           '+',
           style: TextStyle(fontSize: 25),

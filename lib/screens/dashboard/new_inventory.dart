@@ -6,13 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:kudibooks_app/models/Users/ProductInLoad.dart';
 import 'package:kudibooks_app/models/inventory_model.dart';
-import 'package:kudibooks_app/models/product_model.dart';
-import 'package:kudibooks_app/models/Users/ProductInLoad.dart';
-import 'package:kudibooks_app/models/inventory_model.dart';
-import 'package:kudibooks_app/models/product_model.dart';
 import 'package:kudibooks_app/providers/all_providers_list.dart';
-import 'package:kudibooks_app/providers/inventory_provider.dart';
-import 'package:kudibooks_app/providers/product_provider.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/drop_down_widget.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
@@ -45,12 +39,8 @@ class _NewInventoryState extends ConsumerState<NewInventory> {
 
   @override
   Widget build(BuildContext context) {
-    
-    List<InventoryModel> inventoryProvidersList =
-        ref.watch(inventoryProvider);
-    
-    List<ProductModel> _productModel = ref.watch(productProvider);
-    List<ProductInLoadModel> _productsToLoad = ref.watch(productToLoadProvider);
+    var productModel = ref.watch(productProvider);
+    List<ProductInLoadModel> productsToLoad = ref.watch(productToLoadProvider);
 
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
@@ -62,18 +52,19 @@ class _NewInventoryState extends ConsumerState<NewInventory> {
                 text: 'Save',
                 actionField: () {
                   if (_formKey.currentState!.validate()) {
-                    ref.read(inventoryProvider.notifier).addInventory(InventoryModel(
-                        id: _randNumber.nextInt(500),
-                        bulkName: nameController.text,
-                        productList: _productsToLoad,
-                        amountPaid: double.parse(amountPaid.text),
-                        bankAccount: bankAccountsValue,
-                        deptAmount: double.parse(debtAmount.text),
-                        vendor: vendorListValue,
-                        transactionName: transactionNameController.text,
-                        transactionDate: transactionDateController.text,
-                        memoInventory: memoController.text));
-                    _productsToLoad.clear();
+                    ref.read(inventoryProvider.notifier).addInventory(
+                        InventoryModel(
+                            id: _randNumber.nextInt(500),
+                            bulkName: nameController.text,
+                            productList: productsToLoad,
+                            amountPaid: double.parse(amountPaid.text),
+                            bankAccount: bankAccountsValue,
+                            deptAmount: double.parse(debtAmount.text),
+                            vendor: vendorListValue,
+                            transactionName: transactionNameController.text,
+                            transactionDate: transactionDateController.text,
+                            memoInventory: memoController.text));
+                    productsToLoad.clear();
                     debugPrint("Saved");
                     context.pop();
                   }
@@ -112,23 +103,24 @@ class _NewInventoryState extends ConsumerState<NewInventory> {
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       String changeToInt =
-                          _productsToLoad[index].productId.toString();
+                          productsToLoad[index].productId.toString();
                       debugPrint(changeToInt);
-                      var _names = _productModel.firstWhere(
+                      var names = productModel.firstWhere(
                           (element) => element.id == int.parse(changeToInt));
 
                       return InventoryProductCard(
                         widgetPadding: Column(children: [
                           TwoSideHeader(
                             textFontSize: 16.0,
-                            leftSide: _names.productName,
+                            leftSide: names.productName,
                             fontWeight: FontWeight.bold,
                             rightSide: IconButton(
                               icon: const Icon(
                                 Icons.close,
                                 color: Color(0xffA34646),
                               ),
-                              onPressed: () => setState(() => ref.read(productToLoadProvider.notifier)
+                              onPressed: () => setState(() => ref
+                                  .read(productToLoadProvider.notifier)
                                   .removeLoadInModel(int.parse(changeToInt))),
                             ),
                             bottomSize: 10,
@@ -168,7 +160,7 @@ class _NewInventoryState extends ConsumerState<NewInventory> {
                     separatorBuilder: (_, idx) => const SizedBox(
                           height: 2,
                         ),
-                    itemCount: _productsToLoad.length),
+                    itemCount: productsToLoad.length),
               ),
               Container(
                 height: 100,
@@ -184,17 +176,8 @@ class _NewInventoryState extends ConsumerState<NewInventory> {
                     borderRadius: BorderRadius.circular(10.0)),
                 child: Center(
                     child: TextButton(
-                        onPressed: () => showModalBottomSheet(
-                            isDismissible: false,
-                            elevation: 0.0,
-                            shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(20.0),
-                                    topRight: Radius.circular(20.0))),
-                            context: context,
-                            builder: (context) {
-                              return const ProductInLoad();
-                            }),
+                        onPressed: () => DialogBox.dialogBox(
+                            const ProductInLoad(), context, null),
                         child: const Text(
                           "Add Product",
                           style:
@@ -325,4 +308,22 @@ class _NewInventoryState extends ConsumerState<NewInventory> {
       )),
     );
   }
+}
+
+class DialogBox {
+  static dialogBox(Widget dialogContent, context, double? height) =>
+      showModalBottomSheet(
+          isDismissible: false,
+          isScrollControlled: true,
+          elevation: 0.0,
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20.0),
+                  topRight: Radius.circular(20.0))),
+          context: context,
+          builder: (context) {
+            return SizedBox(
+                height: MediaQuery.of(context).size.height * (height ?? 0.60),
+                child: dialogContent);
+          });
 }

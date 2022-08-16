@@ -166,9 +166,18 @@ class Drawers extends ConsumerWidget {
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: LoginButton(
-                    text: 'Bank Login',
+                    text: 'Create Company',
                     actionField: () {
                       context.pushNamed('newCompany');
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: LoginButton(
+                    text: 'Bank Login',
+                    actionField: () {
+                      context.pushNamed('signin');
                     },
                   ),
                 ),

@@ -105,32 +105,6 @@ class _PhoneResetState extends ConsumerState<ResetEmailPassword> {
             const SizedBox(
               height: 10,
             ),
-            // LoginButton(
-            //   text: 'Login',
-            //   actionField: () {
-            //     if (_formKey.currentState!.validate()) {
-            //       var checkUser = _users.where((element) =>
-            //           element.phoneOrEmail ==
-            //           _countryCode + phoneController.text);
-            //       if (checkUser.isEmpty) {
-            //         ScaffoldMessenger.of(context).showSnackBar(
-            //             SnackBars.snackBars(
-            //                 'This user not found', Colors.redAccent));
-            //       } else if (checkUser.first.phoneOrEmail ==
-            //               _countryCode + phoneController.text &&
-            //           checkUser.first.password == pinController.text) {
-            //         context.goNamed('dashboard');
-            //       } else {
-            //         ScaffoldMessenger.of(context).showSnackBar(
-            //             SnackBars.snackBars('Incorrect pin', Colors.redAccent));
-            //         debugPrint(
-            //             "Printed successfully ${checkUser.first.phoneOrEmail} and password is: ${checkUser.first.password}");
-            //       }
-            //       debugPrint(
-            //           "Country code is: ${_countryCode + phoneController.text}");
-            //     }
-            //   },
-            // ),
             LoginButton(
               text: 'Reset',
               actionField: () async {
@@ -143,16 +117,16 @@ class _PhoneResetState extends ConsumerState<ResetEmailPassword> {
                           password: passwordController.text,
                           password_confirmation:
                               confirmPasswordController.text);
-                  debugPrint("able to reset ${responses.runtimeType}");
+                  // debugPrint("able to reset ${responses.runtimeType}");
                   if (responses == "success") {
-                    context.goNamed('signin');
                     ScaffoldMessenger.of(context).showSnackBar(
                         SnackBars.snackBars(
                             'Rested successfully', Colors.green.shade400));
+                    context.goNamed('signin');
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                         SnackBars.snackBars(
-                            'Reseted successfully', Colors.red.shade400));
+                            'Some error happened', Colors.red.shade400));
                   }
                 }
               },
@@ -163,3 +137,31 @@ class _PhoneResetState extends ConsumerState<ResetEmailPassword> {
     );
   }
 }
+
+
+// LoginButton(
+//   text: 'Login',
+//   actionField: () {
+//     if (_formKey.currentState!.validate()) {
+//       var checkUser = _users.where((element) =>
+//           element.phoneOrEmail ==
+//           _countryCode + phoneController.text);
+//       if (checkUser.isEmpty) {
+//         ScaffoldMessenger.of(context).showSnackBar(
+//             SnackBars.snackBars(
+//                 'This user not found', Colors.redAccent));
+//       } else if (checkUser.first.phoneOrEmail ==
+//               _countryCode + phoneController.text &&
+//           checkUser.first.password == pinController.text) {
+//         context.goNamed('dashboard');
+//       } else {
+//         ScaffoldMessenger.of(context).showSnackBar(
+//             SnackBars.snackBars('Incorrect pin', Colors.redAccent));
+//         debugPrint(
+//             "Printed successfully ${checkUser.first.phoneOrEmail} and password is: ${checkUser.first.password}");
+//       }
+//       debugPrint(
+//           "Country code is: ${_countryCode + phoneController.text}");
+//     }
+//   },
+// ),

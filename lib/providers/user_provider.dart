@@ -1,10 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:kudibooks_app/dio_services.dart';
 import 'package:kudibooks_app/models/Users/user_model.dart';
 
-String? myToken;
+String? myToken = "";
 
 class UserProvider extends StateNotifier<List<User>> {
   UserProvider() : super([]);
@@ -63,13 +64,15 @@ class UserProvider extends StateNotifier<List<User>> {
       debugPrint("Before map: $myToken");
       Map<String, String> mainHeader = {
         "Content-type": "application/json",
-        "Authorization": "Bearer $myToken"
+        "Authorization": "Bearer ${Hive.box('tokens').get('token')}"
       };
       logoutResponse = await _dio.get('${DioServices.baseUrl}auth/logout',
           options: Options(headers: mainHeader));
       if (logoutResponse.statusCode == 200) {
         debugPrint("${logoutResponse.statusCode} logged out successfully");
-        debugPrint("$myToken logged out successfully");
+        debugPrint("${Hive.box('tokens').get('token')} logged out successfully");
+        await Hive.openBox('tokens');
+        await Hive.box('tokens').delete('token');
         myToken = null;
         return "success";
       }
@@ -97,7 +100,10 @@ class UserProvider extends StateNotifier<List<User>> {
           data: {"email": email, "password": password});
       if (loginResponse.statusCode == 200) {
         wrongCred = null;
+        await Hive.openBox('tokens');
+        await Hive.box('tokens').put('token', loginResponse.data["token"]);
         myToken = loginResponse.data["token"];
+
         return "success";
       }
       wrongCred = "${loginResponse.data['message']}";
@@ -120,6 +126,9 @@ class UserProvider extends StateNotifier<List<User>> {
           data: {"phoneNumber": phoneNumber, "password": pin});
       if (loginResponse.statusCode == 200) {
         wrongCred = null;
+        await Hive.openBox('tokens');
+        Hive.box('tokens').put('token', loginResponse.data["token"]);
+        // Hive.box('tokens').put('token', '211|fypwIaljfZhLkrRzINT25vr2omXSXmG5wksFl53w');
         myToken = loginResponse.data["token"];
         return "success";
       }

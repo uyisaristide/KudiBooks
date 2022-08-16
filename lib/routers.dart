@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive/hive.dart';
 import 'package:kudibooks_app/models/product_model.dart';
 import 'package:kudibooks_app/screens/auth_screens/login.dart';
 import 'package:kudibooks_app/screens/auth_screens/otp_verification.dart';
@@ -34,6 +35,13 @@ import 'package:kudibooks_app/screens/splash_screen/white_splash_screen.dart';
 import 'package:kudibooks_app/screens/welcome/welcome_screen.dart';
 
 GoRouter router = GoRouter(
+    redirect: (state) {
+      String token = Hive.box('tokens').get('token');
+      final goingToLogin = state.location == '/';
+      if (token.isEmpty && !goingToLogin) return '/login';
+      if (token.isNotEmpty && goingToLogin) return '/homeScreen';
+      return null;
+    },
     urlPathStrategy: UrlPathStrategy.path,
     initialLocation: '/',
     errorBuilder: (context, state) => MaterialApp(
@@ -117,7 +125,7 @@ GoRouter router = GoRouter(
           builder: (context, state) => NewAccount()),
       GoRoute(
           name: 'chartAccount',
-          path: '/newChartOfAccounts',
+          path: '/listOfAccounts',
           builder: (context, state) => const ChartAccount()),
       GoRoute(
           name: 'newProduct',
