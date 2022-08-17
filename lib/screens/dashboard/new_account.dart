@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kudibooks_app/models/chart_of_account_model.dart';
 import 'package:kudibooks_app/providers/all_providers_list.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/drop_down_widget.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
 import 'package:kudibooks_app/screens/dashboard/new_inventory.dart';
@@ -28,6 +27,8 @@ class _NewAccountState extends ConsumerState<NewAccount> {
   final nameController = TextEditingController();
   final codeController = TextEditingController();
   final noteController = TextEditingController();
+  var accountTypeController = TextEditingController();
+  var expenseCategoryController = TextEditingController();
 
   int accountCode = 0;
   String selectedName = '';
@@ -38,7 +39,7 @@ class _NewAccountState extends ConsumerState<NewAccount> {
   selectedValueFunction(AccountName accountName) {
     setState(() {
       accountCode = accountName.code;
-      selectedName = accountName.name;
+      accountTypeController = TextEditingController(text: accountName.name);
       selectedType = accountName.type;
     });
   }
@@ -47,6 +48,8 @@ class _NewAccountState extends ConsumerState<NewAccount> {
     setState(() {
       expenseCategoryId = expenseCategory.id;
       expenseCategoryName = expenseCategory.name;
+      expenseCategoryController =
+          TextEditingController(text: expenseCategory.name);
     });
   }
 
@@ -100,27 +103,39 @@ class _NewAccountState extends ConsumerState<NewAccount> {
               key: _formKey,
               child: Column(
                 children: [
-                  GestureDetector(
-                    onTap: () => DialogBox.dialogBox(
+                  CustomFormField(
+                    fieldIcon: const Icon(Icons.arrow_drop_down),
+                    inputType: TextInputType.none,
+                    calendarPicker: () => DialogBox.dialogBox(
                         AccountTypes(selectedValueFunction), context, 0.80),
-                    child: SelectInputType(
-                      itemsToSelect: [],
-                      dropDownHint: Text(
-                          selectedName != '' ? selectedName : 'Select type'),
-                    ),
+                    validators: (value) {
+                      if (value.toString().isEmpty) {
+                        return "Enter account Name";
+                      }
+                      return null;
+                    },
+                    hintText: 'Select type',
+                    isShown: false,
+                    fieldController: accountTypeController,
                   ),
                   if (selectedType == 5)
-                    GestureDetector(
-                        onTap: () => DialogBox.dialogBox(
-                            ExpenseCategories(selectedExpenseCategory),
-                            context,
-                            0.25),
-                        child: SelectInputType(
-                          itemsToSelect: [],
-                          dropDownHint: Text(expenseCategoryName != ''
-                              ? expenseCategoryName
-                              : 'Select expense category'),
-                        ))
+                    CustomFormField(
+                      fieldIcon: const Icon(Icons.arrow_drop_down),
+                      inputType: TextInputType.none,
+                      calendarPicker: () => DialogBox.dialogBox(
+                          ExpenseCategories(selectedExpenseCategory),
+                          context,
+                          0.25),
+                      validators: (value) {
+                        if (value.toString().isEmpty) {
+                          return "Enter account Name";
+                        }
+                        return null;
+                      },
+                      hintText: 'Select type',
+                      isShown: false,
+                      fieldController: expenseCategoryController,
+                    )
                   else
                     Container(),
                   CustomFormField(

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kudibooks_app/models/Users/user_model.dart';
-import 'package:kudibooks_app/providers/all_providers_list.dart';
-import 'package:kudibooks_app/providers/user_provider.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
 

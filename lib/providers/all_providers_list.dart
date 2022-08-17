@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/Users/ProductInLoad.dart';
 import 'package:kudibooks_app/models/Users/products_sold_model.dart';
 import 'package:kudibooks_app/models/Users/user_model.dart';
+import 'package:kudibooks_app/models/chart_accounts.dart';
 import 'package:kudibooks_app/models/client_model.dart';
 import 'package:kudibooks_app/models/company_model.dart';
 import 'package:kudibooks_app/models/expense_model.dart';
@@ -9,6 +10,7 @@ import 'package:kudibooks_app/models/inventory_model.dart';
 import 'package:kudibooks_app/models/product_model.dart';
 import 'package:kudibooks_app/models/product_sale_model.dart';
 import 'package:kudibooks_app/providers/chart_of_account.dart';
+import 'package:kudibooks_app/providers/charts_account_list.dart';
 import 'package:kudibooks_app/providers/client_provider.dart';
 import 'package:kudibooks_app/providers/company_provider.dart';
 import 'package:kudibooks_app/providers/expenses_provider.dart';
@@ -51,3 +53,4 @@ final authProvider =
 final chartAccountProvider =
     StateNotifierProvider<ChartAccountProvider, List>(
         (ref) => ChartAccountProvider());
+final allAccountsProvider = StateNotifierProvider<AllChartAccountsProvider, List<Accounts>>((ref) => AllChartAccountsProvider());
