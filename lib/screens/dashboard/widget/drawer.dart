@@ -153,7 +153,7 @@ class Drawers extends ConsumerWidget {
                   child: LoginButton(
                     text: 'Logout',
                     actionField: () async {
-                      String? response =
+                      String response =
                           await ref.read(usersProvider.notifier).logout();
                       if (response == 'success') {
                         context.goNamed('signin');

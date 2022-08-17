@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive/hive.dart';
+import 'package:kudibooks_app/models/account_type.dart';
 import 'package:kudibooks_app/models/product_model.dart';
 import 'package:kudibooks_app/screens/auth_screens/login.dart';
 import 'package:kudibooks_app/screens/auth_screens/otp_verification.dart';
@@ -17,6 +18,7 @@ import 'package:kudibooks_app/screens/dashboard/all_transaction.dart';
 import 'package:kudibooks_app/screens/dashboard/chart_of_account.dart';
 import 'package:kudibooks_app/screens/dashboard/client_deposit.dart';
 import 'package:kudibooks_app/screens/dashboard/client_list.dart';
+import 'package:kudibooks_app/screens/dashboard/edit_chart_screen.dart';
 import 'package:kudibooks_app/screens/dashboard/inventory_deduction.dart';
 import 'package:kudibooks_app/screens/dashboard/loads.dart';
 import 'package:kudibooks_app/screens/dashboard/new_account.dart';
@@ -36,10 +38,15 @@ import 'package:kudibooks_app/screens/welcome/welcome_screen.dart';
 
 GoRouter router = GoRouter(
     redirect: (state) {
-      String token = Hive.box('tokens').get('token');
+      var token = Hive.box('tokens').get('token');
+      debugPrint("Kigali Token: $token");
+
       final goingToLogin = state.location == '/';
-      if (token.isEmpty && !goingToLogin) return '/login';
-      if (token.isNotEmpty && goingToLogin) return '/homeScreen';
+      if (token == null && goingToLogin) {
+        return '/login';
+      } else if (token != null && goingToLogin) {
+        return '/homeScreen';
+      }
       return null;
     },
     urlPathStrategy: UrlPathStrategy.path,
@@ -77,6 +84,12 @@ GoRouter router = GoRouter(
           name: 'signin',
           path: '/login',
           builder: (context, state) => const Login()),
+      GoRoute(
+          name: "editChart",
+          path: '/editChart',
+          builder: (context, state) {
+            return EditCharts();
+          }),
       GoRoute(
           name: 'loginPhone',
           path: '/signinPhone',

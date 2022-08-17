@@ -35,4 +35,29 @@ class AllChartAccountsProvider extends StateNotifier<List<Accounts>> {
       }
     }
   }
+
+  Future removeChart(int chartId) async {
+    debugPrint("This is id: $chartId");
+    try {
+      Map<String, dynamic> chartHeaders = {
+        "Content-type": "application/json",
+        "Authorization": "Bearer ${Hive.box('tokens').get('token')}",
+        "companyID": 29
+      };
+      Response response = await _dio.delete(
+          '${DioServices.baseUrl}app/chart/delete/$chartId}',
+          options: Options(headers: chartHeaders));
+      if (response.statusCode == 200) {
+        return 'success';
+      } else {
+        return 'fail';
+      }
+    } catch (e) {
+      if (e is DioError) {
+        throw e.response?.data["error"] ?? e.response?.data["message"];
+      } else {
+        throw Exception(e);
+      }
+    }
+  }
 }

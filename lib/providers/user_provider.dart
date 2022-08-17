@@ -58,7 +58,7 @@ class UserProvider extends StateNotifier<List<User>> {
     }
   }
 
-  Future<String?> logout() async {
+  Future logout() async {
     Response logoutResponse;
     try {
       debugPrint("Before map: $myToken");
@@ -73,11 +73,8 @@ class UserProvider extends StateNotifier<List<User>> {
         debugPrint("${Hive.box('tokens').get('token')} logged out successfully");
         await Hive.openBox('tokens');
         await Hive.box('tokens').delete('token');
-        myToken = null;
         return "success";
       }
-
-      return "failed";
     } on DioError catch (e) {
       debugPrint("${e.response}");
     }
