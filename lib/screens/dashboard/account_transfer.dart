@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/drop_down_widget.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
+import '../auth_screens/validators/validator.dart';
+import '../auth_screens/widgets/drop_down_widget.dart';
+import '../auth_screens/widgets/login_button.dart';
+import '../auth_screens/widgets/text_form_field.dart';
+import 'widget/common_appBar.dart';
 
 class AccountTransfer extends StatelessWidget {
   AccountTransfer({Key? key}) : super(key: key);
@@ -41,14 +41,14 @@ class AccountTransfer extends StatelessWidget {
                     'Withdraw from',
                     style: TextStyle(color: Colors.grey, fontSize: 16),
                   ),
-                  itemsToSelect: [],
+                  itemsToSelect: const [],
                 ),
                 SelectInputType(
                   dropDownHint: const Text(
                     'Withdraw to',
                     style: TextStyle(color: Colors.grey, fontSize: 16),
                   ),
-                  itemsToSelect: [],
+                  itemsToSelect: const [],
                 ),
                 CustomFormField(
                     validators: (value) {

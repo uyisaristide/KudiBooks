@@ -1,54 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hive/hive.dart';
-import 'package:kudibooks_app/models/account_type.dart';
-import 'package:kudibooks_app/models/product_model.dart';
-import 'package:kudibooks_app/screens/auth_screens/login.dart';
-import 'package:kudibooks_app/screens/auth_screens/otp_verification.dart';
-import 'package:kudibooks_app/screens/auth_screens/phone_login.dart';
-import 'package:kudibooks_app/screens/auth_screens/phone_reset_screen.dart';
-import 'package:kudibooks_app/screens/auth_screens/phone_signup.dart';
-import 'package:kudibooks_app/screens/auth_screens/request_token_email_screen.dart';
-import 'package:kudibooks_app/screens/auth_screens/reset_password.dart';
-import 'package:kudibooks_app/screens/auth_screens/reset_pin.dart';
-import 'package:kudibooks_app/screens/auth_screens/signup.dart';
-import 'package:kudibooks_app/screens/company/new_company.dart';
-import 'package:kudibooks_app/screens/dashboard/account_transfer.dart';
-import 'package:kudibooks_app/screens/dashboard/all_transaction.dart';
-import 'package:kudibooks_app/screens/dashboard/chart_of_account.dart';
-import 'package:kudibooks_app/screens/dashboard/client_deposit.dart';
-import 'package:kudibooks_app/screens/dashboard/client_list.dart';
-import 'package:kudibooks_app/screens/dashboard/edit_chart_screen.dart';
-import 'package:kudibooks_app/screens/dashboard/inventory_deduction.dart';
-import 'package:kudibooks_app/screens/dashboard/loads.dart';
-import 'package:kudibooks_app/screens/dashboard/new_account.dart';
-import 'package:kudibooks_app/screens/dashboard/new_client.dart';
-import 'package:kudibooks_app/screens/dashboard/new_expense.dart';
-import 'package:kudibooks_app/screens/dashboard/new_inventory.dart';
-import 'package:kudibooks_app/screens/dashboard/new_product.dart';
-import 'package:kudibooks_app/screens/dashboard/product_details.dart';
-import 'package:kudibooks_app/screens/dashboard/product_sale.dart';
-import 'package:kudibooks_app/screens/dashboard/products.dart';
-import 'package:kudibooks_app/screens/dashboard/reports.dart';
-import 'package:kudibooks_app/screens/dashboard/settings_screen.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/bottom_navigation.dart';
-import 'package:kudibooks_app/screens/splash_screen/green_splash_screen.dart';
-import 'package:kudibooks_app/screens/splash_screen/white_splash_screen.dart';
-import 'package:kudibooks_app/screens/welcome/welcome_screen.dart';
+import 'models/product_model.dart';
+import 'screens/auth_screens/login.dart';
+import 'screens/auth_screens/otp_verification.dart';
+import 'screens/auth_screens/phone_login.dart';
+import 'screens/auth_screens/phone_reset_screen.dart';
+import 'screens/auth_screens/phone_signup.dart';
+import 'screens/auth_screens/request_token_email_screen.dart';
+import 'screens/auth_screens/reset_password.dart';
+import 'screens/auth_screens/reset_pin.dart';
+import 'screens/auth_screens/signup.dart';
+import 'screens/company/new_company.dart';
+import 'screens/dashboard/account_transfer.dart';
+import 'screens/dashboard/all_transaction.dart';
+import 'screens/dashboard/chart_of_account.dart';
+import 'screens/dashboard/client_deposit.dart';
+import 'screens/dashboard/client_list.dart';
+import 'screens/dashboard/edit_chart_screen.dart';
+import 'screens/dashboard/inventory_deduction.dart';
+import 'screens/dashboard/loads.dart';
+import 'screens/dashboard/new_account.dart';
+import 'screens/dashboard/new_client.dart';
+import 'screens/dashboard/new_expense.dart';
+import 'screens/dashboard/new_inventory.dart';
+import 'screens/dashboard/new_product.dart';
+import 'screens/dashboard/product_details.dart';
+import 'screens/dashboard/product_sale.dart';
+import 'screens/dashboard/products.dart';
+import 'screens/dashboard/reports.dart';
+import 'screens/dashboard/settings_screen.dart';
+import 'screens/dashboard/widget/bottom_navigation.dart';
+import 'screens/splash_screen/green_splash_screen.dart';
+import 'screens/splash_screen/white_splash_screen.dart';
+import 'screens/welcome/welcome_screen.dart';
 
 GoRouter router = GoRouter(
-    redirect: (state) {
-      var token = Hive.box('tokens').get('token');
-      debugPrint("Kigali Token: $token");
-
-      final goingToLogin = state.location == '/';
-      if (token == null && goingToLogin) {
-        return '/login';
-      } else if (token != null && goingToLogin) {
-        return '/homeScreen';
-      }
-      return null;
-    },
+    // redirect: (state) {
+    //   var token = Hive.box('tokens').get('token');
+    //   debugPrint("Kigali Token: $token");
+    //
+    //   final goingToLogin = state.location == '/';
+    //   if (token == null && goingToLogin) {
+    //     return '/login';
+    //   } else if (token != null && goingToLogin) {
+    //     return '/homeScreen';
+    //   }
+    //   return null;
+    // },
     urlPathStrategy: UrlPathStrategy.path,
     initialLocation: '/',
     errorBuilder: (context, state) => MaterialApp(
@@ -79,7 +77,7 @@ GoRouter router = GoRouter(
       GoRoute(
           name: 'signup',
           path: '/createUserEmail',
-          builder: (context, state) => SignUp()),
+          builder: (context, state) => const SignUp()),
       GoRoute(
           name: 'signin',
           path: '/login',
@@ -88,22 +86,22 @@ GoRouter router = GoRouter(
           name: "editChart",
           path: '/editChart',
           builder: (context, state) {
-            return EditCharts();
+            return const EditCharts();
           }),
       GoRoute(
           name: 'loginPhone',
           path: '/signinPhone',
-          builder: (context, state) => PhoneLogin()),
+          builder: (context, state) => const PhoneLogin()),
       GoRoute(
           name: 'signupPhone',
           path: '/createUserPhone',
-          builder: (context, state) => PhoneSignup()),
+          builder: (context, state) => const PhoneSignup()),
 
       //Dashboard screen routes
       GoRoute(
           name: 'dashboard',
           path: '/homeScreen',
-          builder: (context, state) => NavigationBottom()),
+          builder: (context, state) => const NavigationBottom()),
       GoRoute(
           name: 'sell',
           path: '/sellProduct',
@@ -111,7 +109,7 @@ GoRouter router = GoRouter(
       GoRoute(
           name: 'createInventory',
           path: '/newInventory',
-          builder: (context, state) => NewInventory()),
+          builder: (context, state) => const NewInventory()),
       GoRoute(
           name: 'createExpense',
           path: '/newExpense',
@@ -119,7 +117,7 @@ GoRouter router = GoRouter(
       GoRoute(
           name: 'inventoryDeduction',
           path: '/newInventoryDeduction',
-          builder: (context, state) => InventoryDeduction()),
+          builder: (context, state) => const InventoryDeduction()),
       GoRoute(
           name: 'depositClient',
           path: '/clientDeposit',
@@ -134,8 +132,13 @@ GoRouter router = GoRouter(
           builder: (context, state) => AllTransaction()),
       GoRoute(
           name: 'newChartAccount',
-          path: '/newChartOfAccounts',
-          builder: (context, state) => NewAccount()),
+          path: '/newChartOfAccounts/:id',
+          builder: (context, state) {
+            final id = state.params['id'];
+            return NewAccount(
+              accountId: int.parse(id.toString()),
+            );
+          }),
       GoRoute(
           name: 'chartAccount',
           path: '/listOfAccounts',
@@ -143,7 +146,7 @@ GoRouter router = GoRouter(
       GoRoute(
           name: 'newProduct',
           path: '/createProduct',
-          builder: (context, state) => NewProduct()),
+          builder: (context, state) => const NewProduct()),
       GoRoute(
           name: 'screenProducts',
           path: '/productScreens',
@@ -159,7 +162,7 @@ GoRouter router = GoRouter(
       GoRoute(
           name: 'newClient',
           path: '/createClient',
-          builder: (context, state) => NewClient()),
+          builder: (context, state) => const NewClient()),
       GoRoute(
           name: 'reports',
           path: '/reportsScreen',

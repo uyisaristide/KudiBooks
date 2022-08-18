@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
+import 'widget/common_appBar.dart';
+import 'widget/drawer.dart';
 
 class MyAccountScreen extends ConsumerWidget {
   String? loggedUser;

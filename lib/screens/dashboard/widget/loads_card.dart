@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kudibooks_app/models/inventory_model.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/double_header_two.dart';
+import '../../../models/inventory_model.dart';
+import 'double_header_two.dart';
 
 class LoadCard extends StatelessWidget {
   InventoryModel inventoryModel;

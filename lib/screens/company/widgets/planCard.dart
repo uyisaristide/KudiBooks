@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kudibooks_app/models/plan.dart';
+import '../../../models/plan.dart';
 
 class PlanCard extends StatelessWidget {
   PurchasePlan purchasePlan;

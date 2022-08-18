@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kudibooks_app/screens/dashboard/classes/sliver_delegate_search.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/progress_row.dart';
+import 'classes/sliver_delegate_search.dart';
 import 'widget/progress_row.dart';
 
 class ClientList extends StatelessWidget {

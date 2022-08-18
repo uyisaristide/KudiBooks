@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kudibooks_app/screens/dashboard/classes/pie_chart_data.dart';
+import 'classes/pie_chart_data.dart';
 
 class IndicatorsWidget extends StatelessWidget {
   const IndicatorsWidget({Key? key}) : super(key: key);

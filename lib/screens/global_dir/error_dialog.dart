@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:kudibooks_app/screens/dashboard/classes/snack_bars.dart';
+import '../dashboard/classes/snack_bars.dart';
 
 class ErrorDialogClass extends ConsumerWidget {
   String errors;

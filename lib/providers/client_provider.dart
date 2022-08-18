@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:kudibooks_app/dio_services.dart';
-import 'package:kudibooks_app/models/client_model.dart';
-import 'package:kudibooks_app/providers/user_provider.dart';
+import '../dio_services.dart';
+import '../models/client_model.dart';
+import 'user_provider.dart';
 
 class ClientNotifier extends StateNotifier<List<ClientModel>> {
   ClientNotifier() : super([]);

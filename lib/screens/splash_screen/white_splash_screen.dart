@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kudibooks_app/screens/splash_screen/widgets/splash.dart';
+import 'widgets/splash.dart';
 
 class WhiteSplashScreen extends StatefulWidget {
   const WhiteSplashScreen({Key? key}) : super(key: key);

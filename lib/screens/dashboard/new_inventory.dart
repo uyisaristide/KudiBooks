@@ -4,20 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:kudibooks_app/models/Users/ProductInLoad.dart';
-import 'package:kudibooks_app/models/inventory_model.dart';
-import 'package:kudibooks_app/providers/all_providers_list.dart';
-import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/drop_down_widget.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/double_header_two.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/inventory_card.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/load_product.dart';
+import '../../models/Users/ProductInLoad.dart';
+import '../../models/inventory_model.dart';
+import '../../providers/all_providers_list.dart';
+import '../auth_screens/validators/validator.dart';
+import '../auth_screens/widgets/drop_down_widget.dart';
+import '../auth_screens/widgets/login_button.dart';
+import '../auth_screens/widgets/text_form_field.dart';
+import 'widget/common_appBar.dart';
+import 'widget/double_header_two.dart';
+import 'widget/inventory_card.dart';
+import 'widget/load_product.dart';
 
 class NewInventory extends ConsumerStatefulWidget {
-  NewInventory({Key? key}) : super(key: key);
+  const NewInventory({Key? key}) : super(key: key);
 
   @override
   ConsumerState<NewInventory> createState() => _NewInventoryState();

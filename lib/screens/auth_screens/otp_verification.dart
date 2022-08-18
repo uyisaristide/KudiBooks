@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kudibooks_app/providers/all_providers_list.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/hyperlink_text.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/page_title.dart';
-import 'package:kudibooks_app/screens/background.dart';
+import '../../providers/all_providers_list.dart';
+import 'widgets/hyperlink_text.dart';
+import 'widgets/page_title.dart';
+import '../background.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 import '../dashboard/classes/snack_bars.dart';

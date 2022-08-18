@@ -2,8 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
-import 'package:kudibooks_app/dio_services.dart';
-import 'package:kudibooks_app/models/chart_accounts.dart';
+import '../dio_services.dart';
+import '../models/chart_accounts.dart';
 
 class AllChartAccountsProvider extends StateNotifier<List<Accounts>> {
   AllChartAccountsProvider() : super([]);

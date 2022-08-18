@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:kudibooks_app/dio_services.dart';
-import 'package:kudibooks_app/models/company_model.dart';
+import '../dio_services.dart';
+import '../models/company_model.dart';
 
 class CompanyProvider extends StateNotifier<List<Company>> {
   CompanyProvider() : super([]);
@@ -28,5 +28,6 @@ class CompanyProvider extends StateNotifier<List<Company>> {
         throw Exception("Error");
       }
     }
+    return null;
   }
 }

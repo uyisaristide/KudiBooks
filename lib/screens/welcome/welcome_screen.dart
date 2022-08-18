@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kudibooks_app/models/services_model.dart';
-import 'package:kudibooks_app/screens/welcome/widgets/carousel_card.dart';
+import '../../models/services_model.dart';
+import 'widgets/carousel_card.dart';
 import 'widgets/background_stack.dart';
 
 class WelcomeScreen extends StatefulWidget {

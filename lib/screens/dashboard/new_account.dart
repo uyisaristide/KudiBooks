@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kudibooks_app/models/chart_of_account_model.dart';
-import 'package:kudibooks_app/providers/all_providers_list.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
-import 'package:kudibooks_app/screens/dashboard/new_inventory.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/accountTypebottomSheet.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
+import '../../models/chart_of_account_model.dart';
+import '../../providers/all_providers_list.dart';
+import '../auth_screens/widgets/login_button.dart';
+import '../auth_screens/widgets/text_form_field.dart';
+import 'new_inventory.dart';
+import 'widget/accountTypebottomSheet.dart';
+import 'widget/common_appBar.dart';
 
 import '../../models/account_type.dart';
 import 'classes/snack_bars.dart';
 
 class NewAccount extends ConsumerStatefulWidget {
-  const NewAccount({Key? key}) : super(key: key);
+  int? accountId;
+  NewAccount({Key? key, this.accountId}) : super(key: key);
 
   @override
   ConsumerState<NewAccount> createState() => _NewAccountState();
@@ -52,12 +53,12 @@ class _NewAccountState extends ConsumerState<NewAccount> {
           TextEditingController(text: expenseCategory.name);
     });
   }
-
   List<ExpenseCategory> expenseCategories = [];
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("$expenseCategoryId");
+    debugPrint("This is provided id: ${widget.accountId}");
+    debugPrint("Expense: $expenseCategoryId");
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
           color: Colors.transparent,

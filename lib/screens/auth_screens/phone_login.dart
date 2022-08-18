@@ -1,25 +1,23 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive/hive.dart';
-import 'package:kudibooks_app/models/Users/user_model.dart';
-import 'package:kudibooks_app/providers/all_providers_list.dart';
-import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/circled_logo.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/custom_devider.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/hyperlink_text.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/lock_icon.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/page_title.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/password_field.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/phone_input.dart';
-import 'package:kudibooks_app/screens/background.dart';
+import '../../models/Users/user_model.dart';
+import '../../providers/all_providers_list.dart';
+import 'validators/validator.dart';
+import 'widgets/circled_logo.dart';
+import 'widgets/custom_devider.dart';
+import 'widgets/hyperlink_text.dart';
+import 'widgets/lock_icon.dart';
+import 'widgets/login_button.dart';
+import 'widgets/page_title.dart';
+import 'widgets/password_field.dart';
+import 'widgets/phone_input.dart';
+import '../background.dart';
 
-import '../dashboard/classes/snack_bars.dart';
 
 class PhoneLogin extends ConsumerStatefulWidget {
-  PhoneLogin({Key? key}) : super(key: key);
+  const PhoneLogin({Key? key}) : super(key: key);
 
   @override
   ConsumerState<PhoneLogin> createState() => _PhoneLoginState();
@@ -72,7 +70,9 @@ class _PhoneLoginState extends ConsumerState<PhoneLogin> {
             const LockIcon(),
             const PageTitle(title: 'Account Sign In'),
             PhoneField(
-              validators: (value) {},
+              validators: (value) {
+                return null;
+              },
               countryCodes: (country) {
                 _countryCode = country.dialCode;
                 debugPrint(_countryCode);

@@ -1,7 +1,6 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:kudibooks_app/models/services_model.dart';
+import '../../../models/services_model.dart';
 
 class CarouselCard extends StatelessWidget {
   CarouselsCard carouselsCard;

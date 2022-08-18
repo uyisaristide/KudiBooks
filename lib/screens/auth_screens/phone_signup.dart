@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kudibooks_app/models/Users/user_model.dart';
-import 'package:kudibooks_app/providers/all_providers_list.dart';
-import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/circled_logo.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/custom_devider.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/hyperlink_text.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/page_title.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/phone_input.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
-import 'package:kudibooks_app/screens/background.dart';
+import '../../models/Users/user_model.dart';
+import '../../providers/all_providers_list.dart';
+import 'validators/validator.dart';
+import 'widgets/circled_logo.dart';
+import 'widgets/custom_devider.dart';
+import 'widgets/hyperlink_text.dart';
+import 'widgets/login_button.dart';
+import 'widgets/page_title.dart';
+import 'widgets/phone_input.dart';
+import 'widgets/text_form_field.dart';
+import '../background.dart';
 import 'package:collection/collection.dart';
 
 import '../dashboard/classes/snack_bars.dart';
 
 class PhoneSignup extends ConsumerStatefulWidget {
-  PhoneSignup({Key? key}) : super(key: key);
+  const PhoneSignup({Key? key}) : super(key: key);
 
   @override
   ConsumerState<PhoneSignup> createState() => _PhoneSignupState();
@@ -89,7 +89,9 @@ class _PhoneSignupState extends ConsumerState<PhoneSignup> {
               },
               fieldIcon: const Icon(Icons.phone, size: 18),
               phoneNumber: phoneController,
-              validators: (value) {},
+              validators: (value) {
+                return null;
+              },
             ),
             Padding(
               padding: const EdgeInsets.only(

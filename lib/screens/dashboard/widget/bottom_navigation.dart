@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:kudibooks_app/screens/dashboard/alert_screen.dart';
-import 'package:kudibooks_app/screens/dashboard/dashboard.dart';
-import 'package:kudibooks_app/screens/dashboard/inventory.dart';
-import 'package:kudibooks_app/screens/dashboard/my_account.dart';
+import '../alert_screen.dart';
+import '../dashboard.dart';
+import '../inventory.dart';
+import '../my_account.dart';
 
 class NavigationBottom extends StatefulWidget {
 
-  NavigationBottom({Key? key}) : super(key: key);
+  const NavigationBottom({Key? key}) : super(key: key);
 
   @override
   State<NavigationBottom> createState() => _NavigationBottomState();

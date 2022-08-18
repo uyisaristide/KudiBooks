@@ -2,21 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kudibooks_app/models/Users/user_model.dart';
-import 'package:kudibooks_app/models/inventory_model.dart';
-import 'package:kudibooks_app/models/product_model.dart';
-import 'package:kudibooks_app/providers/all_providers_list.dart';
-import 'package:kudibooks_app/providers/inventory_provider.dart';
-import 'package:kudibooks_app/providers/product_provider.dart';
-import 'package:kudibooks_app/providers/user_provider.dart';
-import 'package:kudibooks_app/screens/dashboard/classes/sliver_delegate_search.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/button_widget.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/loads_card.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/product_listtile.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/search_input.dart';
+import '../../models/inventory_model.dart';
+import '../../models/product_model.dart';
+import '../../providers/all_providers_list.dart';
+import 'classes/sliver_delegate_search.dart';
+import 'widget/button_widget.dart';
+import 'widget/drawer.dart';
+import 'widget/loads_card.dart';
+import 'widget/product_listtile.dart';
+import 'widget/search_input.dart';
 
-import 'new_inventory.dart';
 
 class InventoryScreen extends ConsumerStatefulWidget {
   VoidCallback? loadInventories;
@@ -58,15 +53,14 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen>
 
   @override
   Widget build(BuildContext context) {
-    
     List<ProductModel> _productList = ref.watch(productProvider);
-    
+
     List<InventoryModel> _loadsList = ref.watch(inventoryProvider);
-    
-    User? signedUser = ref.watch(usersProvider)
-        .firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
+
+    // User? signedUser = ref.watch(usersProvider)
+    //     .firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
     return Scaffold(
-      drawer: Drawers(userInfo: signedUser),
+      drawer: Drawers(),
       body: DefaultTabController(
         length: 2,
         child: NestedScrollView(

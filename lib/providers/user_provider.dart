@@ -2,8 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:kudibooks_app/dio_services.dart';
-import 'package:kudibooks_app/models/Users/user_model.dart';
+import '../dio_services.dart';
+import '../models/Users/user_model.dart';
 
 String? myToken = "";
 

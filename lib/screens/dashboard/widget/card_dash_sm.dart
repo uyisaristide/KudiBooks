@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/horizontal_line_container.dart';
+import 'horizontal_line_container.dart';
 
 class CardDashSmall extends StatelessWidget {
   Color? lignColor;
@@ -85,11 +85,11 @@ class CardDashSmall extends StatelessWidget {
             child: Container(
               height: 40,
               width: 40,
-              child: containerIcon,
               decoration: BoxDecoration(
                 color: colorContainer,
                 shape: BoxShape.circle,
               ),
+              child: containerIcon,
             ),
           ),
         ],

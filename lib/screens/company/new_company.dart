@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kudibooks_app/models/company_model.dart';
-import 'package:kudibooks_app/models/plan.dart';
-import 'package:kudibooks_app/providers/all_providers_list.dart';
-import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/drop_down_widget.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/page_title.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
-import 'package:kudibooks_app/screens/background.dart';
-import 'package:kudibooks_app/screens/company/widgets/planCard.dart';
+import '../../models/company_model.dart';
+import '../../models/plan.dart';
+import '../../providers/all_providers_list.dart';
+import '../auth_screens/widgets/drop_down_widget.dart';
+import '../auth_screens/widgets/login_button.dart';
+import '../auth_screens/widgets/page_title.dart';
+import '../auth_screens/widgets/text_form_field.dart';
+import '../background.dart';
+import 'widgets/planCard.dart';
 
 class NewCompany extends ConsumerStatefulWidget {
   const NewCompany({Key? key}) : super(key: key);

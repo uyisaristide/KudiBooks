@@ -1,7 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:kudibooks_app/screens/dashboard/classes/pie_chart_data.dart';
-import 'package:kudibooks_app/screens/dashboard/pie_chart_indicators.dart';
+import '../classes/pie_chart_data.dart';
+import '../pie_chart_indicators.dart';
 
 class CustomPieChart extends StatelessWidget {
   const CustomPieChart({Key? key}) : super(key: key);

@@ -1,12 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kudibooks_app/models/product_model.dart';
-import 'package:kudibooks_app/providers/all_providers_list.dart';
-import 'package:kudibooks_app/providers/product_provider.dart';
-import 'package:kudibooks_app/screens/dashboard/product_details.dart';
-import 'package:provider/provider.dart';
+import '../../../models/product_model.dart';
+import '../../../providers/all_providers_list.dart';
 
 class ProductListCard extends ConsumerWidget {
   ProductModel productModel;

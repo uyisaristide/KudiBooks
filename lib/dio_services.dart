@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:hive/hive.dart';
-import 'package:kudibooks_app/providers/user_provider.dart';
 
 class DioServices {
   Dio dioInstance = Dio();

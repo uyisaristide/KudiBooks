@@ -3,13 +3,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/lock_icon.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/page_title.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
-import 'package:kudibooks_app/screens/background.dart';
-import 'package:kudibooks_app/screens/dashboard/classes/snack_bars.dart';
+import 'validators/validator.dart';
+import 'widgets/lock_icon.dart';
+import 'widgets/login_button.dart';
+import 'widgets/page_title.dart';
+import 'widgets/text_form_field.dart';
+import '../background.dart';
+import '../dashboard/classes/snack_bars.dart';
 
 import '../../providers/all_providers_list.dart';
 

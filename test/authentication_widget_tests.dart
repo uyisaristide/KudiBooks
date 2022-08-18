@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kudibooks_app/screens/auth_screens/login.dart';
-import 'package:kudibooks_app/screens/auth_screens/phone_login.dart';
 import 'package:kudibooks_app/screens/auth_screens/phone_signup.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/circled_logo.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/custom_devider.dart';
@@ -55,9 +54,9 @@ void main() {
         (testPhoneSignUp) async {
       await testPhoneSignUp.pumpWidget(MaterialApp(
         home: Scaffold(
-          body: MultiProvider(providers: [
+          body: MultiProvider(providers: const [
             // ChangeNotifierProvider(create: (_) => UserProvider()),
-          ], child: PhoneSignup()),
+          ], child: const PhoneSignup()),
         ),
       ));
       expect(find.byType(BackgroundScreen), findsOneWidget);

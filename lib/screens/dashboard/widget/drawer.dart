@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kudibooks_app/models/Users/user_model.dart';
-import 'package:kudibooks_app/providers/all_providers_list.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
+import '../../../models/Users/user_model.dart';
+import '../../../providers/all_providers_list.dart';
+import '../../auth_screens/widgets/login_button.dart';
 
 class Drawers extends ConsumerWidget {
   VoidCallback? dashboardScreen;
@@ -154,11 +154,11 @@ class Drawers extends ConsumerWidget {
                     text: 'Logout',
                     actionField: () async {
                       String response =
-                          await ref.read(usersProvider.notifier).logout();
+                      await ref.read(usersProvider.notifier).logout();
                       if (response == 'success') {
                         context.goNamed('signin');
                       } else {
-                        debugPrint("$response");
+                        debugPrint(response);
                       }
                     },
                   ),

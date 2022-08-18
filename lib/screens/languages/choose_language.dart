@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kudibooks_app/models/language_model.dart';
-import 'package:kudibooks_app/screens/languages/Widget/language_list.dart';
-import 'package:kudibooks_app/screens/welcome/widgets/background_stack.dart';
+import '../../models/language_model.dart';
+import 'Widget/language_list.dart';
+import '../welcome/widgets/background_stack.dart';
 
 class Languages extends StatefulWidget {
   const Languages({Key? key}) : super(key: key);

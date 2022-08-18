@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kudibooks_app/models/product_model.dart';
-import 'package:kudibooks_app/providers/all_providers_list.dart';
-import 'package:kudibooks_app/providers/product_provider.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/product_list_card.dart';
-import 'package:kudibooks_app/screens/dashboard/classes/sliver_delegate_search.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/search_input.dart';
+import '../../models/product_model.dart';
+import '../../providers/all_providers_list.dart';
+import '../auth_screens/widgets/product_list_card.dart';
+import 'classes/sliver_delegate_search.dart';
+import 'widget/search_input.dart';
 
 class ProductsScreen extends ConsumerStatefulWidget {
   VoidCallback? loadProducts;
