@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'providers/all_providers_list.dart';
 import 'routers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
@@ -14,16 +15,25 @@ void main() async {
   runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerStatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
+  @override
+  ConsumerState<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends ConsumerState<MyApp> {
   // This widget is the root of your application.
+  var mode = ThemeMode.light;
+
   @override
   Widget build(BuildContext context) {
+    var modes = ref.watch(modeProvider);
+    debugPrint("$modes");
     return MaterialApp.router(
       theme: ThemeData(),
       darkTheme: ThemeData.dark(),
-      themeMode: ThemeMode.system,
+      themeMode: modes ?? mode,
       debugShowCheckedModeBanner: false,
       title: 'KudiBooks',
       routerDelegate: router.routerDelegate,

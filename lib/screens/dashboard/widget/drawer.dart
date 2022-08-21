@@ -23,15 +23,25 @@ class Drawers extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  height: 80,
-                  width: 80,
-                  decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: Colors.grey),
-                    shape: BoxShape.circle,
-                  ),
-                  child: Image.asset(
-                      "assets/images/splash/kudibooks-WHITE-PNG-LOGO.png"),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 80,
+                      width: 80,
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 1, color: Colors.grey),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Image.asset(
+                          "assets/images/splash/kudibooks-WHITE-PNG-LOGO.png"),
+                    ),
+                    const Spacer(),
+                    IconButton(onPressed: (){
+                      var mode = Theme.of(context).brightness == Brightness.light ? ThemeMode.dark : ThemeMode.light;
+                      ref.read(modeProvider.notifier).func(mode);
+                    }, icon: const Icon(Icons.dark_mode))
+                  ],
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,10 +66,11 @@ class Drawers extends ConsumerWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const ListTile(
+                      ListTile(
+                        onTap: () => Navigator.pop(context),
                         leading: Icon(Icons.home),
-                        title: Text("Home"),
-                        trailing: Icon(
+                        title: const Text("Home"),
+                        trailing: const Icon(
                           Icons.arrow_forward_ios,
                           size: 15,
                         ),
@@ -154,7 +165,7 @@ class Drawers extends ConsumerWidget {
                     text: 'Logout',
                     actionField: () async {
                       String response =
-                      await ref.read(usersProvider.notifier).logout();
+                          await ref.read(usersProvider.notifier).logout();
                       if (response == 'success') {
                         context.goNamed('signin');
                       } else {

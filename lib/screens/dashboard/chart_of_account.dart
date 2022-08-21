@@ -23,7 +23,6 @@ class _ChartAccountState extends ConsumerState<ChartAccount> {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("Search List: ${searchList.length}");
     return Scaffold(
       floatingActionButton: ElevatedButton(
         style: ElevatedButton.styleFrom(
@@ -156,9 +155,7 @@ class _ChartAccountState extends ConsumerState<ChartAccount> {
                                           index: snapshot.data!.indexOf(e),
                                         ),
                                       ))
-                                  .toList()
-                                  .reversed
-                                  .toList())
+                                  .toList().reversed.toList())
                     ]);
               } else if (snapshot.hasError) {
                 return Text("${snapshot.error}");

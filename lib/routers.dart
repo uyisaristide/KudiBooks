@@ -109,7 +109,7 @@ GoRouter router = GoRouter(
       GoRoute(
           name: 'createInventory',
           path: '/newInventory',
-          builder: (context, state) => const NewInventory()),
+          builder: (context, state) => NewInventory()),
       GoRoute(
           name: 'createExpense',
           path: '/newExpense',
@@ -136,8 +136,7 @@ GoRouter router = GoRouter(
           builder: (context, state) {
             final id = state.params['id'];
             return NewAccount(
-              accountId: int.parse(id.toString()),
-            );
+              accountId: int.parse(id.toString()));
           }),
       GoRoute(
           name: 'chartAccount',

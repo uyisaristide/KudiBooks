@@ -37,7 +37,6 @@ class AllChartAccountsProvider extends StateNotifier<List<Accounts>> {
   }
 
   Future removeChart(int chartId) async {
-    debugPrint("This is id: $chartId");
     try {
       Map<String, dynamic> chartHeaders = {
         "Content-type": "application/json",
