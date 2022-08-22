@@ -4,11 +4,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
 import '../dio_services.dart';
 import '../models/account_details_model.dart';
+import '../models/utilities/network_info.dart';
 
-class AccountDetailsNotifier extends StateNotifier<AccountDetailsModel?> {
-  AccountDetailsNotifier() : super(null);
+class AccountDetailsNotifier extends StateNotifier<NetworkInfo<AccountDetailsModel?>> {
+  AccountDetailsNotifier() : super(NetworkInfo());
   final _dio = Dio();
-  Future<AccountDetailsModel?> accountDetailsData(int? id) async {
+  accountDetailsData(int? id) async {
+    state = NetworkInfo(networkStatus: NetworkStatus.loading);
     try {
       debugPrint("This is id account: $id");
       Map<String, dynamic> chartHeader = {
@@ -21,13 +23,11 @@ class AccountDetailsNotifier extends StateNotifier<AccountDetailsModel?> {
           options: Options(headers: chartHeader));
         var accountDetails = AccountDetailsModel.fromJson(response.data);
         // debugPrint("Some data: ${accountDetailsModel.accountDetails.note}");
-        state = accountDetails;
-    } catch (e) {
-      if (e is DioError) {
-        throw e.response?.data["message"] ?? e.response?.statusCode;
-      } else {
-        throw Exception(e);
-      }
+        state = NetworkInfo(data: accountDetails);
+    } on DioError catch (e) {
+
+    } catch(e){
+
     }
   }
 }

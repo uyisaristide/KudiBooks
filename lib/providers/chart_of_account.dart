@@ -37,8 +37,6 @@ class ChartAccountProvider extends StateNotifier<List<AccountChartModel>> {
     }
   }
 
-
-
   Future registerChart(ChartAccountModel accountModel) async {
     try {
       Map<String, dynamic> chartHeader = {
@@ -55,6 +53,28 @@ class ChartAccountProvider extends StateNotifier<List<AccountChartModel>> {
     } catch (e) {
       if (e is DioError) {
         throw e.response?.data;
+      } else {
+        throw Exception(e);
+      }
+    }
+  }
+
+  Future updateChartAccount(
+      {required ChartAccountModel chartAccountModel}) async {
+    try {
+      Map<String, dynamic> editChart = {
+        "Content-type": "application/json",
+        "Authorization": "Bearer ${Hive.box('tokens').get('token')}",
+        "companyID": 29
+      };
+      Response response = await _dio.put(
+          '${DioServices.baseUrl}app/chart/update/${chartAccountModel.accountTypeSelected}',
+          data: chartAccountModel.toJson(),
+          options: Options(headers: editChart));
+      return response.statusCode;
+    } catch (e) {
+      if (e is DioError) {
+        throw e.response?.data["error"] ?? e.response?.data["error"];
       } else {
         throw Exception(e);
       }

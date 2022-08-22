@@ -4,13 +4,16 @@ import '../models/Users/ProductInLoad.dart';
 import '../models/Users/products_sold_model.dart';
 import '../models/Users/user_model.dart';
 import '../models/account_details_model.dart';
+import '../models/account_type.dart';
 import '../models/chart_accounts.dart';
+import '../models/chart_of_account_model.dart';
 import '../models/client_model.dart';
 import '../models/company_model.dart';
 import '../models/expense_model.dart';
 import '../models/inventory_model.dart';
 import '../models/product_model.dart';
 import '../models/product_sale_model.dart';
+import '../models/utilities/network_info.dart';
 import 'account_details.dart';
 import 'chart_of_account.dart';
 import 'charts_account_list.dart';
@@ -54,9 +57,9 @@ final companyProvider = StateNotifierProvider<CompanyProvider, List<Company>>(
 final authProvider =
     StateNotifierProvider<AuthProvider, List<User>>((ref) => AuthProvider());
 final chartAccountProvider =
-    StateNotifierProvider<ChartAccountProvider, List>(
+    StateNotifierProvider<ChartAccountProvider, List<AccountChartModel>>(
         (ref) => ChartAccountProvider());
-final allAccountsProvider = StateNotifierProvider<AllChartAccountsProvider, List<Accounts>>((ref) => AllChartAccountsProvider());
-final accountDetailsProvider = StateNotifierProvider<AccountDetailsNotifier, AccountDetailsModel?>((ref) => AccountDetailsNotifier());
+final allAccountsProvider = StateNotifierProvider<AllChartAccountsProvider, NetworkInfo<List<Accounts>>>((ref) => AllChartAccountsProvider());
+final accountDetailsProvider = StateNotifierProvider<AccountDetailsNotifier, NetworkInfo<AccountDetailsModel?>>((ref) => AccountDetailsNotifier());
 final modeProvider = StateNotifierProvider<ModeNotifier, ThemeMode?>((ref) => ModeNotifier());
 

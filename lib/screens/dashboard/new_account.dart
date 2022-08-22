@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../models/account_details_model.dart';
 import '../../models/chart_of_account_model.dart';
+import '../../models/utilities/network_info.dart';
 import '../../providers/all_providers_list.dart';
 import '../auth_screens/widgets/login_button.dart';
 import '../auth_screens/widgets/text_form_field.dart';
@@ -24,55 +25,28 @@ class NewAccount extends ConsumerStatefulWidget {
 class _NewAccountState extends ConsumerState<NewAccount> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  List<String> unitProduct = ["Kigali", "Rwanda"];
+  var accountNameProvider = StateProvider<AccountName?>((ref) => null);
+  var expenseCategoryProvider = StateProvider<ExpenseCategory?>((ref) => null);
 
   var nameController = TextEditingController();
   var codeController = TextEditingController();
   var noteController = TextEditingController();
   var accountTypeController = TextEditingController();
   var expenseCategoryController = TextEditingController();
-
-  int accountCode = 0;
-  String selectedName = '';
-  int selectedType = 0;
-  int expenseCategoryId = 0;
-  String expenseCategoryName = '';
-  bool _loading = false;
-
+  var selectedType = 0;
   selectedValueFunction(AccountName accountName) {
-    setState(() {
-      accountCode = accountName.code;
-      accountTypeController = TextEditingController(text: accountName.name);
-      selectedType = accountName.type;
-    });
+    ref.read(accountNameProvider.notifier).state = accountName;
+    accountTypeController.text = accountName.name;
+    selectedType = accountName.type;
   }
-
-  AccountDetailsModel? accountDetailsModel;
 
   selectedExpenseCategory(ExpenseCategory expenseCategory) {
-    setState(() {
-      expenseCategoryId = expenseCategory.id;
-      expenseCategoryName = expenseCategory.name;
-      expenseCategoryController =
-          TextEditingController(text: expenseCategory.name);
-    });
+    ref.read(expenseCategoryProvider.notifier).state = expenseCategory;
+    expenseCategoryController.text = expenseCategory.name;
   }
 
-  AccountDetailsModel? dataStatus;
-
   void accountDetailsData() async {
-    setState(() {
-      _loading = true;
-    });
-
-    if (widget.accountId != 0) {
-      var model = await ref
-          .read(accountDetailsProvider.notifier)
-          .accountDetailsData(int.parse(widget.accountId.toString()));
-    }
-    setState(() {
-      _loading = false;
-    });
+    ref.read(accountDetailsProvider.notifier).accountDetailsData(int.parse(widget.accountId.toString()));
   }
 
   List<ExpenseCategory> expenseCategories = [];
@@ -80,26 +54,38 @@ class _NewAccountState extends ConsumerState<NewAccount> {
   @override
   void initState() {
     super.initState();
-    accountDetailsData();
+    if (widget.accountId != 0) {
+      accountDetailsData();
+    }
+  }
+
+  populateData() {
+    var details = ref.read(accountDetailsProvider);
+    // accountTypeController.text = details!.accountSelected.name;
+    // codeController.text = details.accountDetails.code;
+    // nameController.text = details.accountDetails.name;
+    // noteController.text = details.accountDetails.note;
+    // selectedType = details.accountSelected.type == 5 ? 5 : details.accountSelected.type;
+    // expenseCategoryController.text =
   }
 
   @override
   void dispose() {
     super.dispose();
+
   }
 
   @override
   Widget build(BuildContext context) {
+    print("selected type: $selectedType");
+    var accountName = ref.watch(accountNameProvider);
     var detailsAccounts = ref.watch(accountDetailsProvider);
-    if (detailsAccounts != null && widget.accountId != 0) {
-      debugPrint('${detailsAccounts.accountDetails.expenseCategory}');
-      accountTypeController.text = detailsAccounts.accountSelected.name;
-      codeController.text = detailsAccounts.accountDetails.code;
-      nameController.text = detailsAccounts.accountDetails.name;
-      noteController.text = detailsAccounts.accountDetails.note;
-        selectedType = detailsAccounts.accountSelected.type == 5 ?detailsAccounts.accountSelected.type:0;
-        debugPrint("Expenses: ${expenseCategoryController.text}");
-    }
+    ref.listen<NetworkInfo<AccountDetailsModel?>>(accountDetailsProvider, (previous, next) {
+      if (widget.accountId != 0) {
+        populateData();
+      }
+    });
+
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
           color: Colors.transparent,
@@ -107,38 +93,71 @@ class _NewAccountState extends ConsumerState<NewAccount> {
           child: Container(
             margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             child: LoginButton(
-                text: 'Save account',
+                text: widget.accountId == 0 ? "Save account" : "Edit account",
                 actionField: () async {
                   if (_formKey.currentState!.validate()) {
-                    print('$selectedType');
-                    var resp = await ref
-                        .read(chartAccountProvider.notifier)
-                        .registerChart(ChartAccountModel(
-                            accountTypeSelected: accountCode,
-                            accountName: nameController.text,
-                            accountCode: codeController.text,
-                            accountNote: noteController.text,
-                            expenseCategory: expenseCategoryId != 0
-                                ? expenseCategoryId
-                                : null));
-                    if (resp == 'success') {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBars.snackBars(
-                              'Chart of account saved successfully',
-                              Colors.green.shade400));
-                      context.pop();
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBars.snackBars(
-                              'Chart of account saved successfully',
-                              Colors.red.shade400));
+                    if (widget.accountId == 0) {
+                      var resp = await ref
+                          .read(chartAccountProvider.notifier)
+                          .registerChart(ChartAccountModel(
+                              accountTypeSelected:
+                                  ref.watch(accountNameProvider)!.code,
+                              accountName: nameController.text,
+                              accountCode: codeController.text,
+                              accountNote: noteController.text,
+                              expenseCategory:
+                                  ref.watch(expenseCategoryProvider)!.id != 0
+                                      ? ref.watch(expenseCategoryProvider)!.id
+                                      : null));
+                      if (resp == 'success') {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBars.snackBars(
+                                'Chart of account saved successfully',
+                                Colors.green.shade400));
+                        context.pop();
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBars.snackBars(
+                                'Chart of account saved successfully',
+                                Colors.red.shade400));
+                      }
                     }
-                  }
+
+                    } else if (widget.accountId != 0) {
+                      var editChart = await ref
+                          .read(chartAccountProvider.notifier)
+                          .updateChartAccount(
+                              chartAccountModel: ChartAccountModel(
+                                  accountTypeSelected: ref.watch(accountNameProvider)!.type,
+                                  accountName: nameController.text,
+                                  accountCode: codeController.text,
+                                  accountNote: noteController.text,
+                                  expenseCategory:
+                                  ref.watch(expenseCategoryProvider)!.id != 0
+                                  ? ref.watch(expenseCategoryProvider)!.id
+                                  : null));
+                      if (editChart == 200) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBars.snackBars(
+                                'Chart of account edited successfully',
+                                Colors.green.shade400));
+                        context.pop();
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBars.snackBars(
+                                'Not',
+                                Colors.red.shade400));
+                      }
+                    }
                 }),
           )),
-      appBar: AppBarCommon.preferredSizeWidget(context, "New account"),
-      body: _loading
-          ? const Center(child: CircularProgressIndicator())
+      appBar: AppBarCommon.preferredSizeWidget(
+          context, widget.accountId == 0 ? "Save account" : "Edit account"),
+      body: detailsAccounts == null && widget.accountId !=0
+          ? Center(
+              child: CircularProgressIndicator(
+              color: Colors.green.shade400,
+            ))
           : SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Container(

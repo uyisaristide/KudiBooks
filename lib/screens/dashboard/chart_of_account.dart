@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:go_router/go_router.dart';
 import '../../models/chart_accounts.dart';
+import '../../models/utilities/network_info.dart';
 import '../../providers/all_providers_list.dart';
 import 'classes/snack_bars.dart';
 import 'widget/chart_item.dart';
@@ -18,11 +19,24 @@ class ChartAccount extends ConsumerStatefulWidget {
 
 class _ChartAccountState extends ConsumerState<ChartAccount> {
   final searchText = TextEditingController();
-  List<Accounts> searchList = [];
   String searchString = '';
+
+  void loadCharts() {
+    ref.read(allAccountsProvider.notifier).chartRetrieve();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      loadCharts();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    var data = ref.watch(allAccountsProvider);
     return Scaffold(
       floatingActionButton: ElevatedButton(
         style: ElevatedButton.styleFrom(
@@ -38,135 +52,112 @@ class _ChartAccountState extends ConsumerState<ChartAccount> {
       ),
       appBar: AppBarCommon.preferredSizeWidget(context, 'Chart of Account'),
       body: Container(
-        margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-        child: FutureBuilder<List<Accounts>>(
-            future: ref.read(allAccountsProvider.notifier).chartRetrieve(),
-            builder:
-                (BuildContext context, AsyncSnapshot<List<Accounts>> snapshot) {
-              if (snapshot.hasData) {
-                // return Text("${snapshot.data}");
-                return ListView(
-                    physics: const BouncingScrollPhysics(),
-                    children: [
-                      SearchTextField(
-                        searchingContent: (value) {
-                          // print(value);
-                          var item = snapshot.data!
-                              .where((element) => element.accountName
-                                  .toLowerCase()
-                                  .contains(value))
-                              .toList();
-                          if (item.isNotEmpty) {
-                            searchList = item;
-                            searchString = value;
-                            debugPrint(item[0].accountName);
-                          }
-                        },
-                        hintTexts: 'Search here..',
-                        searchContent: searchText,
-                      ),
-                      Column(
-                              children: snapshot.data!
-                                  .map((e) => Slidable(
-                                        startActionPane: ActionPane(
-                                          motion: const ScrollMotion(),
-                                          children: [
-                                            SlidableAction(
-                                              onPressed: (context) {
-                                                context.push(
-                                                    "/newChartOfAccounts/${e.id}");
-                                              },
-                                              icon: Icons.edit_outlined,
-                                              backgroundColor:
-                                                  Colors.green.shade400,
-                                              foregroundColor: Colors.white,
-                                              label: 'Edit',
-                                            )
-                                          ],
-                                        ),
-                                        endActionPane: ActionPane(
-                                          motion: const ScrollMotion(),
-                                          children: [
-                                            SlidableAction(
-                                              onPressed: (context) {
-                                                showDialog<void>(
-                                                  context: context,
-                                                  barrierDismissible: true,
-                                                  // false = user must tap button, true = tap outside dialog
-                                                  builder: (BuildContext
-                                                      dialogContext) {
-                                                    return AlertDialog(
-                                                      title: const Text(
-                                                          'Are you sure?'),
-                                                      content: const Text(
-                                                          "Do you want to remove this chart"),
-                                                      actions: <Widget>[
-                                                        TextButton(
-                                                          child:
-                                                              const Text('No'),
-                                                          onPressed: () {
-                                                            Navigator.of(
-                                                                    dialogContext)
-                                                                .pop(); // Dismiss alert dialog
-                                                          },
-                                                        ),
-                                                        TextButton(
-                                                          child:
-                                                              const Text('Yes'),
-                                                          onPressed: () async {
-                                                            var res = await ref
-                                                                .read(allAccountsProvider
-                                                                    .notifier)
-                                                                .removeChart(
-                                                                    e.id);
-                                                            if (res ==
-                                                                'success') {
-                                                              // debugPrint("$res");
-                                                              Navigator.pop(
-                                                                  dialogContext);
-                                                              ScaffoldMessenger.of(
-                                                                      dialogContext)
-                                                                  .showSnackBar(SnackBars.snackBars(
-                                                                      'Deleted successfully',
-                                                                      Colors
-                                                                          .green
-                                                                          .shade400));
-                                                            } else {
-                                                              Navigator.pop(
-                                                                  dialogContext);
-                                                            }
-                                                            // Dismiss alert dialog
-                                                          },
-                                                        ),
-                                                      ],
-                                                    );
+          margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+          child: data.networkStatus == NetworkStatus.success
+              ? ListView(physics: const BouncingScrollPhysics(), children: [
+                  SearchTextField(
+                    hintTexts: 'Search here..',
+                    searchContent: searchText,
+                  ),
+                  Column(
+                      children: data.data!
+                          .map((e) => Slidable(
+                                startActionPane: ActionPane(
+                                  motion: const ScrollMotion(),
+                                  children: [
+                                    SlidableAction(
+                                      onPressed: (context) {
+                                        context.push(
+                                            "/newChartOfAccounts/${e.id}");
+                                      },
+                                      icon: Icons.edit_outlined,
+                                      backgroundColor: Colors.green.shade400,
+                                      foregroundColor: Colors.white,
+                                      label: 'Edit',
+                                    )
+                                  ],
+                                ),
+                                endActionPane: ActionPane(
+                                  motion: const ScrollMotion(),
+                                  children: [
+                                    SlidableAction(
+                                      onPressed: (context) {
+                                        showDialog<void>(
+                                          context: context,
+                                          barrierDismissible: true,
+                                          // false = user must tap button, true = tap outside dialog
+                                          builder:
+                                              (BuildContext dialogContext) {
+                                            return AlertDialog(
+                                              title:
+                                                  const Text('Are you sure?'),
+                                              content: const Text(
+                                                  "Do you want to remove this chart"),
+                                              actions: <Widget>[
+                                                TextButton(
+                                                  child: const Text('No'),
+                                                  onPressed: () {
+                                                    Navigator.of(dialogContext)
+                                                        .pop(); // Dismiss alert dialog
                                                   },
-                                                );
-                                              },
-                                              backgroundColor: Colors.redAccent,
-                                              icon: Icons.delete,
-                                              foregroundColor: Colors.white,
-                                              label: 'Delete',
-                                            )
-                                          ],
-                                        ),
-                                        child: ChartItem(
-                                          accounts: e,
-                                          index: snapshot.data!.indexOf(e),
-                                        ),
-                                      ))
-                                  .toList().reversed.toList())
-                    ]);
-              } else if (snapshot.hasError) {
-                return Text("${snapshot.error}");
-              } else {
-                return Center(
-                    child: CircularProgressIndicator(
-                  color: Colors.green.shade400,
-                ));
-              }
-            }),
-      ),
+                                                ),
+                                                TextButton(
+                                                  child: const Text('Yes'),
+                                                  onPressed: () async {
+                                                    var res = await ref
+                                                        .read(
+                                                            allAccountsProvider
+                                                                .notifier)
+                                                        .removeChart(e.id);
+                                                    if (res == 'success') {
+                                                      // debugPrint("$res");
+                                                      Navigator.pop(
+                                                          dialogContext);
+                                                      ScaffoldMessenger.of(
+                                                              dialogContext)
+                                                          .showSnackBar(SnackBars
+                                                              .snackBars(
+                                                                  'Deleted successfully',
+                                                                  Colors.green
+                                                                      .shade400));
+                                                    } else {
+                                                      Navigator.pop(
+                                                          dialogContext);
+                                                    }
+                                                    // Dismiss alert dialog
+                                                  },
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      },
+                                      backgroundColor: Colors.redAccent,
+                                      icon: Icons.delete,
+                                      foregroundColor: Colors.white,
+                                      label: 'Delete',
+                                    )
+                                  ],
+                                ),
+                                child: ChartItem(
+                                  accounts: e,
+                                  index: data.data!.indexOf(e),
+                                ),
+                              ))
+                          .toList()
+                          .reversed
+                          .toList())
+                ])
+              : data.networkStatus == NetworkStatus.loading
+                  ? const Center(child: CircularProgressIndicator())
+                  : data.networkStatus == NetworkStatus.failed
+                      ? Center(
+                        child: Text("${data.networkStatus}"),
+                      )
+                      :  Center(
+                        child: InkWell(onTap: (){loadCharts();},child: Text("${data.errorMessage}, retry")),
+                      )
+          ),
     );
   }
 }
