@@ -92,6 +92,7 @@ class ChartAccountProvider
 
   Future updateChartAccount( {required ChartAccountModel chartAccountModel, required int id}) async {
     try {
+      state=NetworkInfo(networkStatus: NetworkStatus.loading)..data=state.data;
       Map<String, dynamic> editChart = {
         "Content-type": "application/json",
         "Authorization": "Bearer ${Hive.box('tokens').get('token')}",
@@ -106,7 +107,6 @@ class ChartAccountProvider
       if(response.statusCode == 200){
         return response.statusCode;
       }else{
-
         return response.data;
       }
     }   on DioError catch (e) {

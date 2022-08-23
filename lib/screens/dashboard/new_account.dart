@@ -36,7 +36,7 @@ class _NewAccountState extends ConsumerState<NewAccount> {
   var expenseCategoryController = TextEditingController();
   var selectedType = 0;
   int accountSelected=0;
-  int? selectedCategory = 0;
+  int? selectedCategory;
 
   selectedValueFunction(AccountName accountName) {
     var accountNames =
@@ -134,10 +134,7 @@ class _NewAccountState extends ConsumerState<NewAccount> {
                               accountName: nameController.text,
                               accountCode: codeController.text,
                               accountNote: noteController.text,
-                              expenseCategory:
-                                  ref.watch(expenseCategoryProvider)!.id != 0
-                                      ? ref.watch(expenseCategoryProvider)!.id
-                                      : null));
+                              expenseCategory:selectedCategory));
                       if (resp == 'success') {
                         ScaffoldMessenger.of(context).showSnackBar(
                             SnackBars.snackBars(
