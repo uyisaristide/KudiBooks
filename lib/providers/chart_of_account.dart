@@ -5,13 +5,16 @@ import 'package:hive/hive.dart';
 import '../dio_services.dart';
 import '../models/account_type.dart';
 import '../models/chart_of_account_model.dart';
+import '../models/utilities/network_info.dart';
 
-class ChartAccountProvider extends StateNotifier<List<AccountChartModel>> {
-  ChartAccountProvider() : super([]);
+class ChartAccountProvider
+    extends StateNotifier<NetworkInfo<List<AccountChartModel>>> {
+  ChartAccountProvider() : super(NetworkInfo());
   final _dio = Dio();
   List chartAccountList = [];
 
-  Future<List<AccountChartModel>> listOfCharts() async {
+  listOfCharts() async {
+    state = NetworkInfo(networkStatus: NetworkStatus.loading)..data=state.data;
     try {
       Response response = await _dio.get(
           '${DioServices.baseUrl}app/chart/required',
@@ -26,14 +29,42 @@ class ChartAccountProvider extends StateNotifier<List<AccountChartModel>> {
       for (var d in chartAccountList) {
         data.add(AccountChartModel.fromJson(d));
       }
-      return data;
-    } catch (e) {
-      if (e is DioError) {
-        // debugPrint(" Some test sum data: ${e.response?.data["message"]}");
-        throw e.response?.data["errors"] ?? e;
-      } else {
-        throw Exception(e);
+      var info = NetworkInfo<List<AccountChartModel>>(
+          statusCode: 200, networkStatus: NetworkStatus.success, data: data);
+      state = info;
+    }   on DioError catch (e) {
+      NetworkInfo<List<ChartAccountModel>> info =
+      NetworkInfo(networkStatus: NetworkStatus.failed);
+      switch (e.type) {
+        case DioErrorType.connectTimeout:
+        // TODO: Handle this case.
+          info.errorMessage = "Connection error, check your internet";
+          break;
+        case DioErrorType.sendTimeout:
+        // TODO: Handle this case.
+          info.errorMessage = "Check connection, before send data";
+          break;
+        case DioErrorType.receiveTimeout:
+        // TODO: Handle this case.
+          info.errorMessage = "Slow network";
+          break;
+        case DioErrorType.response:
+        // TODO: Handle this case.
+          info = NetworkInfo<List<ChartAccountModel>>.errors(e.response?.data ?? {},
+              statusCode: e.response!.statusCode, status: NetworkStatus.failed);
+          break;
+        case DioErrorType.cancel:
+        // TODO: Handle this case.
+          info = NetworkInfo(errorMessage: "Reconnect your internet");
+          break;
+        case DioErrorType.other:
+        // TODO: Handle this case.
+          info = NetworkInfo(errorMessage: "Check your internet");
+          break;
       }
+    } catch (e) {
+      NetworkInfo<List<ChartAccountModel>> info = NetworkInfo();
+      info.errorMessage = "";
     }
   }
 
@@ -59,25 +90,59 @@ class ChartAccountProvider extends StateNotifier<List<AccountChartModel>> {
     }
   }
 
-  Future updateChartAccount(
-      {required ChartAccountModel chartAccountModel}) async {
+  Future updateChartAccount( {required ChartAccountModel chartAccountModel, required int id}) async {
     try {
       Map<String, dynamic> editChart = {
         "Content-type": "application/json",
         "Authorization": "Bearer ${Hive.box('tokens').get('token')}",
         "companyID": 29
       };
+      debugPrint("${chartAccountModel.toJson()}");
       Response response = await _dio.put(
-          '${DioServices.baseUrl}app/chart/update/${chartAccountModel.accountTypeSelected}',
+          '${DioServices.baseUrl}app/chart/update/$id',
           data: chartAccountModel.toJson(),
           options: Options(headers: editChart));
-      return response.statusCode;
-    } catch (e) {
-      if (e is DioError) {
-        throw e.response?.data["error"] ?? e.response?.data["error"];
-      } else {
-        throw Exception(e);
+      debugPrint("On update error: ${response.data}");
+      if(response.statusCode == 200){
+        return response.statusCode;
+      }else{
+
+        return response.data;
       }
+    }   on DioError catch (e) {
+      debugPrint("Following is error: ${e.response?.data} ${e.response?.statusCode}");
+      NetworkInfo<List<ChartAccountModel>> info =
+      NetworkInfo(networkStatus: NetworkStatus.failed);
+      switch (e.type) {
+        case DioErrorType.connectTimeout:
+        // TODO: Handle this case.
+          info.errorMessage = "Connection error, check your internet";
+          break;
+        case DioErrorType.sendTimeout:
+        // TODO: Handle this case.
+          info.errorMessage = "Check connection, before send data";
+          break;
+        case DioErrorType.receiveTimeout:
+        // TODO: Handle this case.
+          info.errorMessage = "Slow network";
+          break;
+        case DioErrorType.response:
+        // TODO: Handle this case.
+          info = NetworkInfo<List<ChartAccountModel>>.errors(e.response?.data ?? {},
+              statusCode: e.response!.statusCode, status: NetworkStatus.failed);
+          break;
+        case DioErrorType.cancel:
+        // TODO: Handle this case.
+          info = NetworkInfo(errorMessage: "Reconnect your internet");
+          break;
+        case DioErrorType.other:
+        // TODO: Handle this case.
+          info = NetworkInfo(errorMessage: "Check your internet");
+          break;
+      }
+    } catch (e) {
+      NetworkInfo<List<ChartAccountModel>> info = NetworkInfo();
+      info.errorMessage = "";
     }
   }
 

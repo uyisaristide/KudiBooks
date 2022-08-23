@@ -57,7 +57,7 @@ final companyProvider = StateNotifierProvider<CompanyProvider, List<Company>>(
 final authProvider =
     StateNotifierProvider<AuthProvider, List<User>>((ref) => AuthProvider());
 final chartAccountProvider =
-    StateNotifierProvider<ChartAccountProvider, List<AccountChartModel>>(
+    StateNotifierProvider<ChartAccountProvider, NetworkInfo<List<AccountChartModel>>>(
         (ref) => ChartAccountProvider());
 final allAccountsProvider = StateNotifierProvider<AllChartAccountsProvider, NetworkInfo<List<Accounts>>>((ref) => AllChartAccountsProvider());
 final accountDetailsProvider = StateNotifierProvider<AccountDetailsNotifier, NetworkInfo<AccountDetailsModel?>>((ref) => AccountDetailsNotifier());

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:go_router/go_router.dart';
-import '../../models/chart_accounts.dart';
 import '../../models/utilities/network_info.dart';
 import '../../providers/all_providers_list.dart';
 import 'classes/snack_bars.dart';
@@ -104,25 +103,20 @@ class _ChartAccountState extends ConsumerState<ChartAccount> {
                                                 TextButton(
                                                   child: const Text('Yes'),
                                                   onPressed: () async {
-                                                    var res = await ref
-                                                        .read(
-                                                            allAccountsProvider
-                                                                .notifier)
-                                                        .removeChart(e.id);
+                                                    var res = await ref.read(allAccountsProvider.notifier).removeChart(e.id);
                                                     if (res == 'success') {
                                                       // debugPrint("$res");
-                                                      Navigator.pop(
-                                                          dialogContext);
-                                                      ScaffoldMessenger.of(
-                                                              dialogContext)
+                                                      Navigator.pop(dialogContext);
+                                                      loadCharts();
+                                                      ScaffoldMessenger.of(dialogContext)
                                                           .showSnackBar(SnackBars
                                                               .snackBars(
                                                                   'Deleted successfully',
                                                                   Colors.green
                                                                       .shade400));
-                                                    } else {
-                                                      Navigator.pop(
-                                                          dialogContext);
+                                                    } else if (data.networkStatus == NetworkStatus.failed) {
+                                                      ScaffoldMessenger.of(dialogContext).showSnackBar(SnackBars.snackBars('Can not delete', Colors.redAccent));
+                                                      Navigator.pop(dialogContext);
                                                     }
                                                     // Dismiss alert dialog
                                                   },
@@ -149,15 +143,21 @@ class _ChartAccountState extends ConsumerState<ChartAccount> {
                           .toList())
                 ])
               : data.networkStatus == NetworkStatus.loading
-                  ? const Center(child: CircularProgressIndicator())
+                  ? Center(
+                      child: CircularProgressIndicator(
+                      color: Colors.green.shade400,
+                    ))
                   : data.networkStatus == NetworkStatus.failed
                       ? Center(
-                        child: Text("${data.networkStatus}"),
-                      )
-                      :  Center(
-                        child: InkWell(onTap: (){loadCharts();},child: Text("${data.errorMessage}, retry")),
-                      )
-          ),
+                          child: Text("${data.networkStatus}"),
+                        )
+                      : Center(
+                          child: InkWell(
+                              onTap: () {
+                                loadCharts();
+                              },
+                              child: Text("${data.errorMessage}, retry")),
+                        )),
     );
   }
 }
