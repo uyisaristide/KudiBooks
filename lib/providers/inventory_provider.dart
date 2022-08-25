@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:kudibooks_app/models/inventory_model.dart';
+import '../models/inventory_model.dart';
 
 class InventoryProviders extends StateNotifier<List<InventoryModel>> {
   InventoryProviders() : super([]);

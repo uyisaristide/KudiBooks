@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kudibooks_app/models/Users/user_model.dart';
-import 'package:kudibooks_app/providers/all_providers_list.dart';
-import 'package:kudibooks_app/providers/user_provider.dart';
-import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/circled_logo.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/custom_devider.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/hyperlink_text.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/lock_icon.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/page_title.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
-import 'package:kudibooks_app/screens/background.dart';
-import 'package:kudibooks_app/screens/dashboard/classes/snack_bars.dart';
+import 'package:hive/hive.dart';
+import '../../models/Users/user_model.dart';
+import '../../models/utilities/network_info.dart';
+import '../../providers/all_providers_list.dart';
+import '../../providers/user_provider.dart';
+import 'validators/validator.dart';
+import 'widgets/circled_logo.dart';
+import 'widgets/custom_devider.dart';
+import 'widgets/hyperlink_text.dart';
+import 'widgets/lock_icon.dart';
+import 'widgets/login_button.dart';
+import 'widgets/page_title.dart';
+import 'widgets/text_form_field.dart';
+import '../background.dart';
+import '../dashboard/classes/snack_bars.dart';
 
 class Login extends ConsumerStatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -33,12 +35,13 @@ class _LoginState extends ConsumerState<Login> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    ref.read(loginEmailProvider);
     emailController.addListener(() => setState(() {}));
   }
 
   @override
   Widget build(BuildContext context) {
-    List<User> _user = ref.watch(usersProvider);
+    var loginEmailWatcher = ref.watch(loginEmailProvider);
     debugPrint("Logged user is: $myToken");
     return BackgroundScreen(
       buttonWidget: Row(
@@ -96,9 +99,9 @@ class _LoginState extends ConsumerState<Login> {
                         onPressed: () => setState(() => isHidden = !isHidden),
                         icon: isHidden
                             ? const Icon(
-                          Icons.visibility,
-                          color: Colors.grey,
-                        )
+                                Icons.visibility,
+                                color: Colors.grey,
+                              )
                             : const Icon(Icons.visibility_off)),
                     focusedBorder: OutlineInputBorder(
                         borderSide: const BorderSide(
@@ -107,15 +110,15 @@ class _LoginState extends ConsumerState<Login> {
                     focusedErrorBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                             color: Validators.validatePassword(
-                                passwordController.text) ==
-                                null
+                                        passwordController.text) ==
+                                    null
                                 ? Colors.grey
                                 : Colors.red,
                             width: 1.0),
                         borderRadius: BorderRadius.circular(10.0)),
                     enabledBorder: OutlineInputBorder(
                         borderSide:
-                        const BorderSide(color: Colors.grey, width: 1.0),
+                            const BorderSide(color: Colors.grey, width: 1.0),
                         borderRadius: BorderRadius.circular(10.0)),
                     errorBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
@@ -131,7 +134,8 @@ class _LoginState extends ConsumerState<Login> {
             HyperLinkText(
               directingText: 'Forgot Password ?',
               actions: () {
-                context.pushNamed('requestTokenEmail', extra: emailController.text);
+                context.pushNamed('requestTokenEmail',
+                    extra: emailController.text);
               },
             ),
             // LoginButton(
@@ -170,19 +174,12 @@ class _LoginState extends ConsumerState<Login> {
               text: 'Login',
               actionField: () async {
                 if (_formKey.currentState!.validate()) {
-                  String? check = await ref
-                      .read(usersProvider.notifier)
-                      .loginEmail(
-                      emailController.text, passwordController.text);
-                  if (check == "success") {
-                    context.goNamed('dashboard');
-                  } else if (check == "fail") {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBars.snackBars(
-                            "${ref
-                                .read(usersProvider.notifier)
-                                .wrongCred}",
-                            Colors.redAccent));
+                  var check = await ref.read(loginEmailProvider.notifier).loginEmail(emailController.text, passwordController.text);
+                  if(check.networkStatus == NetworkStatus.success){
+                    context.goNamed('newCompany');
+                  }else{
+                    debugPrint("${loginEmailWatcher.networkStatus}");
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars('${loginEmailWatcher.errorMessage}', Colors.redAccent.shade400));
                   }
                 }
               },

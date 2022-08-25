@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kudibooks_app/models/product_model.dart';
+import '../../../models/product_model.dart';
 
 class SelectItemDynamic extends StatelessWidget {
   Function(ProductModel?)? selectValue;

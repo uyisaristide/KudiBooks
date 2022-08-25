@@ -1,16 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kudibooks_app/models/product_model.dart';
-import 'package:kudibooks_app/screens/dashboard/classes/sliver_delegate_search.dart';
-import 'package:kudibooks_app/screens/dashboard/product_sale.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/action_card.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/line_chart.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/title_double.dart';
+import '../../models/product_model.dart';
+import 'classes/sliver_delegate_search.dart';
+import 'widget/action_card.dart';
+import 'widget/line_chart.dart';
+import 'widget/title_double.dart';
 
-import 'all_transaction.dart';
-import 'inventory_deduction.dart';
 
 class ProductDetails extends StatelessWidget {
   ProductModel productModel;

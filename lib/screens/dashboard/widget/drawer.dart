@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kudibooks_app/models/Users/user_model.dart';
-import 'package:kudibooks_app/providers/all_providers_list.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
+import '../../../models/Users/user_model.dart';
+import '../../../models/utilities/network_info.dart';
+import '../../../providers/all_providers_list.dart';
+import '../../auth_screens/widgets/login_button.dart';
+import '../classes/snack_bars.dart';
 
 class Drawers extends ConsumerWidget {
   VoidCallback? dashboardScreen;
@@ -23,15 +25,25 @@ class Drawers extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  height: 80,
-                  width: 80,
-                  decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: Colors.grey),
-                    shape: BoxShape.circle,
-                  ),
-                  child: Image.asset(
-                      "assets/images/splash/kudibooks-WHITE-PNG-LOGO.png"),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 80,
+                      width: 80,
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 1, color: Colors.grey),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Image.asset(
+                          "assets/images/splash/kudibooks-WHITE-PNG-LOGO.png"),
+                    ),
+                    const Spacer(),
+                    IconButton(onPressed: (){
+                      var mode = Theme.of(context).brightness == Brightness.light ? ThemeMode.dark : ThemeMode.light;
+                      ref.read(modeProvider.notifier).func(mode);
+                    }, icon: const Icon(Icons.dark_mode))
+                  ],
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,10 +68,11 @@ class Drawers extends ConsumerWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const ListTile(
+                      ListTile(
+                        onTap: () => Navigator.pop(context),
                         leading: Icon(Icons.home),
-                        title: Text("Home"),
-                        trailing: Icon(
+                        title: const Text("Home"),
+                        trailing: const Icon(
                           Icons.arrow_forward_ios,
                           size: 15,
                         ),
@@ -153,13 +166,21 @@ class Drawers extends ConsumerWidget {
                   child: LoginButton(
                     text: 'Logout',
                     actionField: () async {
-                      String? response =
-                          await ref.read(usersProvider.notifier).logout();
-                      if (response == 'success') {
+                      var response = await ref.read(logoutProvider.notifier).logout();
+                      if(response.networkStatus == NetworkStatus.success){
                         context.goNamed('signin');
-                      } else {
-                        debugPrint("$response");
+                      }else{
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars('${response.errorMessage}', Colors.redAccent.shade400));
                       }
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: LoginButton(
+                    text: 'Create Company',
+                    actionField: () {
+                      context.pushNamed('newCompany');
                     },
                   ),
                 ),
@@ -168,7 +189,7 @@ class Drawers extends ConsumerWidget {
                   child: LoginButton(
                     text: 'Bank Login',
                     actionField: () {
-                      context.pushNamed('newCompany');
+                      context.pushNamed('signin');
                     },
                   ),
                 ),

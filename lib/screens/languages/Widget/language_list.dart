@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kudibooks_app/models/language_model.dart';
+import '../../../models/language_model.dart';
 
 class LanguageList extends StatelessWidget {
   ChooseLanguages chooseLanguages;

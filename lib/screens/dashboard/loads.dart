@@ -1,14 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kudibooks_app/models/inventory_model.dart';
-import 'package:kudibooks_app/providers/all_providers_list.dart';
-import 'package:kudibooks_app/providers/inventory_provider.dart';
-import 'package:kudibooks_app/screens/dashboard/classes/sliver_delegate_search.dart';
-import 'package:kudibooks_app/screens/dashboard/new_inventory.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/loads_card.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/search_input.dart';
+import '../../models/inventory_model.dart';
+import '../../providers/all_providers_list.dart';
+import 'classes/sliver_delegate_search.dart';
+import 'widget/loads_card.dart';
+import 'widget/search_input.dart';
 
 class Loads extends ConsumerWidget {
   Loads({Key? key}) : super(key: key);

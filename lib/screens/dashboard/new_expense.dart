@@ -4,14 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:kudibooks_app/models/expense_model.dart';
-import 'package:kudibooks_app/providers/all_providers_list.dart';
-import 'package:kudibooks_app/providers/expenses_provider.dart';
-import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/drop_down_widget.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/double_header_two.dart';
+import '../../models/expense_model.dart';
+import '../../providers/all_providers_list.dart';
+import '../auth_screens/validators/validator.dart';
+import '../auth_screens/widgets/drop_down_widget.dart';
+import '../auth_screens/widgets/login_button.dart';
+import 'widget/common_appBar.dart';
+import 'widget/double_header_two.dart';
 import '../auth_screens/widgets/text_form_field.dart';
 import 'classes/snack_bars.dart';
 
@@ -59,12 +58,18 @@ class _NewExpenseState extends ConsumerState<NewExpense> {
     'Account 4'
   ];
 
+
+  final List<Expense1> _list = [
+    Expense1(TextEditingController(text: '2100'))
+  ];
+
   String? cashBankAccount;
 
   addExpenseWidget(Widget widgets) {}
 
   @override
   Widget build(BuildContext context) {
+
     List<Widget> listOfNewCard = [
       Container(
         width: double.infinity,
@@ -108,28 +113,28 @@ class _NewExpenseState extends ConsumerState<NewExpense> {
                 ),
                 Expanded(
                     child: Container(
-                  margin: const EdgeInsets.only(right: 15),
-                  padding: const EdgeInsets.all(15),
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      border: Border.all(width: 1.0, color: Colors.grey),
-                      borderRadius: BorderRadius.circular(10.0)),
-                  child: InkWell(
-                    onTap: () => showModalBottomSheet(
-                        elevation: 0.0,
-                        shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(10.0),
-                                topRight: Radius.circular(10.0))),
-                        context: (context),
-                        builder: (index) => LoadTags()),
-                    child: const Text(
-                      "Add Tag",
-                      style: TextStyle(color: Color(0xffA70C4A)),
-                    ),
-                  ),
-                ))
+                      margin: const EdgeInsets.only(right: 15),
+                      padding: const EdgeInsets.all(15),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          border: Border.all(width: 1.0, color: Colors.grey),
+                          borderRadius: BorderRadius.circular(10.0)),
+                      child: InkWell(
+                        onTap: () => showModalBottomSheet(
+                            elevation: 0.0,
+                            shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10.0),
+                                    topRight: Radius.circular(10.0))),
+                            context: (context),
+                            builder: (index) => LoadTags()),
+                        child: const Text(
+                          "Add Tag",
+                          style: TextStyle(color: Color(0xffA70C4A)),
+                        ),
+                      ),
+                    ))
               ],
             ),
           ],
@@ -177,35 +182,34 @@ class _NewExpenseState extends ConsumerState<NewExpense> {
                 ),
                 Expanded(
                     child: Container(
-                  margin: const EdgeInsets.only(right: 15),
-                  padding: const EdgeInsets.all(15),
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      border: Border.all(width: 1.0, color: Colors.grey),
-                      borderRadius: BorderRadius.circular(10.0)),
-                  child: InkWell(
-                    onTap: () => showModalBottomSheet(
-                        elevation: 0.0,
-                        shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(10.0),
-                                topRight: Radius.circular(10.0))),
-                        context: (context),
-                        builder: (index) => LoadTags()),
-                    child: const Text(
-                      "Add Tag",
-                      style: TextStyle(color: Color(0xffA70C4A)),
-                    ),
-                  ),
-                ))
+                      margin: const EdgeInsets.only(right: 15),
+                      padding: const EdgeInsets.all(15),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          border: Border.all(width: 1.0, color: Colors.grey),
+                          borderRadius: BorderRadius.circular(10.0)),
+                      child: InkWell(
+                        onTap: () => showModalBottomSheet(
+                            elevation: 0.0,
+                            shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10.0),
+                                    topRight: Radius.circular(10.0))),
+                            context: (context),
+                            builder: (index) => LoadTags()),
+                        child: const Text(
+                          "Add Tag",
+                          style: TextStyle(color: Color(0xffA70C4A)),
+                        ),
+                      ),
+                    ))
               ],
             ),
           ],
         ),
       ),
     ];
-
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
           color: Colors.transparent,
@@ -241,10 +245,10 @@ class _NewExpenseState extends ConsumerState<NewExpense> {
           key: _formKey,
           child: Column(
             children: [
-              Container(
+              Column(children: _list.map((e) => Container(
                 width: double.infinity,
                 margin:
-                    const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
                 decoration: BoxDecoration(
                     border: Border.all(
                       width: 1.0,
@@ -273,55 +277,46 @@ class _NewExpenseState extends ConsumerState<NewExpense> {
                           child: CustomFormField(
                               inputType: TextInputType.number,
                               validators: (value) {
-                                if (amountPaidExpensesController.text.isEmpty) {
+                                if (e.amount.text.isEmpty) {
                                   return 'Enter amount';
                                 }
                                 return null;
                               },
                               hintText: 'Amount paid',
-                              fieldController: amountPaidExpensesController,
+                              fieldController: e.amount,
                               isShown: false),
                         ),
                         Expanded(
                             child: Container(
-                          margin: const EdgeInsets.only(right: 15),
-                          padding: const EdgeInsets.all(15),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.rectangle,
-                              border:
+                              margin: const EdgeInsets.only(right: 15),
+                              padding: const EdgeInsets.all(15),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.rectangle,
+                                  border:
                                   Border.all(width: 1.0, color: Colors.grey),
-                              borderRadius: BorderRadius.circular(10.0)),
-                          child: InkWell(
-                            onTap: () => showModalBottomSheet(
-                                elevation: 0.0,
-                                shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(10.0),
-                                        topRight: Radius.circular(10.0))),
-                                context: (context),
-                                builder: (index) => LoadTags()),
-                            child: const Text(
-                              "Add Tag",
-                              style: TextStyle(color: Color(0xffA70C4A)),
-                            ),
-                          ),
-                        ))
+                                  borderRadius: BorderRadius.circular(10.0)),
+                              child: InkWell(
+                                onTap: () => showModalBottomSheet(
+                                    elevation: 0.0,
+                                    shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(10.0),
+                                            topRight: Radius.circular(10.0))),
+                                    context: (context),
+                                    builder: (index) => LoadTags()),
+                                child: const Text(
+                                  "Add Tag",
+                                  style: TextStyle(color: Color(0xffA70C4A)),
+                                ),
+                              ),
+                            ))
                       ],
                     ),
                   ],
                 ),
-              ),
-              // LimitedBox(
-              //   child: ListView.separated(
-              //       shrinkWrap: true,
-              //       itemBuilder: (context, indexCard) =>
-              //           listOfNewCard[indexCard],
-              //       separatorBuilder: (_, idx) => const SizedBox(
-              //             height: 5,
-              //           ),
-              //       itemCount: listOfNewCard.length),
-              // ),
+              )).toList(),),
+
               Container(
                 padding: const EdgeInsets.only(left: 15, right: 15),
                 child: TwoSideHeader(
@@ -331,93 +326,9 @@ class _NewExpenseState extends ConsumerState<NewExpense> {
                     leftSide: '',
                     rightSide: TextButton(
                       onPressed: () {
-                        debugPrint("${listOfNewCard.length}");
-                        return setState(() {
-                          listOfNewCard.add(
-                            Container(
-                              width: double.infinity,
-                              margin: const EdgeInsets.symmetric(
-                                  vertical: 15, horizontal: 15),
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                    width: 1.0,
-                                    color: Colors.grey,
-                                  ),
-                                  shape: BoxShape.rectangle,
-                                  borderRadius: BorderRadius.circular(10.0)),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SelectInputType(
-                                      dropDownHint:
-                                          const Text('Expense account'),
-                                      selectedValue: (values) {
-                                        expenseAccount = values;
-                                      },
-                                      validation: (expenseName) {
-                                        if (expenseName == null) {
-                                          return 'Select expense';
-                                        }
-                                        return null;
-                                      },
-                                      itemsToSelect: expenseAccountList),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: CustomFormField(
-                                            inputType: TextInputType.number,
-                                            validators: (value) {
-                                              if (amountPaidExpensesController
-                                                  .text.isEmpty) {
-                                                return 'Enter amount';
-                                              }
-                                              return null;
-                                            },
-                                            hintText: 'Amount paid',
-                                            fieldController:
-                                                amountPaidExpensesController,
-                                            isShown: false),
-                                      ),
-                                      Expanded(
-                                          child: Container(
-                                        margin:
-                                            const EdgeInsets.only(right: 15),
-                                        padding: const EdgeInsets.all(15),
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                            shape: BoxShape.rectangle,
-                                            border: Border.all(
-                                                width: 1.0, color: Colors.grey),
-                                            borderRadius:
-                                                BorderRadius.circular(10.0)),
-                                        child: InkWell(
-                                          onTap: () => showModalBottomSheet(
-                                              elevation: 0.0,
-                                              shape:
-                                                  const RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.only(
-                                                              topLeft: Radius
-                                                                  .circular(
-                                                                      10.0),
-                                                              topRight: Radius
-                                                                  .circular(
-                                                                      10.0))),
-                                              context: (context),
-                                              builder: (index) => LoadTags()),
-                                          child: const Text(
-                                            "Add Tag",
-                                            style: TextStyle(
-                                                color: Color(0xffA70C4A)),
-                                          ),
-                                        ),
-                                      ))
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
+                        print("New expense button");
+                        setState(() {
+                          _list.add(Expense1(TextEditingController(text: "100")));
                         });
                       },
                       child: const Text(
@@ -426,6 +337,9 @@ class _NewExpenseState extends ConsumerState<NewExpense> {
                       ),
                     )),
               ),
+
+
+
               Container(
                 margin:
                     const EdgeInsets.only(right: 15.0, bottom: 1.0, top: 30),
@@ -657,4 +571,11 @@ class LoadTags extends StatelessWidget {
       ),
     );
   }
+}
+
+
+class Expense1{
+  TextEditingController amount;
+
+  Expense1(this.amount);
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/list_tile.dart';
+import 'widget/common_appBar.dart';
+import 'widget/list_tile.dart';
 
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);

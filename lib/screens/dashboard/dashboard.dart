@@ -2,14 +2,12 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:kudibooks_app/models/transition_chart.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/action_card.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/business_movement_cart.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/line_chart.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/pie_chart.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/title_double.dart';
-import '../../providers/user_provider.dart';
+import 'package:hive/hive.dart';
+import 'widget/action_card.dart';
+import 'widget/drawer.dart';
+import 'widget/line_chart.dart';
+import 'widget/pie_chart.dart';
+import 'widget/title_double.dart';
 
 class Dashboard extends ConsumerStatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -19,11 +17,11 @@ class Dashboard extends ConsumerStatefulWidget {
 }
 
 class _DashboardState extends ConsumerState<Dashboard> {
-  final List<BusinessMovement> chartData = BusinessMovement.data;
+  // final List<BusinessMovement> chartData = BusinessMovement.data;
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("Logged user is: $myToken");
+    debugPrint("Logged user is: ${Hive.box('tokens').get('token')}");
     return Scaffold(
         extendBodyBehindAppBar: true,
         drawer: Drawers(),
@@ -164,20 +162,21 @@ class _DashboardState extends ConsumerState<Dashboard> {
                             fontSize: 17.0, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.only(left: 15, right: 15),
-                      height: 300,
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5.0)),
-                      child: DeveloperCharts(data: chartData),
-                    ),
+                    // Container(
+                    //   padding: const EdgeInsets.only(left: 15, right: 15),
+                    //   height: 300,
+                    //   width: MediaQuery.of(context).size.width,
+                    //   decoration: BoxDecoration(
+                    //       borderRadius: BorderRadius.circular(5.0)),
+                    //   // child: DeveloperCharts(data: chartData),
+                    // ),
+                    const CustomPieChart(),
                     Container(
                       padding: const EdgeInsets.only(top: 30.0),
                       child: LignChartObject(),
                     ),
                     // const LineChartIndicator(),
-                    const CustomPieChart(),
+
                     DoubleHeader(
                       rightSide: "Recent Transactions",
                       iconButton2: IconButton(

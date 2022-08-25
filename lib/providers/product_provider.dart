@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:kudibooks_app/models/Users/ProductInLoad.dart';
-import 'package:kudibooks_app/models/Users/products_sold_model.dart';
-import 'package:kudibooks_app/models/product_model.dart';
+import '../models/Users/ProductInLoad.dart';
+import '../models/Users/products_sold_model.dart';
+import '../models/product_model.dart';
 
 class ProductProvider extends StateNotifier<List<ProductModel>> {
   ProductProvider() : super([]);

@@ -1,14 +1,19 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kudibooks_app/screens/background.dart';
-import 'package:kudibooks_app/screens/categories/widgets/grid_card.dart';
-import 'package:kudibooks_app/screens/drawer/navigation_drawer.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../background.dart';
+import 'widgets/grid_card.dart';
 
-class Categories extends StatelessWidget {
+class Categories extends ConsumerStatefulWidget {
   const Categories({Key? key}) : super(key: key);
 
   @override
+  ConsumerState<Categories> createState() => _CategoriesState();
+}
+
+class _CategoriesState extends ConsumerState<Categories> {
+  @override
   Widget build(BuildContext context) {
+
     return BackgroundScreen(
       paddingSize: 0.0,
       screens: ListView(
@@ -61,13 +66,13 @@ class Categories extends StatelessWidget {
             padding: const EdgeInsets.all(10.0),
             child: OutlinedButton(
               onPressed: () {},
-              child: const Text("Other"),
               style: OutlinedButton.styleFrom(
                   padding: const EdgeInsets.all(20.0),
                   side: const BorderSide(width: 1.0, color: Color(0xff157253)),
                   primary: const Color(0xff157253),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0))),
+              child: const Text("Other"),
             ),
           ),
         ],

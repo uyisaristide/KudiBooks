@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kudibooks_app/providers/all_providers_list.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/hyperlink_text.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/page_title.dart';
-import 'package:kudibooks_app/screens/background.dart';
+import '../../models/utilities/network_info.dart';
+import '../../providers/all_providers_list.dart';
+import 'widgets/hyperlink_text.dart';
+import 'widgets/page_title.dart';
+import '../background.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 import '../dashboard/classes/snack_bars.dart';
@@ -44,6 +45,7 @@ class _OtpVerificationState extends ConsumerState<OtpVerification>
   Widget build(BuildContext context) {
     print("This is the number ${widget.phoneNumber}");
     controller.reverse(from: controller.value == 0 ? 1.0 : controller.value);
+    var verifyProvider = ref.watch(verifyOtpProvider);
     return BackgroundScreen(
       screens: SingleChildScrollView(
         child: Column(
@@ -65,16 +67,13 @@ class _OtpVerificationState extends ConsumerState<OtpVerification>
               child: PinCodeTextField(
                 onCompleted: ((value) async {
                   var response = await ref
-                      .read(authProvider.notifier)
+                      .read(verifyOtpProvider.notifier)
                       .verifyOTP(value, widget.phoneNumber);
-                  if (response == "success") {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBars.snackBars(
-                            'Verfied successfully', Colors.green.shade400));
+                  if (response.networkStatus == NetworkStatus.success) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars('Verified successfully', Colors.green.shade400));
                     context.goNamed("signin");
                   } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBars.snackBars('Wrong OTP', Colors.red.shade400));
+                    ScaffoldMessenger.of(context).showSnackBar( SnackBars.snackBars('error: ${verifyProvider.getErrorMessage}', Colors.red.shade400));
                   }
                 }),
                 keyboardType: TextInputType.number,
