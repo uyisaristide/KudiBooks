@@ -36,6 +36,7 @@ class _ChartAccountState extends ConsumerState<ChartAccount> {
   @override
   Widget build(BuildContext context) {
     var data = ref.watch(allAccountsProvider);
+    var removeChart = ref.watch(removeChartProvider);
     return Scaffold(
       floatingActionButton: ElevatedButton(
         style: ElevatedButton.styleFrom(
@@ -103,20 +104,16 @@ class _ChartAccountState extends ConsumerState<ChartAccount> {
                                                 TextButton(
                                                   child: const Text('Yes'),
                                                   onPressed: () async {
-                                                    var res = await ref.read(allAccountsProvider.notifier).removeChart(e.id);
-                                                    if (res == 'success') {
+                                                    var deleteResponse = await ref.read(removeChartProvider.notifier).removeChart(e.id);
+                                                    if (deleteResponse.networkStatus==NetworkStatus.success) {
                                                       // debugPrint("$res");
                                                       Navigator.pop(dialogContext);
                                                       loadCharts();
-                                                      ScaffoldMessenger.of(dialogContext)
-                                                          .showSnackBar(SnackBars
-                                                              .snackBars(
-                                                                  'Deleted successfully',
-                                                                  Colors.green
-                                                                      .shade400));
-                                                    } else if (data.networkStatus == NetworkStatus.failed) {
-                                                      ScaffoldMessenger.of(dialogContext).showSnackBar(SnackBars.snackBars('Can not delete', Colors.redAccent));
+                                                      ScaffoldMessenger.of(dialogContext).showSnackBar(SnackBars.snackBars('Deleted successfully',Colors.green.shade400));
+                                                    }else{
                                                       Navigator.pop(dialogContext);
+                                                      debugPrint("${removeChart.networkStatus}");
+                                                      ScaffoldMessenger.of(dialogContext).showSnackBar(SnackBars.snackBars('${removeChart.errorMessage}', Colors.redAccent));
                                                     }
                                                     // Dismiss alert dialog
                                                   },
@@ -147,9 +144,9 @@ class _ChartAccountState extends ConsumerState<ChartAccount> {
                       child: CircularProgressIndicator(
                       color: Colors.green.shade400,
                     ))
-                  : data.networkStatus == NetworkStatus.failed
+                  :data.networkStatus==NetworkStatus.error?Center(child: Text("${data.errorMessage}"),): data.networkStatus == NetworkStatus.failed
                       ? Center(
-                          child: Text("${data.networkStatus}"),
+                          child: Text("${data.getErrorMessage}"),
                         )
                       : Center(
                           child: InkWell(

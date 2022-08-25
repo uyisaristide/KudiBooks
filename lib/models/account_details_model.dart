@@ -25,9 +25,9 @@ class AccountSelected {
 }
 
 class AccountDetails {
-  String name;
-  String code;
-  String note;
+  String ?name;
+  String? code;
+  String? note;
   int? expenseCategory;
 
   AccountDetails(

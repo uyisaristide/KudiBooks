@@ -24,6 +24,7 @@ class _AccountTypesState extends ConsumerState<AccountTypes> {
     // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      ref.watch(chartAccountProvider);
       loadRequiredData();
     });
   }
@@ -33,11 +34,8 @@ class _AccountTypesState extends ConsumerState<AccountTypes> {
     var accountChart = ref.watch(chartAccountProvider);
     return Container(
       padding: const EdgeInsets.all(10),
-      child: accountChart.networkStatus == NetworkStatus.loading
-          ? Center(
-              child: CircularProgressIndicator(color: Colors.green.shade400),
-            )
-          : LimitedBox(
+      child: accountChart.networkStatus == NetworkStatus.success
+          ? LimitedBox(
               child: ListView.separated(
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
@@ -76,7 +74,10 @@ class _AccountTypesState extends ConsumerState<AccountTypes> {
                   separatorBuilder: ((context, idx) => const SizedBox(
                         height: 10.0,
                       )),
-                  itemCount: accountChart.data?.length??0),
+                  itemCount: accountChart.data?.length ?? 0),
+            )
+          : Center(
+              child: CircularProgressIndicator(color: Colors.green.shade400),
             ),
     );
   }
@@ -125,7 +126,9 @@ class ExpenseCategories extends ConsumerWidget {
             separatorBuilder: ((context, idx) => const SizedBox(
                   height: 10.0,
                 )),
-            itemCount: expenseAccount.networkStatus == NetworkStatus.loading?0:expenseAccount.data!.length),
+            itemCount: expenseAccount.networkStatus == NetworkStatus.loading
+                ? 0
+                : expenseAccount.data!.length),
       ),
       // child: FutureBuilder<List<AccountChartModel>>(
       //   future: ref.read(chartAccountProvider.notifier).listOfCharts(),

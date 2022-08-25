@@ -3,80 +3,82 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/adapters.dart';
 import '../dio_services.dart';
+import '../handle/error_handler.dart';
 import '../models/Users/user_model.dart';
+import '../models/utilities/network_info.dart';
 
 String? myToken = "";
 
-class UserProvider extends StateNotifier<List<User>> {
-  UserProvider() : super([]);
+class UserNotifier extends StateNotifier<NetworkInfo<List<User>>> {
+  UserNotifier() : super(NetworkInfo());
   final _dio = Dio();
   String? wrongCred;
 
-  void addUser(User user) {
-    state = [...state, user];
-  }
+  // void addUser(User user) {
+  //   state = [...state, user];
+  // }
 
-  createUserEmail(User user) async {
-    Response response;
+  Future<NetworkInfo> createUserEmail(User user) async {
+    state = NetworkInfo(networkStatus: NetworkStatus.loading);
     try {
-      response = await _dio.post('${DioServices.baseUrl}auth/register',
+      Response response = await _dio.post('${DioServices.baseUrl}auth/register',
           data: user.toJsonEmail());
-      if (response.statusCode == 200) {
-        return "success";
-      } else {
-        return "fail";
-      }
+      var info  = NetworkInfo<List<User>>(networkStatus: NetworkStatus.success, statusCode: 200);
+      return info;
+    } on DioError catch (e) {
+      print("${e.response?.data["errors"]}");
+      var information = ErrorHandler.handleError<List<User>>(e);
+      state=information;
+      return information;
     } catch (e) {
-      if (e is DioError) {
-        debugPrint("${e.response?.data["errors"]} is an error");
-        throw e.response?.data["errors"] ?? e;
-      } else {
-        throw Exception(e);
-      }
+      NetworkInfo<List<User>> errorInfo = NetworkInfo(networkStatus: NetworkStatus.error, errorMessage: '${e}');
+      return errorInfo;
     }
   }
-
-  Future<String?> createUserPhone(User user) async {
-    Response response;
+  Future<NetworkInfo> createUserPhone(User user) async {
+    state = NetworkInfo(networkStatus: NetworkStatus.loading);
     try {
-      response = await _dio.post('${DioServices.baseUrl}auth/register',
+      Response response = await _dio.post('${DioServices.baseUrl}auth/register',
           data: user.toJsonPhone());
-      if (response.statusCode == 200) {
-        print(
-            "User saved with phone Number: Server message ${response.statusMessage} ${response.statusCode}");
-        myToken = response.data["token"];
-        return "success";
-      } else {
-        return "Failed to save with phone";
-      }
-    } catch (e) {
-      if (e is DioError) {
-        throw e.response?.data['errors'][0] ?? "Error";
-      } else {
-        throw Exception(e);
-      }
+      var responseInfo = NetworkInfo<List<User>>(networkStatus: NetworkStatus.success, statusCode: 200, );
+      return responseInfo;
+    } on DioError catch(e){
+      print("${e.response?.data["errors"]}");
+      var info = ErrorHandler.handleError<List<User>>(e);
+      state=info;
+      return info;
+    } catch(e){
+      var errorSpecial = NetworkInfo(networkStatus: NetworkStatus.error, errorMessage: "Contact system admin");
+      return errorSpecial;
     }
   }
 
-  Future logout() async {
-    Response logoutResponse;
+  Future<NetworkInfo> logout() async {
+    state = NetworkInfo(networkStatus: NetworkStatus.loading);
     try {
       debugPrint("Before map: $myToken");
       Map<String, String> mainHeader = {
         "Content-type": "application/json",
         "Authorization": "Bearer ${Hive.box('tokens').get('token')}"
       };
-      logoutResponse = await _dio.get('${DioServices.baseUrl}auth/logout',
+
+      var logoutResponse = await _dio.get('${DioServices.baseUrl}auth/logout',
           options: Options(headers: mainHeader));
-      if (logoutResponse.statusCode == 200) {
+
         debugPrint("${logoutResponse.statusCode} logged out successfully");
-        debugPrint("${Hive.box('tokens').get('token')} logged out successfully");
+        debugPrint( "${Hive.box('tokens').get('token')} logged out successfully");
         await Hive.openBox('tokens');
         await Hive.box('tokens').delete('token');
-        return "success";
-      }
+        var successLogout = NetworkInfo<List<User>>(networkStatus: NetworkStatus.success, statusCode: 200);
+        state=NetworkInfo(networkStatus: NetworkStatus.success);
+        return successLogout;
+
     } on DioError catch (e) {
-      debugPrint("${e.response}");
+      var dioError = ErrorHandler.handleError<List<User>>(e);
+      return dioError;
+    }catch(e){
+      NetworkInfo<List<User>> errorInfo = NetworkInfo(networkStatus: NetworkStatus.error, errorMessage: 'Contact system Admin');
+      return errorInfo;
     }
   }
 
@@ -90,54 +92,45 @@ class UserProvider extends StateNotifier<List<User>> {
     return users;
   }
 
-  Future<String?> loginEmail(String email, String password) async {
-    Response loginResponse;
+  Future<NetworkInfo> loginEmail(String email, String password) async {
+    state = NetworkInfo(networkStatus: NetworkStatus.loading);
     try {
-      loginResponse = await _dio.post('${DioServices.baseUrl}auth/login',
+      Response loginResponse = await _dio.post('${DioServices.baseUrl}auth/login',
           data: {"email": email, "password": password});
-      if (loginResponse.statusCode == 200) {
-        wrongCred = null;
         await Hive.openBox('tokens');
         await Hive.box('tokens').put('token', loginResponse.data["token"]);
-        myToken = loginResponse.data["token"];
-
-        return "success";
-      }
-      wrongCred = "${loginResponse.data['message']}";
-      return "fail";
-    } catch (e) {
-      if (e is DioError) {
-        debugPrint("Login email error: ${e.response?.data["message"]}");
-        throw e.response?.data['errors'] ?? e;
-      } else {
-        throw Exception(e);
-      }
+        var infoLogin = NetworkInfo<List<User>>(networkStatus: NetworkStatus.success, statusCode: 200);
+        return infoLogin;
+    } on DioError catch(e){
+      print("${e.response?.data['errors']}");
+      var informationError = ErrorHandler.handleError<List<User>>(e);
+      state=informationError;
+      return informationError;
+    }
+    catch (e) {
+      NetworkInfo<List<User>> errorInfo = NetworkInfo(networkStatus: NetworkStatus.error, errorMessage: 'Contact system Admin');
+      return errorInfo;
     }
   }
 
-  Future<String?> loginPhone(
-      {required String phoneNumber, required String pin}) async {
-    Response loginResponse;
+  Future<NetworkInfo> loginPhone( {required String phoneNumber, required String pin}) async {
+    state = NetworkInfo(networkStatus: NetworkStatus.loading);
     try {
-      loginResponse = await _dio.post('${DioServices.baseUrl}auth/login',
+      var loginResponse = await _dio.post('${DioServices.baseUrl}auth/login',
           data: {"phoneNumber": phoneNumber, "password": pin});
-      if (loginResponse.statusCode == 200) {
         wrongCred = null;
         await Hive.openBox('tokens');
         Hive.box('tokens').put('token', loginResponse.data["token"]);
-        // Hive.box('tokens').put('token', '211|fypwIaljfZhLkrRzINT25vr2omXSXmG5wksFl53w');
-        myToken = loginResponse.data["token"];
-        return "success";
-      }
-      wrongCred = "${loginResponse.data['message']}";
-      return "fail";
-    } catch (e) {
-      if (e is DioError) {
-        print(e.response?.data["message"]);
-        throw e.response?.data['errors'] ?? "Error $e";
-      } else {
-        throw Exception(e);
-      }
+        var info = NetworkInfo<List<User>>(networkStatus: NetworkStatus.success, statusCode: 200);
+        state = NetworkInfo(networkStatus: NetworkStatus.success);
+        return info;
+    }on DioError catch(e){
+      var info = ErrorHandler.handleError<List<User>>(e);
+      state=info;
+      return info;
+    }catch (e) {
+      var infoError = NetworkInfo(networkStatus: NetworkStatus.error);
+      return infoError;
     }
   }
 //

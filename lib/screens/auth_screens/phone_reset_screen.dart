@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../models/utilities/network_info.dart';
+import '../dashboard/classes/snack_bars.dart';
 import 'widgets/lock_icon.dart';
 import 'widgets/login_button.dart';
 import 'widgets/page_title.dart';
@@ -35,6 +37,7 @@ class _PhoneResetState extends ConsumerState<PhoneReset> {
 
   @override
   Widget build(BuildContext context) {
+    var requestOtpWatcher = ref.watch(requestingOtpProvider);
     return BackgroundScreen(
       paddingSize: 150,
       screens: Form(
@@ -96,13 +99,14 @@ class _PhoneResetState extends ConsumerState<PhoneReset> {
                   context.pushNamed('recoverScreen');
                   // print("+$_countryCode${phoneController.text}");
                   var phoneNumbers = "+$_countryCode${phoneController.text}";
-                  String otpResponse = await ref
-                      .read(authProvider.notifier)
+                  var otpResponse = await ref
+                      .read(requestingOtpProvider.notifier)
                       .requestOTP(phoneNumbers: phoneNumbers);
-                  if (otpResponse == "success") {
+                  if (otpResponse.networkStatus == NetworkStatus.success) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars('Rewrite your OTP', Colors.green.shade400));
                     context.pushNamed('recoverScreen');
                   } else {
-                    debugPrint("This is OTP Error: $otpResponse");
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars(requestOtpWatcher.getErrorMessage, Colors.redAccent.shade400));
                   }
                 }
               },

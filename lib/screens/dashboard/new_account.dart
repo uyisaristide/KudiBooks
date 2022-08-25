@@ -12,7 +12,7 @@ import 'widget/accountTypebottomSheet.dart';
 import 'widget/common_appBar.dart';
 import '../../models/account_type.dart';
 import 'classes/snack_bars.dart';
-import 'package:collection/collection.dart';
+import "package:collection/collection.dart";
 
 class NewAccount extends ConsumerStatefulWidget {
   int? accountId;
@@ -35,7 +35,7 @@ class _NewAccountState extends ConsumerState<NewAccount> {
   var accountTypeController = TextEditingController();
   var expenseCategoryController = TextEditingController();
   var selectedType = 0;
-  int accountSelected=0;
+  int accountSelected = 0;
   int? selectedCategory;
 
   selectedValueFunction(AccountName accountName) {
@@ -55,9 +55,7 @@ class _NewAccountState extends ConsumerState<NewAccount> {
   }
 
   void accountDetailsData() async {
-    ref
-        .read(accountDetailsProvider.notifier)
-        .accountDetailsData(int.parse(widget.accountId.toString()));
+    ref.read(accountDetailsProvider.notifier).accountDetailsData(int.parse(widget.accountId.toString()));
   }
 
   @override
@@ -65,7 +63,6 @@ class _NewAccountState extends ConsumerState<NewAccount> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(chartAccountProvider.notifier).listOfCharts();
-
       if (widget.accountId != 0) {
         accountDetailsData();
       }
@@ -75,14 +72,13 @@ class _NewAccountState extends ConsumerState<NewAccount> {
   populateData() {
     ref.watch(expenseCategoryProvider);
     var details = ref.watch(accountDetailsProvider);
+    var requiredData = ref.watch(chartAccountProvider);
     if (details.networkStatus == NetworkStatus.success) {
-      var requiredData = ref.read(chartAccountProvider);
       var category = requiredData.data
           ?.singleWhere((element) => element.accountType == 5)
           .expenseCategories
           .singleWhereOrNull((element) =>
               element.id == details.data?.accountDetails.expenseCategory);
-
       // debugPrint("${category?.name}");
 
       accountTypeController.text = details.data?.accountSelected.name ?? '';
@@ -90,8 +86,10 @@ class _NewAccountState extends ConsumerState<NewAccount> {
       nameController.text = details.data?.accountDetails.name ?? '';
       noteController.text = details.data?.accountDetails.note ?? '';
       expenseCategoryController.text = category?.name ?? '';
-      selectedType = details.data?.accountSelected.type == 5? selectedType = 5: selectedType;
-      accountSelected = details.data?.accountSelected.code??accountSelected;
+      selectedType = details.data?.accountSelected.type == 5
+          ? selectedType = 5
+          : selectedType;
+      accountSelected = details.data?.accountSelected.code ?? accountSelected;
       selectedCategory = category?.id;
       // debugPrint("This is: $selectedType");
     }
@@ -105,7 +103,7 @@ class _NewAccountState extends ConsumerState<NewAccount> {
   @override
   Widget build(BuildContext context) {
     ref.watch(accountNameProvider);
-    debugPrint("in build selected: $accountSelected and selected category is: $selectedCategory}");
+    debugPrint( "in build selected: $accountSelected and selected category is: $selectedCategory}");
     var detailsAccounts = ref.watch(accountDetailsProvider);
     var requiredData = ref.watch(chartAccountProvider);
 
@@ -130,11 +128,12 @@ class _NewAccountState extends ConsumerState<NewAccount> {
                       var resp = await ref
                           .read(chartAccountProvider.notifier)
                           .registerChart(ChartAccountModel(
-                              accountTypeSelected: ref.watch(accountNameProvider)!.code,
+                              accountTypeSelected:
+                                  ref.watch(accountNameProvider)!.code,
                               accountName: nameController.text,
                               accountCode: codeController.text,
-                              accountNote: noteController.text,
-                              expenseCategory:selectedCategory));
+                              note: noteController.text,
+                              expenseCategory: selectedCategory));
                       if (resp == 'success') {
                         ScaffoldMessenger.of(context).showSnackBar(
                             SnackBars.snackBars(
@@ -150,14 +149,18 @@ class _NewAccountState extends ConsumerState<NewAccount> {
                     } else if (widget.accountId != 0) {
                       var editChart = await ref
                           .read(chartAccountProvider.notifier)
-                          .updateChartAccount(id: widget.accountId !=0?int.parse(widget.accountId.toString()):0,
+                          .updateChartAccount(
+                              id: widget.accountId != 0
+                                  ? int.parse(widget.accountId.toString())
+                                  : 0,
                               chartAccountModel: ChartAccountModel(
-                                  accountTypeSelected:accountSelected,
+                                  accountTypeSelected: accountSelected,
                                   accountName: nameController.text,
                                   accountCode: codeController.text,
-                                  accountNote: noteController.text,
-                                  expenseCategory:selectedType == 5?selectedCategory:null)
-                      );
+                                  note: noteController.text,
+                                  expenseCategory: selectedType == 5
+                                      ? selectedCategory
+                                      : null));
                       if (editChart == 200) {
                         ScaffoldMessenger.of(context).showSnackBar(
                             SnackBars.snackBars(
@@ -175,92 +178,163 @@ class _NewAccountState extends ConsumerState<NewAccount> {
           )),
       appBar: AppBarCommon.preferredSizeWidget(
           context, widget.accountId == 0 ? "Save account" : "Edit account"),
-      body: detailsAccounts.networkStatus == NetworkStatus.loading ||
-              requiredData.networkStatus == NetworkStatus.loading
-          ? Center(
-              child: CircularProgressIndicator(
-              color: Colors.green.shade400,
-            ))
-          : detailsAccounts.networkStatus == NetworkStatus.success &&
-                  requiredData.networkStatus == NetworkStatus.success
-              ? SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(
-                        vertical: 15, horizontal: 15),
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        children: [
-                          CustomFormField(
-                            fieldIcon: const Icon(Icons.arrow_drop_down),
-                            inputType: TextInputType.none,
-                            calendarPicker: () => DialogBox.dialogBox(
-                                AccountTypes(selectedValueFunction),
-                                context,
-                                0.80),
-                            validators: (value) {
-                              if (value.toString().isEmpty) {
-                                return "Enter account Name";
-                              }
-                              return null;
-                            },
-                            hintText: 'Select type',
-                            isShown: false,
-                            fieldController: accountTypeController,
-                          ),
-                          if (selectedType == 5)
-                            CustomFormField(
-                              fieldIcon: const Icon(Icons.arrow_drop_down),
-                              inputType: TextInputType.none,
-                              calendarPicker: () => DialogBox.dialogBox(
-                                  ExpenseCategories(selectedExpenseCategory),
-                                  context,
-                                  0.25),
-                              validators: (value) {
-                                if (value.toString().isEmpty) {
-                                  return "Enter account Name";
-                                }
-                                return null;
-                              },
-                              hintText: 'Select type',
-                              isShown: false,
-                              fieldController: expenseCategoryController,
-                            )
-                          else
-                            Container(),
-                          CustomFormField(
-                            validators: (value) {
-                              if (value.toString().isEmpty) {
-                                return "Enter account Name";
-                              }
-                              return null;
-                            },
-                            hintText: 'Account name',
-                            isShown: false,
-                            fieldController: nameController,
-                          ),
-                          CustomFormField(
-                              validators: (value) {},
-                              hintText: 'Code',
-                              fieldController: codeController,
-                              isShown: false),
-                          CustomFormField(
-                            maxLining: 5,
-                            hintText: 'Note',
-                            fieldController: noteController,
-                            isShown: false,
-                            validators: (value) {},
-                          )
-                        ],
+      body: widget.accountId == 0
+          ? SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Container(
+                margin:
+                    const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      CustomFormField(
+                        fieldIcon: const Icon(Icons.arrow_drop_down),
+                        inputType: TextInputType.none,
+                        calendarPicker: () => DialogBox.dialogBox(
+                            AccountTypes(selectedValueFunction), context, 0.80),
+                        validators: (value) {
+                          if (value.toString().isEmpty) {
+                            return "Enter account Name";
+                          }
+                          return null;
+                        },
+                        hintText: 'Select type',
+                        isShown: false,
+                        fieldController: accountTypeController,
                       ),
-                    ),
-                  ))
-              : Center(
-                  child: InkWell(
-                      onTap: () {},
-                      child: Text('${detailsAccounts.errorMessage}')),
+                      if (selectedType == 5)
+                        CustomFormField(
+                          fieldIcon: const Icon(Icons.arrow_drop_down),
+                          inputType: TextInputType.none,
+                          calendarPicker: () => DialogBox.dialogBox(
+                              ExpenseCategories(selectedExpenseCategory),
+                              context,
+                              0.25),
+                          validators: (value) {
+                            if (value.toString().isEmpty) {
+                              return "Enter account Name";
+                            }
+                            return null;
+                          },
+                          hintText: 'Select type',
+                          isShown: false,
+                          fieldController: expenseCategoryController,
+                        )
+                      else
+                        Container(),
+                      CustomFormField(
+                        validators: (value) {
+                          if (value.toString().isEmpty) {
+                            return "Enter account Name";
+                          }
+                          return null;
+                        },
+                        hintText: 'Account name',
+                        isShown: false,
+                        fieldController: nameController,
+                      ),
+                      CustomFormField(
+                          validators: (value) {},
+                          hintText: 'Code',
+                          fieldController: codeController,
+                          isShown: false),
+                      CustomFormField(
+                        maxLining: 5,
+                        hintText: 'Note',
+                        fieldController: noteController,
+                        isShown: false,
+                        validators: (value) {},
+                      )
+                    ],
+                  ),
                 ),
+              ))
+          : detailsAccounts.networkStatus == NetworkStatus.success || requiredData.networkStatus == NetworkStatus.success
+              ? SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Container(
+            margin: const EdgeInsets.symmetric(
+                vertical: 15, horizontal: 15),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  CustomFormField(
+                    fieldIcon: const Icon(Icons.arrow_drop_down),
+                    inputType: TextInputType.none,
+                    calendarPicker: () => DialogBox.dialogBox(
+                        AccountTypes(selectedValueFunction),
+                        context,
+                        0.80),
+                    validators: (value) {
+                      if (value.toString().isEmpty) {
+                        return "Enter account Name";
+                      }
+                      return null;
+                    },
+                    hintText: 'Select type',
+                    isShown: false,
+                    fieldController: accountTypeController,
+                  ),
+                  if (selectedType == 5)
+                    CustomFormField(
+                      fieldIcon: const Icon(Icons.arrow_drop_down),
+                      inputType: TextInputType.none,
+                      calendarPicker: () => DialogBox.dialogBox(
+                          ExpenseCategories(
+                              selectedExpenseCategory),
+                          context,
+                          0.25),
+                      validators: (value) {
+                        if (value.toString().isEmpty) {
+                          return "Enter account Name";
+                        }
+                        return null;
+                      },
+                      hintText: 'Select type',
+                      isShown: false,
+                      fieldController: expenseCategoryController,
+                    )
+                  else
+                    Container(),
+                  CustomFormField(
+                    validators: (value) {
+                      if (value.toString().isEmpty) {
+                        return "Enter account Name";
+                      }
+                      return null;
+                    },
+                    hintText: 'Account name',
+                    isShown: false,
+                    fieldController: nameController,
+                  ),
+                  CustomFormField(
+                      validators: (value) {},
+                      hintText: 'Code',
+                      fieldController: codeController,
+                      isShown: false),
+                  CustomFormField(
+                    maxLining: 5,
+                    hintText: 'Note',
+                    fieldController: noteController,
+                    isShown: false,
+                    validators: (value) {},
+                  )
+                ],
+              ),
+            ),
+          ))
+              : detailsAccounts.networkStatus == NetworkStatus.loading && requiredData.networkStatus == NetworkStatus.loading
+                  ? Center(
+          child: CircularProgressIndicator(
+            color: Colors.green.shade400,
+          ))
+                  : Center(
+                      child: InkWell(
+                          onTap: () {},
+                          child: Text('${detailsAccounts.networkStatus}')),
+                    ),
     );
   }
 }

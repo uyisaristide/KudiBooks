@@ -19,5 +19,8 @@ class NetworkInfo<T> {
   factory NetworkInfo.errors(Map<String, dynamic> jsonData, {T? data,int? statusCode,NetworkStatus status=NetworkStatus.failed}) => NetworkInfo(
       data: data,
       statusCode: statusCode,
-      networkStatus:status, errorMessage: jsonData["message"],errors:List<String>.from(jsonData["errors"]) );
+      networkStatus:status,
+      errorMessage: jsonData["message"],
+      errors:jsonData['errors'] !=null? List<String>.from(jsonData["errors"]):[],
+  );
 }

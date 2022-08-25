@@ -4,14 +4,14 @@ class ChartAccountModel {
   int accountTypeSelected;
   String accountName;
   String? accountCode;
-  String? accountNote;
+  String? note;
   int? expenseCategory;
 
   ChartAccountModel(
       {required this.accountTypeSelected,
       required this.accountName,
       this.accountCode,
-      this.accountNote,
+      this.note,
       this.expenseCategory});
 
   factory ChartAccountModel.fromJson(Map<String, dynamic> json) =>
@@ -19,7 +19,7 @@ class ChartAccountModel {
           accountTypeSelected: json["accountTypeSelected"],
           accountName: json["accountName"],
           accountCode: json["accountCode"],
-          accountNote: json["accountNote"],
+          note: json["accountNote"],
           expenseCategory: json["expenseCategory"]);
 
   Map<String, dynamic> toJson() {
@@ -27,7 +27,7 @@ class ChartAccountModel {
       "accountTypeSelected": accountTypeSelected,
       "accountName": accountName,
       "accountCode": accountCode,
-      "accountNote": accountCode,
+      "accountNote": note,
       "expenseCategory": expenseCategory,
     };
   }

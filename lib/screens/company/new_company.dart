@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive/hive.dart';
 import '../../models/company_model.dart';
 import '../../models/plan.dart';
+import '../../models/utilities/network_info.dart';
 import '../../providers/all_providers_list.dart';
 import '../auth_screens/widgets/drop_down_widget.dart';
 import '../auth_screens/widgets/login_button.dart';
 import '../auth_screens/widgets/page_title.dart';
 import '../auth_screens/widgets/text_form_field.dart';
 import '../background.dart';
+import '../dashboard/classes/snack_bars.dart';
 import 'widgets/planCard.dart';
 
 class NewCompany extends ConsumerStatefulWidget {
@@ -34,6 +37,8 @@ class _NewCompanyState extends ConsumerState<NewCompany> {
 
   @override
   Widget build(BuildContext context) {
+    print('${Hive.box('company').get('companyId')}');
+    ref.watch(createCompanyProvider);
     return BackgroundScreen(
       paddingSize: 150.0,
       screens: Form(
@@ -42,12 +47,22 @@ class _NewCompanyState extends ConsumerState<NewCompany> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const PageTitle(title: 'Create new account'),
+            LoginButton(
+                text: "Skip",
+                actionField: () {
+                  var tokenId = '${Hive.box('company').get('companyId')}';
+                  tokenId.isNotEmpty
+                      ? context.goNamed('dashboard')
+                      : ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBars.snackBars('Register Company first',
+                              Colors.redAccent.shade400));
+                }),
             CustomFormField(
               fieldController: companyNameController,
               fieldIcon: const Icon(Icons.person),
               hintText: 'Company Name',
               validators: (value) {
-                if(value.toString().isEmpty){
+                if (value.toString().isEmpty) {
                   return "Company Name required";
                 }
                 return null;
@@ -133,16 +148,22 @@ class _NewCompanyState extends ConsumerState<NewCompany> {
             ),
             LoginButton(
                 text: "Create company",
-                actionField: () {
-                  var createUser = ref
-                      .read(companyProvider.notifier)
+                actionField: () async {
+                  var createCompany = await ref
+                      .read(createCompanyProvider.notifier)
                       .createCompany(Company(
                           companyName: companyNameController.text,
                           industry: int.parse(selectedIndustry.toString()),
                           country: int.parse(selectedCountry.toString()),
                           currency: 2,
                           plan: 1));
-                  context.goNamed("dashboard");
+                  if (createCompany.networkStatus == NetworkStatus.success) {
+                    context.goNamed("dashboard");
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBars.snackBars('${createCompany.getErrorMessage}',
+                            Colors.redAccent.shade400));
+                  }
                 })
           ],
         ),

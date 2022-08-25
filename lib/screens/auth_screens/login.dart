@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive/hive.dart';
 import '../../models/Users/user_model.dart';
+import '../../models/utilities/network_info.dart';
 import '../../providers/all_providers_list.dart';
 import '../../providers/user_provider.dart';
 import 'validators/validator.dart';
@@ -34,12 +35,13 @@ class _LoginState extends ConsumerState<Login> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    ref.read(loginEmailProvider);
     emailController.addListener(() => setState(() {}));
   }
 
   @override
   Widget build(BuildContext context) {
-    List<User> _user = ref.watch(usersProvider);
+    var loginEmailWatcher = ref.watch(loginEmailProvider);
     debugPrint("Logged user is: $myToken");
     return BackgroundScreen(
       buttonWidget: Row(
@@ -172,19 +174,12 @@ class _LoginState extends ConsumerState<Login> {
               text: 'Login',
               actionField: () async {
                 if (_formKey.currentState!.validate()) {
-                  String? check = await ref
-                      .read(usersProvider.notifier)
-                      .loginEmail(
-                          emailController.text, passwordController.text);
-                  if (check == "success") {
-                    var tokenHive = await Hive.box('tokens').get('token');
-                    debugPrint("In Hive token: $tokenHive}");
-                    context.goNamed('dashboard');
-                  } else if (check == "fail") {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBars.snackBars(
-                            "${ref.read(usersProvider.notifier).wrongCred}",
-                            Colors.redAccent));
+                  var check = await ref.read(loginEmailProvider.notifier).loginEmail(emailController.text, passwordController.text);
+                  if(check.networkStatus == NetworkStatus.success){
+                    context.goNamed('newCompany');
+                  }else{
+                    debugPrint("${loginEmailWatcher.networkStatus}");
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars('${loginEmailWatcher.errorMessage}', Colors.redAccent.shade400));
                   }
                 }
               },

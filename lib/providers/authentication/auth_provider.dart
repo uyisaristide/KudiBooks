@@ -3,59 +3,52 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../dio_services.dart';
 
+import '../../handle/error_handler.dart';
 import '../../models/Users/user_model.dart';
+import '../../models/utilities/network_info.dart';
 
-class AuthProvider extends StateNotifier<List<User>> {
-  AuthProvider() : super([]);
+class AuthProvider extends StateNotifier<NetworkInfo<List<User>>> {
+  AuthProvider() : super(NetworkInfo());
   final Dio _dioInstance = Dio();
 
-  requestOTP({required String phoneNumbers}) async {
+  Future<NetworkInfo> requestOTP({required String phoneNumbers}) async {
+    state = NetworkInfo(networkStatus: NetworkStatus.loading);
     try {
       var responses = await _dioInstance.post(
           '${DioServices.baseUrl}auth/otp/request',
           data: {"phoneNumber": phoneNumbers});
-      if (responses.statusCode == 200) {
-        return "success";
-      } else {
-        debugPrint("${responses.statusCode} ${responses.statusMessage}");
-        return "fail";
-      }
-    } catch (error) {
-      if (error is DioError) {
-        throw error.response?.data['errors'] ?? "$error";
-      } else {
-        throw Exception(error);
-      }
+      var successInfo = NetworkInfo<List<User>>(networkStatus: NetworkStatus.success, statusCode: 200);
+      state = NetworkInfo(networkStatus: NetworkStatus.success);
+      return successInfo;
+    } on DioError catch(e){
+      var errorInfo = ErrorHandler.handleError<List<User>>(e);
+      return errorInfo;
+    } catch (e) {
+      NetworkInfo<List<User>> errorInfo = NetworkInfo(networkStatus: NetworkStatus.error, errorMessage: 'Contact system Admin');
+      return errorInfo;
     }
   }
 
-  verifyOTP(String otpCode, String phoneNumber) async {
+  Future<NetworkInfo> verifyOTP(String otpCode, String phoneNumber) async {
+    state = NetworkInfo(networkStatus: NetworkStatus.loading);
     try {
       Response response = await _dioInstance.post(
           "${DioServices.baseUrl}auth/otp/verify",
           data: {"code": otpCode, "phoneNumber": phoneNumber});
-      if (response.statusCode == 200) {
-        debugPrint("${response.statusCode} ${response.statusMessage}");
-        return "success";
-      } else {
-        debugPrint(response.statusMessage);
-        return "fail";
-      }
+        var successInfo = NetworkInfo<List<User>>(networkStatus: NetworkStatus.success, statusCode: 200);
+        state = NetworkInfo(networkStatus: NetworkStatus.success);
+        return successInfo;
+    }  on DioError catch(e){
+      var errorInfo = ErrorHandler.handleError<List<User>>(e);
+      return errorInfo;
     } catch (e) {
-      if (e is DioError) {
-        debugPrint(e.response?.data["errors"] ?? "error");
-        throw e.response?.data["errors"] ?? "error";
-      } else {
-        throw Exception(e);
-      }
+      NetworkInfo<List<User>> errorInfo = NetworkInfo(networkStatus: NetworkStatus.error, errorMessage: 'Contact system Admin');
+      return errorInfo;
     }
   }
 
-  resetPhonePin(
-      {required String otpCode,
-      required String phoneNumber,
-      required String pin,
-      required String confirm_pin}) async {
+  Future<NetworkInfo> resetPhonePin( {required String otpCode, required String phoneNumber, required String pin, required String confirm_pin}) async {
+    state = NetworkInfo(networkStatus: NetworkStatus.loading);
     try {
       Map<String, dynamic> resetData = {
         "otpCode": otpCode,
@@ -66,47 +59,41 @@ class AuthProvider extends StateNotifier<List<User>> {
       Response response = await _dioInstance.post(
           '${DioServices.baseUrl}auth/reset-password/phone',
           data: resetData);
-      if (response.statusCode == 200) {
-        // state = response.data["message"];
-        return "success";
-      } else {
-        return "fail";
-      }
+
+      state=NetworkInfo(networkStatus: NetworkStatus.success);
+      var successInfo = NetworkInfo<List<User>>(networkStatus: NetworkStatus.success, statusCode: 200);
+      return successInfo;
+    } on DioError catch(e){
+      var errorInfo = ErrorHandler.handleError<List<User>>(e);
+      return errorInfo;
     } catch (e) {
-      if (e is DioError) {
-        debugPrint("${e.response?.data["errors"]}");
-        throw e.response?.data["errors"] ?? e;
-      } else {
-        throw Exception(e);
-      }
+      NetworkInfo<List<User>> errorInfo = NetworkInfo(networkStatus: NetworkStatus.error, errorMessage: 'Contact system Admin');
+      return errorInfo;
     }
   }
 
-  forgotPassword({required String email, required String device}) async {
+  Future<NetworkInfo> forgotPassword({required String email, required String device}) async {
+
     try {
       Response response = await _dioInstance.post(
           '${DioServices.baseUrl}auth/forgot-password',
           data: {"email": email, "device": device});
-      if (response.statusCode == 200) {
-        return "success";
-      } else {
-        return "fail";
-      }
+
+      // state=NetworkInfo(networkStatus: NetworkStatus.success);
+      var successInfo = NetworkInfo<List<User>>(networkStatus: NetworkStatus.success, statusCode: 200);
+      return successInfo;
+
+    }  on DioError catch(e){
+      var errorInfo = ErrorHandler.handleError<List<User>>(e);
+      return errorInfo;
     } catch (e) {
-      if (e is DioError) {
-        debugPrint("${e.response?.data["errors"] ?? e}");
-        throw e.response?.data["errors"] ?? e;
-      } else {
-        throw Exception(e);
-      }
+      NetworkInfo<List<User>> errorInfo = NetworkInfo(networkStatus: NetworkStatus.error, errorMessage: 'Contact system Admin');
+      return errorInfo;
     }
   }
 
-  resetEmailPassword(
-      {required String token,
-      required String email,
-      required String password,
-      required String password_confirmation}) async {
+  Future<NetworkInfo> resetEmailPassword( {required String token, required String email, required String password, required String password_confirmation}) async {
+
     try {
       Map<String, dynamic> resetEmailData = {
         "token": token,
@@ -118,19 +105,15 @@ class AuthProvider extends StateNotifier<List<User>> {
           '${DioServices.baseUrl}auth/reset-password/email',
           data: resetEmailData);
 
-      if (response.statusCode == 200) {
-        debugPrint("Response reset message is: ${response.data['message']}");
-        return "success";
-      } else {
-        return "fail";
-      }
+      var successInfo = NetworkInfo<List<User>>(networkStatus: NetworkStatus.success, statusCode: 200);
+      return successInfo;
+
+    } on DioError catch(e){
+      var errorInfo = ErrorHandler.handleError<List<User>>(e);
+      return errorInfo;
     } catch (e) {
-      if (e is DioError) {
-        debugPrint("This is email error: ${e.response?.data["message"]}");
-        throw "This is email error: ${e.response?.data["errors"] ?? e}";
-      } else {
-        throw Exception(e);
-      }
+      NetworkInfo<List<User>> errorInfo = NetworkInfo(networkStatus: NetworkStatus.error, errorMessage: 'Contact system Admin');
+      return errorInfo;
     }
   }
 }

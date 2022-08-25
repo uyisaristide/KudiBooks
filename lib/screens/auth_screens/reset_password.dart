@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../models/utilities/network_info.dart';
 import '../../providers/all_providers_list.dart';
 import 'validators/validator.dart';
 import 'widgets/lock_icon.dart';
@@ -26,7 +27,7 @@ class ResetEmailPassword extends ConsumerStatefulWidget {
 class _PhoneResetState extends ConsumerState<ResetEmailPassword> {
   String? myEmail;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  late TextEditingController emailController;
+  final TextEditingController emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
   bool isHidden = true;
@@ -35,11 +36,12 @@ class _PhoneResetState extends ConsumerState<ResetEmailPassword> {
   void initState() {
     super.initState();
     myEmail = widget.recoverEmail;
-    emailController = TextEditingController(text: myEmail);
+    emailController.text=myEmail.toString();
   }
 
   @override
   Widget build(BuildContext context) {
+    var resetEmailLink = ref.watch(authProvider);
     return BackgroundScreen(
       paddingSize: 150,
       screens: Form(
@@ -118,7 +120,7 @@ class _PhoneResetState extends ConsumerState<ResetEmailPassword> {
                           password_confirmation:
                               confirmPasswordController.text);
                   // debugPrint("able to reset ${responses.runtimeType}");
-                  if (responses == "success") {
+                  if (responses.networkStatus == NetworkStatus.success) {
                     ScaffoldMessenger.of(context).showSnackBar(
                         SnackBars.snackBars(
                             'Rested successfully', Colors.green.shade400));
@@ -126,7 +128,7 @@ class _PhoneResetState extends ConsumerState<ResetEmailPassword> {
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                         SnackBars.snackBars(
-                            'Some error happened', Colors.red.shade400));
+                            'Error: ${resetEmailLink.getErrorMessage}', Colors.red.shade400));
                   }
                 }
               },

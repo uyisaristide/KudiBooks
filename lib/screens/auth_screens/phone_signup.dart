@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../models/Users/user_model.dart';
+import '../../models/utilities/network_info.dart';
 import '../../providers/all_providers_list.dart';
 import 'validators/validator.dart';
 import 'widgets/circled_logo.dart';
@@ -12,7 +13,6 @@ import 'widgets/page_title.dart';
 import 'widgets/phone_input.dart';
 import 'widgets/text_form_field.dart';
 import '../background.dart';
-import 'package:collection/collection.dart';
 
 import '../dashboard/classes/snack_bars.dart';
 
@@ -53,7 +53,7 @@ class _PhoneSignupState extends ConsumerState<PhoneSignup> {
 
   @override
   Widget build(BuildContext context) {
-    List<User> users = ref.watch(usersProvider);
+    var createUserPhone = ref.watch(createUserPhoneProvider);
     return BackgroundScreen(
       screens: Form(
         key: _formKey,
@@ -204,48 +204,26 @@ class _PhoneSignupState extends ConsumerState<PhoneSignup> {
                     hintStyle: const TextStyle(color: Colors.grey)),
               ),
             ),
-            LoginButton(
-              text: 'Register now',
-              actionField: () {
-                if (_formKey.currentState!.validate()) {
-                  var checkUser = users.firstWhereOrNull((element) =>
-                      element.phoneOrEmail == phoneController.text);
-                  if (checkUser == null) {
-                    ref.read(usersProvider.notifier).addUser(User(
-                        firstName: firstNameController.text,
-                        lastName: lastNameController.text,
-                        phoneOrEmail: _countryCodes + phoneController.text,
-                        password: pinController.text));
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBars.snackBars(
-                            'User saved successfully', Colors.green.shade400));
-                    context.goNamed('signin');
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBars.snackBars(
-                            'User already exists', Colors.redAccent.shade400));
-                  }
-                }
-              },
-            ),
             const SizedBox(height: 5),
             LoginButton(
-              text: 'Register now Net',
+              text: 'Register',
               actionField: () async{
                 if (_formKey.currentState!.validate()) {
                   var _phoneNumber = "+$_countryCodes${phoneController.text}";
                   var phoneRegister = await ref
-                      .read(usersProvider.notifier)
+                      .read(createUserPhoneProvider.notifier)
                       .createUserPhone(User(
                           firstName: firstNameController.text,
                           lastName: lastNameController.text,
                           phoneOrEmail: _phoneNumber,
                           password: pinController.text,
                           passwordConfirm: pinController.text));
-                  if(phoneRegister == 'success'){
-                    context.goNamed('dashboard');
+                  if(phoneRegister.networkStatus == NetworkStatus.success){
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars('Thanks for creating account', Colors.green.shade400));
+                    context.goNamed('signin');
+                  }else{
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars('${createUserPhone.getErrorMessage}', Colors.redAccent.shade400));
                   }
-                  debugPrint("Kigali rwanda");
                 }
               },
             ),

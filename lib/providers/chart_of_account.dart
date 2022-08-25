@@ -29,8 +29,7 @@ class ChartAccountProvider
       for (var d in chartAccountList) {
         data.add(AccountChartModel.fromJson(d));
       }
-      var info = NetworkInfo<List<AccountChartModel>>(
-          statusCode: 200, networkStatus: NetworkStatus.success, data: data);
+      var info = NetworkInfo<List<AccountChartModel>>( statusCode: 200, networkStatus: NetworkStatus.success, data: data);
       state = info;
     }   on DioError catch (e) {
       NetworkInfo<List<ChartAccountModel>> info =
@@ -69,12 +68,14 @@ class ChartAccountProvider
   }
 
   Future registerChart(ChartAccountModel accountModel) async {
+    state = NetworkInfo(networkStatus: NetworkStatus.loading);
     try {
       Map<String, dynamic> chartHeader = {
         "Content-type": "application/json",
         "Authorization": "Bearer ${Hive.box('tokens').get('token')}",
-        "companyID": 29
+        "companyID": '${Hive.box('company').get('companyId')}'
       };
+      debugPrint('${Hive.box('company').get('companyId')}');
       Response response = await _dio.post("${DioServices.baseUrl}app/chart",
           options: Options(headers: chartHeader), data: accountModel.toJson());
       if (response.statusCode == 200) {
@@ -96,8 +97,9 @@ class ChartAccountProvider
       Map<String, dynamic> editChart = {
         "Content-type": "application/json",
         "Authorization": "Bearer ${Hive.box('tokens').get('token')}",
-        "companyID": 29
+        "companyID": '${Hive.box('company').get('companyId')}'
       };
+
       debugPrint("${chartAccountModel.toJson()}");
       Response response = await _dio.put(
           '${DioServices.baseUrl}app/chart/update/$id',
@@ -145,12 +147,6 @@ class ChartAccountProvider
       info.errorMessage = "";
     }
   }
-
-  // datas(){
-  //   chartAccountList.forEach((element) {
-  //     debugPrint("${element}");
-  //   });
-  // }
 
   addNewChart(ChartAccountModel chartModel) {}
 }

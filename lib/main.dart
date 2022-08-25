@@ -11,6 +11,7 @@ void main() async {
   Directory directory = await path_provider.getApplicationDocumentsDirectory();
   Hive.init(directory.path);
   await Hive.openBox('tokens');
+  await Hive.openBox('company');
   // debugPrint("Kigali Tokens: ${Hive.box('tokens').get('tokens')}");
   runApp(const ProviderScope(child: MyApp()));
 }

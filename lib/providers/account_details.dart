@@ -17,11 +17,13 @@ class AccountDetailsNotifier
       Map<String, dynamic> chartHeader = {
         "Content-type": "application/json",
         "Authorization": "Bearer ${Hive.box('tokens').get('token')}",
-        "companyID": 29,
+        "companyID": '${Hive.box('company').get('companyId')}',
       };
+
       Response response = await _dio.get(
           '${DioServices.baseUrl}app/chart/edit/$id',
           options: Options(headers: chartHeader));
+
       var accountDetails = AccountDetailsModel.fromJson(response.data);
       state = NetworkInfo(
           data: accountDetails,

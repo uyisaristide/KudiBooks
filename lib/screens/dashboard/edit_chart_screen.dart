@@ -76,7 +76,7 @@ class _EditChartsState extends ConsumerState<EditCharts> {
                             accountTypeSelected: accountCode,
                             accountName: nameController.text,
                             accountCode: codeController.text,
-                            accountNote: noteController.text,
+                            note: noteController.text,
                             expenseCategory: expenseCategoryId != 0
                                 ? expenseCategoryId
                                 : null));

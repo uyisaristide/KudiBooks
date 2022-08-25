@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../models/utilities/network_info.dart';
 import 'validators/validator.dart';
 import 'widgets/lock_icon.dart';
 import 'widgets/login_button.dart';
@@ -38,6 +39,7 @@ class _PhoneResetState extends ConsumerState<EmailReset> {
 
   @override
   Widget build(BuildContext context) {
+    var forgetPasswordWatcher = ref.watch(forgetPasswordProvider);
     return BackgroundScreen(
       paddingSize: 150,
       screens: Form(
@@ -60,16 +62,14 @@ class _PhoneResetState extends ConsumerState<EmailReset> {
             LoginButton(
               text: 'Send email',
               actionField: () async {
-                debugPrint('Reset email');
                 if (_formKey.currentState!.validate()) {
                   if (Platform.isAndroid) {
-                    String result = await ref
-                        .read(authProvider.notifier)
+                    var result = await ref
+                        .read(forgetPasswordProvider.notifier)
                         .forgotPassword(
                         email: emailController.text,
                         device: Platform.operatingSystem);
-                    if (result == "success") {
-                      // debugPrint(result);
+                    if (result.networkStatus == NetworkStatus.success) {
                       context.goNamed('signin');
                       ScaffoldMessenger.of(context)
                         ..removeCurrentSnackBar()
@@ -80,26 +80,24 @@ class _PhoneResetState extends ConsumerState<EmailReset> {
                       ScaffoldMessenger.of(context)
                         ..removeCurrentSnackBar()
                         ..showSnackBar(SnackBars.snackBars(
-                            "Check Link on email", Colors.red.shade400));
+                            "${forgetPasswordWatcher.getErrorMessage}", Colors.red.shade400));
                     }
                   } else if (Platform.isIOS) {
-                    String result = await ref
-                        .read(authProvider.notifier)
+                    var result = await ref
+                        .read(forgetPasswordProvider.notifier)
                         .forgotPassword(
                         email: emailController.text,
                         device: Platform.operatingSystem);
-                    if (result == "success") {
-                      debugPrint(result);
+                    if (result.networkStatus == NetworkStatus.success) {
                       ScaffoldMessenger.of(context)
                         ..removeCurrentSnackBar()
                         ..showSnackBar(SnackBars.snackBars(
                             "Check Link on email", Colors.green.shade400));
                     } else {
-                      print("failed");
                       ScaffoldMessenger.of(context)
                         ..removeCurrentSnackBar()
                         ..showSnackBar(SnackBars.snackBars(
-                            "Check Link on email", Colors.red.shade400));
+                            "Error: ${forgetPasswordWatcher.getErrorMessage}", Colors.red.shade400));
                     }
                   } else {
                     ScaffoldMessenger.of(context)

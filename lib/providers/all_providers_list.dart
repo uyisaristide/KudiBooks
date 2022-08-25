@@ -40,8 +40,16 @@ final expencesProvider = StateNotifierProvider<ExpensesProvider, List<Expense>>(
 final inventoryProvider =
     StateNotifierProvider<InventoryProviders, List<InventoryModel>>(
         (ref) => InventoryProviders());
-final usersProvider =
-    StateNotifierProvider<UserProvider, List<User>>((ref) => UserProvider());
+
+//User Providers
+final usersProvider = StateNotifierProvider<UserNotifier, NetworkInfo<List<User>>>((ref) => UserNotifier());
+final createUserEmailProvider = StateNotifierProvider<UserNotifier, NetworkInfo<List<User>>>((ref) => UserNotifier());
+final createUserPhoneProvider = StateNotifierProvider<UserNotifier, NetworkInfo<List<User>>>((ref) => UserNotifier());
+final loginEmailProvider = StateNotifierProvider<UserNotifier, NetworkInfo<List<User>>>((ref) => UserNotifier());
+final loginPhoneProvider = StateNotifierProvider<UserNotifier, NetworkInfo<List<User>>>((ref) => UserNotifier());
+final logoutProvider = StateNotifierProvider<UserNotifier, NetworkInfo<List<User>>>((ref) => UserNotifier());
+
+
 
 final productToSalesProvide =
     StateNotifierProvider<AddProductToSalesNotifier, List<ProductToSell>>(
@@ -52,14 +60,26 @@ final productToLoadProvider =
 final salesProvider =
     StateNotifierProvider<ProductSalesProvider, List<ProductSalesModel>>(
         (ref) => ProductSalesProvider());
-final companyProvider = StateNotifierProvider<CompanyProvider, List<Company>>(
-    (ref) => CompanyProvider());
-final authProvider =
-    StateNotifierProvider<AuthProvider, List<User>>((ref) => AuthProvider());
-final chartAccountProvider =
-    StateNotifierProvider<ChartAccountProvider, NetworkInfo<List<AccountChartModel>>>(
-        (ref) => ChartAccountProvider());
-final allAccountsProvider = StateNotifierProvider<AllChartAccountsProvider, NetworkInfo<List<Accounts>>>((ref) => AllChartAccountsProvider());
-final accountDetailsProvider = StateNotifierProvider<AccountDetailsNotifier, NetworkInfo<AccountDetailsModel?>>((ref) => AccountDetailsNotifier());
+
+
+//Company providers
+final companyProvider = StateNotifierProvider<CompanyProvider, NetworkInfo<List<Company>>>((ref) => CompanyProvider());
+final createCompanyProvider = StateNotifierProvider<CompanyProvider, NetworkInfo<List<Company>>>((ref) => CompanyProvider());
+
+//Auth
+final authProvider = StateNotifierProvider<AuthProvider, NetworkInfo<List<User>>>((ref) => AuthProvider());
+final requestingOtpProvider = StateNotifierProvider<AuthProvider, NetworkInfo<List<User>>>((ref) => AuthProvider());
+final verifyOtpProvider = StateNotifierProvider<AuthProvider, NetworkInfo<List<User>>>((ref) => AuthProvider());
+final resetUserInfoProvider = StateNotifierProvider<AuthProvider, NetworkInfo<List<User>>>((ref) => AuthProvider());
+final forgetPasswordProvider = StateNotifierProvider<AuthProvider, NetworkInfo<List<User>>>((ref) => AuthProvider());
+
 final modeProvider = StateNotifierProvider<ModeNotifier, ThemeMode?>((ref) => ModeNotifier());
 
+
+//Chart of account providers
+final removeChartProvider = StateNotifierProvider<AllChartAccountsProvider, NetworkInfo<List<Accounts>>>((ref) => AllChartAccountsProvider());
+final editChartProvider = StateNotifierProvider<AllChartAccountsProvider, NetworkInfo<List<Accounts>>>((ref) => AllChartAccountsProvider());
+final chartAccountProvider =StateNotifierProvider<ChartAccountProvider, NetworkInfo<List<AccountChartModel>>>((ref) => ChartAccountProvider());
+final allAccountsProvider = StateNotifierProvider<AllChartAccountsProvider, NetworkInfo<List<Accounts>>>((ref) => AllChartAccountsProvider());
+final accountDetailsProvider = StateNotifierProvider<AccountDetailsNotifier, NetworkInfo<AccountDetailsModel?>>((ref) => AccountDetailsNotifier());
+//Authentication providers

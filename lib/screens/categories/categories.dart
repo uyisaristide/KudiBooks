@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../background.dart';
 import 'widgets/grid_card.dart';
 
-class Categories extends StatelessWidget {
+class Categories extends ConsumerStatefulWidget {
   const Categories({Key? key}) : super(key: key);
 
   @override
+  ConsumerState<Categories> createState() => _CategoriesState();
+}
+
+class _CategoriesState extends ConsumerState<Categories> {
+  @override
   Widget build(BuildContext context) {
+
     return BackgroundScreen(
       paddingSize: 0.0,
       screens: ListView(

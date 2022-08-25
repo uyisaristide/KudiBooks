@@ -16,7 +16,7 @@ class Accounts {
   int id;
   String accountType;
   String accountName;
-  String code;
+  String? code;
   String totalDebit;
   String totalCredit;
 

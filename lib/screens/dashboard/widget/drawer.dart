@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../models/Users/user_model.dart';
+import '../../../models/utilities/network_info.dart';
 import '../../../providers/all_providers_list.dart';
 import '../../auth_screens/widgets/login_button.dart';
+import '../classes/snack_bars.dart';
 
 class Drawers extends ConsumerWidget {
   VoidCallback? dashboardScreen;
@@ -164,12 +166,11 @@ class Drawers extends ConsumerWidget {
                   child: LoginButton(
                     text: 'Logout',
                     actionField: () async {
-                      String response =
-                          await ref.read(usersProvider.notifier).logout();
-                      if (response == 'success') {
+                      var response = await ref.read(logoutProvider.notifier).logout();
+                      if(response.networkStatus == NetworkStatus.success){
                         context.goNamed('signin');
-                      } else {
-                        debugPrint(response);
+                      }else{
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars('${response.errorMessage}', Colors.redAccent.shade400));
                       }
                     },
                   ),

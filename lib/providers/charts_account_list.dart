@@ -1,8 +1,10 @@
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
 import '../dio_services.dart';
+import '../handle/error_handler.dart';
 import '../models/chart_accounts.dart';
 import '../models/utilities/network_info.dart';
 
@@ -11,13 +13,15 @@ class AllChartAccountsProvider extends StateNotifier<NetworkInfo<List<Accounts>>
   final _dio = Dio();
 
   chartRetrieve() async {
+
     state = NetworkInfo(networkStatus: NetworkStatus.loading);
     try {
       Map<String, dynamic> chartHeader = {
         "Content-type": "application/json",
         "Authorization": "Bearer ${Hive.box('tokens').get('token')}",
-        "companyID": 29
+        "companyID": '${Hive.box('company').get('companyId')}'
       };
+      debugPrint('${Hive.box('company').get('companyId')}');
       Response response = await _dio.get("${DioServices.baseUrl}app/chart",
           options: Options(headers: chartHeader));
       var data = ChartAccount.fromJson(response.data);
@@ -33,92 +37,39 @@ class AllChartAccountsProvider extends StateNotifier<NetworkInfo<List<Accounts>>
           statusCode: 200);
       state = info;
     } on DioError catch (e) {
-      NetworkInfo<List<Accounts>> info =
-      NetworkInfo(networkStatus: NetworkStatus.failed);
-      switch (e.type) {
-        case DioErrorType.connectTimeout:
-        // TODO: Handle this case.
-          info.errorMessage = "Connection error, check your internet";
-          break;
-        case DioErrorType.sendTimeout:
-        // TODO: Handle this case.
-          info.errorMessage = "Check connection, before send data";
-          break;
-        case DioErrorType.receiveTimeout:
-        // TODO: Handle this case.
-          info.errorMessage = "Slow network";
-          break;
-        case DioErrorType.response:
-        // TODO: Handle this case.
-          info = NetworkInfo<List<Accounts>>.errors(e.response?.data ?? {},
-              statusCode: e.response!.statusCode, status: NetworkStatus.failed);
-          break;
-        case DioErrorType.cancel:
-        // TODO: Handle this case.
-          info = NetworkInfo(errorMessage: "Reconnect your internet");
-          break;
-        case DioErrorType.other:
-        // TODO: Handle this case.
-          info = NetworkInfo(errorMessage: "Check your internet");
-          break;
-      }
-      state = info;
+      debugPrint("fdsffdsdfs ${e.response?.statusCode}");
+      state = ErrorHandler.handleError<List<Accounts>>(e);
     } catch (e) {
-      NetworkInfo<List<Accounts>> info = NetworkInfo();
-      info.errorMessage = "";
+      print("dgdgdg");
+      NetworkInfo<List<Accounts>> info = NetworkInfo(networkStatus: NetworkStatus.error);
+      info.errorMessage = "Not found! contact admin";
+      state=info;
     }
   }
 
-  Future removeChart(int chartId) async {
+  Future<NetworkInfo> removeChart(int chartId) async {
     try {
       Map<String, dynamic> chartHeaders = {
         "Content-type": "application/json",
         "Authorization": "Bearer ${Hive.box('tokens').get('token')}",
-        "companyID": 29
+        "companyID": '${Hive.box('company').get('companyId')}'
       };
+      debugPrint('${Hive.box('company').get('companyId')}');
       Response response = await _dio.delete(
           '${DioServices.baseUrl}app/chart/delete/$chartId}',
           options: Options(headers: chartHeaders));
-      // state = NetworkInfo(networkStatus: NetworkStatus.success, data: response.data);
-      if (response.statusCode == 200) {
-        return 'success';
-      } else {
-        return 'fail';
-      }
+       var removeInfo = NetworkInfo<List<Accounts>>(networkStatus: NetworkStatus.success, statusCode: 200);
+      // state = removeInfo;
+      return removeInfo;
     }  on DioError catch (e) {
-      NetworkInfo<List<Accounts>> info =
-      NetworkInfo(networkStatus: NetworkStatus.failed);
-      switch (e.type) {
-        case DioErrorType.connectTimeout:
-        // TODO: Handle this case.
-          info.errorMessage = "Connection error, check your internet";
-          break;
-        case DioErrorType.sendTimeout:
-        // TODO: Handle this case.
-          info.errorMessage = "Check connection, before send data";
-          break;
-        case DioErrorType.receiveTimeout:
-        // TODO: Handle this case.
-          info.errorMessage = "Slow network";
-          break;
-        case DioErrorType.response:
-        // TODO: Handle this case.
-          info = NetworkInfo<List<Accounts>>.errors(e.response?.data ?? {},
-              statusCode: e.response!.statusCode, status: NetworkStatus.failed);
-          break;
-        case DioErrorType.cancel:
-        // TODO: Handle this case.
-          info = NetworkInfo(errorMessage: "Reconnect your internet");
-          break;
-        case DioErrorType.other:
-        // TODO: Handle this case.
-          info = NetworkInfo(errorMessage: "Check your internet");
-          break;
-      }
-      state = info;
+      var info = ErrorHandler.handleError<List<Accounts>>(e);
+      state=info;
+      return info;
     } catch (e) {
       NetworkInfo<List<Accounts>> info = NetworkInfo();
-      info.errorMessage = "";
+      info.errorMessage = "Contact system admin";
+      return info;
     }
   }
+
 }
