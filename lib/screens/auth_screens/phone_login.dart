@@ -117,11 +117,9 @@ class _PhoneLoginState extends ConsumerState<PhoneLogin> {
                   var phoneNumber = "+$_countryCode${phoneController.text}";
                   var result = await ref
                       .read(loginPhoneProvider.notifier)
-                      .loginPhone(
-                          phoneNumber: phoneNumber, pin: pinController.text);
+                      .loginPhone(phoneNumber: phoneNumber, pin: pinController.text);
                   if(result.networkStatus == NetworkStatus.success){
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars('Thanks for creating account', Colors.green.shade400));
-                    context.goNamed('signin');
+                    context.goNamed('signin', extra: "${phoneController.text}");
                   }else{
                     ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars(loginPhoneWatcher.getErrorMessage, Colors.redAccent.shade400));
                   }

@@ -15,7 +15,8 @@ import '../dashboard/classes/snack_bars.dart';
 import 'widgets/planCard.dart';
 
 class NewCompany extends ConsumerStatefulWidget {
-  const NewCompany({Key? key}) : super(key: key);
+  String? email;
+  NewCompany({this.email, Key? key}) : super(key: key);
 
   @override
   ConsumerState<NewCompany> createState() => _NewCompanyState();
@@ -38,6 +39,7 @@ class _NewCompanyState extends ConsumerState<NewCompany> {
   @override
   Widget build(BuildContext context) {
     print('${Hive.box('company').get('companyId')}');
+    print("Logged Email: ${widget.email}");
     ref.watch(createCompanyProvider);
     return BackgroundScreen(
       paddingSize: 150.0,
@@ -156,7 +158,7 @@ class _NewCompanyState extends ConsumerState<NewCompany> {
                           industry: int.parse(selectedIndustry.toString()),
                           country: int.parse(selectedCountry.toString()),
                           currency: 2,
-                          plan: 1));
+                          plan: 1),email: widget.email);
                   if (createCompany.networkStatus == NetworkStatus.success) {
                     context.goNamed("dashboard");
                   } else {

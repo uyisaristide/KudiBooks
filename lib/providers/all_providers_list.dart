@@ -31,8 +31,8 @@ final productProvider =
     StateNotifierProvider<ProductProvider, List<ProductModel>>(
         (ref) => ProductProvider());
 
-final clientProvider = StateNotifierProvider<ClientNotifier, List<ClientModel>>(
-    (ref) => ClientNotifier());
+final clientProvider = StateNotifierProvider<ClientNotifier, NetworkInfo<List<ClientModel>>>((ref) => ClientNotifier());
+final createClientProvider = StateNotifierProvider<ClientNotifier, NetworkInfo<List<ClientModel>>>((ref) => ClientNotifier());
 
 final expencesProvider = StateNotifierProvider<ExpensesProvider, List<Expense>>(
     (ref) => ExpensesProvider());
