@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:kudibooks_app/models/Users/user_model.dart';
-import 'package:kudibooks_app/providers/all_providers_list.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/custom_devider.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/alert_box.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
+import '../auth_screens/widgets/custom_devider.dart';
+import 'widget/alert_box.dart';
+import 'widget/common_appBar.dart';
+import 'widget/drawer.dart';
 
 class AlertScreen extends ConsumerStatefulWidget {
   String? loggedUser;
@@ -22,11 +20,14 @@ class _AlertScreenState extends ConsumerState<AlertScreen> {
     // User? signedUser = ref
     //     .watch(usersProvider)
     //     .firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
+<<<<<<< HEAD
 
     var signedUser = ref.watch(userProfileProvider.notifier).myUserProfile;
+=======
+>>>>>>> 4fa982bd7a709896c57fdbb1d145786bac93220f
     return Scaffold(
       drawerEnableOpenDragGesture: true,
-      drawer: Drawers(userInfo: signedUser),
+      drawer: Drawers(),
       appBar: AppBarCommon.preferredSizeWidget(context, "Alerts"),
       body: SingleChildScrollView(
         child: Container(
@@ -45,13 +46,13 @@ class _AlertScreenState extends ConsumerState<AlertScreen> {
                 topLignColor: const Color(0xffC66666),
                 actionButton: ElevatedButton(
                   onPressed: () {},
-                  child: const Text("Action"),
                   style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
                           vertical: 13.0, horizontal: 20.0),
                       elevation: 0.0,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25.0))),
+                  child: const Text("Action"),
                 ),
                 cancelButton: TextButton(
                   style: TextButton.styleFrom(
@@ -79,13 +80,13 @@ class _AlertScreenState extends ConsumerState<AlertScreen> {
                 cardTitle: 'Important alert',
                 actionButton: ElevatedButton(
                   onPressed: () {},
-                  child: const Text("Action"),
                   style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
                           vertical: 13.0, horizontal: 20.0),
                       elevation: 0.0,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25.0))),
+                  child: const Text("Action"),
                 ),
                 cancelButton: TextButton(
                   style: TextButton.styleFrom(
@@ -108,13 +109,13 @@ class _AlertScreenState extends ConsumerState<AlertScreen> {
                 cardTitle: 'Important alert',
                 actionButton: ElevatedButton(
                   onPressed: () {},
-                  child: const Text("Action"),
                   style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
                           vertical: 13.0, horizontal: 20.0),
                       elevation: 0.0,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25.0))),
+                  child: const Text("Action"),
                 ),
                 cancelButton: TextButton(
                   style: TextButton.styleFrom(

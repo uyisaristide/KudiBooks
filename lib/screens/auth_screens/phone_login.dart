@@ -1,22 +1,25 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kudibooks_app/models/Users/user_model.dart';
-import 'package:kudibooks_app/providers/all_providers_list.dart';
-import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/circled_logo.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/custom_devider.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/hyperlink_text.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/lock_icon.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/page_title.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/password_field.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/phone_input.dart';
-import 'package:kudibooks_app/screens/background.dart';
+import 'package:hive/hive.dart';
+import '../../models/Users/user_model.dart';
+import '../../models/utilities/network_info.dart';
+import '../../providers/all_providers_list.dart';
+import '../dashboard/classes/snack_bars.dart';
+import 'validators/validator.dart';
+import 'widgets/circled_logo.dart';
+import 'widgets/custom_devider.dart';
+import 'widgets/hyperlink_text.dart';
+import 'widgets/lock_icon.dart';
+import 'widgets/login_button.dart';
+import 'widgets/page_title.dart';
+import 'widgets/password_field.dart';
+import 'widgets/phone_input.dart';
+import '../background.dart';
+
 
 class PhoneLogin extends ConsumerStatefulWidget {
-  PhoneLogin({Key? key}) : super(key: key);
+  const PhoneLogin({Key? key}) : super(key: key);
 
   @override
   ConsumerState<PhoneLogin> createState() => _PhoneLoginState();
@@ -42,7 +45,7 @@ class _PhoneLoginState extends ConsumerState<PhoneLogin> {
   @override
   Widget build(BuildContext context) {
     print("In phone screen +$_countryCode${phoneController.text}");
-    List<User> _users = ref.watch(usersProvider);
+    var loginPhoneWatcher = ref.watch(loginPhoneProvider);
     return BackgroundScreen(
       buttonWidget: Row(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -69,7 +72,9 @@ class _PhoneLoginState extends ConsumerState<PhoneLogin> {
             const LockIcon(),
             const PageTitle(title: 'Account Sign In'),
             PhoneField(
-              validators: (value) {},
+              validators: (value) {
+                return null;
+              },
               countryCodes: (country) {
                 _countryCode = country.dialCode;
                 debugPrint(_countryCode);
@@ -99,27 +104,45 @@ class _PhoneLoginState extends ConsumerState<PhoneLogin> {
             const SizedBox(
               height: 10,
             ),
-
             HyperLinkText(
               directingText: 'Forgot Pin ?',
               actions: () {
                 context.pushNamed('forget', extra: phoneController.text);
               },
             ),
-
+            LoginButton(
+              text: 'Login',
+              actionField: () async {
+                if (_formKey.currentState!.validate()) {
+                  var phoneNumber = "+$_countryCode${phoneController.text}";
+                  var result = await ref
+                      .read(loginPhoneProvider.notifier)
+                      .loginPhone(
+                          phoneNumber: phoneNumber, pin: pinController.text);
+                  if(result.networkStatus == NetworkStatus.success){
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars('Thanks for creating account', Colors.green.shade400));
+                    context.goNamed('signin');
+                  }else{
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars(loginPhoneWatcher.getErrorMessage, Colors.redAccent.shade400));
+                  }
+                }
+              },
+            ),
             // LoginButton(
-            //   text: 'Login',
+            //   text: 'Login local',
             //   actionField: () {
+            //     debugPrint("${Hive.box('tokens').get('token')}");
+            //     context.pushNamed('dashboard');
             //     if (_formKey.currentState!.validate()) {
             //       var checkUser = _users.where((element) =>
-            //           element.phoneOrEmail ==
+            //       element.phoneOrEmail ==
             //           _countryCode + phoneController.text);
             //       if (checkUser.isEmpty) {
             //         ScaffoldMessenger.of(context).showSnackBar(
             //             SnackBars.snackBars(
             //                 'This user not found', Colors.redAccent));
             //       } else if (checkUser.first.phoneOrEmail ==
-            //               _countryCode + phoneController.text &&
+            //           _countryCode + phoneController.text &&
             //           checkUser.first.password == pinController.text) {
             //         context.goNamed('dashboard');
             //       } else {
@@ -133,23 +156,6 @@ class _PhoneLoginState extends ConsumerState<PhoneLogin> {
             //     }
             //   },
             // ),
-            LoginButton(
-              text: 'Login',
-              actionField: () async {
-                if (_formKey.currentState!.validate()) {
-                  var phoneNumber = "+$_countryCode${phoneController.text}";
-                  var result = await ref
-                      .read(usersProvider.notifier)
-                      .loginPhone(
-                          phoneNumber: phoneNumber, pin: pinController.text);
-                  if (result == "success") {
-                    context.goNamed('dashboard');
-                  } else {
-                    debugPrint("Incorrect pin: $result");
-                  }
-                }
-              },
-            ),
             CustomDevider(
               middleText: 'Or sign in with',
               horizotalPadding: 40.0,

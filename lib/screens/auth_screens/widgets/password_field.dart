@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../validators/validator.dart';
 
 class PasswordField extends StatelessWidget {
   bool isHidden = true;

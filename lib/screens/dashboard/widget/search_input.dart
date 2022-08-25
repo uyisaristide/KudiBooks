@@ -26,6 +26,8 @@ class SearchTextField extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           child: TextFormField(
               validator: (value) {
+                return null;
+              
 
               },
               controller: searchContent,

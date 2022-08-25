@@ -1,4 +1,4 @@
-import 'package:kudibooks_app/models/Users/ProductInLoad.dart';
+import 'Users/ProductInLoad.dart';
 
 class InventoryModel {
   int id;

@@ -1,17 +1,16 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:kudibooks_app/models/client_model.dart';
-import 'package:kudibooks_app/providers/all_providers_list.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/drop_down_widget.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/phone_input.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
+import '../../models/client_model.dart';
+import '../../providers/all_providers_list.dart';
+import '../auth_screens/widgets/drop_down_widget.dart';
+import '../auth_screens/widgets/login_button.dart';
+import '../auth_screens/widgets/phone_input.dart';
+import '../auth_screens/widgets/text_form_field.dart';
+import 'widget/common_appBar.dart';
 
 class NewClient extends ConsumerStatefulWidget {
-  NewClient({Key? key}) : super(key: key);
+  const NewClient({Key? key}) : super(key: key);
 
   @override
   ConsumerState<NewClient> createState() => _NewClientState();
@@ -159,7 +158,9 @@ class _NewClientState extends ConsumerState<NewClient> {
                       isShown: false,
                       inputType: TextInputType.emailAddress),
                   PhoneField(
-                      validators: (values) {},
+                      validators: (values) {
+                        return null;
+                      },
                       phoneNumber: phoneController,
                       fieldIcon: const Icon(Icons.phone),
                       countryCodes: (phoneCode) {

@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kudibooks_app/models/Users/user_model.dart';
-import 'package:kudibooks_app/providers/all_providers_list.dart';
-import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/circled_logo.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/custom_devider.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/hyperlink_text.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/page_title.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
-import 'package:kudibooks_app/screens/background.dart';
+import '../../models/Users/user_model.dart';
+import '../../models/utilities/network_info.dart';
+import '../../providers/all_providers_list.dart';
+import '../dashboard/classes/snack_bars.dart';
+import 'validators/validator.dart';
+import 'widgets/circled_logo.dart';
+import 'widgets/custom_devider.dart';
+import 'widgets/hyperlink_text.dart';
+import 'widgets/login_button.dart';
+import 'widgets/page_title.dart';
+import 'widgets/text_form_field.dart';
+import '../background.dart';
 import 'widgets/password_field.dart';
 
 class SignUp extends ConsumerStatefulWidget {
-  SignUp({Key? key}) : super(key: key);
+  const SignUp({Key? key}) : super(key: key);
 
   @override
   ConsumerState<SignUp> createState() => _SignUpState();
@@ -53,8 +55,8 @@ class _SignUpState extends ConsumerState<SignUp> {
 
   @override
   Widget build(BuildContext context) {
-    List<User> _users = ref.watch(usersProvider);
-
+    var allUsers = ref.watch(usersProvider);
+    var userEmailCreate = ref.watch(createUserEmailProvider);
     return BackgroundScreen(
       paddingSize: 150,
       screens: Form(
@@ -183,42 +185,18 @@ class _SignUpState extends ConsumerState<SignUp> {
                 var serverPassword = "${passwordController.text}+1234";
                 if (_formKey.currentState!.validate()) {
                   var userSaving = await ref
-                      .read(usersProvider.notifier)
+                      .read(createUserEmailProvider.notifier)
                       .createUserEmail(User(
                           firstName: firstNameController.text,
                           lastName: lastNameController.text,
                           email: emailController.text,
                           password: passwordController.text,
                           passwordConfirm: passwordController.text));
-                  if (userSaving == "success") {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)),
-                      duration: const Duration(seconds: 3),
-                      content: const Text(
-                        'User saved to network',
-                        style: TextStyle(
-                          fontSize: 17,
-                        ),
-                      ),
-                      padding: const EdgeInsets.all(20.0),
-                      backgroundColor: Colors.green,
-                    ));
+                  if(userSaving.networkStatus == NetworkStatus.success){
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars('Thanks for creating account', Colors.green.shade400));
                     context.goNamed('signin');
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)),
-                      duration: const Duration(seconds: 3),
-                      content: const Text(
-                        'User saved to network',
-                        style: TextStyle(
-                          fontSize: 17,
-                        ),
-                      ),
-                      padding: const EdgeInsets.all(20.0),
-                      backgroundColor: Colors.red,
-                    ));
+                  }else{
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars(userEmailCreate.getErrorMessage, Colors.redAccent.shade400));
                   }
                 }
               },

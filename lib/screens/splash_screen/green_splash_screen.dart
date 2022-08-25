@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kudibooks_app/screens/splash_screen/widgets/splash.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'widgets/splash.dart';
 
 class GreenSplashScreen extends StatefulWidget {
   const GreenSplashScreen({Key? key}) : super(key: key);
@@ -14,11 +15,12 @@ class _GreenSplashScreenState extends State<GreenSplashScreen> {
   _GreenSplashScreenState() {
     Timer(const Duration(milliseconds: 3000), () {
       setState(() {
-        context.goNamed("whiteSplash");
-
-        // Navigator.of(context).pushAndRemoveUntil(
-        //     MaterialPageRoute(builder: (context) => const WhiteSplashScreen()),
-        //         (route) => false);
+        var token = Hive.box('tokens').get('token');
+        if (token == null) {
+          context.goNamed('signin');
+        } else {
+          context.goNamed('dashboard');
+        }
       });
     });
   }

@@ -2,18 +2,17 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kudibooks_app/models/product_model.dart';
-import 'package:kudibooks_app/providers/all_providers_list.dart';
-import 'package:kudibooks_app/providers/product_provider.dart';
-import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/drop_down_widget.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/double_header_two.dart';
+import '../../models/product_model.dart';
+import '../../providers/all_providers_list.dart';
+import '../auth_screens/validators/validator.dart';
+import '../auth_screens/widgets/drop_down_widget.dart';
+import '../auth_screens/widgets/login_button.dart';
+import '../auth_screens/widgets/text_form_field.dart';
+import 'widget/common_appBar.dart';
+import 'widget/double_header_two.dart';
 
 class NewProduct extends ConsumerStatefulWidget {
-  NewProduct({Key? key}) : super(key: key);
+  const NewProduct({Key? key}) : super(key: key);
 
   @override
   ConsumerState<NewProduct> createState() => _NewProductState();

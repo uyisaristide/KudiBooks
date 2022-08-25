@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/circled_logo.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/custom_devider.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/lock_icon.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/page_title.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/phone_input.dart';
-import 'package:kudibooks_app/screens/background.dart';
+import '../../models/utilities/network_info.dart';
+import '../dashboard/classes/snack_bars.dart';
+import 'widgets/lock_icon.dart';
+import 'widgets/login_button.dart';
+import 'widgets/page_title.dart';
+import 'widgets/phone_input.dart';
+import '../background.dart';
 
 import '../../providers/all_providers_list.dart';
 
@@ -37,6 +37,7 @@ class _PhoneResetState extends ConsumerState<PhoneReset> {
 
   @override
   Widget build(BuildContext context) {
+    var requestOtpWatcher = ref.watch(requestingOtpProvider);
     return BackgroundScreen(
       paddingSize: 150,
       screens: Form(
@@ -47,7 +48,9 @@ class _PhoneResetState extends ConsumerState<PhoneReset> {
             const LockIcon(),
             const PageTitle(title: 'Reset pin'),
             PhoneField(
-              validators: (value) {},
+              validators: (value) {
+                return null;
+              },
               countryCodes: (country) {
                 _countryCode = country.dialCode;
                 debugPrint(_countryCode);
@@ -96,13 +99,14 @@ class _PhoneResetState extends ConsumerState<PhoneReset> {
                   context.pushNamed('recoverScreen');
                   // print("+$_countryCode${phoneController.text}");
                   var phoneNumbers = "+$_countryCode${phoneController.text}";
-                  String otpResponse = await ref
-                      .read(authProvider.notifier)
+                  var otpResponse = await ref
+                      .read(requestingOtpProvider.notifier)
                       .requestOTP(phoneNumbers: phoneNumbers);
-                  if (otpResponse == "success") {
+                  if (otpResponse.networkStatus == NetworkStatus.success) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars('Rewrite your OTP', Colors.green.shade400));
                     context.pushNamed('recoverScreen');
                   } else {
-                    debugPrint("This is OTP Error: $otpResponse");
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars(requestOtpWatcher.getErrorMessage, Colors.redAccent.shade400));
                   }
                 }
               },

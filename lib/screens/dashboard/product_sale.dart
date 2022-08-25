@@ -1,22 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:kudibooks_app/models/Users/products_sold_model.dart';
-import 'package:kudibooks_app/models/product_model.dart';
-import 'package:kudibooks_app/models/Users/ProductInLoad.dart';
-import 'package:kudibooks_app/models/Users/products_sold_model.dart';
-import 'package:kudibooks_app/models/product_model.dart';
-import 'package:kudibooks_app/models/product_sale_model.dart';
-import 'package:kudibooks_app/providers/all_providers_list.dart';
-import 'package:kudibooks_app/providers/product_provider.dart';
-import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/drop_down_widget.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
-import 'package:kudibooks_app/screens/dashboard/add_products_popup.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/double_header_two.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/inventory_card.dart';
+import '../../models/Users/products_sold_model.dart';
+import '../../models/product_model.dart';
+import '../../models/product_sale_model.dart';
+import '../../providers/all_providers_list.dart';
+import '../auth_screens/validators/validator.dart';
+import '../auth_screens/widgets/drop_down_widget.dart';
+import '../auth_screens/widgets/login_button.dart';
+import '../auth_screens/widgets/text_form_field.dart';
+import 'add_products_popup.dart';
+import 'widget/common_appBar.dart';
+import 'widget/double_header_two.dart';
+import 'widget/inventory_card.dart';
 
 class ProductSale extends ConsumerStatefulWidget {
   const ProductSale({Key? key}) : super(key: key);

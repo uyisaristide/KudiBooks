@@ -1,13 +1,24 @@
+ 
 // import 'package:charts_flutter/flutter.dart' as charts;
 // import 'package:flutter/material.dart';
+
+// import 'package:flutter/material.dart';
+//
 
 // class BusinessMovement {
 //   final String months;
 //   final int amounts;
 //   final charts.Color barColor;
 
+
 //   BusinessMovement(
 //       {required this.months, required this.amounts, required this.barColor});
+
+
+//
+//   BusinessMovement(
+//       {required this.months, required this.amounts, required this.barColor});
+//
 
 //   static final List<BusinessMovement> data = [
 //     BusinessMovement(
@@ -67,6 +78,18 @@
 //       barColor: charts.ColorUtil.fromDartColor(Colors.orange),
 //     ),
 //   ];
+
+// }
+
+// class IncomeChart {
+//   double amount;
+//   String month;
+//   charts.Color barColor;
+//
+//   IncomeChart(
+//       {required this.barColor, required this.amount, required this.month});
+//
+
 // }
 
 // // class IncomeChart {
