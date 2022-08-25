@@ -57,15 +57,15 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen>
 
     List<InventoryModel> _loadsList = ref.watch(inventoryProvider);
 
-<<<<<<< HEAD
+
     var signedUser = ref.watch(userProfileProvider.notifier).myUserProfile;
     // .firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
-=======
+
     // User? signedUser = ref.watch(usersProvider)
     //     .firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
->>>>>>> 4fa982bd7a709896c57fdbb1d145786bac93220f
+
     return Scaffold(
-      drawer: Drawers(),
+      drawer: Drawers(userInfo: signedUser,),
       body: DefaultTabController(
         length: 2,
         child: NestedScrollView(

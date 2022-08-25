@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-<<<<<<< HEAD
+
 import 'package:kudibooks_app/models/Users/ProductInLoad.dart';
 import 'package:kudibooks_app/models/Users/products_sold_model.dart';
 import 'package:kudibooks_app/models/Users/user_model.dart';
@@ -20,7 +20,7 @@ import 'package:kudibooks_app/providers/products_sale_provider.dart';
 import 'package:kudibooks_app/providers/user_profile_provider.dart';
 import 'package:kudibooks_app/providers/user_provider.dart';
 
-=======
+
 import '../models/Users/ProductInLoad.dart';
 import '../models/Users/products_sold_model.dart';
 import '../models/Users/user_model.dart';
@@ -46,7 +46,7 @@ import 'mode_notifier.dart';
 import 'product_provider.dart';
 import 'products_sale_provider.dart';
 import 'user_provider.dart';
->>>>>>> 4fa982bd7a709896c57fdbb1d145786bac93220f
+
 import 'authentication/auth_provider.dart';
 
 final productProvider =
@@ -82,7 +82,7 @@ final productToLoadProvider =
 final salesProvider =
     StateNotifierProvider<ProductSalesProvider, List<ProductSalesModel>>(
         (ref) => ProductSalesProvider());
-<<<<<<< HEAD
+
 final companyProvider = StateNotifierProvider<CompanyProvider, List<Company>>(
     (ref) => CompanyProvider());
 final authProvider =
@@ -90,7 +90,7 @@ final authProvider =
 
     final userProfileProvider =
     StateNotifierProvider<UserProfileNotifier, List<UserProfile>>((ref) => UserProfileNotifier());
-=======
+
 
 
 //Company providers
@@ -114,4 +114,4 @@ final chartAccountProvider =StateNotifierProvider<ChartAccountProvider, NetworkI
 final allAccountsProvider = StateNotifierProvider<AllChartAccountsProvider, NetworkInfo<List<Accounts>>>((ref) => AllChartAccountsProvider());
 final accountDetailsProvider = StateNotifierProvider<AccountDetailsNotifier, NetworkInfo<AccountDetailsModel?>>((ref) => AccountDetailsNotifier());
 //Authentication providers
->>>>>>> 4fa982bd7a709896c57fdbb1d145786bac93220f
+

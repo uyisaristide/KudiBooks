@@ -3,16 +3,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-<<<<<<< HEAD
+
 import 'package:hive/hive.dart';
 import 'package:kudibooks_app/models/Users/user_profile_model.dart';
-import 'package:kudibooks_app/providers/all_providers_list.dart';
-import 'package:kudibooks_app/screens/splash_screen/widgets/splash.dart';
-=======
+import '../../providers/all_providers_list.dart';
 import 'widgets/splash.dart';
->>>>>>> 4fa982bd7a709896c57fdbb1d145786bac93220f
 
-import '../../main.dart';
+
+
 
 class WhiteSplashScreen extends ConsumerStatefulWidget {
   const WhiteSplashScreen({Key? key}) : super(key: key);

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-<<<<<<< HEAD
+
 import 'package:kudibooks_app/models/expense_model.dart';
 import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
@@ -12,7 +12,7 @@ import 'package:kudibooks_app/screens/auth_screens/widgets/drop_down_widget.dart
 import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/double_header_two.dart';
-=======
+
 import '../../models/expense_model.dart';
 import '../../providers/all_providers_list.dart';
 import '../auth_screens/validators/validator.dart';
@@ -20,7 +20,7 @@ import '../auth_screens/widgets/drop_down_widget.dart';
 import '../auth_screens/widgets/login_button.dart';
 import 'widget/common_appBar.dart';
 import 'widget/double_header_two.dart';
->>>>>>> 4fa982bd7a709896c57fdbb1d145786bac93220f
+
 import '../auth_screens/widgets/text_form_field.dart';
 import 'classes/snack_bars.dart';
 

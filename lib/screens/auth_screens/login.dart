@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive/hive.dart';
-<<<<<<< HEAD
 import 'package:kudibooks_app/main.dart';
 import 'package:kudibooks_app/models/Users/user_model.dart';
 import 'package:kudibooks_app/models/Users/user_profile_model.dart';
@@ -17,22 +16,6 @@ import 'package:kudibooks_app/screens/auth_screens/widgets/page_title.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
 import 'package:kudibooks_app/screens/background.dart';
 import 'package:kudibooks_app/screens/dashboard/classes/snack_bars.dart';
-=======
-import '../../models/Users/user_model.dart';
-import '../../models/utilities/network_info.dart';
-import '../../providers/all_providers_list.dart';
-import '../../providers/user_provider.dart';
-import 'validators/validator.dart';
-import 'widgets/circled_logo.dart';
-import 'widgets/custom_devider.dart';
-import 'widgets/hyperlink_text.dart';
-import 'widgets/lock_icon.dart';
-import 'widgets/login_button.dart';
-import 'widgets/page_title.dart';
-import 'widgets/text_form_field.dart';
-import '../background.dart';
-import '../dashboard/classes/snack_bars.dart';
->>>>>>> 4fa982bd7a709896c57fdbb1d145786bac93220f
 
 // late Box box;
 // void createBox() async {
@@ -59,7 +42,6 @@ class _LoginState extends ConsumerState<Login> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    ref.read(loginEmailProvider);
     emailController.addListener(() => setState(() {}));
 
     // loggedUserBox = Hive.box(userProfileBoxName);
@@ -67,15 +49,10 @@ class _LoginState extends ConsumerState<Login> {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
     List<User> _user = ref.watch(usersProvider);
     // var profile = ref.watch(userProfileProvider.notifier).userProfileBox;
     // debugPrint("Logged user is: ${profile}");
     // debugPrint('$profile is signed in');
-=======
-    var loginEmailWatcher = ref.watch(loginEmailProvider);
-    debugPrint("Logged user is: $myToken");
->>>>>>> 4fa982bd7a709896c57fdbb1d145786bac93220f
     return BackgroundScreen(
       buttonWidget: Row(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -208,7 +185,6 @@ class _LoginState extends ConsumerState<Login> {
               text: 'Login net',
               actionField: () async {
                 if (_formKey.currentState!.validate()) {
-<<<<<<< HEAD
                   String? check = await ref
                       .read(usersProvider.notifier)
                       .loginEmail(
@@ -237,14 +213,6 @@ class _LoginState extends ConsumerState<Login> {
                         SnackBars.snackBars(
                             "${ref.read(usersProvider.notifier).wrongCred}",
                             Colors.redAccent));
-=======
-                  var check = await ref.read(loginEmailProvider.notifier).loginEmail(emailController.text, passwordController.text);
-                  if(check.networkStatus == NetworkStatus.success){
-                    context.goNamed('newCompany');
-                  }else{
-                    debugPrint("${loginEmailWatcher.networkStatus}");
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars('${loginEmailWatcher.errorMessage}', Colors.redAccent.shade400));
->>>>>>> 4fa982bd7a709896c57fdbb1d145786bac93220f
                   }
                 }
               },

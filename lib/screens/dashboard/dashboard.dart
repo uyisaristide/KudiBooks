@@ -2,25 +2,23 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-<<<<<<< HEAD
-import 'package:kudibooks_app/models/Users/user_profile_model.dart';
-import 'package:kudibooks_app/models/transition_chart.dart';
-import 'package:kudibooks_app/providers/all_providers_list.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/action_card.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/business_movement_cart.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/line_chart.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/pie_chart.dart';
-import 'package:kudibooks_app/screens/dashboard/widget/title_double.dart';
-import '../../providers/user_provider.dart';
-=======
+
+// import 'package:kudibooks_app/providers/all_providers_list.dart';
+// import 'package:kudibooks_app/screens/dashboard/widget/action_card.dart';
+// import 'package:kudibooks_app/screens/dashboard/widget/business_movement_cart.dart';
+// import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
+// import 'package:kudibooks_app/screens/dashboard/widget/line_chart.dart';
+// import 'package:kudibooks_app/screens/dashboard/widget/pie_chart.dart';
+import '../../providers/all_providers_list.dart';
+import 'widget/title_double.dart';
+
 import 'package:hive/hive.dart';
 import 'widget/action_card.dart';
 import 'widget/drawer.dart';
 import 'widget/line_chart.dart';
 import 'widget/pie_chart.dart';
 import 'widget/title_double.dart';
->>>>>>> 4fa982bd7a709896c57fdbb1d145786bac93220f
+
 
 class Dashboard extends ConsumerStatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -34,12 +32,12 @@ class _DashboardState extends ConsumerState<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
+
     var signedUser = ref.watch(userProfileProvider.notifier).myUserProfile;
     debugPrint("Logged user is: ${signedUser!.userName}");
-=======
+
     debugPrint("Logged user is: ${Hive.box('tokens').get('token')}");
->>>>>>> 4fa982bd7a709896c57fdbb1d145786bac93220f
+
     return Scaffold(
         extendBodyBehindAppBar: true,
         drawer: Drawers(userInfo: signedUser),
@@ -186,14 +184,14 @@ class _DashboardState extends ConsumerState<Dashboard> {
                     //   width: MediaQuery.of(context).size.width,
                     //   decoration: BoxDecoration(
                     //       borderRadius: BorderRadius.circular(5.0)),
-<<<<<<< HEAD
+
                     //   child: DeveloperCharts(data: chartData),
                     // ),
-=======
+
                     //   // child: DeveloperCharts(data: chartData),
                     // ),
                     const CustomPieChart(),
->>>>>>> 4fa982bd7a709896c57fdbb1d145786bac93220f
+
                     Container(
                       padding: const EdgeInsets.only(top: 30.0),
                       child: LignChartObject(),

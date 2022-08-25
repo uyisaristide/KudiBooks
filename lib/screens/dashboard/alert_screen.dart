@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../providers/all_providers_list.dart';
 import '../auth_screens/widgets/custom_devider.dart';
 import 'widget/alert_box.dart';
 import 'widget/common_appBar.dart';
@@ -20,14 +21,13 @@ class _AlertScreenState extends ConsumerState<AlertScreen> {
     // User? signedUser = ref
     //     .watch(usersProvider)
     //     .firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
-<<<<<<< HEAD
+
 
     var signedUser = ref.watch(userProfileProvider.notifier).myUserProfile;
-=======
->>>>>>> 4fa982bd7a709896c57fdbb1d145786bac93220f
+
     return Scaffold(
       drawerEnableOpenDragGesture: true,
-      drawer: Drawers(),
+      drawer: Drawers(userInfo: signedUser,),
       appBar: AppBarCommon.preferredSizeWidget(context, "Alerts"),
       body: SingleChildScrollView(
         child: Container(

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-<<<<<<< HEAD
+
 import 'package:kudibooks_app/models/Users/user_model.dart';
 import 'package:kudibooks_app/models/Users/user_profile_model.dart';
 import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/providers/user_provider.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
-=======
+
 import 'widget/common_appBar.dart';
 import 'widget/drawer.dart';
->>>>>>> 4fa982bd7a709896c57fdbb1d145786bac93220f
+
 
 class MyAccountScreen extends ConsumerWidget {
   String? loggedUser;
@@ -24,13 +24,13 @@ class MyAccountScreen extends ConsumerWidget {
     // User? signedUser = loadUser
     //     .watch(usersProvider)
     //     .firstWhere((user) => user.phoneOrEmail == loggedUser);
-<<<<<<< HEAD
+
 
     UserProfile? signedUser = loadUser.watch(userProfileProvider.notifier).myUserProfile;
-=======
->>>>>>> 4fa982bd7a709896c57fdbb1d145786bac93220f
+
+
     return Scaffold(
-      drawer: Drawers(),
+      drawer: Drawers(userInfo: signedUser,),
       appBar: AppBarCommon.preferredSizeWidget(context, 'My Account'),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -70,7 +70,7 @@ class MyAccountScreen extends ConsumerWidget {
                         ),
                       ),
                     ),
-<<<<<<< HEAD
+
                     Text("${signedUser!.firstName} ${signedUser.lastName}",
                         style: const TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold)),
@@ -79,12 +79,12 @@ class MyAccountScreen extends ConsumerWidget {
                             ? ""
                             : signedUser.email,
                         style: const TextStyle(
-=======
+
                     // Text("${signedUser.firstName} ${signedUser.lastName}",
                     //     style: const TextStyle(
                     //         fontSize: 24, fontWeight: FontWeight.bold)),
-                    const Text("Firstname Lastname",
-                        style: TextStyle(
+                    // const Text("Firstname Lastname",
+                    //     style: TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold)),
                     // Text(
                     //     signedUser.phoneOrEmail == null
@@ -95,7 +95,7 @@ class MyAccountScreen extends ConsumerWidget {
                     //     )),
                     const Text("Phone and Email",
                         style: TextStyle(
->>>>>>> 4fa982bd7a709896c57fdbb1d145786bac93220f
+
                           fontSize: 16,
                         )),
                     const SizedBox(
