@@ -3,14 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-
-import 'package:hive/hive.dart';
+import 'package:kudibooks_app/models/Users/user_model.dart';
 import 'package:kudibooks_app/models/Users/user_profile_model.dart';
-import '../../providers/all_providers_list.dart';
-import 'widgets/splash.dart';
-
-
-
+import 'package:kudibooks_app/providers/all_providers_list.dart';
+import 'package:kudibooks_app/providers/user_profile_provider.dart';
+import 'package:kudibooks_app/screens/splash_screen/widgets/splash.dart';
 
 class WhiteSplashScreen extends ConsumerStatefulWidget {
   const WhiteSplashScreen({Key? key}) : super(key: key);
@@ -21,16 +18,6 @@ class WhiteSplashScreen extends ConsumerStatefulWidget {
 
 class _WhiteSplashScreenState extends ConsumerState<WhiteSplashScreen> {
   _WhiteSplashScreenState() {}
-
-
-  Future<void> getBox()async{
-    Box box = await Hive.openBox<UserProfile>(userProfileBoxName);
-
-        //  await userProfileBox.put('user', user);
-        
-        // // miProfile = userProfileBox;
-        // myUserProfile = userProfileBox.get('user');
-  }
 
   @override
   Widget build(BuildContext context) {

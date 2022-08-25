@@ -1,4 +1,6 @@
-import 'dart:math';
+import 'dart:core';
+
+
 
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
@@ -59,7 +61,7 @@ class UserProfileNotifier extends StateNotifier<List<UserProfile>> {
 
         return user;
       } else {
-        return 'failed with error $e';
+        return 'failed with error ';
       }
     } catch (e) {
       if (e is DioError) {

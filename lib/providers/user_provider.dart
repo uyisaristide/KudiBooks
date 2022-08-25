@@ -1,29 +1,16 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-<<<<<<< HEAD
-import 'package:hive/hive.dart';
-import 'package:kudibooks_app/dio_services.dart';
-import 'package:kudibooks_app/models/Users/user_model.dart';
-=======
 import 'package:hive_flutter/adapters.dart';
 import '../dio_services.dart';
 import '../handle/error_handler.dart';
 import '../models/Users/user_model.dart';
 import '../models/utilities/network_info.dart';
->>>>>>> 4fa982bd7a709896c57fdbb1d145786bac93220f
 
 String? myToken = "";
 
-<<<<<<< HEAD
-
-
-class UserProvider extends StateNotifier<List<User>> {
-  UserProvider() : super([]);
-=======
 class UserNotifier extends StateNotifier<NetworkInfo<List<User>>> {
   UserNotifier() : super(NetworkInfo());
->>>>>>> 4fa982bd7a709896c57fdbb1d145786bac93220f
   final _dio = Dio();
   String? wrongCred;
 
@@ -110,24 +97,6 @@ class UserNotifier extends StateNotifier<NetworkInfo<List<User>>> {
     try {
       Response loginResponse = await _dio.post('${DioServices.baseUrl}auth/login',
           data: {"email": email, "password": password});
-<<<<<<< HEAD
-      if (loginResponse.statusCode == 200) {
-        wrongCred = null;
-        myToken = loginResponse.data["token"];
-
-      
-        return "success";
-      }
-      wrongCred = "${loginResponse.data['message']}";
-      return "fail";
-    } catch (e) {
-      if (e is DioError) {
-        debugPrint("Login email error: ${e.response?.data["message"]}");
-        throw e.response?.data['errors'] ?? e;
-      } else {
-        throw Exception(e);
-      }
-=======
         await Hive.openBox('tokens');
         await Hive.box('tokens').put('token', loginResponse.data["token"]);
         var infoLogin = NetworkInfo<List<User>>(networkStatus: NetworkStatus.success, statusCode: 200);
@@ -141,7 +110,6 @@ class UserNotifier extends StateNotifier<NetworkInfo<List<User>>> {
     catch (e) {
       NetworkInfo<List<User>> errorInfo = NetworkInfo(networkStatus: NetworkStatus.error, errorMessage: 'Contact system Admin');
       return errorInfo;
->>>>>>> 4fa982bd7a709896c57fdbb1d145786bac93220f
     }
   }
 
