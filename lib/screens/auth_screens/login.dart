@@ -176,7 +176,7 @@ class _LoginState extends ConsumerState<Login> {
                 if (_formKey.currentState!.validate()) {
                   var check = await ref.read(loginEmailProvider.notifier).loginEmail(emailController.text, passwordController.text);
                   if(check.networkStatus == NetworkStatus.success){
-                    context.goNamed('newCompany');
+                    context.goNamed('newCompany', extra: emailController.text);
                   }else{
                     debugPrint("${loginEmailWatcher.networkStatus}");
                     ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars('${loginEmailWatcher.errorMessage}', Colors.redAccent.shade400));

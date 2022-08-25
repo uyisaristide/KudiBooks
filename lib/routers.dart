@@ -35,31 +35,32 @@ import 'screens/splash_screen/white_splash_screen.dart';
 import 'screens/welcome/welcome_screen.dart';
 
 GoRouter router = GoRouter(
-    // redirect: (state) {
-    //   var token = Hive.box('tokens').get('token');
-    //   debugPrint("Kigali Token: $token");
-    //
-    //   final goingToLogin = state.location == '/';
-    //   if (token == null && goingToLogin) {
-    //     return '/login';
-    //   } else if (token != null && goingToLogin) {
-    //     return '/homeScreen';
-    //   }
-    //   return null;
-    // },
+  // redirect: (state) {
+  //   var token = Hive.box('tokens').get('token');
+  //   debugPrint("Kigali Token: $token");
+  //
+  //   final goingToLogin = state.location == '/';
+  //   if (token == null && goingToLogin) {
+  //     return '/login';
+  //   } else if (token != null && goingToLogin) {
+  //     return '/homeScreen';
+  //   }
+  //   return null;
+  // },
     urlPathStrategy: UrlPathStrategy.path,
     initialLocation: '/',
-    errorBuilder: (context, state) => MaterialApp(
+    errorBuilder: (context, state) =>
+        MaterialApp(
             home: Scaffold(
-          body: Center(
-              child: Column(
-            children: [
-              TextButton(
-                  onPressed: () => context.goNamed('sell'),
-                  child: Text("404 ${state.error.toString()},")),
-            ],
-          )),
-        )),
+              body: Center(
+                  child: Column(
+                    children: [
+                      TextButton(
+                          onPressed: () => context.goNamed('sell'),
+                          child: Text("404 ${state.error.toString()},")),
+                    ],
+                  )),
+            )),
     routes: [
       //Auth screens
       GoRoute(
@@ -136,7 +137,7 @@ GoRouter router = GoRouter(
           builder: (context, state) {
             final id = state.params['id'];
             return NewAccount(
-              accountId: int.parse(id.toString()));
+                accountId: int.parse(id.toString()));
           }),
       GoRoute(
           name: 'chartAccount',
@@ -178,7 +179,8 @@ GoRouter router = GoRouter(
       GoRoute(
           name: 'newCompany',
           path: '/createCompany',
-          builder: (context, state) => const NewCompany()),
+          builder: (context, state) =>
+              NewCompany(email: state.extra.toString(),)),
       GoRoute(
         name: 'forget',
         path: '/forgetPassword',
@@ -205,7 +207,8 @@ GoRouter router = GoRouter(
       GoRoute(
           name: 'requestTokenEmail',
           path: '/requestEmail',
-          builder: (context, state) => EmailReset(
+          builder: (context, state) =>
+              EmailReset(
                 sentEmail: state.extra.toString(),
               )),
       GoRoute(

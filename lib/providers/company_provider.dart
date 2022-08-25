@@ -11,16 +11,27 @@ class CompanyProvider extends StateNotifier<NetworkInfo<List<Company>>> {
   CompanyProvider() : super(NetworkInfo());
   final Dio _dio = Dio();
 
-  Future<NetworkInfo> createCompany(Company company) async {
+  Future<NetworkInfo> createCompany(Company company, {String? email}) async {
     state = NetworkInfo(networkStatus: NetworkStatus.loading);
     try {
       debugPrint("${company.toJson()}");
       var response = await _dio.post("${DioServices.baseUrl}app/company",
           data: company.toJson(),
           options: Options(headers: DioServices.mainHeader));
+
       await Hive.openBox('company');
-      await Hive.box('company').put('companyId', '${response.data['companyID']}');
-      debugPrint("${Hive.box('company').get('companyId')}");
+      await Hive.box('company').put('companyInfo', {'companyId':'${response.data['companyID']}', 'ownerEmail':'$email'});
+
+      var companyInfo = Hive.box('company').get('companyInfo');
+
+      var companyId = companyInfo['companyId'];
+      var ownerEmail = companyInfo['ownerEmail'];
+
+      debugPrint('Company Id: ${companyInfo['companyId']}');
+      debugPrint('Owner Email: ${companyInfo['ownerEmail']}');
+
+
+
       var info = NetworkInfo<List<Company>>(networkStatus: NetworkStatus.success, statusCode: 200);
       return info;
     } on DioError catch(e){

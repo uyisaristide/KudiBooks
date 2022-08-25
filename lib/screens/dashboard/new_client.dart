@@ -1,12 +1,13 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../models/client_model.dart';
+import '../../models/utilities/network_info.dart';
 import '../../providers/all_providers_list.dart';
 import '../auth_screens/widgets/drop_down_widget.dart';
 import '../auth_screens/widgets/login_button.dart';
 import '../auth_screens/widgets/phone_input.dart';
 import '../auth_screens/widgets/text_form_field.dart';
+import 'classes/snack_bars.dart';
 import 'widget/common_appBar.dart';
 
 class NewClient extends ConsumerStatefulWidget {
@@ -42,6 +43,7 @@ class _NewClientState extends ConsumerState<NewClient> {
 
   @override
   Widget build(BuildContext context) {
+    var clientWatcher = ref.watch(createClientProvider);
     // print(ClientProvider.clientInstance.allClients.length);
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
@@ -51,41 +53,34 @@ class _NewClientState extends ConsumerState<NewClient> {
             margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             child: LoginButton(
                 text: 'Save Client',
-                actionField: () {
+                actionField: () async {
                   if (_formKey.currentState!.validate()) {
-                    ref.read(clientProvider.notifier).registerClient(
-                        ClientModel(
+                    var clientResponse = await ref
+                        .read(createClientProvider.notifier)
+                        .registerClient(ClientModel(
                             clientName: nameController.text,
-                            status:
-                                clientStatusOption == "Active" ? true : false,
+                            status: clientStatusOption == "Active" ? true : false,
                             clientTin: tinNumberController.text,
                             contactPersonFirstName: contactPersonName.text,
                             contactPersonLastName: contactPersonLastName.text,
                             email: emailController.text,
-                            phoneNumber:
-                                countryCode.toString() + phoneController.text,
+                            phoneNumber: countryCode.toString() + phoneController.text,
                             physicalAddress: addressController.text,
                             note: noteController.text));
                     debugPrint(countryCode.toString() + phoneController.text);
-                    ScaffoldMessenger.of(context)
-                      ..removeCurrentSnackBar()
-                      ..showSnackBar(SnackBar(
-                        content: const Text(
-                          "Client saved successfully",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 17, color: Colors.white),
-                        ),
-                        duration: const Duration(seconds: 2),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5.0)),
-                        padding: const EdgeInsets.only(
-                          bottom: 30.0,
-                          top: 10.0,
-                        ),
-                        elevation: 0.0,
-                        backgroundColor: Colors.green,
-                      ));
-                    Navigator.pop(context);
+                    if (clientResponse.networkStatus == NetworkStatus.success) {
+                      ScaffoldMessenger.of(context)
+                        ..removeCurrentSnackBar()
+                        ..showSnackBar(SnackBars.snackBars(
+                            'Client saved successfully',
+                            Colors.green.shade400));
+                    } else {
+                      ScaffoldMessenger.of(context)
+                        ..removeCurrentSnackBar()
+                        ..showSnackBar(SnackBars.snackBars(
+                            '${clientWatcher.getErrorMessage}',
+                            Colors.green.shade400));
+                    }
                   }
                 }),
           )),
