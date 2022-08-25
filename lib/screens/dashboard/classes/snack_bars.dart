@@ -5,7 +5,7 @@ class SnackBars {
 
   static snackBars(String textSnack, Color colorSnack) {
     return SnackBar(
-      duration: const Duration(seconds: 1),
+      duration: const Duration(seconds: 3),
       // behavior: SnackBarBehavior.floating,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(

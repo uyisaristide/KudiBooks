@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kudibooks_app/models/Users/ProductInLoad.dart';
 import 'package:kudibooks_app/models/Users/products_sold_model.dart';
 import 'package:kudibooks_app/models/Users/user_model.dart';
+import 'package:kudibooks_app/models/Users/user_profile_model.dart';
 import 'package:kudibooks_app/models/client_model.dart';
 import 'package:kudibooks_app/models/company_model.dart';
 import 'package:kudibooks_app/models/expense_model.dart';
@@ -14,7 +15,10 @@ import 'package:kudibooks_app/providers/expenses_provider.dart';
 import 'package:kudibooks_app/providers/inventory_provider.dart';
 import 'package:kudibooks_app/providers/product_provider.dart';
 import 'package:kudibooks_app/providers/products_sale_provider.dart';
+import 'package:kudibooks_app/providers/user_profile_provider.dart';
 import 'package:kudibooks_app/providers/user_provider.dart';
+
+import 'authentication/auth_provider.dart';
 
 final productProvider =
     StateNotifierProvider<ProductProvider, List<ProductModel>>(
@@ -43,3 +47,8 @@ final salesProvider =
         (ref) => ProductSalesProvider());
 final companyProvider = StateNotifierProvider<CompanyProvider, List<Company>>(
     (ref) => CompanyProvider());
+final authProvider =
+    StateNotifierProvider<AuthProvider, List<User>>((ref) => AuthProvider());
+
+    final userProfileProvider =
+    StateNotifierProvider<UserProfileNotifier, List<UserProfile>>((ref) => UserProfileNotifier());

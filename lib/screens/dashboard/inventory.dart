@@ -58,13 +58,12 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen>
 
   @override
   Widget build(BuildContext context) {
-    
     List<ProductModel> _productList = ref.watch(productProvider);
-    
+
     List<InventoryModel> _loadsList = ref.watch(inventoryProvider);
-    
-    User? signedUser = ref.watch(usersProvider)
-        .firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
+
+    var signedUser = ref.watch(userProfileProvider.notifier).myUserProfile;
+    // .firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
     return Scaffold(
       drawer: Drawers(userInfo: signedUser),
       body: DefaultTabController(
@@ -74,8 +73,8 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen>
                 (BuildContext context, bool innerBoxIsScrolled) {
               return [
                 const SliverAppBar(
-                  systemOverlayStyle:
-                      SystemUiOverlayStyle(statusBarColor: Color(0xff157253)),
+                  systemOverlayStyle: SystemUiOverlayStyle(
+                      statusBarColor: Color.fromARGB(255, 100, 146, 131)),
                   pinned: true,
                   automaticallyImplyLeading: true,
                   elevation: 0.0,

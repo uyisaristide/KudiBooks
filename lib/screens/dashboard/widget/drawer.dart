@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive/hive.dart';
+import 'package:kudibooks_app/main.dart';
 import 'package:kudibooks_app/models/Users/user_model.dart';
 import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
 
+import '../../../models/Users/user_profile_model.dart';
+
 class Drawers extends ConsumerWidget {
   VoidCallback? dashboardScreen;
-  User? userInfo;
+  UserProfile? userInfo;
 
-  Drawers({this.dashboardScreen, this.userInfo, Key? key}) : super(key: key);
+  Drawers({this.dashboardScreen, required this.userInfo, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context, ref) {
+    var userProfile = ref.watch(userProfileProvider.notifier).myUserProfile;
+    // Box<UserProfile> loggMeOut = Hive.box(userProfileBoxName);
     return Drawer(
       elevation: 0.0,
       child: ListView(
@@ -35,12 +42,13 @@ class Drawers extends ConsumerWidget {
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     Text(
-                      "User Name",
-                      style: TextStyle(color: Colors.white),
+                      "${userProfile!.lastName}  ${userProfile.firstName} ",
+                      style: const TextStyle(color: Colors.white),
                     ),
-                    Text("Email", style: TextStyle(color: Colors.white))
+                    Text(userProfile.email,
+                        style: const TextStyle(color: Colors.white))
                   ],
                 ),
               ],
@@ -92,7 +100,7 @@ class Drawers extends ConsumerWidget {
                         ),
                       ),
                       ListTile(
-                        onTap: () => context.pushNamed('transactionAll'),
+                        onTap: () => context.pushNamed('transactionsAll'),
                         leading: const Icon(Icons.credit_card),
                         title: const Text("Transaction"),
                         trailing: const Icon(
@@ -153,9 +161,14 @@ class Drawers extends ConsumerWidget {
                   child: LoginButton(
                     text: 'Logout',
                     actionField: () async {
+                      // await loggMeOut.clear();
+                      // print('is $userProfile  deleted?');
                       String? response =
                           await ref.read(usersProvider.notifier).logout();
                       if (response == 'success') {
+                        
+                            ref.read(userProfileProvider.notifier).loggout;
+                        // print(' now the status of record is: ${out}');
                         context.goNamed('signin');
                       } else {
                         debugPrint("$response");

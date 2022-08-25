@@ -53,9 +53,8 @@ class _SignUpState extends ConsumerState<SignUp> {
 
   @override
   Widget build(BuildContext context) {
-    
     List<User> _users = ref.watch(usersProvider);
-   
+
     return BackgroundScreen(
       paddingSize: 150,
       screens: Form(
@@ -127,11 +126,7 @@ class _SignUpState extends ConsumerState<SignUp> {
                         )
                       : const Icon(Icons.visibility_off)),
             ),
-            LoginButton(
-              text: 'Register now',
-              actionField: () {
 
-                context.goNamed('/');
 
                 // if (_formKey.currentState!.validate()) {
                 //   var checkUser = _users.firstWhereOrNull((element) =>
@@ -152,22 +147,50 @@ class _SignUpState extends ConsumerState<SignUp> {
                 //             'User already exist', Colors.redAccent.shade400));
                 //   }
                 // }
-              },
-            ),
-            const SizedBox(height: 5),
+             
+
+            // LoginButton(
+            //   text: 'Register now',
+            //   actionField: () {
+            //
+            //     context.goNamed('');
+            //
+            //     // if (_formKey.currentState!.validate()) {
+            //     //   var checkUser = _users.firstWhereOrNull((element) =>
+            //     //       element.phoneOrEmail == emailController.text);
+            //     //   if (checkUser == null) {
+            //     //     ref.read(usersProvider.notifier).addUser(User(
+            //     //         firstName: firstNameController.text,
+            //     //         lastName: lastNameController.text,
+            //     //         phoneOrEmail: emailController.text,
+            //     //         password: passwordController.text));
+            //     //     context.goNamed('signin');
+            //     //     ScaffoldMessenger.of(context).showSnackBar(
+            //     //         SnackBars.snackBars(
+            //     //             'User saved successfully', Colors.green.shade400));
+            //     //   } else {
+            //     //     ScaffoldMessenger.of(context).showSnackBar(
+            //     //         SnackBars.snackBars(
+            //     //             'User already exist', Colors.redAccent.shade400));
+            //     //   }
+            //     // }
+            //   },
+            // ),
+
             LoginButton(
-              text: 'Register now Net',
-              actionField: () {
+              text: 'Register now',
+              actionField: () async {
                 var serverPassword = "${passwordController.text}+1234";
                 if (_formKey.currentState!.validate()) {
-                  var userSaving = ref.read(usersProvider.notifier).createUserEmail(User(
-                      firstName: firstNameController.text,
-                      lastName: lastNameController.text,
-                      email: emailController.text,
-                      password: passwordController.text,
-                      passwordConfirm: passwordController.text));
-                  print("This is runtime type: $userSaving");
-                  if (userSaving.toString().isNotEmpty) {
+                  var userSaving = await ref
+                      .read(usersProvider.notifier)
+                      .createUserEmail(User(
+                          firstName: firstNameController.text,
+                          lastName: lastNameController.text,
+                          email: emailController.text,
+                          password: passwordController.text,
+                          passwordConfirm: passwordController.text));
+                  if (userSaving == "success") {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15)),
@@ -182,8 +205,21 @@ class _SignUpState extends ConsumerState<SignUp> {
                       backgroundColor: Colors.green,
                     ));
                     context.goNamed('signin');
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15)),
+                      duration: const Duration(seconds: 3),
+                      content: const Text(
+                        'User saved to network',
+                        style: TextStyle(
+                          fontSize: 17,
+                        ),
+                      ),
+                      padding: const EdgeInsets.all(20.0),
+                      backgroundColor: Colors.red,
+                    ));
                   }
-                  print("This is the future value $userSaving");
                 }
               },
             ),
@@ -203,7 +239,7 @@ class _SignUpState extends ConsumerState<SignUp> {
                 children: [
                   CircledLogo(
                     logo: 'assets/images/categories/logoutIcon.png',
-                    navigateTo: () =>context.goNamed('signupPhone'),
+                    navigateTo: () => context.goNamed('signupPhone'),
                   ),
                   CircledLogo(
                     navigateTo: () {},

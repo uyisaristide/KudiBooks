@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kudibooks_app/models/Users/user_model.dart';
+import 'package:kudibooks_app/models/Users/user_profile_model.dart';
 import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/providers/user_provider.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/common_appBar.dart';
@@ -15,9 +16,11 @@ class MyAccountScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef loadUser) {
-    User? signedUser = loadUser
-        .watch(usersProvider)
-        .firstWhere((user) => user.phoneOrEmail == loggedUser);
+    // User? signedUser = loadUser
+    //     .watch(usersProvider)
+    //     .firstWhere((user) => user.phoneOrEmail == loggedUser);
+
+    UserProfile? signedUser = loadUser.watch(userProfileProvider.notifier).myUserProfile;
     return Scaffold(
       drawer: Drawers(userInfo: signedUser),
       appBar: AppBarCommon.preferredSizeWidget(context, 'My Account'),
@@ -59,13 +62,13 @@ class MyAccountScreen extends ConsumerWidget {
                         ),
                       ),
                     ),
-                    Text("${signedUser.firstName} ${signedUser.lastName}",
+                    Text("${signedUser!.firstName} ${signedUser.lastName}",
                         style: const TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold)),
                     Text(
-                        signedUser.phoneOrEmail == null
+                        signedUser.phoneNumber == null
                             ? ""
-                            : signedUser.phoneOrEmail!,
+                            : signedUser.email,
                         style: const TextStyle(
                           fontSize: 16,
                         )),

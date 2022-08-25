@@ -2,7 +2,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kudibooks_app/models/Users/user_profile_model.dart';
 import 'package:kudibooks_app/models/transition_chart.dart';
+import 'package:kudibooks_app/providers/all_providers_list.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/action_card.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/business_movement_cart.dart';
 import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
@@ -19,14 +21,15 @@ class Dashboard extends ConsumerStatefulWidget {
 }
 
 class _DashboardState extends ConsumerState<Dashboard> {
-  final List<BusinessMovement> chartData = BusinessMovement.data;
+  // final List<BusinessMovement> chartData = BusinessMovement.data;
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("Logged user is: $myToken");
+    var signedUser = ref.watch(userProfileProvider.notifier).myUserProfile;
+    debugPrint("Logged user is: ${signedUser!.userName}");
     return Scaffold(
         extendBodyBehindAppBar: true,
-        drawer: Drawers(),
+        drawer: Drawers(userInfo: signedUser),
         body: Stack(children: [
           Positioned(
               top: 150,
@@ -164,14 +167,14 @@ class _DashboardState extends ConsumerState<Dashboard> {
                             fontSize: 17.0, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.only(left: 15, right: 15),
-                      height: 300,
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5.0)),
-                      child: DeveloperCharts(data: chartData),
-                    ),
+                    // Container(
+                    //   padding: const EdgeInsets.only(left: 15, right: 15),
+                    //   height: 300,
+                    //   width: MediaQuery.of(context).size.width,
+                    //   decoration: BoxDecoration(
+                    //       borderRadius: BorderRadius.circular(5.0)),
+                    //   child: DeveloperCharts(data: chartData),
+                    // ),
                     Container(
                       padding: const EdgeInsets.only(top: 30.0),
                       child: LignChartObject(),

@@ -19,9 +19,11 @@ class AlertScreen extends ConsumerStatefulWidget {
 class _AlertScreenState extends ConsumerState<AlertScreen> {
   @override
   Widget build(BuildContext context) {
-    User? signedUser = ref
-        .watch(usersProvider)
-        .firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
+    // User? signedUser = ref
+    //     .watch(usersProvider)
+    //     .firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
+
+    var signedUser = ref.watch(userProfileProvider.notifier).myUserProfile;
     return Scaffold(
       drawerEnableOpenDragGesture: true,
       drawer: Drawers(userInfo: signedUser),
