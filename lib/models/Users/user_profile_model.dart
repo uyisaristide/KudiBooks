@@ -2,6 +2,7 @@
 // import 'dart:core';
 
 
+
 // import 'package:hive/hive.dart';
 // import '../../providers/user_provider.dart';
 
@@ -26,6 +27,7 @@
 //     required this.updatedAt,
 //     this.token,
 //   });
+  
 //   @HiveField(0)
 //   int id;
 

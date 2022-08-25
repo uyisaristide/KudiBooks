@@ -18,20 +18,20 @@
 //     };
 //     return UserProfile(
 //       id: fields[0] as int,
-//       firstName: fields[1] as String,
-//       lastName: fields[2] as String,
-//       email: fields[3] as String,
-//       provider: fields[4] as String,
-//       providerId: fields[5] as String,
-//       userName: fields[6] as String,
-//       phoneNumber: fields[7] as String,
-//       profile: fields[8] as String,
+//       firstName: fields[1] as dynamic,
+//       lastName: fields[2] as dynamic,
+//       email: fields[3] as dynamic,
+//       provider: fields[4] as dynamic,
+//       providerId: fields[5] as dynamic,
+//       userName: fields[6] as dynamic,
+//       phoneNumber: fields[7] as dynamic,
+//       profile: fields[8] as dynamic,
 //       emailVerifiedAt: fields[9] as dynamic,
 //       emailVerifiedRequired: fields[10] as int,
 //       inviterId: fields[11] as dynamic,
 //       createdAt: fields[12] as DateTime,
 //       updatedAt: fields[13] as DateTime,
-//       token: fields[14] as String?,
+//       token: fields[14] as dynamic,
 //     );
 //   }
 
