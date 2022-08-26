@@ -12,7 +12,6 @@ import 'widget/accountTypebottomSheet.dart';
 import 'widget/common_appBar.dart';
 import '../../models/account_type.dart';
 import 'classes/snack_bars.dart';
-import "package:collection/collection.dart";
 
 class NewAccount extends ConsumerStatefulWidget {
   int? accountId;
@@ -77,7 +76,7 @@ class _NewAccountState extends ConsumerState<NewAccount> {
       var category = requiredData.data
           ?.singleWhere((element) => element.accountType == 5)
           .expenseCategories
-          .singleWhereOrNull((element) =>
+          .singleWhere((element) =>
               element.id == details.data?.accountDetails.expenseCategory);
       // debugPrint("${category?.name}");
 

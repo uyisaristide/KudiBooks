@@ -15,12 +15,12 @@ class _GreenSplashScreenState extends State<GreenSplashScreen> {
   _GreenSplashScreenState() {
     Timer(const Duration(milliseconds: 3000), () {
       setState(() {
-        var token = Hive.box('tokens').get('token');
-        if (token == null) {
+        // var token = Hive.box('tokens').get('token');
+        // if (token == null) {
           context.goNamed('signin');
-        } else {
-          context.goNamed('dashboard');
-        }
+        // } else {
+          // context.goNamed('dashboard');
+        // }
       });
     });
   }

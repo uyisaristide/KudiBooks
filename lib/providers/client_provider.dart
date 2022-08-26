@@ -1,35 +1,43 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive/hive.dart';
 import '../dio_services.dart';
+import '../handle/error_handler.dart';
 import '../models/client_model.dart';
+import '../models/utilities/network_info.dart';
 import 'user_provider.dart';
 
-class ClientNotifier extends StateNotifier<List<ClientModel>> {
-  ClientNotifier() : super([]);
+class ClientNotifier extends StateNotifier<NetworkInfo<List<ClientModel>>> {
+  ClientNotifier() : super(NetworkInfo());
   final _dio = Dio();
+  //
+  // addClient(ClientModel clientModel) {
+  //   state = [...state, clientModel];
+  // }
 
-  addClient(ClientModel clientModel) {
-    state = [...state, clientModel];
-  }
-
-  Future<Response> registerClient(ClientModel client) async {
+  Future<NetworkInfo> registerClient(ClientModel client) async {
+    state=NetworkInfo(networkStatus: NetworkStatus.loading);
     try {
       Map<String, dynamic> newClientHeader = {
-        "Authorization": "Bearer $myToken",
+        "Authorization": "Bearer  ${Hive.box('tokens').get('token')}",
         "companyID": 29
       };
-      var responses = _dio.post("${DioServices.baseUrl}app/client",
+      var responses = await _dio.post("${DioServices.baseUrl}app/client",
           data: client.clientToJson(),
           options: Options(headers: newClientHeader));
-      debugPrint("Client created successfully");
-      return responses;
+
+      var clients = NetworkInfo<List<ClientModel>>(networkStatus: NetworkStatus.success, statusCode: 200);
+      state=clients;
+      return clients;
+    } on DioError catch(e){
+      var errorInfo = ErrorHandler.handleError<List<ClientModel>>(e);
+      state=errorInfo;
+      return errorInfo;
     } catch (e) {
-      if (e is DioError) {
-        throw e.response?.data['errors'][0] ?? "Error";
-      } else {
-        throw Exception(e);
-      }
+      NetworkInfo<List<ClientModel>> info = NetworkInfo();
+      info.errorMessage = "Contact system admin";
+      return info;
     }
   }
 

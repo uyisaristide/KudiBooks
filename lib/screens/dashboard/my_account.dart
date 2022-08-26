@@ -26,7 +26,7 @@ class MyAccountScreen extends ConsumerWidget {
     //     .firstWhere((user) => user.phoneOrEmail == loggedUser);
 
 
-    UserProfile? signedUser = loadUser.watch(userProfileProvider.notifier).myUserProfile;
+    UserProfile? signedUser = loadUser.watch(userProfileProvider).data;
 
 
     return Scaffold(

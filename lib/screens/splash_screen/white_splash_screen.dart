@@ -22,7 +22,7 @@ class _WhiteSplashScreenState extends ConsumerState<WhiteSplashScreen> {
   @override
   Widget build(BuildContext context) {
     UserProfile? userStatus =
-        ref.watch(userProfileProvider.notifier).myUserProfile;
+        ref.watch(userProfileProvider).data;
 
     // print(userStatus!.email);
     Timer(const Duration(milliseconds: 3000), () {

@@ -1,19 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-<<<<<<< HEAD
-import 'package:hive/hive.dart';
-import 'package:kudibooks_app/main.dart';
-import 'package:kudibooks_app/models/Users/user_model.dart';
-import 'package:kudibooks_app/providers/all_providers_list.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
-=======
 import '../../../models/Users/user_model.dart';
 import '../../../models/utilities/network_info.dart';
 import '../../../providers/all_providers_list.dart';
 import '../../auth_screens/widgets/login_button.dart';
 import '../classes/snack_bars.dart';
->>>>>>> 4fa982bd7a709896c57fdbb1d145786bac93220f
 
 import '../../../models/Users/user_profile_model.dart';
 
@@ -26,7 +18,7 @@ class Drawers extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    var userProfile = ref.watch(userProfileProvider.notifier).myUserProfile;
+    var userProfile = ref.watch(userProfileProvider.notifier).miProfile;
     // Box<UserProfile> loggMeOut = Hive.box(userProfileBoxName);
     return Drawer(
       elevation: 0.0,
@@ -180,19 +172,8 @@ class Drawers extends ConsumerWidget {
                   child: LoginButton(
                     text: 'Logout',
                     actionField: () async {
-<<<<<<< HEAD
-                      // await loggMeOut.clear();
-                      // print('is $userProfile  deleted?');
-                      String? response =
-                          await ref.read(usersProvider.notifier).logout();
-                      if (response == 'success') {
-                        
-                            ref.read(userProfileProvider.notifier).loggout;
-                        // print(' now the status of record is: ${out}');
-=======
                       var response = await ref.read(logoutProvider.notifier).logout();
                       if(response.networkStatus == NetworkStatus.success){
->>>>>>> 4fa982bd7a709896c57fdbb1d145786bac93220f
                         context.goNamed('signin');
                       }else{
                         ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars('${response.errorMessage}', Colors.redAccent.shade400));

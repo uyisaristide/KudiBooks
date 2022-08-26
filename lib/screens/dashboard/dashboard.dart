@@ -33,8 +33,8 @@ class _DashboardState extends ConsumerState<Dashboard> {
   @override
   Widget build(BuildContext context) {
 
-    var signedUser = ref.watch(userProfileProvider.notifier).myUserProfile;
-    debugPrint("Logged user is: ${signedUser!.userName}");
+    var signedUser = ref.watch(userProfileProvider).data;
+    // debugPrint("Logged user is: ${signedUser!.userName}");
 
     debugPrint("Logged user is: ${Hive.box('tokens').get('token')}");
 

@@ -58,7 +58,7 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen>
     List<InventoryModel> _loadsList = ref.watch(inventoryProvider);
 
 
-    var signedUser = ref.watch(userProfileProvider.notifier).myUserProfile;
+    var signedUser = ref.watch(userProfileProvider).data;
     // .firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
 
     // User? signedUser = ref.watch(usersProvider)

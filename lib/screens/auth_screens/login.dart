@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hive/hive.dart';
-import 'package:kudibooks_app/main.dart';
-import 'package:kudibooks_app/models/Users/user_model.dart';
-import 'package:kudibooks_app/models/Users/user_profile_model.dart';
-import 'package:kudibooks_app/providers/all_providers_list.dart';
-import 'package:kudibooks_app/screens/auth_screens/validators/validator.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/circled_logo.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/custom_devider.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/hyperlink_text.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/lock_icon.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/page_title.dart';
-import 'package:kudibooks_app/screens/auth_screens/widgets/text_form_field.dart';
-import 'package:kudibooks_app/screens/background.dart';
-import 'package:kudibooks_app/screens/dashboard/classes/snack_bars.dart';
+import '../../models/Users/user_profile_model.dart';
+import '../../models/utilities/network_info.dart';
+import '../../providers/all_providers_list.dart';
+import '../../providers/user_provider.dart';
+import 'validators/validator.dart';
+import 'widgets/circled_logo.dart';
+import 'widgets/custom_devider.dart';
+import 'widgets/hyperlink_text.dart';
+import 'widgets/lock_icon.dart';
+import 'widgets/login_button.dart';
+import 'widgets/page_title.dart';
+import 'widgets/text_form_field.dart';
+import '../background.dart';
+import '../dashboard/classes/snack_bars.dart';
 
 // late Box box;
 // void createBox() async {
@@ -36,12 +35,13 @@ class _LoginState extends ConsumerState<Login> {
   final passwordController = TextEditingController();
   bool isHidden = true;
 
-  late Box<UserProfile> loggedUserBox;
+  // late Box<UserProfile> loggedUserBox;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    ref.read(loginEmailProvider);
     emailController.addListener(() => setState(() {}));
 
     // loggedUserBox = Hive.box(userProfileBoxName);
@@ -49,10 +49,8 @@ class _LoginState extends ConsumerState<Login> {
 
   @override
   Widget build(BuildContext context) {
-    List<User> _user = ref.watch(usersProvider);
-    // var profile = ref.watch(userProfileProvider.notifier).userProfileBox;
-    // debugPrint("Logged user is: ${profile}");
-    // debugPrint('$profile is signed in');
+    var loginEmailWatcher = ref.watch(loginEmailProvider);
+    debugPrint("Logged user is: $myToken");
     return BackgroundScreen(
       buttonWidget: Row(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -185,34 +183,21 @@ class _LoginState extends ConsumerState<Login> {
               text: 'Login net',
               actionField: () async {
                 if (_formKey.currentState!.validate()) {
-                  String? check = await ref
-                      .read(usersProvider.notifier)
+                  var check = await ref
+                      .read(loginEmailProvider.notifier)
                       .loginEmail(
                           emailController.text, passwordController.text);
-                  if (check == "success") {
-                    var currentUser = await ref
+                  if (check.networkStatus == NetworkStatus.success) {
+                   var user= await ref
                         .read(userProfileProvider.notifier)
                         .getUserProfile();
-                    print('${currentUser} is now the current profile');
-                    var hisProfile =
-                        ref.watch(userProfileProvider.notifier).userProfileBox;
-
-                    print(
-                        '${hisProfile.isNotEmpty} whe have now the profile : $hisProfile');
-
-                      var  userProfileBox = await Hive.openBox<UserProfile>(userProfileBoxName);
-
-                      await userProfileBox.put('user', currentUser);
-        
-        // miProfile = userProfileBox;
-        // myUserProfile = userProfileBox.get('user');
-
-                    context.goNamed('dashboard');
-                  } else if (check == "fail") {
+                    
+                    context.goNamed('newCompany');
+                  } else {
+                    debugPrint("${loginEmailWatcher.networkStatus}");
                     ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBars.snackBars(
-                            "${ref.read(usersProvider.notifier).wrongCred}",
-                            Colors.redAccent));
+                        SnackBars.snackBars('${loginEmailWatcher.errorMessage}',
+                            Colors.redAccent.shade400));
                   }
                 }
               },

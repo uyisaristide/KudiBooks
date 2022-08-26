@@ -23,7 +23,7 @@ class _AlertScreenState extends ConsumerState<AlertScreen> {
     //     .firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
 
 
-    var signedUser = ref.watch(userProfileProvider.notifier).myUserProfile;
+    var signedUser = ref.watch(userProfileProvider).data;
 
     return Scaffold(
       drawerEnableOpenDragGesture: true,
