@@ -19,7 +19,6 @@ import 'widget/line_chart.dart';
 import 'widget/pie_chart.dart';
 import 'widget/title_double.dart';
 
-
 class Dashboard extends ConsumerStatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
 
@@ -31,12 +30,20 @@ class _DashboardState extends ConsumerState<Dashboard> {
   // final List<BusinessMovement> chartData = BusinessMovement.data;
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    // TODO: implement initState
 
+    ref.read(userInHiveProvider.notifier).getUserFromHive();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var currentux =ref.read(userInHiveProvider.notifier).getUserFromHive();
     var signedUser = ref.watch(userProfileProvider).data;
+    // var signedUser=currentux
     // debugPrint("Logged user is: ${signedUser!.userName}");
 
-    debugPrint("Logged user is: ${Hive.box('tokens').get('token')}");
+    // debugPrint("Logged user is: ${Hive.box('tokens').get('token')}");
 
     return Scaffold(
         extendBodyBehindAppBar: true,

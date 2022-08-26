@@ -13,20 +13,31 @@ import 'widget/common_appBar.dart';
 import 'widget/drawer.dart';
 
 
-class MyAccountScreen extends ConsumerWidget {
+class MyAccountScreen extends ConsumerStatefulWidget {
   String? loggedUser;
 
   MyAccountScreen({this.loggedUser, Key? key}) : super(key: key);
-  final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
   @override
-  Widget build(BuildContext context, WidgetRef loadUser) {
+  ConsumerState<MyAccountScreen> createState() => _MyAccountScreenState();
+}
+
+class _MyAccountScreenState extends ConsumerState<MyAccountScreen> {
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
+  @override
+void initState() {
+    // TODO: implement initState
+    super.initState();
+    ref.read(userInHiveProvider.notifier).getUserFromHive();
+  }
+  @override
+  Widget build(BuildContext context) {
     // User? signedUser = loadUser
     //     .watch(usersProvider)
     //     .firstWhere((user) => user.phoneOrEmail == loggedUser);
 
 
-    UserProfile? signedUser = loadUser.watch(userProfileProvider).data;
+    UserProfile? signedUser = ref.watch(userInHiveProvider.notifier).currentUser;
 
 
     return Scaffold(

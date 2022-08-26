@@ -4,7 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/adapters.dart';
 import '../dio_services.dart';
 import '../handle/error_handler.dart';
+import '../main.dart';
 import '../models/Users/user_model.dart';
+import '../models/Users/user_profile_model.dart';
 import '../models/utilities/network_info.dart';
 
 String? myToken;
@@ -64,19 +66,22 @@ class UserNotifier extends StateNotifier<NetworkInfo<List<User>>> {
   Future<NetworkInfo> logout() async {
     state = NetworkInfo(networkStatus: NetworkStatus.loading);
     try {
-      debugPrint("Before map: $myToken");
+      Box myBox =  Hive.box(userProfileBoxName);
+      UserProfile userProfile = myBox.get('user');
+
+      // debugPrint("Before map: $myToken");
       Map<String, String> mainHeader = {
         "Content-type": "application/json",
-        "Authorization": "Bearer ${Hive.box('tokens').get('token')}"
+        "Authorization": "Bearer ${userProfile.token}"
       };
 
       var logoutResponse = await _dio.get('${DioServices.baseUrl}auth/logout',
           options: Options(headers: mainHeader));
 
-      debugPrint("${logoutResponse.statusCode} logged out successfully");
-      debugPrint("${Hive.box('tokens').get('token')} logged out successfully");
-      await Hive.openBox('tokens');
-      await Hive.box('tokens').delete('token');
+      // debugPrint("${logoutResponse.statusCode} logged out successfully");
+      // debugPrint("${Hive.box('tokens').get('token')} logged out successfully");
+      // await Hive.openBox('tokens');
+      // await Hive.box('tokens').delete('token');
       var successLogout = NetworkInfo<List<User>>(
           networkStatus: NetworkStatus.success, statusCode: 200);
       state = NetworkInfo(networkStatus: NetworkStatus.success);
@@ -113,7 +118,7 @@ class UserNotifier extends StateNotifier<NetworkInfo<List<User>>> {
       var infoLogin = NetworkInfo<List<User>>(
           networkStatus: NetworkStatus.success, statusCode: 200);
       myToken = loginResponse.data["token"];
-      
+
       return infoLogin;
     } on DioError catch (e) {
       print("${e.response?.data['errors']}");

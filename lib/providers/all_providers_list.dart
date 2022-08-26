@@ -108,6 +108,9 @@ final modeProvider =
 final userProfileProvider =
     StateNotifierProvider<UserProfileNotifier, NetworkInfo<UserProfile>>(
         (ref) => UserProfileNotifier());
+        final userInHiveProvider =
+    StateNotifierProvider<UserProfileNotifier, NetworkInfo<UserProfile>>(
+        (ref) => UserProfileNotifier());
 
 //Chart of account providers
 final removeChartProvider = StateNotifierProvider<AllChartAccountsProvider,

@@ -188,10 +188,17 @@ class _LoginState extends ConsumerState<Login> {
                       .loginEmail(
                           emailController.text, passwordController.text);
                   if (check.networkStatus == NetworkStatus.success) {
-                   var user= await ref
+                    var user = await ref
                         .read(userProfileProvider.notifier)
                         .getUserProfile();
-                    
+                    var toHive = await ref
+                        .read(userProfileProvider.notifier)
+                        .addLoggedUserToHive();
+                    var getUserProfile = ref
+                        .read(userProfileProvider.notifier)
+                        .getUserFromHive();
+
+                    // print('get user returned: ${getUserProfile}');
                     context.goNamed('newCompany');
                   } else {
                     debugPrint("${loginEmailWatcher.networkStatus}");

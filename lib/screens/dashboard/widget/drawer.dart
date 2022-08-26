@@ -9,7 +9,7 @@ import '../classes/snack_bars.dart';
 
 import '../../../models/Users/user_profile_model.dart';
 
-class Drawers extends ConsumerWidget {
+class Drawers extends ConsumerStatefulWidget {
   VoidCallback? dashboardScreen;
   UserProfile? userInfo;
 
@@ -17,8 +17,21 @@ class Drawers extends ConsumerWidget {
       : super(key: key);
 
   @override
-  Widget build(BuildContext context, ref) {
-    var userProfile = ref.watch(userProfileProvider.notifier).miProfile;
+  ConsumerState<Drawers> createState() => _DrawersState();
+}
+
+class _DrawersState extends ConsumerState<Drawers> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    ref.read(userInHiveProvider.notifier).getUserFromHive();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var userProfile = ref.watch(userInHiveProvider.notifier).currentUser;
+
     // Box<UserProfile> loggMeOut = Hive.box(userProfileBoxName);
     return Drawer(
       elevation: 0.0,
@@ -44,10 +57,15 @@ class Drawers extends ConsumerWidget {
                           "assets/images/splash/kudibooks-WHITE-PNG-LOGO.png"),
                     ),
                     const Spacer(),
-                    IconButton(onPressed: (){
-                      var mode = Theme.of(context).brightness == Brightness.light ? ThemeMode.dark : ThemeMode.light;
-                      ref.read(modeProvider.notifier).func(mode);
-                    }, icon: const Icon(Icons.dark_mode))
+                    IconButton(
+                        onPressed: () {
+                          var mode =
+                              Theme.of(context).brightness == Brightness.light
+                                  ? ThemeMode.dark
+                                  : ThemeMode.light;
+                          ref.read(modeProvider.notifier).func(mode);
+                        },
+                        icon: const Icon(Icons.dark_mode))
                   ],
                 ),
                 Column(
@@ -172,11 +190,17 @@ class Drawers extends ConsumerWidget {
                   child: LoginButton(
                     text: 'Logout',
                     actionField: () async {
-                      var response = await ref.read(logoutProvider.notifier).logout();
-                      if(response.networkStatus == NetworkStatus.success){
+                      var response =
+                          await ref.read(logoutProvider.notifier).logout();
+                      if (response.networkStatus == NetworkStatus.success) {
+                        ref
+                            .read(userInHiveProvider.notifier)
+                            .deleUserFromHive();
                         context.goNamed('signin');
-                      }else{
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars('${response.errorMessage}', Colors.redAccent.shade400));
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBars.snackBars('${response.errorMessage}',
+                                Colors.redAccent.shade400));
                       }
                     },
                   ),

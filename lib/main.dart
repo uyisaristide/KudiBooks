@@ -8,14 +8,14 @@ import 'package:path_provider/path_provider.dart';
 const String userProfileBoxName = "userProfile";
 
 Future<void> main() async {
-   WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   final document = await getApplicationDocumentsDirectory();
 
- 
-
-   Hive.init(document.path);
+  Hive.init(document.path);
 
   Hive.registerAdapter(UserProfileAdapter());
+
+  await Hive.openBox(userProfileBoxName);
 
   runApp(const ProviderScope(child: MyApp()));
 }
@@ -36,11 +36,9 @@ class _MyAppState extends State<MyApp> {
       themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
       title: 'KudiBooks',
-
       routerDelegate: router.routerDelegate,
       routeInformationParser: router.routeInformationParser,
       routeInformationProvider: router.routeInformationProvider,
-
     );
   }
 }

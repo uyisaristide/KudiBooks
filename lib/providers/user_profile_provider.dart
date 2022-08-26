@@ -7,6 +7,7 @@ import '../dio_services.dart';
 import 'package:kudibooks_app/models/Users/user_profile_model.dart';
 import 'package:kudibooks_app/providers/user_provider.dart';
 
+import '../main.dart';
 import '../models/utilities/network_info.dart';
 
 String? haveToke;
@@ -19,9 +20,11 @@ class UserProfileNotifier extends StateNotifier<NetworkInfo<UserProfile>> {
 
   final dio = Dio();
 
-  // late Box<UserProfile?> userProfileBox;
+  var userProfileBox;
 
   UserProfile? miProfile;
+
+  UserProfile? currentUser;
 
   // late var amOut;
 
@@ -47,7 +50,7 @@ class UserProfileNotifier extends StateNotifier<NetworkInfo<UserProfile>> {
 
       miProfile = info.data;
       print(mainHeader);
-      // print('user name ${miProfile!.lastName}');
+
       state = info;
     } on DioError catch (e) {
       NetworkInfo<UserProfile> info =
@@ -86,9 +89,24 @@ class UserProfileNotifier extends StateNotifier<NetworkInfo<UserProfile>> {
   }
 
   Future addLoggedUserToHive() async {
-    Box<UserProfile> userProfileBox = await Hive.openBox('userProfile');
-    var currentUser
+    // userProfileBox = await Hive.openBox<UserProfile?>(userProfileBoxName);
+    userProfileBox = Hive.box(userProfileBoxName);
+    await userProfileBox.put('user', miProfile);
   }
+
+  Future<UserProfile?> getUserFromHive() async {
+    // userProfileBox = await Hive.openBox<UserProfile?>(userProfileBoxName);
+    userProfileBox = Hive.box(userProfileBoxName);
+    currentUser = userProfileBox.get('user');
+    
+    return currentUser;
+  }
+
+  Future deleUserFromHive() async {
+    userProfileBox = Hive.box(userProfileBoxName);
+    await userProfileBox.clear();
+  }
+  // Future deleteUser
 }
 
 //   Future loggout() async {
