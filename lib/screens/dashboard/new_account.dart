@@ -61,6 +61,7 @@ class _NewAccountState extends ConsumerState<NewAccount> {
   @override
   void initState() {
     super.initState();
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(chartAccountProvider.notifier).listOfCharts();
       if (widget.accountId != 0) {
@@ -85,12 +86,12 @@ class _NewAccountState extends ConsumerState<NewAccount> {
       codeController.text = details.data?.accountDetails.code ?? '';
       nameController.text = details.data?.accountDetails.name ?? '';
       noteController.text = details.data?.accountDetails.note ?? '';
-      expenseCategoryController.text = category?.name ?? '';
+      expenseCategoryController.text = category!.name;
       selectedType = details.data?.accountSelected.type == 5
           ? selectedType = 5
           : selectedType;
       accountSelected = details.data?.accountSelected.code ?? accountSelected;
-      selectedCategory = category?.id;
+      selectedCategory = category.id;
       // debugPrint("This is: $selectedType");
     }
   }

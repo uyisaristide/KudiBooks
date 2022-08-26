@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:go_router/go_router.dart';
+import '../../models/utilities/network_info.dart';
+import '../../providers/all_providers_list.dart';
 import 'classes/sliver_delegate_search.dart';
+import 'classes/snack_bars.dart';
+import 'widget/client_list_item.dart';
 import 'widget/progress_row.dart';
 
-class ClientList extends StatelessWidget {
+class ClientList extends ConsumerStatefulWidget {
   ClientList({Key? key}) : super(key: key);
+
+  @override
+  ConsumerState<ClientList> createState() => _ClientListState();
+}
+
+class _ClientListState extends ConsumerState<ClientList> {
   List<Widget> statisticsCard = [
     Container(
       margin: const EdgeInsets.only(right: 5),
@@ -137,6 +149,7 @@ class ClientList extends StatelessWidget {
       ),
     ),
   ];
+
   List<Widget> listClients = [
     ListTile(
       trailing: Column(
@@ -178,8 +191,23 @@ class ClientList extends StatelessWidget {
     ),
   ];
 
+  void clientData() {
+    ref.read(clientProvider.notifier).allClients();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      clientData();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    var clientList = ref.watch(clientProvider);
+    var deleteItem = ref.watch(removeClientProvider);
     return Scaffold(
       floatingActionButton: ElevatedButton(
         style: ElevatedButton.styleFrom(
@@ -187,7 +215,7 @@ class ClientList extends StatelessWidget {
             padding: const EdgeInsets.all(15.0),
             elevation: 0.0,
             shape: const CircleBorder()),
-        onPressed: () => context.pushNamed('newClient'),
+        onPressed: () => context.push('/createClient/0'),
         child: const Text(
           '+',
           style: TextStyle(fontSize: 25),
@@ -320,61 +348,105 @@ class ClientList extends StatelessWidget {
                 )),
           ];
         },
-        body: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              LimitedBox(
-                child: ListView.separated(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) => ListTile(
-                          trailing: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.only(
-                                    left: 20, right: 20.0, top: 9, bottom: 9),
-                                decoration: BoxDecoration(
-                                    color: const Color(0xffE6FDE6),
-                                    borderRadius: BorderRadius.circular(20.0)),
-                                child: const Text(
-                                  "Active",
-                                  style: TextStyle(
-                                      color: Colors.green,
-                                      fontSize: 9.0,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20.0)),
-                                child: const Text(
-                                  "\$25.99",
-                                  style: TextStyle(fontSize: 15.0),
-                                ),
-                              ),
-                            ],
-                          ),
-                          leading: const CircleAvatar(
-                            radius: 25,
-                            child: Icon(Icons.person),
-                          ),
-                          subtitle: const Text("clientemail@gmail.com"),
-                          title: const Text(
-                            "Client name",
-                            style: TextStyle(
-                                fontSize: 16.0, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                    separatorBuilder: (_, idx) => const SizedBox(
-                          height: 5,
-                        ),
-                    itemCount: 15),
+        body: clientList.networkStatus == NetworkStatus.loading
+            ? Center(
+                child: CircularProgressIndicator(color: Colors.green.shade400),
               )
-            ],
-          ),
-        ),
+            : clientList.networkStatus == NetworkStatus.success
+                ? LimitedBox(
+                    child: LimitedBox(
+                      maxHeight: 1000,
+                      child: ListView.separated(
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) => Slidable(
+                              endActionPane: ActionPane(
+                                motion: const ScrollMotion(),
+                                children: [
+                                  SlidableAction(
+                                    onPressed: (context) {
+                                      showDialog<void>(
+                                          context: context,
+                                          builder: (deleteContext) {
+                                            return AlertDialog(
+                                              title:
+                                                  const Text('Are you sure?'),
+                                              content: const Text(
+                                                  "Do you want to remove this client"),
+                                              actions: <Widget>[
+                                                TextButton(
+                                                  child: const Text('No'),
+                                                  onPressed: () {
+                                                    Navigator.of(deleteContext)
+                                                        .pop(); // Dismiss alert dialog
+                                                  },
+                                                ),
+                                                TextButton(
+                                                  child: const Text('Yes'),
+                                                  onPressed: () async {
+                                                    var deleteResponse = await ref
+                                                        .read(
+                                                            removeClientProvider
+                                                                .notifier)
+                                                        .removeClient(clientList
+                                                            .data![index].id);
+                                                    if (deleteResponse
+                                                            .networkStatus ==
+                                                        NetworkStatus.success) {
+                                                      Navigator.pop(
+                                                          deleteContext);
+                                                      clientData();
+                                                      ScaffoldMessenger.of(
+                                                              deleteContext)
+                                                          .showSnackBar(SnackBars
+                                                              .snackBars(
+                                                                  'Deleted successfully',
+                                                                  Colors.green
+                                                                      .shade400));
+                                                    } else {
+                                                      Navigator.pop(
+                                                          deleteContext);
+                                                      ScaffoldMessenger.of(
+                                                              deleteContext)
+                                                          .showSnackBar(SnackBars
+                                                              .snackBars(
+                                                                  '${deleteItem.errorMessage}',
+                                                                  Colors
+                                                                      .redAccent));
+                                                    }
+                                                    // Dismiss alert dialog
+                                                  },
+                                                ),
+                                              ],
+                                            );
+                                          });
+                                    },
+                                    icon: Icons.edit_outlined,
+                                    backgroundColor: Colors.redAccent,
+                                    foregroundColor: Colors.white,
+                                    label: 'Delete',
+                                  )
+                                ],
+                              ),
+                              startActionPane: ActionPane(
+                                motion: const ScrollMotion(),
+                                children: [
+                                  SlidableAction(
+                                    onPressed: (context) {context.push('/createClient/${clientList.data![index].id}');},
+                                    label: 'Edit',
+                                    foregroundColor: Colors.white,
+                                    backgroundColor: Colors.green.shade400,
+                                  )
+                                ],
+                              ),
+                              child: ClientListItem(
+                                  client: clientList.data![index])),
+                          separatorBuilder: (_, idx) => const SizedBox(
+                                height: 5,
+                              ),
+                          itemCount: clientList.data!.length),
+                    ),
+                  )
+                : Center(child: Text("${clientList.errorMessage}")),
       ),
     );
   }

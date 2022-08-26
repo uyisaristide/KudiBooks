@@ -170,7 +170,7 @@ class Drawers extends ConsumerWidget {
                       if(response.networkStatus == NetworkStatus.success){
                         context.goNamed('signin');
                       }else{
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars('${response.errorMessage}', Colors.redAccent.shade400));
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars('${response.getErrorMessage}', Colors.redAccent.shade400));
                       }
                     },
                   ),

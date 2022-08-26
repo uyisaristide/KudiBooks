@@ -222,7 +222,7 @@ class _PhoneSignupState extends ConsumerState<PhoneSignup> {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars('Thanks for creating account', Colors.green.shade400));
                     context.goNamed('signin');
                   }else{
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars('${createUserPhone.getErrorMessage}', Colors.redAccent.shade400));
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars(phoneRegister.getErrorMessage, Colors.redAccent.shade400));
                   }
                 }
               },

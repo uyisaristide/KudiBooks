@@ -19,7 +19,8 @@ class AllChartAccountsProvider extends StateNotifier<NetworkInfo<List<Accounts>>
       Map<String, dynamic> chartHeader = {
         "Content-type": "application/json",
         "Authorization": "Bearer ${Hive.box('tokens').get('token')}",
-        "companyID": '${Hive.box('company').get('companyId')}'
+        "companyID": 29
+        // "companyID": '${Hive.box('company').get('companyId')}'
       };
       debugPrint('${Hive.box('company').get('companyId')}');
       Response response = await _dio.get("${DioServices.baseUrl}app/chart",
@@ -37,10 +38,8 @@ class AllChartAccountsProvider extends StateNotifier<NetworkInfo<List<Accounts>>
           statusCode: 200);
       state = info;
     } on DioError catch (e) {
-      debugPrint("fdsffdsdfs ${e.response?.statusCode}");
       state = ErrorHandler.handleError<List<Accounts>>(e);
     } catch (e) {
-      print("dgdgdg");
       NetworkInfo<List<Accounts>> info = NetworkInfo(networkStatus: NetworkStatus.error);
       info.errorMessage = "Not found! contact admin";
       state=info;
@@ -52,7 +51,8 @@ class AllChartAccountsProvider extends StateNotifier<NetworkInfo<List<Accounts>>
       Map<String, dynamic> chartHeaders = {
         "Content-type": "application/json",
         "Authorization": "Bearer ${Hive.box('tokens').get('token')}",
-        "companyID": '${Hive.box('company').get('companyId')}'
+        "companyID": 29
+        // "companyID": '${Hive.box('company').get('companyId')}'
       };
       debugPrint('${Hive.box('company').get('companyId')}');
       Response response = await _dio.delete(
