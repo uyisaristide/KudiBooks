@@ -97,7 +97,8 @@ class ChartAccountProvider
       Map<String, dynamic> editChart = {
         "Content-type": "application/json",
         "Authorization": "Bearer ${Hive.box('tokens').get('token')}",
-        "companyID": '${Hive.box('company').get('companyId')}'
+        "companyID": 29
+        // "companyID": '${Hive.box('company').get('companyId')}'
       };
 
       debugPrint("${chartAccountModel.toJson()}");

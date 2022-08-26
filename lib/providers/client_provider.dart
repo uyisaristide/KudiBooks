@@ -1,12 +1,10 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
 import '../dio_services.dart';
 import '../handle/error_handler.dart';
 import '../models/client_model.dart';
 import '../models/utilities/network_info.dart';
-import 'user_provider.dart';
 
 class ClientNotifier extends StateNotifier<NetworkInfo<List<ClientModel>>> {
   ClientNotifier() : super(NetworkInfo());
@@ -41,9 +39,27 @@ class ClientNotifier extends StateNotifier<NetworkInfo<List<ClientModel>>> {
     }
   }
 
-  // Future<ClientModel> allClients() async {
-  //   Response response;
-  //   response = await _dio.get('${DioServices.mainHeader}');
-  // }
+  Future<NetworkInfo> removeClient(int? id) async{
+    state=NetworkInfo(networkStatus: NetworkStatus.loading);
+    try{
+      Map<String, dynamic> chartHeaders = {
+        "Content-type": "application/json",
+        "Authorization": "Bearer ${Hive.box('tokens').get('token')}",
+        "companyID": 29
+      };
+      Response response = await _dio.delete('${DioServices.baseUrl}app/client/delete/$id', options: Options(headers: chartHeaders));
+      var info = NetworkInfo<List<ClientModel>>(networkStatus: NetworkStatus.success, statusCode: 200);
+      state=info;
+      return info;
+    } on DioError catch(e){
+      var errorInfo = ErrorHandler.handleError<List<ClientModel>>(e);
+      state=errorInfo;
+      return errorInfo;
+    } catch(e){
+      var networkInfo = NetworkInfo(networkStatus: NetworkStatus.error);
+      networkInfo.errorMessage = "Contact admin";
+      return networkInfo;
+    }
+  }
 
 }

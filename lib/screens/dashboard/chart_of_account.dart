@@ -86,8 +86,7 @@ class _ChartAccountState extends ConsumerState<ChartAccount> {
                                           context: context,
                                           barrierDismissible: true,
                                           // false = user must tap button, true = tap outside dialog
-                                          builder:
-                                              (BuildContext dialogContext) {
+                                          builder:(BuildContext dialogContext) {
                                             return AlertDialog(
                                               title:
                                                   const Text('Are you sure?'),

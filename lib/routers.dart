@@ -161,8 +161,11 @@ GoRouter router = GoRouter(
           builder: (context, state) => ClientList()),
       GoRoute(
           name: 'newClient',
-          path: '/createClient',
-          builder: (context, state) => const NewClient()),
+          path: '/createClient/:clientId',
+          builder: (context, state) {
+            String? id=state.params['clientId'];
+            return NewClient(clientId: id,);
+          }),
       GoRoute(
           name: 'reports',
           path: '/reportsScreen',

@@ -121,7 +121,7 @@ class _PhoneLoginState extends ConsumerState<PhoneLogin> {
                   if(result.networkStatus == NetworkStatus.success){
                     context.goNamed('signin', extra: "${phoneController.text}");
                   }else{
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars(loginPhoneWatcher.getErrorMessage, Colors.redAccent.shade400));
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars(result.getErrorMessage, Colors.redAccent.shade400));
                   }
                 }
               },

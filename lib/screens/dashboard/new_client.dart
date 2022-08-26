@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../../models/client_model.dart';
 import '../../models/utilities/network_info.dart';
 import '../../providers/all_providers_list.dart';
@@ -11,7 +12,8 @@ import 'classes/snack_bars.dart';
 import 'widget/common_appBar.dart';
 
 class NewClient extends ConsumerStatefulWidget {
-  const NewClient({Key? key}) : super(key: key);
+  String? clientId;
+  NewClient({Key? key, required this.clientId}) : super(key: key);
 
   @override
   ConsumerState<NewClient> createState() => _NewClientState();
@@ -40,11 +42,16 @@ class _NewClientState extends ConsumerState<NewClient> {
   List<String> clientStatus = ['Active', 'Inactive'];
 
   String? clientStatusOption;
-
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    ref.read(createClientProvider);
+  }
   @override
   Widget build(BuildContext context) {
     var clientWatcher = ref.watch(createClientProvider);
-    // print(ClientProvider.clientInstance.allClients.length);
+    print(int.parse(widget.clientId.toString())==0?"Save Client":"Edit Client");
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
           color: Colors.transparent,
@@ -52,39 +59,39 @@ class _NewClientState extends ConsumerState<NewClient> {
           child: Container(
             margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             child: LoginButton(
-                text: 'Save Client',
+                text: int.parse(widget.clientId.toString())==0?"Save Client":"Edit Client",
                 actionField: () async {
                   if (_formKey.currentState!.validate()) {
-                    var clientResponse = await ref
-                        .read(createClientProvider.notifier)
-                        .registerClient(ClientModel(
-                            clientName: nameController.text,
-                            status: clientStatusOption == "Active" ? true : false,
-                            clientTin: tinNumberController.text,
-                            contactPersonFirstName: contactPersonName.text,
-                            contactPersonLastName: contactPersonLastName.text,
-                            email: emailController.text,
-                            phoneNumber: countryCode.toString() + phoneController.text,
-                            physicalAddress: addressController.text,
-                            note: noteController.text));
-                    debugPrint(countryCode.toString() + phoneController.text);
+                      var clientResponse = await ref
+                          .read(createClientProvider.notifier)
+                          .registerClient(ClientModel(
+                          clientName: nameController.text,
+                          status: clientStatusOption == "Active" ? true : false,
+                          clientTin: tinNumberController.text,
+                          contactPersonFirstName: contactPersonName.text,
+                          contactPersonLastName: contactPersonLastName.text,
+                          email: emailController.text,
+                          phoneNumber: countryCode.toString() + phoneController.text,
+                          physicalAddress: addressController.text,
+                          note: noteController.text));
                     if (clientResponse.networkStatus == NetworkStatus.success) {
                       ScaffoldMessenger.of(context)
                         ..removeCurrentSnackBar()
                         ..showSnackBar(SnackBars.snackBars(
                             'Client saved successfully',
                             Colors.green.shade400));
+                      context.goNamed('clientList');
                     } else {
                       ScaffoldMessenger.of(context)
                         ..removeCurrentSnackBar()
                         ..showSnackBar(SnackBars.snackBars(
                             '${clientWatcher.getErrorMessage}',
-                            Colors.green.shade400));
+                            Colors.redAccent.shade400));
                     }
                   }
                 }),
           )),
-      appBar: AppBarCommon.preferredSizeWidget(context, "New client"),
+      appBar: AppBarCommon.preferredSizeWidget(context, int.parse(widget.clientId.toString())==0?"Save Client":"Edit Client"),
       body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Container(

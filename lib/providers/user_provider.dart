@@ -100,11 +100,13 @@ class UserNotifier extends StateNotifier<NetworkInfo<List<User>>> {
         await Hive.openBox('tokens');
         await Hive.box('tokens').put('token', loginResponse.data["token"]);
         var infoLogin = NetworkInfo<List<User>>(networkStatus: NetworkStatus.success, statusCode: 200);
+        debugPrint("${loginResponse.data}");
         return infoLogin;
     } on DioError catch(e){
-      print("${e.response?.data['errors']}");
+      print("${e.response?.data}");
       var informationError = ErrorHandler.handleError<List<User>>(e);
       state=informationError;
+      debugPrint("${informationError.networkStatus}");
       return informationError;
     }
     catch (e) {
@@ -133,6 +135,4 @@ class UserNotifier extends StateNotifier<NetworkInfo<List<User>>> {
       return infoError;
     }
   }
-//
-// Future<Response> loginPhone() {}
 }

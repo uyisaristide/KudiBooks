@@ -179,7 +179,7 @@ class _LoginState extends ConsumerState<Login> {
                     context.goNamed('newCompany', extra: emailController.text);
                   }else{
                     debugPrint("${loginEmailWatcher.networkStatus}");
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars('${loginEmailWatcher.errorMessage}', Colors.redAccent.shade400));
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars(check.getErrorMessage, Colors.redAccent.shade400));
                   }
                 }
               },
