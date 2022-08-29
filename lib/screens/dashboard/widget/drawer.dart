@@ -113,10 +113,11 @@ class Drawers extends ConsumerWidget {
                           size: 15,
                         ),
                       ),
-                      const ListTile(
-                        leading: Icon(Icons.shopping_bag_rounded),
-                        title: Text("Vendors"),
-                        trailing: Icon(
+                      ListTile(
+                        onTap: ()=>context.pushNamed('vendors'),
+                        leading: const Icon(Icons.shopping_bag_rounded),
+                        title: const Text("Vendors"),
+                        trailing: const Icon(
                           Icons.arrow_forward_ios,
                           size: 15,
                         ),

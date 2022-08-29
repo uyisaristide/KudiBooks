@@ -393,104 +393,102 @@ class _ClientListState extends ConsumerState<ClientList> {
               )
             : clientList.networkStatus == NetworkStatus.success
                 ? LimitedBox(
-                    child: LimitedBox(
-                      maxHeight: 1000,
-                      child: ListView.separated(
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) => Slidable(
-                              endActionPane: ActionPane(
-                                motion: const ScrollMotion(),
-                                children: [
-                                  SlidableAction(
-                                    onPressed: (context) {
-                                      showDialog<void>(
-                                          context: context,
-                                          builder: (deleteContext) {
-                                            return AlertDialog(
-                                              title:
-                                                  const Text('Are you sure?'),
-                                              content: const Text(
-                                                  "Do you want to remove this client"),
-                                              actions: <Widget>[
-                                                TextButton(
-                                                  child: const Text('No'),
-                                                  onPressed: () {
-                                                    Navigator.of(deleteContext)
-                                                        .pop(); // Dismiss alert dialog
-                                                  },
-                                                ),
-                                                TextButton(
-                                                  child: const Text('Yes'),
-                                                  onPressed: () async {
-                                                    var deleteResponse = await ref
-                                                        .read(
-                                                            removeClientProvider
-                                                                .notifier)
-                                                        .removeClient(clientList
-                                                            .data![index].id);
-                                                    if (deleteResponse
-                                                            .networkStatus ==
-                                                        NetworkStatus.success) {
-                                                      Navigator.pop(
-                                                          deleteContext);
-                                                      clientData();
-                                                      ScaffoldMessenger.of(
-                                                              deleteContext)
-                                                          .showSnackBar(SnackBars
-                                                              .snackBars(
-                                                                  'Deleted successfully',
-                                                                  Colors.green
-                                                                      .shade400));
-                                                    } else {
-                                                      Navigator.pop(
-                                                          deleteContext);
-                                                      ScaffoldMessenger.of(
-                                                              deleteContext)
-                                                          .showSnackBar(SnackBars
-                                                              .snackBars(
-                                                                  '${deleteItem.errorMessage}',
-                                                                  Colors
-                                                                      .redAccent));
-                                                    }
-                                                    // Dismiss alert dialog
-                                                  },
-                                                ),
-                                              ],
-                                            );
-                                          });
-                                    },
-                                    icon: Icons.edit_outlined,
-                                    backgroundColor: Colors.redAccent,
-                                    foregroundColor: Colors.white,
-                                    label: 'Delete',
-                                  )
-                                ],
-                              ),
-                              startActionPane: ActionPane(
-                                motion: const ScrollMotion(),
-                                children: [
-                                  SlidableAction(
-                                    onPressed: (context) {
-                                      context.push(
-                                          '/createClient/${clientList.data![index].id}');
-                                    },
-                                    label: 'Edit',
-                                    foregroundColor: Colors.white,
-                                    backgroundColor: Colors.green.shade400,
-                                  )
-                                ],
-                              ),
-                              child: InkWell(onTap: (){
-                                return context.push('/profileClient/${clientList.data![index].id}');
+                    child: ListView.separated(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) => Slidable(
+                            endActionPane: ActionPane(
+                              motion: const ScrollMotion(),
+                              children: [
+                                SlidableAction(
+                                  onPressed: (context) {
+                                    showDialog<void>(
+                                        context: context,
+                                        builder: (deleteContext) {
+                                          return AlertDialog(
+                                            title: const Text('Are you sure?'),
+                                            content: const Text(
+                                                "Do you want to remove this client"),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                child: const Text('No'),
+                                                onPressed: () {
+                                                  Navigator.of(deleteContext)
+                                                      .pop(); // Dismiss alert dialog
+                                                },
+                                              ),
+                                              TextButton(
+                                                child: const Text('Yes'),
+                                                onPressed: () async {
+                                                  var deleteResponse = await ref
+                                                      .read(removeClientProvider
+                                                          .notifier)
+                                                      .removeClient(clientList
+                                                          .data![index].id);
+                                                  if (deleteResponse
+                                                          .networkStatus ==
+                                                      NetworkStatus.success) {
+                                                    Navigator.pop(
+                                                        deleteContext);
+                                                    clientData();
+                                                    ScaffoldMessenger.of(
+                                                            deleteContext)
+                                                        .showSnackBar(
+                                                            SnackBars.snackBars(
+                                                                'Deleted successfully',
+                                                                Colors.green
+                                                                    .shade400));
+                                                  } else {
+                                                    Navigator.pop(
+                                                        deleteContext);
+                                                    ScaffoldMessenger.of(
+                                                            deleteContext)
+                                                        .showSnackBar(
+                                                            SnackBars.snackBars(
+                                                                '${deleteItem.errorMessage}',
+                                                                Colors
+                                                                    .redAccent));
+                                                  }
+                                                  // Dismiss alert dialog
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        });
+                                  },
+                                  icon: Icons.edit_outlined,
+                                  backgroundColor: Colors.redAccent,
+                                  foregroundColor: Colors.white,
+                                  label: 'Delete',
+                                )
+                              ],
+                            ),
+                            startActionPane: ActionPane(
+                              motion: const ScrollMotion(),
+                              children: [
+                                SlidableAction(
+                                  onPressed: (context) {
+                                    context.push(
+                                        '/createClient/${clientList.data![index].id}');
+                                  },
+                                  label: 'Edit',
+                                  foregroundColor: Colors.white,
+                                  backgroundColor: Colors.green.shade400,
+                                )
+                              ],
+                            ),
+                            child: InkWell(
+                              onTap: () {
+                                return context.push(
+                                    '/profileClient/${clientList.data![index].id}');
                               },
-                                child: ClientListItem(
-                                    client: clientList.data![index]),
-                              )),
-                          separatorBuilder: (_, idx) => const SizedBox(
-                                height: 5,
-                              ),
-                          itemCount: clientList.data!.length),
-                    ),
+                              child: ClientListItem(
+                                  client: clientList.data![index]),
+                            )),
+                        separatorBuilder: (_, idx) => const SizedBox(
+                              height: 5,
+                            ),
+                        itemCount: clientList.data!.length),
                   )
                 : Center(child: Text("${clientList.errorMessage}")),
       ),

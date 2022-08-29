@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'models/product_model.dart';
 import 'providers/clients/client_profile.dart';
+import 'screens/dashboard/vendors/new_vendor.dart';
 import 'screens/auth_screens/login.dart';
 import 'screens/auth_screens/otp_verification.dart';
 import 'screens/auth_screens/phone_login.dart';
@@ -30,6 +31,7 @@ import 'screens/dashboard/product_sale.dart';
 import 'screens/dashboard/products.dart';
 import 'screens/dashboard/reports.dart';
 import 'screens/dashboard/settings_screen.dart';
+import 'screens/dashboard/vendors/vendor_list.dart';
 import 'screens/dashboard/widget/bottom_navigation.dart';
 import 'screens/splash_screen/green_splash_screen.dart';
 import 'screens/splash_screen/white_splash_screen.dart';
@@ -231,5 +233,32 @@ GoRouter router = GoRouter(
               recoverEmail: email,
               token: token,
             );
-          })
+          }),
+
+      //Vendor
+
+      // GoRoute(
+      //     path: '/password/reset/:token',
+      //     builder: (context, state) {
+      //       final token = state.params["token"];
+      //       final email = state.queryParams["email"];
+      //       return ResetEmailPassword(
+      //         recoverEmail: email,
+      //         token: token,
+      //       );
+      //     }),
+      GoRoute(
+        name: 'vendors',
+        path: '/vendorList',
+        builder: (context, state) =>Vendors(),
+      ),
+      GoRoute(
+        name: 'newVendor',
+        path: '/createVendor/:id',
+        builder: (context, state){
+          final id = state.params['id'];
+          return NewVendor(vendorId: id,);
+        },
+      ),
     ]);
+
