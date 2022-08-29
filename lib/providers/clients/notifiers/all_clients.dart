@@ -2,10 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
-import '../dio_services.dart';
-import '../handle/error_handler.dart';
-import '../models/client_list_model.dart';
-import '../models/utilities/network_info.dart';
+import '../../../../dio_services.dart';
+import '../../../../handle/error_handler.dart';
+import '../../../../models/client_list_model.dart';
+import '../../../../models/utilities/network_info.dart';
 
 class AllClientsNotifier extends StateNotifier<NetworkInfo<List<Clients>>> {
   AllClientsNotifier() : super(NetworkInfo());
@@ -14,7 +14,6 @@ class AllClientsNotifier extends StateNotifier<NetworkInfo<List<Clients>>> {
   // addClient(ClientModel clientModel) {
   //   state = [...state, clientModel];
   // }
-
   allClients() async {
     state=NetworkInfo(networkStatus: NetworkStatus.loading)..data=state.data;
     try{
@@ -36,7 +35,7 @@ class AllClientsNotifier extends StateNotifier<NetworkInfo<List<Clients>>> {
       var errorInfo = ErrorHandler.handleError<List<Clients>>(e);
       state=errorInfo;
     } catch(e){
-      debugPrint("${e}");
+      debugPrint("$e");
       NetworkInfo<List<Clients>> info = NetworkInfo(networkStatus: NetworkStatus.error);
       info.errorMessage="Contact system admin";
       state=info;

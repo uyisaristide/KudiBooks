@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'models/product_model.dart';
+import 'providers/clients/client_profile.dart';
 import 'screens/auth_screens/login.dart';
 import 'screens/auth_screens/otp_verification.dart';
 import 'screens/auth_screens/phone_login.dart';
@@ -110,7 +111,7 @@ GoRouter router = GoRouter(
       GoRoute(
           name: 'createInventory',
           path: '/newInventory',
-          builder: (context, state) => NewInventory()),
+          builder: (context, state) => const NewInventory()),
       GoRoute(
           name: 'createExpense',
           path: '/newExpense',
@@ -159,6 +160,13 @@ GoRouter router = GoRouter(
           name: 'clientList',
           path: '/allClients',
           builder: (context, state) => ClientList()),
+      GoRoute(
+          name: 'clientProfile',
+          path: '/profileClient/:id',
+          builder: (context, state){
+            final id = state.params["id"];
+            return ClientProfile(client:int.parse(id.toString()));
+          }),
       GoRoute(
           name: 'newClient',
           path: '/createClient/:clientId',

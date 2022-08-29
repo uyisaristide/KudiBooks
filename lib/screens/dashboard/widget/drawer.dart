@@ -70,7 +70,7 @@ class Drawers extends ConsumerWidget {
                     children: [
                       ListTile(
                         onTap: () => Navigator.pop(context),
-                        leading: Icon(Icons.home),
+                        leading: const Icon(Icons.home),
                         title: const Text("Home"),
                         trailing: const Icon(
                           Icons.arrow_forward_ios,
@@ -147,14 +147,6 @@ class Drawers extends ConsumerWidget {
                           size: 15,
                         ),
                       ),
-                      // const ListTile(
-                      //   leading: Icon(Icons.info_outline),
-                      //   title: Text("About"),
-                      //   trailing: Icon(
-                      //     Icons.arrow_forward_ios,
-                      //     size: 15,
-                      //   ),
-                      // ),
                     ],
                   ),
                 ),

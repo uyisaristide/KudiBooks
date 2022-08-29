@@ -2,15 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../models/client_list_model.dart';
-
-
 class ClientListItem extends ConsumerWidget {
   Clients client;
   ClientListItem({Key? key, required this.client}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    debugPrint("${client.clientName}");
     return ListTile(
       trailing: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
