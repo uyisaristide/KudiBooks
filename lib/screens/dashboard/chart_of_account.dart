@@ -112,7 +112,7 @@ class _ChartAccountState extends ConsumerState<ChartAccount> {
                                                     }else{
                                                       Navigator.pop(dialogContext);
                                                       debugPrint("${removeChart.networkStatus}");
-                                                      ScaffoldMessenger.of(dialogContext).showSnackBar(SnackBars.snackBars('${removeChart.errorMessage}', Colors.redAccent));
+                                                      ScaffoldMessenger.of(dialogContext).showSnackBar(SnackBars.snackBars(deleteResponse.getErrorMessage, Colors.redAccent));
                                                     }
                                                     // Dismiss alert dialog
                                                   },

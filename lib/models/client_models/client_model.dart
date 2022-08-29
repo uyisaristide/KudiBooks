@@ -10,24 +10,24 @@ class ClientModel {
   String? physicalAddress;
   String? note;
 
-  ClientModel(
-      {this.id,
-      required this.clientName,
-      required this.status,
-      this.clientTin,
-      this.contactPersonFirstName,
-      this.contactPersonLastName,
-      this.email,
-      this.phoneNumber,
-      this.physicalAddress,
-      this.note});
+  ClientModel({this.id,
+    required this.clientName,
+    required this.status,
+    this.clientTin,
+    this.contactPersonFirstName,
+    this.contactPersonLastName,
+    this.email,
+    this.phoneNumber,
+    this.physicalAddress,
+    this.note});
 
   factory ClientModel.fromJson(Map<dynamic, dynamic> fromJson) {
     return ClientModel(
-        clientName: fromJson["clientName"],
+        id: fromJson["id"],
+        clientName: fromJson["name"],
         status: fromJson["status"],
-        clientTin: fromJson["clientTIN"],
-        contactPersonFirstName: fromJson["contactPersonF"],
+        clientTin: fromJson["Tin"],
+        contactPersonFirstName: fromJson["contactPerson"],
         contactPersonLastName: fromJson["contactPersonL"],
         email: fromJson["email"],
         phoneNumber: fromJson["phoneNumber"],
@@ -45,6 +45,7 @@ class ClientModel {
       "email": email,
       "phoneNumber": phoneNumber,
       "physicalAddress": physicalAddress,
+      "note": note,
     };
   }
 }

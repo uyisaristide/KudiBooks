@@ -6,9 +6,6 @@ import '../models/Users/user_model.dart';
 import '../models/account_details_model.dart';
 import '../models/account_type.dart';
 import '../models/chart_accounts.dart';
-import '../models/chart_of_account_model.dart';
-import '../models/client_list_model.dart';
-import '../models/client_model.dart';
 import '../models/company_model.dart';
 import '../models/expense_model.dart';
 import '../models/inventory_model.dart';
@@ -16,10 +13,8 @@ import '../models/product_model.dart';
 import '../models/product_sale_model.dart';
 import '../models/utilities/network_info.dart';
 import 'account_details.dart';
-import 'all_clients.dart';
 import 'chart_of_account.dart';
 import 'charts_account_list.dart';
-import 'client_provider.dart';
 import 'company_provider.dart';
 import 'expenses_provider.dart';
 import 'inventory_provider.dart';
@@ -31,13 +26,7 @@ import 'authentication/auth_provider.dart';
 
 final productProvider = StateNotifierProvider<ProductProvider, List<ProductModel>>( (ref) => ProductProvider());
 
-//Client providers:
-
-final clientProvider = StateNotifierProvider<AllClientsNotifier, NetworkInfo<List<Clients>>>((ref) => AllClientsNotifier());
-final createClientProvider = StateNotifierProvider<ClientNotifier, NetworkInfo<List<ClientModel>>>((ref) => ClientNotifier());
-final removeClientProvider = StateNotifierProvider<ClientNotifier, NetworkInfo<List<ClientModel>>>((ref) => ClientNotifier());
-
-final expencesProvider = StateNotifierProvider<ExpensesProvider, List<Expense>>((ref) => ExpensesProvider());
+final expenseProvider = StateNotifierProvider<ExpensesProvider, List<Expense>>((ref) => ExpensesProvider());
 
 final inventoryProvider =StateNotifierProvider<InventoryProviders, List<InventoryModel>>((ref) => InventoryProviders());
 
@@ -51,9 +40,7 @@ final logoutProvider = StateNotifierProvider<UserNotifier, NetworkInfo<List<User
 
 
 
-final productToSalesProvide =
-    StateNotifierProvider<AddProductToSalesNotifier, List<ProductToSell>>(
-        (ref) => AddProductToSalesNotifier());
+final productToSalesProvide = StateNotifierProvider<AddProductToSalesNotifier, List<ProductToSell>>( (ref) => AddProductToSalesNotifier());
 final productToLoadProvider =
     StateNotifierProvider<ProductInLoadProvider, List<ProductInLoadModel>>(
         (ref) => ProductInLoadProvider());
@@ -72,10 +59,7 @@ final requestingOtpProvider = StateNotifierProvider<AuthProvider, NetworkInfo<Li
 final verifyOtpProvider = StateNotifierProvider<AuthProvider, NetworkInfo<List<User>>>((ref) => AuthProvider());
 final resetUserInfoProvider = StateNotifierProvider<AuthProvider, NetworkInfo<List<User>>>((ref) => AuthProvider());
 final forgetPasswordProvider = StateNotifierProvider<AuthProvider, NetworkInfo<List<User>>>((ref) => AuthProvider());
-
 final modeProvider = StateNotifierProvider<ModeNotifier, ThemeMode?>((ref) => ModeNotifier());
-
-
 //Chart of account providers
 final removeChartProvider = StateNotifierProvider<AllChartAccountsProvider, NetworkInfo<List<Accounts>>>((ref) => AllChartAccountsProvider());
 final editChartProvider = StateNotifierProvider<AllChartAccountsProvider, NetworkInfo<List<Accounts>>>((ref) => AllChartAccountsProvider());
