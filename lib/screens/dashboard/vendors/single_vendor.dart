@@ -40,7 +40,7 @@ class VendorListItem extends ConsumerWidget {
         radius: 25,
         child: Icon(Icons.person),
       ),
-      subtitle: Text("${vendor.email}"),
+      // subtitle: Text("${vendor.email}"),
       title: Text(
         "${vendor.vendorName}",
         style: const TextStyle(

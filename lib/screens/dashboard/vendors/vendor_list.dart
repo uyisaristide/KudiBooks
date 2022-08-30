@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:go_router/go_router.dart';
 import '../../../models/utilities/network_info.dart';
+import '../classes/snack_bars.dart';
 import 'single_vendor.dart';
 import '../../../providers/vendor/vendor_providers.dart';
 import '../classes/sliver_delegate_search.dart';
@@ -114,99 +115,89 @@ class _VendorsState extends ConsumerState<Vendors> {
                 child: CircularProgressIndicator(color: Colors.green.shade400),
               )
             :allVendors.networkStatus == NetworkStatus.success?
-        LimitedBox(
-                child: ListView.separated(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) => Slidable(
-                        endActionPane: ActionPane(
-                          motion: const ScrollMotion(),
-                          children: [
-                            SlidableAction(
-                              onPressed: (context) {
-                                showDialog<void>(
-                                    context: context,
-                                    builder: (deleteContext) {
-                                      return AlertDialog(
-                                        title: const Text('Are you sure?'),
-                                        content: const Text(
-                                            "Do you want to remove this client"),
-                                        actions: <Widget>[
-                                          TextButton(
-                                            child: const Text('No'),
-                                            onPressed: () {
-                                              Navigator.of(deleteContext)
-                                                  .pop(); // Dismiss alert dialog
-                                            },
-                                          ),
-                                          TextButton(
-                                            child: const Text('Yes'),
-                                            onPressed: () async {
-                                              // var deleteResponse = await ref.read(removeClientProvider.notifier)
-                                              //     .removeClient(clientList
-                                              //     .data![index].id);
-                                              // if (deleteResponse.networkStatus == NetworkStatus.success) {
-                                              //   Navigator.pop(deleteContext);
-                                              //   clientData();
-                                              //   ScaffoldMessenger.of(
-                                              //       deleteContext)
-                                              //       .showSnackBar(SnackBars
-                                              //       .snackBars(
-                                              //       'Deleted successfully',
-                                              //       Colors.green
-                                              //           .shade400));
-                                              // } else {
-                                              //   Navigator.pop(
-                                              //       deleteContext);
-                                              //   ScaffoldMessenger.of(
-                                              //       deleteContext)
-                                              //       .showSnackBar(SnackBars
-                                              //       .snackBars(
-                                              //       '${deleteItem.errorMessage}',
-                                              //       Colors
-                                              //           .redAccent));
-                                              // }
-                                              // Dismiss alert dialog
-                                            },
-                                          ),
-                                        ],
-                                      );
-                                    });
-                              },
-                              icon: Icons.edit_outlined,
-                              backgroundColor: Colors.redAccent,
-                              foregroundColor: Colors.white,
-                              label: 'Delete',
-                            )
-                          ],
-                        ),
-                        startActionPane: ActionPane(
-                          motion: const ScrollMotion(),
-                          children: [
-                            SlidableAction(
-                              onPressed: (context) {
-                                context.push(
-                                    '/createClient/${allVendors.data![index].id}');
-                              },
-                              label: 'Edit',
-                              foregroundColor: Colors.white,
-                              backgroundColor: Colors.green.shade400,
-                            )
-                          ],
-                        ),
-                        child: InkWell(
-                          onTap: () {
-                            return context.push(
-                                '/profileClient/${allVendors.data![index].id}');
-                          },
-                          child:
-                              VendorListItem(vendor: allVendors.data![index]),
-                        )),
-                    separatorBuilder: (_, idx) => const SizedBox(
-                          height: 5,
-                        ),
-                    itemCount: allVendors.data!.length),
-              ):allVendors.networkStatus == NetworkStatus.error?
+        RefreshIndicator(color: Colors.green.shade400,
+          onRefresh: (){return ref.read(allVendorsProvider.notifier).allVendors();},
+          child: LimitedBox(
+            maxHeight: 1000,
+                  child: ListView.separated(
+                      physics: const BouncingScrollPhysics(),
+                      itemBuilder: (context, index) => Slidable(
+                          endActionPane: ActionPane(
+                            motion: const ScrollMotion(),
+                            children: [
+                              SlidableAction(
+                                onPressed: (context) {
+                                  showDialog<void>(
+                                      context: context,
+                                      builder: (deleteContext) {
+                                        return AlertDialog(
+                                          title: const Text('Are you sure?'),
+                                          content: const Text(
+                                              "Do you want to remove this vendor"),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              child: const Text('No'),
+                                              onPressed: () {
+                                                Navigator.of(deleteContext)
+                                                    .pop(); // Dismiss alert dialog
+                                              },
+                                            ),
+                                            TextButton(
+                                              child: const Text('Yes'),
+                                              onPressed: () async {
+                                                var deleteResponse = await ref.read(deleteVendorProvider.notifier)
+                                                    .removeVendor(int.parse(allVendors.data![index].id.toString()));
+                                                if (deleteResponse.networkStatus == NetworkStatus.success) {
+                                                  Navigator.pop(deleteContext);
+                                                  loadVendors();
+                                                  ScaffoldMessenger.of(
+                                                      deleteContext).showSnackBar(SnackBars.snackBars('Deleted successfully',Colors.green.shade400));
+                                                } else {
+                                                  Navigator.pop(deleteContext);
+                                                  ScaffoldMessenger.of(deleteContext).showSnackBar(SnackBars.snackBars(
+                                                      deleteResponse.getErrorMessage,Colors.redAccent));
+                                                }
+                                                // Dismiss alert dialog
+                                              },
+                                            ),
+                                          ],
+                                        );
+                                      });
+                                },
+                                icon: Icons.edit_outlined,
+                                backgroundColor: Colors.redAccent,
+                                foregroundColor: Colors.white,
+                                label: 'Delete',
+                              )
+                            ],
+                          ),
+                          startActionPane: ActionPane(
+                            motion: const ScrollMotion(),
+                            children: [
+                              SlidableAction(
+                                onPressed: (context) {
+                                  context.push('/createVendor/${allVendors.data![index].id}');
+                                },
+                                label: 'Edit',
+                                foregroundColor: Colors.white,
+                                backgroundColor: Colors.green.shade400,
+                              )
+                            ],
+                          ),
+                          child: InkWell(
+                            onTap: () {
+                              return context.push(
+                                  '/profileVendor/${allVendors.data![index].id}');
+                            },
+                            child:
+                                VendorListItem(vendor: allVendors.data![index]),
+                          )),
+                      separatorBuilder: (_, idx) => const SizedBox(
+                            height: 5,
+                          ),
+                      itemCount: allVendors.data?.length??0),
+                ),
+        ):allVendors.networkStatus == NetworkStatus.error?
         Center(child: Text('${allVendors.errorMessage}'),):
         Center(child: Text('${allVendors.errorMessage}'),),
       ),

@@ -55,9 +55,7 @@ class _NewAccountState extends ConsumerState<NewAccount> {
   }
 
   void accountDetailsData() async {
-    ref
-        .read(accountDetailsProvider.notifier)
-        .accountDetailsData(int.parse(widget.accountId.toString()));
+    ref.read(accountDetailsProvider.notifier).accountDetailsData(int.parse(widget.accountId.toString()));
   }
 
   @override
@@ -77,23 +75,17 @@ class _NewAccountState extends ConsumerState<NewAccount> {
     var details = ref.watch(accountDetailsProvider);
     var requiredData = ref.watch(chartAccountProvider);
     if (details.networkStatus == NetworkStatus.success) {
-      var category = requiredData.data
-          ?.singleWhere((element) => element.accountType == 5)
-          .expenseCategories
-          .singleWhereOrNull((element) =>
+      var category = requiredData.data?.singleWhere((element) => element.accountType == 5).expenseCategories.singleWhereOrNull((element) =>
               element.id == details.data?.accountDetails.expenseCategory);
       // debugPrint("${category?.name}");
-
       accountTypeController.text = details.data?.accountSelected.name ?? '';
       codeController.text = details.data?.accountDetails.code ?? '';
       nameController.text = details.data?.accountDetails.name ?? '';
       noteController.text = details.data?.accountDetails.note ?? '';
-      expenseCategoryController.text = category!.name;
-      selectedType = details.data?.accountSelected.type == 5
-          ? selectedType = 5
-          : selectedType;
+      expenseCategoryController.text = category?.name??'';
+      selectedType = details.data?.accountSelected.type == 5 ? selectedType = 5 : selectedType;
       accountSelected = details.data?.accountSelected.code ?? accountSelected;
-      selectedCategory = category.id;
+      selectedCategory = category?.id??0;
       // debugPrint("This is: $selectedType");
     }
   }

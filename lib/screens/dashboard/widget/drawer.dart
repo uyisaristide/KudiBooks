@@ -105,7 +105,7 @@ class Drawers extends ConsumerWidget {
                         ),
                       ),
                       ListTile(
-                        onTap: () => context.pushNamed('transactionAll'),
+                        onTap: () {},
                         leading: const Icon(Icons.credit_card),
                         title: const Text("Transaction"),
                         trailing: const Icon(

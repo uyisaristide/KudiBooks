@@ -33,8 +33,8 @@ class VendorModel {
         id: fromJson["id"],
         vendorName: fromJson["name"],
         status: fromJson["status"],
-        vendorTIN: fromJson["vendorTIN"],
-        contactPersonFirstName: fromJson["contactPerson"],
+        vendorTIN: fromJson["Tin"],
+        contactPersonFirstName: fromJson["contactPersonF"],
         contactPersonLastName: fromJson["contactPersonL"],
         email: fromJson["email"],
         phoneNumber: fromJson["phoneNumber"],
@@ -46,12 +46,13 @@ class VendorModel {
     return {
       "vendorName": vendorName,
       "status": status,
-      "vendorTin": vendorTIN,
+      "vendorTIN": vendorTIN,
       "contactPersonF": contactPersonFirstName,
       "contactPersonL": contactPersonLastName,
       "email": email,
       "phoneNumber": phoneNumber,
       "physicalAddress": physicalAddress,
+      "note":note
     };
   }
 }

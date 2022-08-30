@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'models/product_model.dart';
 import 'providers/clients/client_profile.dart';
+import 'providers/vendor/vendor_profile.dart';
 import 'screens/dashboard/vendors/new_vendor.dart';
 import 'screens/auth_screens/login.dart';
 import 'screens/auth_screens/otp_verification.dart';
@@ -258,6 +259,14 @@ GoRouter router = GoRouter(
         builder: (context, state){
           final id = state.params['id'];
           return NewVendor(vendorId: id,);
+        },
+      ),
+      GoRoute(
+        name: 'profileVendor',
+        path: '/profileVendor/:id',
+        builder: (context, state){
+          final id = int.parse(state.params['id'].toString());
+          return VendorProfile(vendorId: id,);
         },
       ),
     ]);
