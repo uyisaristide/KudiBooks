@@ -35,47 +35,50 @@ class _AccountTypesState extends ConsumerState<AccountTypes> {
     return Container(
       padding: const EdgeInsets.all(10),
       child: accountChart.networkStatus == NetworkStatus.success
-          ? LimitedBox(
-              child: ListView.separated(
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return Column(
-                      children: [
-                        Container(
-                            width: MediaQuery.of(context).size.width,
-                            padding: const EdgeInsets.all(10.0),
-                            color: Colors.grey.shade600,
-                            child: Text(
-                              accountChart.data![index].accountCategory,
-                              style: const TextStyle(fontSize: 16.0),
-                            )),
-                        Column(
-                          children: accountChart.data![index].accountName
-                              .map((e) => InkWell(
-                                    hoverColor: Colors.redAccent.shade400,
-                                    onTap: () {
-                                      widget.selectedData(e);
-                                      Navigator.pop(context);
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: Text(
-                                        e.name,
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(),
+          ? RefreshIndicator(color: Colors.green.shade400,
+            onRefresh: (){return ref.read(chartAccountProvider.notifier).listOfCharts();},
+            child: LimitedBox(
+                child: ListView.separated(
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        children: [
+                          Container(
+                              width: MediaQuery.of(context).size.width,
+                              padding: const EdgeInsets.all(10.0),
+                              color: Colors.grey.shade600,
+                              child: Text(
+                                accountChart.data![index].accountCategory,
+                                style: const TextStyle(fontSize: 16.0),
+                              )),
+                          Column(
+                            children: accountChart.data![index].accountName
+                                .map((e) => InkWell(
+                                      hoverColor: Colors.redAccent.shade400,
+                                      onTap: () {
+                                        widget.selectedData(e);
+                                        Navigator.pop(context);
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Text(
+                                          e.name,
+                                          textAlign: TextAlign.center,
+                                          style: const TextStyle(),
+                                        ),
                                       ),
-                                    ),
-                                  ))
-                              .toList(),
-                        ),
-                      ],
-                    );
-                  },
-                  separatorBuilder: ((context, idx) => const SizedBox(
-                        height: 10.0,
-                      )),
-                  itemCount: accountChart.data?.length ?? 0),
-            )
+                                    ))
+                                .toList(),
+                          ),
+                        ],
+                      );
+                    },
+                    separatorBuilder: ((context, idx) => const SizedBox(
+                          height: 10.0,
+                        )),
+                    itemCount: accountChart.data?.length ?? 0),
+              ),
+          )
           : Center(
               child: CircularProgressIndicator(color: Colors.green.shade400),
             ),
