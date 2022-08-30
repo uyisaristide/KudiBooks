@@ -70,8 +70,7 @@ class _NewClientState extends ConsumerState<NewClient> {
       }
     });
     return Scaffold(
-        appBar: AppBarCommon.preferredSizeWidget(
-            context,
+        appBar: AppBarCommon.preferredSizeWidget(context,
             int.parse(widget.clientId.toString()) == 0
                 ? "Save Client"
                 : "Edit Client"),
@@ -241,7 +240,7 @@ class _NewClientState extends ConsumerState<NewClient> {
                                         hintText: 'Client name',
                                         fieldController: nameController,
                                         isShown: false),
-                                    SelectInputType(
+                                    SelectInputType(defaultValue: currentStatus==true?'Active':'Inactive',
                                       dropDownHint: Text(
                                         currentStatus==true?'Active':'Inactive',
                                         style: const TextStyle(color: Colors.grey),
