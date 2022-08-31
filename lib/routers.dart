@@ -26,7 +26,7 @@ import 'screens/dashboard/new_account.dart';
 import 'screens/dashboard/new_client.dart';
 import 'screens/dashboard/new_expense.dart';
 import 'screens/dashboard/new_inventory.dart';
-import 'screens/dashboard/new_product.dart';
+import 'screens/dashboard/product/new_product.dart';
 import 'screens/dashboard/product_details.dart';
 import 'screens/dashboard/product_sale.dart';
 import 'screens/dashboard/products.dart';
@@ -251,7 +251,7 @@ GoRouter router = GoRouter(
       GoRoute(
         name: 'vendors',
         path: '/vendorList',
-        builder: (context, state) =>Vendors(),
+        builder: (context, state) =>const Vendors(),
       ),
       GoRoute(
         name: 'newVendor',
@@ -269,5 +269,8 @@ GoRouter router = GoRouter(
           return VendorProfile(vendorId: id,);
         },
       ),
+
+      //Product Routes
+
     ]);
 

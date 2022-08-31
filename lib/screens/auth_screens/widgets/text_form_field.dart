@@ -53,7 +53,7 @@ class CustomFormField extends StatelessWidget {
         autovalidateMode: AutovalidateMode.onUserInteraction,
         controller: fieldController,
         maxLength: maximumLength,
-        keyboardType: inputType,
+        keyboardType: inputType ?? TextInputType.name,
         onChanged: onChangeAction,
         validator: (value) => validators!(value),
         decoration: InputDecoration(

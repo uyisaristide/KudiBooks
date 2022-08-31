@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../models/Users/ProductInLoad.dart';
-import '../models/Users/products_sold_model.dart';
-import '../models/product_model.dart';
+import '../../models/Users/ProductInLoad.dart';
+import '../../models/Users/products_sold_model.dart';
+import '../../models/product_model.dart';
 
 class ProductProvider extends StateNotifier<List<ProductModel>> {
   ProductProvider() : super([]);
@@ -11,9 +11,7 @@ class ProductProvider extends StateNotifier<List<ProductModel>> {
   }
 
   removeProduct(int productId) {
-    state = state
-        .where((currentProduct) => currentProduct.id != productId)
-        .toList();
+    state = state.where((currentProduct) => currentProduct.id != productId).toList();
   }
 }
 

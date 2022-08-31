@@ -177,7 +177,7 @@ class _NewVendorState extends ConsumerState<NewVendor> {
                                         vendorName: nameController.text,
                                         status: vendorStatusOption == "Active" ? true: false,
                                         email: emailController.text,
-                                        phoneNumber: "+${countryCode.toString()}${phoneController.text}",
+                                        phoneNumber: "+$countryCode${phoneController.text}",
                                         physicalAddress: addressController.text,
                                         contactPersonLastName: contactPersonName.text,
                                         contactPersonFirstName: contactPersonLastName.text,

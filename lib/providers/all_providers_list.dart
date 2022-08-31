@@ -19,8 +19,8 @@ import 'company_provider.dart';
 import 'expenses_provider.dart';
 import 'inventory_provider.dart';
 import 'mode_notifier.dart';
-import 'product_provider.dart';
-import 'products_sale_provider.dart';
+import 'product/product_provider.dart';
+import 'product/products_sale_provider.dart';
 import 'user_provider.dart';
 import 'authentication/auth_provider.dart';
 
