@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../../models/product_model.dart';
+import '../../../models/product/product_model.dart';
 import '../../../providers/all_providers_list.dart';
 
 class ProductListCard extends ConsumerWidget {
@@ -16,8 +16,8 @@ class ProductListCard extends ConsumerWidget {
       children: [
         ListTile(
           onLongPress: () {
-            ref.read(productProvider.notifier).removeProduct(productModel.id);
-            print("Deleted ${productModel.id}");
+            // ref.read(productProvider.notifier).removeProduct(productModel.id);
+            // print("Deleted ${productModel.id}");
           },
           onTap: () => context.pushNamed('pDetails'),
           trailing: Row(

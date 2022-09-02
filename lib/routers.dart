@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'models/product_model.dart';
+import 'models/product/product_model.dart';
 import 'providers/clients/client_profile.dart';
 import 'providers/vendor/vendor_profile.dart';
 import 'screens/dashboard/vendors/new_vendor.dart';

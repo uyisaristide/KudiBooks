@@ -57,14 +57,12 @@ class _LoadProductRequiredDataState
   @override
   Widget build(BuildContext context) {
     var listWatcher = ref.watch(productToSellRequiredDataProvider);
-    ref.listen<NetworkInfo<RequiredDataProduct>>(
-        productToSellRequiredDataProvider, (previous, next) {
+    ref.listen<NetworkInfo<RequiredDataProduct>>( productToSellRequiredDataProvider, (previous, next) {
       if (next.networkStatus == NetworkStatus.success) {
         populateRequiredData();
       }
     });
-    ref.listen<NetworkInfo<RequiredDataProduct>>(
-        productToSellRequiredDataProvider, (previous, next) {
+    ref.listen<NetworkInfo<RequiredDataProduct>>( productToSellRequiredDataProvider, (previous, next) {
       if (next.networkStatus == NetworkStatus.success) {
         populateRequiredDataInventory();
       }
@@ -104,7 +102,7 @@ class _LoadProductRequiredDataState
                                 leading: const Icon(
                                     Icons.account_balance_wallet_outlined),
                               ))
-                          .toList(),
+                          .toList().reversed.toList(),
                     ),
                   )
                 ])
@@ -137,7 +135,7 @@ class _LoadProductRequiredDataState
                                     leading: const Icon(
                                         Icons.account_balance_wallet_outlined),
                                   ))
-                              .toList(),
+                              .toList().reversed.toList(),
                         ),
                       )
                     ])

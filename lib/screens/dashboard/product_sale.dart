@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import '../../models/Users/products_sold_model.dart';
-import '../../models/product_model.dart';
+import '../../models/product/product_model.dart';
 import '../../models/product_sale_model.dart';
 import '../../providers/all_providers_list.dart';
 import '../auth_screens/validators/validator.dart';

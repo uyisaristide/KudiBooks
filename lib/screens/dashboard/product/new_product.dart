@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../models/product/product_sell_model.dart';
 import '../../../models/product/required_data_product.dart';
+import '../../../models/product/unit_measure.dart';
+import '../../../models/utilities/network_info.dart';
 import '../../../providers/product/providers.dart';
 import '../../auth_screens/validators/validator.dart';
 import '../../auth_screens/widgets/drop_down_widget.dart';
 import '../../auth_screens/widgets/login_button.dart';
 import '../../auth_screens/widgets/text_form_field.dart';
+import '../classes/snack_bars.dart';
 import '../new_inventory.dart';
 import '../widget/common_appBar.dart';
 import '../widget/double_header_two.dart';
@@ -22,10 +26,11 @@ class NewProduct extends ConsumerStatefulWidget {
 
 class _NewProductState extends ConsumerState<NewProduct> {
 
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   final revenueAccountsProvider = StateProvider<RevenueAccounts?>((ref) => null);
   final inventoryExpenseAccountProvider = StateProvider<InventoryExpenseAccounts?>((ref) => null);
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final revenueAccountController = TextEditingController();
   final inventoryExpenseAccountController = TextEditingController();
   final productNameController = TextEditingController();
@@ -37,6 +42,31 @@ class _NewProductState extends ConsumerState<NewProduct> {
   final subUnitPrice = TextEditingController();
   final subUnitName = TextEditingController();
 
+  //ids
+  int revenueAccountId = 0;
+  int? inventoryExpenseAccountId;
+  int? measureUnitId;
+
+
+
+  selectedMeasureUnit(UnitsOfMeasureModel unitsOfMeasureModel){
+    unitProductController.text=unitsOfMeasureModel.name??'';
+    measureUnitId=unitsOfMeasureModel.id;
+  }
+  selectedRevenueAccount(RevenueAccounts revenueAccounts){
+    var inventoryExpenseAccounts = ref.read(revenueAccountsProvider.notifier).state=revenueAccounts;
+    revenueAccountController.text=inventoryExpenseAccounts.name.toString();
+    revenueAccountId=inventoryExpenseAccounts.id;
+    print("Selected is: $revenueAccountId");
+  }
+
+  selectedInventoryExpense(InventoryExpenseAccounts invExpenseAccount){
+    var inventoryExpenseAccounts = ref.read(inventoryExpenseAccountProvider.notifier).state=invExpenseAccount;
+    inventoryExpenseAccountController.text=inventoryExpenseAccounts.name.toString();
+    inventoryExpenseAccountId = inventoryExpenseAccounts.id;
+    print("Selected is inventory: $inventoryExpenseAccountId");
+  }
+
   String? unitType;
   String? defaultSellingMethodValue;
 
@@ -46,17 +76,6 @@ class _NewProductState extends ConsumerState<NewProduct> {
 
   bool isItInInventory = false;
   bool soldInSubUnits = false;
-
-  selectedRevenueAccount(RevenueAccounts revenueAccounts){
-    var inventoryExpenseAccounts = ref.read(revenueAccountsProvider.notifier).state=revenueAccounts;
-    revenueAccountController.text=inventoryExpenseAccounts.name.toString();
-    print("Selected is: ");
-  }
-  selectedInventoryExpense(InventoryExpenseAccounts invExpenseAccount){
-    var inventoryExpenseAccounts = ref.read(inventoryExpenseAccountProvider.notifier).state=invExpenseAccount;
-    inventoryExpenseAccountController.text=inventoryExpenseAccounts.name.toString();
-    print("Selected is: ");
-  }
 
   void runRequiredData() {
     ref.read(productToSellRequiredDataProvider.notifier).productRequiredData();
@@ -72,23 +91,32 @@ class _NewProductState extends ConsumerState<NewProduct> {
             margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             child: LoginButton(
                 text: 'Add product',
-                actionField: () {
+                actionField: () async {
                   if (_formKey.currentState!.validate()) {
+                    
+                    var response = await ref.read(createProductProvider.notifier).createProduct(
+                        ProductSellModel(
+                            revenueAccountSelected: revenueAccountId, 
+                            productName: productNameController.text, 
+                            productPrice: int.parse(priceController.text), 
+                            soldInSubUnits: soldInSubUnits, 
+                            isInventory: isItInInventory,
+                            unitName: soldInSubUnits?subUnitName.text:'',
+                            productDesc: descriptionController.text,
+                            productNote: noteController.text,
+                            inventoryAccountSelected: inventoryExpenseAccountId,
+                            companyUnitOfMeasureID:soldInSubUnits?measureUnitId:null,
+                            units: isItInInventory?int.parse(numberOfSubUnits.text):null,
+                            unitPrice: isItInInventory?int.parse(subUnitPrice.text):null,
+                        )
+                    );
 
-                    // ref.read(productProvider.notifier).addProduct(ProductModel(
-                    //     id: _idRandom.nextInt(300),
-                    //     revenueAccount: revenueAccountValue,
-                    //     inventoryExpenseAccount: expenseAccountValue,
-                    //     productName: productNameController.text,
-                    //     subUnit: unitType,
-                    //     numberOfSubUnits: numberOfSubUnits.text,
-                    //     subUnitPrice: subUnitPrice.text,
-                    //     subUnitName: subUnitName.text,
-                    //     productPrice: priceController.text,
-                    //     defaultSellingMethod: defaultSellingMethodValue,
-                    //     productDescription: descriptionController.text,
-                    //     productNote: noteController.text));
-                    context.pop();
+                    if(response.networkStatus == NetworkStatus.success){
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars('Product added successfully', Colors.green.shade400));
+                      Navigator.pop(context);
+                    }else{
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars(response.getErrorMessage, Colors.redAccent));
+                    }
                   }
                 }),
           )),
@@ -196,7 +224,7 @@ class _NewProductState extends ConsumerState<NewProduct> {
                                   fieldIcon: const Icon(Icons.arrow_drop_down),
                                   inputType: TextInputType.none,
                                   calendarPicker: () => DialogBox.dialogBox(
-                                    NewMeasure()
+                                    NewMeasure(selectMeasureUnit: selectedMeasureUnit)
                                     ,context,
                                     0.60,
                                   ),
@@ -214,13 +242,12 @@ class _NewProductState extends ConsumerState<NewProduct> {
                               Expanded(
                                 child: CustomFormField(
                                     validators: (value) {
-                                      if (soldInSubUnits == true &&
-                                          value == '') {
+                                      if (soldInSubUnits == true && value == '') {
                                         return "Fill this field";
                                       }
                                       return null;
                                     },
-                                    hintText: 'Sub units',
+                                    hintText: 'Sub unit',
                                     fieldController: numberOfSubUnits,
                                     isShown: false),
                               )

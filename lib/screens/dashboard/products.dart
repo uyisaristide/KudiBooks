@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../models/product_model.dart';
+import '../../models/product/product_model.dart';
 import '../../providers/all_providers_list.dart';
 import '../auth_screens/widgets/product_list_card.dart';
 import 'classes/sliver_delegate_search.dart';

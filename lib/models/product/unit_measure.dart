@@ -10,20 +10,19 @@ class MeasureModel {
 }
 
 class UnitsOfMeasureModel {
-  int id;
-  String name;
-  int companyUnitOfMeasureID;
+  int? id;
+  String? name;
+  int? companyUnitOfMeasureID;
 
   UnitsOfMeasureModel(
-      {required this.id,
-      required this.name,
-      required this.companyUnitOfMeasureID});
+      {this.id, this.name, this.companyUnitOfMeasureID});
 
   factory UnitsOfMeasureModel.fromJson(Map<dynamic, dynamic> json) =>
       UnitsOfMeasureModel(
           id: json["id"],
           name: json["name"],
-          companyUnitOfMeasureID: json["companyUnitOfMeasureID"]);
+          companyUnitOfMeasureID: json["companyUnitOfMeasureID"]
+      );
 
   Map<dynamic, dynamic> toJson() => {"name": name};
 }

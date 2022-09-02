@@ -9,7 +9,7 @@ import '../models/chart_accounts.dart';
 import '../models/company_model.dart';
 import '../models/expense_model.dart';
 import '../models/inventory_model.dart';
-import '../models/product_model.dart';
+import '../models/product/product_model.dart';
 import '../models/product_sale_model.dart';
 import '../models/utilities/network_info.dart';
 import 'account_details.dart';
