@@ -183,14 +183,12 @@ class _NewClientState extends ConsumerState<NewClient> {
                                     .read(createClientProvider.notifier)
                                     .registerClient(ClientModel(
                                     clientName: nameController.text,
-                                    status:
-                                    clientStatusOption == "Active" ? true : false,
+                                    status: clientStatusOption == "Active" ? true : false,
                                     clientTin: tinNumberController.text,
                                     contactPersonFirstName: contactPersonName.text,
                                     contactPersonLastName: contactPersonLastName.text,
                                     email: emailController.text,
-                                    phoneNumber:
-                                    countryCode.toString() + phoneController.text,
+                                    phoneNumber: countryCode.toString() + phoneController.text,
                                     physicalAddress: addressController.text,
                                     note: noteController.text));
                                 if (clientResponse.networkStatus == NetworkStatus.success) {
@@ -199,7 +197,7 @@ class _NewClientState extends ConsumerState<NewClient> {
                                     ..showSnackBar(SnackBars.snackBars(
                                         'Client saved successfully',
                                         Colors.green.shade400));
-                                  context.goNamed('clientList');
+                                  context.pop();
                                 } else {
                                   ScaffoldMessenger.of(context)
                                     ..removeCurrentSnackBar()

@@ -33,42 +33,16 @@ class ChartAccountProvider
       var info = NetworkInfo<List<AccountChartModel>>( statusCode: 200, networkStatus: NetworkStatus.success, data: data);
       state = info;
     }   on DioError catch (e) {
-      NetworkInfo<List<ChartAccountModel>> info =
-      NetworkInfo(networkStatus: NetworkStatus.failed);
-      switch (e.type) {
-        case DioErrorType.connectTimeout:
-        // TODO: Handle this case.
-          info.errorMessage = "Connection error, check your internet";
-          break;
-        case DioErrorType.sendTimeout:
-        // TODO: Handle this case.
-          info.errorMessage = "Check connection, before send data";
-          break;
-        case DioErrorType.receiveTimeout:
-        // TODO: Handle this case.
-          info.errorMessage = "Slow network";
-          break;
-        case DioErrorType.response:
-        // TODO: Handle this case.
-          info = NetworkInfo<List<ChartAccountModel>>.errors(e.response?.data ?? {},
-              statusCode: e.response!.statusCode, status: NetworkStatus.failed);
-          break;
-        case DioErrorType.cancel:
-        // TODO: Handle this case.
-          info = NetworkInfo(errorMessage: "Reconnect your internet");
-          break;
-        case DioErrorType.other:
-        // TODO: Handle this case.
-          info = NetworkInfo(errorMessage: "Check your internet");
-          break;
-      }
+      var infoDio = ErrorHandler.handleError<List<AccountChartModel>>(e);
+      state=infoDio;
     } catch (e) {
-      NetworkInfo<List<ChartAccountModel>> info = NetworkInfo();
-      info.errorMessage = "";
+      var errorInfo = NetworkInfo<List<AccountChartModel>>(networkStatus: NetworkStatus.error);
+      errorInfo.errorMessage = "Contact admin";
+      state=errorInfo;
     }
   }
 
-  Future registerChart(ChartAccountModel accountModel) async {
+  Future<NetworkInfo> registerChart(ChartAccountModel accountModel) async {
     state = NetworkInfo(networkStatus: NetworkStatus.loading);
     try {
       Map<String, dynamic> chartHeader = {
@@ -80,16 +54,18 @@ class ChartAccountProvider
       debugPrint('${Hive.box('company').get('companyId')}');
       Response response = await _dio.post("${DioServices.baseUrl}app/chart",
           options: Options(headers: chartHeader), data: accountModel.toJson());
-      if (response.statusCode == 200) {
-        debugPrint("${response.data}");
-        return 'success';
-      }
+      var info = NetworkInfo<List<AccountChartModel>>( networkStatus: NetworkStatus.success, statusCode: 200 );
+      state = info;
+      return info;
+
+    } on DioError catch (e) {
+      var errorInfo = ErrorHandler.handleError<List<AccountChartModel>>(e);
+      state = errorInfo;
+      return errorInfo;
     } catch (e) {
-      if (e is DioError) {
-        throw e.response?.data;
-      } else {
-        throw Exception(e);
-      }
+      var errorInfo = NetworkInfo<List<AccountChartModel>>(errorMessage: "Contact system admin");
+      state = errorInfo;
+      return errorInfo;
     }
   }
 

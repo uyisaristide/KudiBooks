@@ -113,14 +113,14 @@ class _VendorProfileState extends ConsumerState<VendorProfile> {
                         Column(children: [
                           IconButton(
                               onPressed: () {},
-                              icon: const Icon(
+                              icon: Icon(
                                 Icons.call,
-                                color: Colors.amber,
+                                color: Colors.red.shade700,
                               )),
-                          const Text(
+                          Text(
                             'Call',
                             style:
-                            TextStyle(color: Colors.amber),
+                            TextStyle(color: Colors.red.shade700),
                           )
                         ]),
                         Column(children: [
@@ -184,6 +184,14 @@ class _VendorProfileState extends ConsumerState<VendorProfile> {
                     TextStyle(fontWeight: FontWeight.bold)),
                 trailing:
                 Text(currentVendor.data?.phoneNumber ?? ''),
+              ),
+              ListTile(
+                onTap: () {},
+                leading: const Text('Note: ',
+                    style:
+                    TextStyle(fontWeight: FontWeight.bold)),
+                trailing:
+                Text(currentVendor.data?.note ?? ''),
               ),
               ListTile(
                 iconColor: Colors.red,

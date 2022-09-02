@@ -24,6 +24,7 @@ class UserNotifier extends StateNotifier<NetworkInfo<List<User>>> {
       Response response = await _dio.post('${DioServices.baseUrl}auth/register',
           data: user.toJsonEmail());
       var info  = NetworkInfo<List<User>>(networkStatus: NetworkStatus.success, statusCode: 200);
+      state=info;
       return info;
     } on DioError catch (e) {
       print("${e.response?.data["errors"]}");

@@ -6,9 +6,9 @@ import '../../../models/utilities/network_info.dart';
 import '../../../providers/all_providers_list.dart';
 
 class AccountTypes extends ConsumerStatefulWidget {
-  final Function(AccountName accountName) selectedData;
+  final Function(AccountName accountName)? selectedData;
 
-  const AccountTypes(this.selectedData, {Key? key}) : super(key: key);
+  AccountTypes(this.selectedData, {Key? key}) : super(key: key);
 
   @override
   ConsumerState<AccountTypes> createState() => _AccountTypesState();
@@ -34,51 +34,63 @@ class _AccountTypesState extends ConsumerState<AccountTypes> {
     var accountChart = ref.watch(chartAccountProvider);
     return Container(
       padding: const EdgeInsets.all(10),
-      child: accountChart.networkStatus == NetworkStatus.success
-          ? LimitedBox(
-              child: ListView.separated(
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return Column(
-                      children: [
-                        Container(
-                            width: MediaQuery.of(context).size.width,
-                            padding: const EdgeInsets.all(10.0),
-                            color: Colors.grey.shade600,
-                            child: Text(
-                              accountChart.data![index].accountCategory,
-                              style: const TextStyle(fontSize: 16.0),
-                            )),
-                        Column(
-                          children: accountChart.data![index].accountName
-                              .map((e) => InkWell(
-                                    hoverColor: Colors.redAccent.shade400,
-                                    onTap: () {
-                                      widget.selectedData(e);
-                                      Navigator.pop(context);
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: Text(
-                                        e.name,
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(),
+      child:accountChart.networkStatus == NetworkStatus.loading?
+      Center(child: CircularProgressIndicator(color: Colors.green.shade400),):
+      accountChart.networkStatus == NetworkStatus.success
+          ? RefreshIndicator(
+              color: Colors.green.shade400,
+              onRefresh: () {
+                return ref.read(chartAccountProvider.notifier).listOfCharts();
+              },
+              child: LimitedBox(
+                child: ListView.separated(
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        children: [
+                          Container(
+                              width: MediaQuery.of(context).size.width,
+                              padding: const EdgeInsets.all(10.0),
+                              color: Colors.grey.shade600,
+                              child: Text(
+                                accountChart.data![index].accountCategory,
+                                style: const TextStyle(fontSize: 16.0),
+                              )),
+                          Column(
+                            children: accountChart.data![index].accountName
+                                .map((e) => InkWell(
+                                      hoverColor: Colors.redAccent.shade400,
+                                      onTap: () {
+                                        widget.selectedData!(e);
+                                        Navigator.pop(context);
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Text(
+                                          e.name,
+                                          textAlign: TextAlign.center,
+                                          style: const TextStyle(),
+                                        ),
                                       ),
-                                    ),
-                                  ))
-                              .toList(),
-                        ),
-                      ],
-                    );
-                  },
-                  separatorBuilder: ((context, idx) => const SizedBox(
-                        height: 10.0,
-                      )),
-                  itemCount: accountChart.data?.length ?? 0),
+                                    ))
+                                .toList(),
+                          ),
+                        ],
+                      );
+                    },
+                    separatorBuilder: ((context, idx) => const SizedBox(
+                          height: 10.0,
+                        )),
+                    itemCount: accountChart.data?.length ?? 0),
+              ),
             )
-          : Center(
-              child: CircularProgressIndicator(color: Colors.green.shade400),
-            ),
+          : accountChart.networkStatus == NetworkStatus.failed
+              ? Center(
+                  child: InkWell(child: Text(accountChart.getErrorMessage)),
+                )
+              : Center(
+                  child: Text(accountChart.getErrorMessage),
+                ),
     );
   }
 }
