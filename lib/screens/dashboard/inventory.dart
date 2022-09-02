@@ -3,8 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../models/inventory_model.dart';
-import '../../models/product_model.dart';
+import '../../models/product/product_model.dart';
+import '../../models/product/retrive_product_model.dart';
+import '../../models/utilities/network_info.dart';
 import '../../providers/all_providers_list.dart';
+import '../../providers/product/providers.dart';
 import 'classes/sliver_delegate_search.dart';
 import 'widget/button_widget.dart';
 import 'widget/drawer.dart';
@@ -28,7 +31,7 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen>
     with SingleTickerProviderStateMixin {
   bool isSearch = false;
   bool isSearchInventory = false;
-  var searchResult = <ProductModel>[];
+  var searchResult = <RetrieveProductModel>[];
   var searchInInventory = <InventoryModel>[];
   String searchInventoryValue = '';
   String searchString = '';
@@ -36,6 +39,13 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen>
   TextEditingController searchContentInventory = TextEditingController();
   TabController? _tabBarController;
   int tabCurrentIndex = 0;
+
+  List<RetrieveProductModel> allProductsToSell = [];
+
+  populateListOfProducts(){
+    var productToSellList = ref.watch(allProductProvider);
+    allProductsToSell=productToSellList.data??[];
+  }
 
   @override
   // ignore: must_call_super
@@ -49,16 +59,22 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen>
         tabCurrentIndex = _tabBarController!.index;
       });
     });
+    
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(allProductProvider.notifier).allProducts();
+    });
+    
   }
 
   @override
   Widget build(BuildContext context) {
-    List<ProductModel> _productList = ref.watch(productProvider);
-
     List<InventoryModel> _loadsList = ref.watch(inventoryProvider);
-
-    // User? signedUser = ref.watch(usersProvider)
-    //     .firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
+    var allProductWatcher = ref.watch(allProductProvider);
+    ref.listen<NetworkInfo<List<RetrieveProductModel>>>(allProductProvider, (previous, next) {
+      if (next.networkStatus == NetworkStatus.success) {
+        populateListOfProducts();
+      }
+    });
     return Scaffold(
       drawer: Drawers(),
       body: DefaultTabController(
@@ -186,9 +202,9 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen>
                                       padding: const EdgeInsets.only(top: 10),
                                       child: SearchTextField(
                                         searchingContent: (value) {
-                                          final results = _productList
+                                          final results = allProductsToSell
                                               .where((items) => items
-                                                  .productName
+                                                  .name
                                                   .toLowerCase()
                                                   .contains(value))
                                               .toList();
@@ -267,74 +283,75 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen>
               controller: _tabBarController,
               physics: const NeverScrollableScrollPhysics(),
               children: [
+                allProductWatcher.networkStatus == NetworkStatus.loading?Center(child: CircularProgressIndicator(color: Colors.green.shade400),):
                 SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
                   child: Padding(
                     padding: const EdgeInsets.only(left: 15, right: 15),
-                    child: Column(
+                    child: allProductWatcher.networkStatus == NetworkStatus.loading?
+                    Center(child: CircularProgressIndicator(color: Colors.green.shade400),):
+                    allProductWatcher.networkStatus == NetworkStatus.success?
+                    Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        _productList.isEmpty
-                            ? const Center(
-                                child: Text("There is no product"),
-                              )
-                            : searchResult.isEmpty ||
-                                    searchString == '' ||
-                                    searchContent.text.isEmpty
-                                ? LimitedBox(
-                                    child: ListView.separated(
-                                        shrinkWrap: true,
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
-                                        itemBuilder: (context, index) =>
-                                            _productList.reversed
-                                                    .toList()
-                                                    .isEmpty
-                                                ? const Center(
-                                                    child: Text(
-                                                        "There is no inventory"),
-                                                  )
-                                                : ProductListTile(
-                                                    productList:
-                                                        _productList[index],
-                                                  ),
-                                        // itemBuilder: (context, index) => const Text("Kigali"),
-                                        separatorBuilder: (_, idx) =>
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                        itemCount: _productList.isEmpty
-                                            ? 1
-                                            : _productList.length),
-                                  )
-                                : LimitedBox(
-                                    child: ListView.separated(
-                                        shrinkWrap: true,
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
-                                        itemBuilder: (context, index) =>
-                                            searchResult.reversed
-                                                    .toList()
-                                                    .isEmpty
-                                                ? const Center(
-                                                    child: Text(
-                                                        "There is no inventory"),
-                                                  )
-                                                : ProductListTile(
-                                                    productList:
-                                                        searchResult[index],
-                                                  ),
-                                        // itemBuilder: (context, index) => const Text("Kigali"),
-                                        separatorBuilder: (_, idx) =>
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                        itemCount: searchResult.isEmpty
-                                            ? 1
-                                            : searchResult.length),
-                                  ),
+                        searchResult.isEmpty || searchString == '' || searchContent.text.isEmpty
+                                ? RefreshIndicator(
+                                  onRefresh: () { return ref.read(allProductProvider.notifier).allProducts(); },
+                                  child: LimitedBox(
+                                      child: ListView.separated(
+                                          shrinkWrap: true,
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          itemBuilder: (context, index) =>
+                                          allProductsToSell.reversed
+                                                      .toList()
+                                                      .isEmpty
+                                                  ? const Text('')
+                                                  : ProductListTile(
+                                                      productList:allProductsToSell[index],
+                                                    ),
+                                          // itemBuilder: (context, index) => const Text("Kigali"),
+                                          separatorBuilder: (_, idx) =>
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                          itemCount: allProductsToSell.isEmpty
+                                              ? 1
+                                              : allProductsToSell.length),
+                                    ),
+                                )
+                                : RefreshIndicator(
+                                  onRefresh: () { return ref.read(allProductProvider.notifier).allProducts(); },
+                                  child: LimitedBox(
+                                      child: ListView.separated(
+                                          shrinkWrap: true,
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          itemBuilder: (context, index) =>
+                                              searchResult.reversed
+                                                      .toList()
+                                                      .isEmpty
+                                                  ? const Center(
+                                                      child: Text(
+                                                          "There is no inventory"),
+                                                    )
+                                                  : ProductListTile(
+                                                      productList:
+                                                          searchResult[index],
+                                                    ),
+                                          // itemBuilder: (context, index) => const Text("Kigali"),
+                                          separatorBuilder: (_, idx) =>
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                          itemCount: searchResult.isEmpty
+                                              ? 1
+                                              : searchResult.length),
+                                    ),
+                                ),
                       ],
-                    ),
+                    ):
+                    Center(child: Text(allProductWatcher.getErrorMessage),),
                   ),
                 ),
                 SingleChildScrollView(

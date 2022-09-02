@@ -30,7 +30,6 @@ class _MyAppState extends ConsumerState<MyApp> {
   @override
   Widget build(BuildContext context) {
     var modes = ref.watch(modeProvider);
-    debugPrint("$modes");
     return MaterialApp.router(
       theme: ThemeData(),
       darkTheme: ThemeData.dark(),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:go_router/go_router.dart';
-import '../../models/product_model.dart';
+import '../../models/product/product_model.dart';
 import 'classes/sliver_delegate_search.dart';
 import 'widget/action_card.dart';
 import 'widget/line_chart.dart';

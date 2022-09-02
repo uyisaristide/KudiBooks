@@ -3,8 +3,7 @@ class ChartAccount {
 
   ChartAccount({required this.accounts});
 
-  factory ChartAccount.fromJson(Map<dynamic, dynamic> json) => ChartAccount(
-      accounts:
+  factory ChartAccount.fromJson(Map<dynamic, dynamic> json) => ChartAccount( accounts:
           (json["accounts"] as List).map((e) => Accounts.fromJson(e)).toList());
 
 // Map<String, dynamic> toJson() {

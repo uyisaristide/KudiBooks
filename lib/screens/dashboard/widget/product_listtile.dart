@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../../models/product_model.dart';
+import '../../../models/product/product_model.dart';
+import '../../../models/product/retrive_product_model.dart';
 
 
 class ProductListTile extends StatelessWidget {
-  ProductModel productList;
+  RetrieveProductModel productList;
 
   ProductListTile({required this.productList, Key? key}) : super(key: key);
 
@@ -20,11 +21,11 @@ class ProductListTile extends StatelessWidget {
         onTap: () => context.pushNamed('pDetails', extra: productList),
         leading:
             Image.asset("assets/images/itemImage.png", width: 50, height: 50),
-        title: Text(productList.productName),
+        title: Text(productList.name),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text("\$${productList.productPrice}"),
+            Text(productList.price),
             const Icon(
               Icons.arrow_forward_ios,
               size: 20,
