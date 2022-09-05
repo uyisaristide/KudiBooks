@@ -1,0 +1,48 @@
+{
+  "dashboard": {
+    "home": {
+      "action": "Action",
+      "sell": "vendre",
+      "newLoad": "Nouvelle charge",
+      "expenses": "Dépenses",
+      "more": "Suite",
+      "sales": "Ventes",
+      "recentTransaction": "Transaction Récente",
+      "view_all": "Voir tout",
+      "approved": "Approuvé",
+      "in_process": "En cours"
+    },
+    "bottom_nav": {
+      "home": "Accueil",
+      "inventory": "Inventaire",
+      "alerts": "Alertes",
+      "account": "Compte"
+    },
+    "inventory_screen": {
+      "new_product": "Nouveau Produit",
+      "product": "Produit",
+      "search_product": "Rechercher un produit",
+      "search_inventory": "Rechercher un l'inventaire",
+      "there_is_no_inventory": "Il n'y a pas d'inventaire"
+    },
+    "account_screen": {
+      "my_account": "Mon compte",
+      "billing_details": "Détails de facturation",
+      "company_profile": "Profil de l'entreprise",
+      "chart_of_account": "Plan comptable",
+      "refer_and_earn": "Parrainez et gagnez",
+      "edit_profile": "Editer le profil",
+      "change_password": "Change le mot de passe",
+      "settings": "Réglages",
+      "help": "Aider",
+      "sign_out": "Se déconnecter"
+    },
+    "drawer": {
+      "load_inventory": "Charger l'inventaire",
+      "client": "Clientes",
+      "transaction": "Transaction",
+      "vendors": "Vendeurs",
+      "reports": "Rapports"
+    }
+  }
+}

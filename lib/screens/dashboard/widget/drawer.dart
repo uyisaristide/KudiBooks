@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -71,7 +72,7 @@ class Drawers extends ConsumerWidget {
                       ListTile(
                         onTap: () => Navigator.pop(context),
                         leading: const Icon(Icons.home),
-                        title: const Text("Home"),
+                        title: Text("dashboard.bottom_nav.home".tr()),
                         trailing: const Icon(
                           Icons.arrow_forward_ios,
                           size: 15,
@@ -80,7 +81,7 @@ class Drawers extends ConsumerWidget {
                       ListTile(
                         onTap: () => context.pushNamed('screenProducts'),
                         leading: const Icon(Icons.shopping_cart_outlined),
-                        title: const Text("Products"),
+                        title: Text("dashboard.inventory_screen.product".tr()),
                         trailing: const Icon(
                           Icons.arrow_forward_ios,
                           size: 15,
@@ -89,7 +90,7 @@ class Drawers extends ConsumerWidget {
                       ListTile(
                         onTap: () => context.pushNamed('loadsScreens'),
                         leading: const Icon(Icons.people),
-                        title: const Text("Load Inventory"),
+                        title: Text("dashboard.drawer.load_inventory".tr()),
                         trailing: const Icon(
                           Icons.arrow_forward_ios,
                           size: 15,
@@ -98,7 +99,7 @@ class Drawers extends ConsumerWidget {
                       ListTile(
                         onTap: () => context.pushNamed('clientList'),
                         leading: const Icon(Icons.people),
-                        title: const Text("Clients"),
+                        title: Text("dashboard.drawer.client".tr()),
                         trailing: const Icon(
                           Icons.arrow_forward_ios,
                           size: 15,
@@ -107,7 +108,7 @@ class Drawers extends ConsumerWidget {
                       ListTile(
                         onTap: () {},
                         leading: const Icon(Icons.credit_card),
-                        title: const Text("Transaction"),
+                        title: Text("dashboard.drawer.transaction".tr()),
                         trailing: const Icon(
                           Icons.arrow_forward_ios,
                           size: 15,
@@ -116,7 +117,7 @@ class Drawers extends ConsumerWidget {
                       ListTile(
                         onTap: ()=>context.pushNamed('vendors'),
                         leading: const Icon(Icons.shopping_bag_rounded),
-                        title: const Text("Vendors"),
+                        title: Text("dashboard.drawer.vendors".tr()),
                         trailing: const Icon(
                           Icons.arrow_forward_ios,
                           size: 15,
@@ -125,7 +126,7 @@ class Drawers extends ConsumerWidget {
                       ListTile(
                         onTap: () => context.pushNamed('reports'),
                         leading: const Icon(Icons.bar_chart_outlined),
-                        title: const Text("Reports"),
+                        title: Text("dashboard.drawer.reports".tr()),
                         trailing: const Icon(
                           Icons.arrow_forward_ios,
                           size: 15,
@@ -134,16 +135,16 @@ class Drawers extends ConsumerWidget {
                       ListTile(
                         onTap: () => context.pushNamed('settingScreens'),
                         leading: const Icon(Icons.notifications),
-                        title: const Text("Settings"),
+                        title: Text("dashboard.account_screen.settings".tr()),
                         trailing: const Icon(
                           Icons.arrow_forward_ios,
                           size: 15,
                         ),
                       ),
-                      const ListTile(
-                        leading: Icon(Icons.help),
-                        title: Text("Help"),
-                        trailing: Icon(
+                      ListTile(
+                        leading: const Icon(Icons.help),
+                        title: Text("dashboard.account_screen.help".tr()),
+                        trailing: const Icon(
                           Icons.arrow_forward_ios,
                           size: 15,
                         ),
@@ -157,13 +158,13 @@ class Drawers extends ConsumerWidget {
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: LoginButton(
-                    text: 'Logout',
+                    text: 'dashboard.account_screen.sign_out'.tr(),
                     actionField: () async {
                       var response = await ref.read(logoutProvider.notifier).logout();
                       if(response.networkStatus == NetworkStatus.success){
                         context.goNamed('signin');
                       }else{
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars('${response.getErrorMessage}', Colors.redAccent.shade400));
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars(response.getErrorMessage, Colors.redAccent.shade400));
                       }
                     },
                   ),

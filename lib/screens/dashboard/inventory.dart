@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -83,16 +84,15 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen>
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) {
               return [
-                const SliverAppBar(
-                  systemOverlayStyle:
-                      SystemUiOverlayStyle(statusBarColor: Color(0xff157253)),
+                SliverAppBar(
+                  systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: Color(0xff157253)),
                   pinned: true,
                   automaticallyImplyLeading: true,
                   elevation: 0.0,
-                  backgroundColor: Color(0xff157253),
+                  backgroundColor: const Color(0xff157253),
                   centerTitle: true,
-                  title: Text("Inventory",
-                      style: TextStyle(
+                  title: Text("dashboard.bottom_nav.inventory".tr(),
+                      style: const TextStyle(
                         fontSize: 20,
                       )),
                 ),
@@ -105,7 +105,7 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen>
                     children: [
                       BodyButton(
                         onClickAction: () => context.pushNamed('newProduct'),
-                        buttonTitle: 'New Product',
+                        buttonTitle: 'dashboard.inventory_screen.new_product'.tr(),
                         suffixIcon: const Icon(
                           Icons.shopping_cart_outlined,
                           size: 20,
@@ -115,7 +115,7 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen>
                       BodyButton(
                         onClickAction: () =>
                             context.pushNamed('createInventory'),
-                        buttonTitle: 'New load',
+                        buttonTitle: 'dashboard.home.newLoad'.tr(),
                         suffixIcon: const Icon(
                           Icons.add,
                           size: 20,
@@ -146,12 +146,12 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen>
                           tabs: [
                             Tab(
                               child: Text(
-                                "Product",
+                                "dashboard.inventory_screen.product".tr(),
                                 style: TextStyle(color: Colors.green.shade900),
                               ),
                             ),
                             Tab(
-                              child: Text("Inventory",
+                              child: Text("dashboard.bottom_nav.inventory".tr(),
                                   style:
                                       TextStyle(color: Colors.green.shade900)),
                             ),
@@ -175,11 +175,11 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen>
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         const Text(
-                                          "Products",
+                                          "dashboard.inventory_screen.product",
                                           style: TextStyle(
                                               fontSize: 17.0,
                                               fontWeight: FontWeight.bold),
-                                        ),
+                                        ).tr(),
                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.end,
@@ -209,12 +209,11 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen>
                                                   .contains(value))
                                               .toList();
                                           if (results.isNotEmpty) {
-                                            debugPrint("Results found");
                                             searchResult = results;
                                             searchString = value;
                                           }
                                         },
-                                        hintTexts: 'Search Product',
+                                        hintTexts: 'dashboard.inventory_screen.search_product'.tr(),
                                         searchContent: searchContent,
                                       ),
                                     ),
@@ -229,11 +228,11 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen>
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         const Text(
-                                          "Inventory",
+                                          "dashboard.bottom_nav.inventory",
                                           style: TextStyle(
                                               fontSize: 17.0,
                                               fontWeight: FontWeight.bold),
-                                        ),
+                                        ).tr(),
                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.end,
@@ -263,7 +262,6 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen>
                                                   .contains(values))
                                               .toList();
                                           if (resultsInventory.isNotEmpty) {
-                                            print("Results found inventory");
                                             searchInInventory =
                                                 resultsInventory;
                                             searchInventoryValue = values;
@@ -271,7 +269,7 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen>
                                             searchInInventory = [];
                                           }
                                         },
-                                        hintTexts: 'Search inventory',
+                                        hintTexts: 'dashboard.inventory_screen.search_inventory'.tr(),
                                         searchContent: searchContentInventory,
                                       ),
                                     ),
@@ -331,9 +329,8 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen>
                                               searchResult.reversed
                                                       .toList()
                                                       .isEmpty
-                                                  ? const Center(
-                                                      child: Text(
-                                                          "There is no inventory"),
+                                                  ? Center(
+                                                      child: const Text("dashboard.inventory_screen.there_is_no_inventory").tr(),
                                                     )
                                                   : ProductListTile(
                                                       productList:
@@ -362,8 +359,8 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen>
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         _loadsList.isEmpty
-                            ? const Center(
-                                child: Text("There is no inventory"),
+                            ? Center(
+                                child: const Text("dashboard.inventory_screen.there_is_no_inventory").tr(),
                               )
                             : searchInInventory.isEmpty ||
                                     searchInventoryValue == '' ||
@@ -381,9 +378,8 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen>
                                                     inventoryModel:
                                                         _loadsList[load],
                                                   )
-                                                : const Center(
-                                                    child: Text(
-                                                        "There is no inventory"),
+                                                : Center(
+                                                    child: const Text( "dashboard.inventory_screen.there_is_no_inventory").tr(),
                                                   ),
                                         // itemBuilder: (context, index) => const Text("Kigali"),
                                         separatorBuilder: (_, idx) =>

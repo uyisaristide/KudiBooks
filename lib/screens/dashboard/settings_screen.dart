@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'widget/common_appBar.dart';
 import 'widget/list_tile.dart';
@@ -31,13 +32,47 @@ class _SettingsState extends State<Settings> {
                       color: Colors.grey),
                 ),
               ),
-              DoubleRowWidgets(
-                leftSideWidget: IconButton(
-                  icon: const Icon(Icons.arrow_forward_ios),
-                  onPressed: () {},
-                ),
-                borderSidebottom: false,
-                rightSideText: 'Theme',
+              const ListTile(
+                title: Text("Theme"),
+                trailing: Icon(Icons.arrow_forward_ios),
+              ),
+              ListTile(
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (contextDialog) {
+                        return AlertDialog(
+                          actions: [
+                            Column(children: [
+                              RadioListTile(
+                                  title: const Text("English"),
+                                  value: "English",
+                                  groupValue: "value",
+                                  onChanged: (value) {
+                                    contextDialog.setLocale(const Locale('en', 'US'));
+                                    Navigator.pop(contextDialog);
+                                  }),
+                              RadioListTile(
+                                  title: const Text("Kinyarwanda"),
+                                  value: "Kinyarwanda",
+                                  groupValue: "value",
+                                  onChanged: (value) {}),
+                              RadioListTile(
+                                  title: const Text("French"),
+                                  value: "French",
+                                  groupValue: "value",
+                                  onChanged: (value){
+                                    print("${contextDialog.locale.toString()}");
+                                    contextDialog.setLocale(const Locale('fr', 'FR'));
+                                    Navigator.pop(contextDialog);
+                                  }),
+                            ]),
+                          ],
+                        );
+                      });
+                },
+                title: Text("Language"),
+                leading: Icon(Icons.language),
               ),
               Container(
                 alignment: Alignment.centerLeft,
