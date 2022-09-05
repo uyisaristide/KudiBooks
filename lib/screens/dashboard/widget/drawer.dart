@@ -26,12 +26,15 @@ class _DrawersState extends ConsumerState<Drawers> {
     // TODO: implement initState
     super.initState();
     ref.read(userInHiveProvider.notifier).getUserFromHive();
+    ref.read(companyProvider.notifier).getCompanyFromHive();
   }
 
   @override
   Widget build(BuildContext context) {
     var userProfile = ref.watch(userInHiveProvider.notifier).currentUser;
+    var company = ref.watch(companyProvider.notifier).myCompany;
 
+    print('now in company ${company!.companyName}');
     // Box<UserProfile> loggMeOut = Hive.box(userProfileBoxName);
     return Drawer(
       elevation: 0.0,

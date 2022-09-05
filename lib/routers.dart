@@ -10,6 +10,7 @@ import 'screens/auth_screens/request_token_email_screen.dart';
 import 'screens/auth_screens/reset_password.dart';
 import 'screens/auth_screens/reset_pin.dart';
 import 'screens/auth_screens/signup.dart';
+import 'screens/company/companies_screen.dart';
 import 'screens/company/new_company.dart';
 import 'screens/dashboard/account_transfer.dart';
 import 'screens/dashboard/all_transaction.dart';
@@ -35,32 +36,31 @@ import 'screens/splash_screen/white_splash_screen.dart';
 import 'screens/welcome/welcome_screen.dart';
 
 GoRouter router = GoRouter(
-  // redirect: (state) {
-  //   var token = Hive.box('tokens').get('token');
-  //   debugPrint("Kigali Token: $token");
-  //
-  //   final goingToLogin = state.location == '/';
-  //   if (token == null && goingToLogin) {
-  //     return '/login';
-  //   } else if (token != null && goingToLogin) {
-  //     return '/homeScreen';
-  //   }
-  //   return null;
-  // },
+    // redirect: (state) {
+    //   var token = Hive.box('tokens').get('token');
+    //   debugPrint("Kigali Token: $token");
+    //
+    //   final goingToLogin = state.location == '/';
+    //   if (token == null && goingToLogin) {
+    //     return '/login';
+    //   } else if (token != null && goingToLogin) {
+    //     return '/homeScreen';
+    //   }
+    //   return null;
+    // },
     urlPathStrategy: UrlPathStrategy.path,
     initialLocation: '/',
-    errorBuilder: (context, state) =>
-        MaterialApp(
+    errorBuilder: (context, state) => MaterialApp(
             home: Scaffold(
-              body: Center(
-                  child: Column(
-                    children: [
-                      TextButton(
-                          onPressed: () => context.goNamed('sell'),
-                          child: Text("404 ${state.error.toString()},")),
-                    ],
-                  )),
-            )),
+          body: Center(
+              child: Column(
+            children: [
+              TextButton(
+                  onPressed: () => context.goNamed('sell'),
+                  child: Text("404 ${state.error.toString()},")),
+            ],
+          )),
+        )),
     routes: [
       //Auth screens
       GoRoute(
@@ -100,6 +100,10 @@ GoRouter router = GoRouter(
 
       //Dashboard screen routes
       GoRoute(
+          name: 'companiesScreen',
+          path: '/companiesSreen',
+          builder: (context, state) => const CompaniesScreen()),
+      GoRoute(
           name: 'dashboard',
           path: '/homeScreen',
           builder: (context, state) => const NavigationBottom()),
@@ -136,8 +140,7 @@ GoRouter router = GoRouter(
           path: '/newChartOfAccounts/:id',
           builder: (context, state) {
             final id = state.params['id'];
-            return NewAccount(
-                accountId: int.parse(id.toString()));
+            return NewAccount(accountId: int.parse(id.toString()));
           }),
       GoRoute(
           name: 'chartAccount',
@@ -179,8 +182,9 @@ GoRouter router = GoRouter(
       GoRoute(
           name: 'newCompany',
           path: '/createCompany',
-          builder: (context, state) =>
-              NewCompany(email: state.extra.toString(),)),
+          builder: (context, state) => NewCompany(
+                email: state.extra.toString(),
+              )),
       GoRoute(
         name: 'forget',
         path: '/forgetPassword',
@@ -207,8 +211,7 @@ GoRouter router = GoRouter(
       GoRoute(
           name: 'requestTokenEmail',
           path: '/requestEmail',
-          builder: (context, state) =>
-              EmailReset(
+          builder: (context, state) => EmailReset(
                 sentEmail: state.extra.toString(),
               )),
       GoRoute(

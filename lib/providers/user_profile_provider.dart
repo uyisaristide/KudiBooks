@@ -40,7 +40,7 @@ class UserProfileNotifier extends StateNotifier<NetworkInfo<UserProfile>> {
 
       profileResponse = await dio.get('${DioServices.baseUrl}app/user',
           options: Options(headers: mainHeader));
-      print(profileResponse.data);
+      // print(profileResponse.data);
       var userProfile = UserProfile.fromJson(profileResponse.data);
 
       var info = NetworkInfo<UserProfile>(
@@ -49,7 +49,7 @@ class UserProfileNotifier extends StateNotifier<NetworkInfo<UserProfile>> {
           data: userProfile);
 
       miProfile = info.data;
-      print(mainHeader);
+      // print(mainHeader);
 
       state = info;
     } on DioError catch (e) {
@@ -98,7 +98,7 @@ class UserProfileNotifier extends StateNotifier<NetworkInfo<UserProfile>> {
     // userProfileBox = await Hive.openBox<UserProfile?>(userProfileBoxName);
     userProfileBox = Hive.box(userProfileBoxName);
     currentUser = userProfileBox.get('user');
-    
+
     return currentUser;
   }
 

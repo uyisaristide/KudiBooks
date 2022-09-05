@@ -31,6 +31,8 @@ class AllChartAccountsProvider extends StateNotifier<NetworkInfo<List<Accounts>>
         allChartAccounts.add(chart);
       }
 
+      
+
       var info = NetworkInfo<List<Accounts>>(
           data: allChartAccounts,
           networkStatus: NetworkStatus.success,

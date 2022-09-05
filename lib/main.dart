@@ -5,7 +5,10 @@ import 'package:kudibooks_app/routers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
 
+import 'models/company_model.dart';
+
 const String userProfileBoxName = "userProfile";
+const String currentCompanyBoxName = "companyBox";
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,7 +18,10 @@ Future<void> main() async {
 
   Hive.registerAdapter(UserProfileAdapter());
 
+  Hive.registerAdapter(CompanyModelAdapter());
+
   await Hive.openBox(userProfileBoxName);
+  await Hive.openBox(currentCompanyBoxName);
 
   runApp(const ProviderScope(child: MyApp()));
 }

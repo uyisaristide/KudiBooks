@@ -197,9 +197,10 @@ class _LoginState extends ConsumerState<Login> {
                     var getUserProfile = ref
                         .read(userProfileProvider.notifier)
                         .getUserFromHive();
-
-                    // print('get user returned: ${getUserProfile}');
-                    context.goNamed('newCompany');
+                    // var companiesAssociated =
+                        ref.read(companyProvider.notifier).getCompaniesList();
+                    // print('get user returned: ${companiesAssociated}');
+                    context.goNamed('companiesScreen');
                   } else {
                     debugPrint("${loginEmailWatcher.networkStatus}");
                     ScaffoldMessenger.of(context).showSnackBar(

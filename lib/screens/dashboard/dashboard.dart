@@ -10,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // import 'package:kudibooks_app/screens/dashboard/widget/line_chart.dart';
 // import 'package:kudibooks_app/screens/dashboard/widget/pie_chart.dart';
 import '../../providers/all_providers_list.dart';
+import '../../providers/user_provider.dart';
 import 'widget/title_double.dart';
 
 import 'package:hive/hive.dart';
@@ -32,14 +33,20 @@ class _DashboardState extends ConsumerState<Dashboard> {
   @override
   void initState() {
     // TODO: implement initState
+    super.initState();
 
     ref.read(userInHiveProvider.notifier).getUserFromHive();
   }
 
   @override
   Widget build(BuildContext context) {
-    var currentux =ref.read(userInHiveProvider.notifier).getUserFromHive();
+    var currentux = ref.read(userInHiveProvider.notifier).getUserFromHive();
     var signedUser = ref.watch(userProfileProvider).data;
+    var currentUser = ref.watch(userInHiveProvider.notifier).currentUser;
+    myToken = currentUser!.token;
+
+    ref.read(companyProvider.notifier).getCompaniesList();
+
     // var signedUser=currentux
     // debugPrint("Logged user is: ${signedUser!.userName}");
 

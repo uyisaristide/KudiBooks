@@ -151,21 +151,21 @@ class _NewCompanyState extends ConsumerState<NewCompany> {
             LoginButton(
                 text: "Create company",
                 actionField: () async {
-                  var createCompany = await ref
-                      .read(createCompanyProvider.notifier)
-                      .createCompany(Company(
-                          companyName: companyNameController.text,
-                          industry: int.parse(selectedIndustry.toString()),
-                          country: int.parse(selectedCountry.toString()),
-                          currency: 2,
-                          plan: 1),email: widget.email);
-                  if (createCompany.networkStatus == NetworkStatus.success) {
-                    context.goNamed("dashboard");
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBars.snackBars('${createCompany.getErrorMessage}',
-                            Colors.redAccent.shade400));
-                  }
+                  // var createCompany = await ref
+                  //     .read(createCompanyProvider.notifier)
+                  //     .createCompany(CompanyModel(
+                  //         companyName: companyNameController.text,
+                  //         industry: int.parse(selectedIndustry.toString()),
+                  //         country: int.parse(selectedCountry.toString()),
+                  //         currency: 2,
+                  //         plan: 1),email: widget.email);
+                  // if (createCompany.networkStatus == NetworkStatus.success) {
+                  //   context.goNamed("dashboard");
+                  // } else {
+                  //   ScaffoldMessenger.of(context).showSnackBar(
+                  //       SnackBars.snackBars('${createCompany.getErrorMessage}',
+                  //           Colors.redAccent.shade400));
+                  // }
                 })
           ],
         ),

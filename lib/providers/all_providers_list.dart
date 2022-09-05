@@ -19,7 +19,7 @@ import 'account_details.dart';
 import 'chart_of_account.dart';
 import 'charts_account_list.dart';
 import 'client_provider.dart';
-import 'company_provider.dart';
+import 'company_notifier.dart';
 import 'expenses_provider.dart';
 import 'inventory_provider.dart';
 import 'mode_notifier.dart';
@@ -79,11 +79,11 @@ final salesProvider =
 
 //Company providers
 final companyProvider =
-    StateNotifierProvider<CompanyProvider, NetworkInfo<List<Company>>>(
-        (ref) => CompanyProvider());
+    StateNotifierProvider<CompanyNotifier, NetworkInfo<List<CompanyModel>>>(
+        (ref) => CompanyNotifier());
 final createCompanyProvider =
-    StateNotifierProvider<CompanyProvider, NetworkInfo<List<Company>>>(
-        (ref) => CompanyProvider());
+    StateNotifierProvider<CompanyNotifier, NetworkInfo<List<CompanyModel>>>(
+        (ref) => CompanyNotifier());
 
 //Auth
 final authProvider =
