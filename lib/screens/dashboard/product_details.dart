@@ -1,18 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:go_router/go_router.dart';
-import '../../models/product_model.dart';
+import '../../providers/product/providers.dart';
 import 'classes/sliver_delegate_search.dart';
 import 'widget/action_card.dart';
 import 'widget/line_chart.dart';
 import 'widget/title_double.dart';
 
 
-class ProductDetails extends StatelessWidget {
-  ProductModel productModel;
+class ProductDetails extends ConsumerStatefulWidget {
+  int id;
+  ProductDetails({required this.id, Key? key}) : super(key: key);
 
-  ProductDetails({required this.productModel, Key? key}) : super(key: key);
+  @override
+  ConsumerState<ProductDetails> createState() => _ProductDetailsState();
+}
 
+class _ProductDetailsState extends ConsumerState<ProductDetails> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    ref.read(productToSellDetailsProvider.notifier).productItemDetails(widget.id);
+  }
   @override
   Widget build(BuildContext context) {
     List<Widget> listOfSmallCards = [
@@ -93,7 +104,7 @@ class ProductDetails extends StatelessWidget {
                   )),
             ),
             SliverPersistentHeader(
-                delegate: SearchBoxSliver(
+              delegate: SearchBoxSliver(
               minHeight: 250,
               maxHeight: 250,
               child: Container(
@@ -129,7 +140,7 @@ class ProductDetails extends StatelessWidget {
                       ),
                     ),
                     Flexible(
-                      child: Text(productModel.productName,
+                      child: Text("Product Name",
                           style: const TextStyle(
                               fontSize: 24, fontWeight: FontWeight.bold)),
                     ),
@@ -137,8 +148,7 @@ class ProductDetails extends StatelessWidget {
                       height: 10,
                     ),
                     Flexible(
-                      child: Text(
-                        productModel.productDescription.toString(),
+                      child: Text("Product Note",
                         textAlign: TextAlign.center,
                         style:
                             const TextStyle(color: Colors.grey, fontSize: 13),

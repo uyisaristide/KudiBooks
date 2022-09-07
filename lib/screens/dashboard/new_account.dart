@@ -38,12 +38,9 @@ class _NewAccountState extends ConsumerState<NewAccount> {
   int? selectedCategory;
 
   selectedValueFunction(AccountName accountName) {
-    var accountNames =
-        ref.read(accountNameProvider.notifier).state = accountName;
+    var accountNames = ref.read(accountNameProvider.notifier).state = accountName;
     accountTypeController.text = accountName.name;
-    selectedType = accountNames.type == 5
-        ? selectedType = 5
-        : selectedType = accountNames.type;
+    selectedType = accountNames.type == 5 ? selectedType = 5 : selectedType = accountNames.type;
     accountSelected = accountNames.code;
   }
 
@@ -60,6 +57,7 @@ class _NewAccountState extends ConsumerState<NewAccount> {
   @override
   void initState() {
     super.initState();
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(chartAccountProvider.notifier).listOfCharts();
       if (widget.accountId != 0) {
@@ -73,23 +71,24 @@ class _NewAccountState extends ConsumerState<NewAccount> {
     var details = ref.watch(accountDetailsProvider);
     var requiredData = ref.watch(chartAccountProvider);
     if (details.networkStatus == NetworkStatus.success) {
+<<<<<<< HEAD
       var category = requiredData.data
           ?.singleWhere((element) => element.accountType == 5)
           .expenseCategories
           .singleWhere((element) =>
               element.id == details.data?.accountDetails.expenseCategory);
+=======
+      var category = requiredData.data?.singleWhere((element) => element.accountType == 5).expenseCategories.singleWhereOrNull((element) => element.id == details.data?.accountDetails.expenseCategory);
+>>>>>>> 39b1895d71f9f30293927ea113498717da5f5883
       // debugPrint("${category?.name}");
-
       accountTypeController.text = details.data?.accountSelected.name ?? '';
       codeController.text = details.data?.accountDetails.code ?? '';
       nameController.text = details.data?.accountDetails.name ?? '';
       noteController.text = details.data?.accountDetails.note ?? '';
-      expenseCategoryController.text = category?.name ?? '';
-      selectedType = details.data?.accountSelected.type == 5
-          ? selectedType = 5
-          : selectedType;
+      expenseCategoryController.text = category!.name;
+      selectedType = details.data?.accountSelected.type == 5 ? selectedType = 5 : selectedType;
       accountSelected = details.data?.accountSelected.code ?? accountSelected;
-      selectedCategory = category?.id;
+      selectedCategory = category.id;
       // debugPrint("This is: $selectedType");
     }
   }
@@ -97,6 +96,11 @@ class _NewAccountState extends ConsumerState<NewAccount> {
   @override
   void dispose() {
     super.dispose();
+    codeController.dispose();
+    noteController.dispose();
+    nameController.dispose();
+    accountTypeController.dispose();
+    expenseCategoryController.dispose();
   }
 
   @override
@@ -114,69 +118,7 @@ class _NewAccountState extends ConsumerState<NewAccount> {
     });
 
     return Scaffold(
-      bottomNavigationBar: BottomAppBar(
-          color: Colors.transparent,
-          elevation: 0.0,
-          child: Container(
-            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            child: LoginButton(
-                text: widget.accountId == 0 ? "Save account" : "Edit account",
-                actionField: () async {
-                  if (_formKey.currentState!.validate()) {
-                    if (widget.accountId == 0) {
-                      var resp = await ref
-                          .read(chartAccountProvider.notifier)
-                          .registerChart(ChartAccountModel(
-                              accountTypeSelected:
-                                  ref.watch(accountNameProvider)!.code,
-                              accountName: nameController.text,
-                              accountCode: codeController.text,
-                              note: noteController.text,
-                              expenseCategory: selectedCategory));
-                      if (resp == 'success') {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBars.snackBars(
-                                'Chart of account saved successfully',
-                                Colors.green.shade400));
-                        context.pop();
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBars.snackBars(
-                                'Chart of account saved successfully',
-                                Colors.red.shade400));
-                      }
-                    } else if (widget.accountId != 0) {
-                      var editChart = await ref
-                          .read(chartAccountProvider.notifier)
-                          .updateChartAccount(
-                              id: widget.accountId != 0
-                                  ? int.parse(widget.accountId.toString())
-                                  : 0,
-                              chartAccountModel: ChartAccountModel(
-                                  accountTypeSelected: accountSelected,
-                                  accountName: nameController.text,
-                                  accountCode: codeController.text,
-                                  note: noteController.text,
-                                  expenseCategory: selectedType == 5
-                                      ? selectedCategory
-                                      : null));
-                      if (editChart == 200) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBars.snackBars(
-                                'Chart of account edited successfully',
-                                Colors.green.shade400));
-                        context.pop();
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBars.snackBars('Can not update $editChart',
-                                Colors.red.shade400));
-                      }
-                    }
-                  }
-                }),
-          )),
-      appBar: AppBarCommon.preferredSizeWidget(
-          context, widget.accountId == 0 ? "Save account" : "Edit account"),
+      appBar: AppBarCommon.preferredSizeWidget( context, widget.accountId == 0 || widget.accountId == null ? "Save account" : "Edit account"),
       body: widget.accountId == 0
           ? SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
@@ -244,6 +186,58 @@ class _NewAccountState extends ConsumerState<NewAccount> {
                         fieldController: noteController,
                         isShown: false,
                         validators: (value) {},
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                        child: LoginButton(
+                            text: widget.accountId == 0 ||  widget.accountId == null ? "Save account" : "Edit account",
+                            actionField: () async {
+                              if (_formKey.currentState!.validate()) {
+                                if (widget.accountId == 0) {
+                                  var resp = await ref
+                                      .read(chartAccountProvider.notifier)
+                                      .registerChart(ChartAccountModel(
+                                      accountTypeSelected:
+                                      ref.watch(accountNameProvider)!.code,
+                                      accountName: nameController.text,
+                                      accountCode: codeController.text,
+                                      note: noteController.text,
+                                      expenseCategory: selectedCategory));
+                                  if (resp.networkStatus == NetworkStatus.success) {
+                                    ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars('Chart of account saved successfully',Colors.green.shade400));
+                                    Navigator.pop(context);
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBars.snackBars(resp.getErrorMessage,Colors.red.shade400));
+                                  }
+                                } else if (widget.accountId != 0) {
+                                  var editChart = await ref
+                                      .read(chartAccountProvider.notifier)
+                                      .updateChartAccount(
+                                      id: widget.accountId != 0
+                                          ? int.parse(widget.accountId.toString())
+                                          : 0,
+                                      chartAccountModel: ChartAccountModel(
+                                          accountTypeSelected: accountSelected,
+                                          accountName: nameController.text,
+                                          accountCode: codeController.text,
+                                          note: noteController.text,
+                                          expenseCategory: selectedType == 5 ? selectedCategory : null));
+                                  if (editChart.networkStatus == NetworkStatus.success) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBars.snackBars(
+                                            'Chart of account edited successfully',
+                                            Colors.green.shade400));
+                                    Navigator.pop(context);
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBars.snackBars(
+                                            'Can not update ${editChart.getErrorMessage}',
+                                            Colors.red.shade400));
+                                  }
+                                }
+                              }
+                            }),
                       )
                     ],
                   ),
@@ -251,88 +245,141 @@ class _NewAccountState extends ConsumerState<NewAccount> {
               ))
           : detailsAccounts.networkStatus == NetworkStatus.success || requiredData.networkStatus == NetworkStatus.success
               ? SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Container(
-            margin: const EdgeInsets.symmetric(
-                vertical: 15, horizontal: 15),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  CustomFormField(
-                    fieldIcon: const Icon(Icons.arrow_drop_down),
-                    inputType: TextInputType.none,
-                    calendarPicker: () => DialogBox.dialogBox(
-                        AccountTypes(selectedValueFunction),
-                        context,
-                        0.80),
-                    validators: (value) {
-                      if (value.toString().isEmpty) {
-                        return "Enter account Name";
-                      }
-                      return null;
-                    },
-                    hintText: 'Select type',
-                    isShown: false,
-                    fieldController: accountTypeController,
-                  ),
-                  if (selectedType == 5)
-                    CustomFormField(
-                      fieldIcon: const Icon(Icons.arrow_drop_down),
-                      inputType: TextInputType.none,
-                      calendarPicker: () => DialogBox.dialogBox(
-                          ExpenseCategories(
-                              selectedExpenseCategory),
-                          context,
-                          0.25),
-                      validators: (value) {
-                        if (value.toString().isEmpty) {
-                          return "Enter account Name";
-                        }
-                        return null;
-                      },
-                      hintText: 'Select type',
-                      isShown: false,
-                      fieldController: expenseCategoryController,
-                    )
-                  else
-                    Container(),
-                  CustomFormField(
-                    validators: (value) {
-                      if (value.toString().isEmpty) {
-                        return "Enter account Name";
-                      }
-                      return null;
-                    },
-                    hintText: 'Account name',
-                    isShown: false,
-                    fieldController: nameController,
-                  ),
-                  CustomFormField(
-                      validators: (value) {},
-                      hintText: 'Code',
-                      fieldController: codeController,
-                      isShown: false),
-                  CustomFormField(
-                    maxLining: 5,
-                    hintText: 'Note',
-                    fieldController: noteController,
-                    isShown: false,
-                    validators: (value) {},
-                  )
-                ],
-              ),
-            ),
-          ))
+                  physics: const BouncingScrollPhysics(),
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 15, horizontal: 15),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          CustomFormField(
+                            fieldIcon: const Icon(Icons.arrow_drop_down),
+                            inputType: TextInputType.none,
+                            calendarPicker: () => DialogBox.dialogBox(
+                                AccountTypes(selectedValueFunction),
+                                context,
+                                0.80),
+                            validators: (value) {
+                              if (value.toString().isEmpty) {
+                                return "Enter account Name";
+                              }
+                              return null;
+                            },
+                            hintText: 'Select type',
+                            isShown: false,
+                            fieldController: accountTypeController,
+                          ),
+                          if (selectedType == 5)
+                            CustomFormField(
+                              fieldIcon: const Icon(Icons.arrow_drop_down),
+                              inputType: TextInputType.none,
+                              calendarPicker: () => DialogBox.dialogBox(
+                                  ExpenseCategories(selectedExpenseCategory),
+                                  context,
+                                  0.25),
+                              validators: (value) {
+                                if (value.toString().isEmpty) {
+                                  return "Enter account Name";
+                                }
+                                return null;
+                              },
+                              hintText: 'Select type',
+                              isShown: false,
+                              fieldController: expenseCategoryController,
+                            )
+                          else
+                            Container(),
+                          CustomFormField(
+                            validators: (value) {
+                              if (value.toString().isEmpty) {
+                                return "Enter account Name";
+                              }
+                              return null;
+                            },
+                            hintText: 'Account name',
+                            isShown: false,
+                            fieldController: nameController,
+                          ),
+                          CustomFormField(
+                              validators: (value) {},
+                              hintText: 'Code',
+                              fieldController: codeController,
+                              isShown: false),
+                          CustomFormField(
+                            maxLining: 5,
+                            hintText: 'Note',
+                            fieldController: noteController,
+                            isShown: false,
+                            validators: (value) {},
+                          ),
+                          Container(
+                            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                            child: LoginButton(
+                                text: widget.accountId == 0 ||  widget.accountId == null ? "Save account" : "Edit account",
+                                actionField: () async {
+                                  if (_formKey.currentState!.validate()) {
+                                    if (widget.accountId == 0) {
+                                      var resp = await ref
+                                          .read(chartAccountProvider.notifier)
+                                          .registerChart(ChartAccountModel(
+                                          accountTypeSelected:
+                                          ref.watch(accountNameProvider)!.code,
+                                          accountName: nameController.text,
+                                          accountCode: codeController.text,
+                                          note: noteController.text,
+                                          expenseCategory: selectedCategory));
+                                      if (resp.networkStatus == NetworkStatus.success) {
+                                        ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars('Chart of account saved successfully',Colors.green.shade400));
+                                        context.pop();
+                                      } else {
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                            SnackBars.snackBars(resp.getErrorMessage,Colors.red.shade400));
+                                      }
+                                    } else if (widget.accountId != 0) {
+                                      var editChart = await ref
+                                          .read(chartAccountProvider.notifier)
+                                          .updateChartAccount(
+                                          id: widget.accountId != 0
+                                              ? int.parse(widget.accountId.toString())
+                                              : 0,
+                                          chartAccountModel: ChartAccountModel(
+                                              accountTypeSelected: accountSelected,
+                                              accountName: nameController.text,
+                                              accountCode: codeController.text,
+                                              note: noteController.text,
+                                              expenseCategory: selectedType == 5
+                                                  ? selectedCategory
+                                                  : null));
+                                      if (editChart.networkStatus == NetworkStatus.success) {
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                            SnackBars.snackBars(
+                                                'Chart of account edited successfully',
+                                                Colors.green.shade400));
+                                        context.pop();
+                                      } else {
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                            SnackBars.snackBars(
+                                                'Can not update ${editChart.getErrorMessage}',
+                                                Colors.red.shade400));
+                                      }
+                                    }
+                                  }
+                                }),
+                          )
+                        ],
+                      ),
+                    ),
+                  ))
               : detailsAccounts.networkStatus == NetworkStatus.loading && requiredData.networkStatus == NetworkStatus.loading
                   ? Center(
-          child: CircularProgressIndicator(
-            color: Colors.green.shade400,
-          ))
+                      child: CircularProgressIndicator(
+                      color: Colors.green.shade400,
+                    ))
                   : Center(
                       child: InkWell(
                           onTap: () {},
-                          child: Text('${detailsAccounts.networkStatus}')),
+                          child: Text(detailsAccounts.getErrorMessage)),
                     ),
     );
   }

@@ -1,8 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hive/hive.dart';
-import '../../models/Users/user_model.dart';
 import '../../models/utilities/network_info.dart';
 import '../../providers/all_providers_list.dart';
 import '../dashboard/classes/snack_bars.dart';
@@ -16,7 +15,6 @@ import 'widgets/page_title.dart';
 import 'widgets/password_field.dart';
 import 'widgets/phone_input.dart';
 import '../background.dart';
-
 
 class PhoneLogin extends ConsumerStatefulWidget {
   const PhoneLogin({Key? key}) : super(key: key);
@@ -55,11 +53,11 @@ class _PhoneLoginState extends ConsumerState<PhoneLogin> {
               context.goNamed("signin");
             },
             child: const Text(
-              "Sign up",
+              "signUpPhoneScreen.button.signUp",
               style: TextStyle(
                 color: Color(0Xff157253),
               ),
-            ),
+            ).tr(),
           ),
         ],
       ),
@@ -70,8 +68,9 @@ class _PhoneLoginState extends ConsumerState<PhoneLogin> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const LockIcon(),
-            const PageTitle(title: 'Account Sign In'),
+            PageTitle(title: 'signUpPhoneScreen.title'.tr()),
             PhoneField(
+              textLabel: 'signUpPhoneScreen.form.phoneNumber.hint'.tr(),
               validators: (value) {
                 return null;
               },
@@ -86,7 +85,8 @@ class _PhoneLoginState extends ConsumerState<PhoneLogin> {
               phoneNumber: phoneController,
             ),
             PasswordField(
-              hintText: "Password",
+              labelText: 'signUpPhoneScreen.form.pin.label'.tr(),
+              hintText: "signUpPhoneScreen.form.pin.hint".tr(),
               isHidden: isHidden,
               passwordController: pinController,
               maxLength: 4,
@@ -105,57 +105,32 @@ class _PhoneLoginState extends ConsumerState<PhoneLogin> {
               height: 10,
             ),
             HyperLinkText(
-              directingText: 'Forgot Pin ?',
+              directingText: 'signUpPhoneScreen.forgotPassword'.tr(),
               actions: () {
                 context.pushNamed('forget', extra: phoneController.text);
               },
             ),
             LoginButton(
-              text: 'Login',
+              text: 'signUpPhoneScreen.button.login'.tr(),
               actionField: () async {
                 if (_formKey.currentState!.validate()) {
                   var phoneNumber = "+$_countryCode${phoneController.text}";
                   var result = await ref
                       .read(loginPhoneProvider.notifier)
-                      .loginPhone(phoneNumber: phoneNumber, pin: pinController.text);
-                  if(result.networkStatus == NetworkStatus.success){
+                      .loginPhone(
+                          phoneNumber: phoneNumber, pin: pinController.text);
+                  if (result.networkStatus == NetworkStatus.success) {
                     context.goNamed('signin', extra: "${phoneController.text}");
-                  }else{
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars(loginPhoneWatcher.getErrorMessage, Colors.redAccent.shade400));
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBars.snackBars(
+                            result.getErrorMessage, Colors.redAccent.shade400));
                   }
                 }
               },
             ),
-            // LoginButton(
-            //   text: 'Login local',
-            //   actionField: () {
-            //     debugPrint("${Hive.box('tokens').get('token')}");
-            //     context.pushNamed('dashboard');
-            //     if (_formKey.currentState!.validate()) {
-            //       var checkUser = _users.where((element) =>
-            //       element.phoneOrEmail ==
-            //           _countryCode + phoneController.text);
-            //       if (checkUser.isEmpty) {
-            //         ScaffoldMessenger.of(context).showSnackBar(
-            //             SnackBars.snackBars(
-            //                 'This user not found', Colors.redAccent));
-            //       } else if (checkUser.first.phoneOrEmail ==
-            //           _countryCode + phoneController.text &&
-            //           checkUser.first.password == pinController.text) {
-            //         context.goNamed('dashboard');
-            //       } else {
-            //         ScaffoldMessenger.of(context).showSnackBar(
-            //             SnackBars.snackBars('Incorrect pin', Colors.redAccent));
-            //         debugPrint(
-            //             "Printed successfully ${checkUser.first.phoneOrEmail} and password is: ${checkUser.first.password}");
-            //       }
-            //       debugPrint(
-            //           "Country code is: ${_countryCode + phoneController.text}");
-            //     }
-            //   },
-            // ),
             CustomDevider(
-              middleText: 'Or sign in with',
+              middleText: 'signUpPhoneScreen.signUpWith'.tr(),
               horizotalPadding: 40.0,
               verticalPadding: 15.0,
             ),

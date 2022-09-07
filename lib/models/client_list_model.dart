@@ -1,7 +1,13 @@
-class ClientModel {
+class AllClients {
+  List<Clients>? clients;
+  AllClients({required this.clients});
+  factory AllClients.fromJson(Map<String, dynamic> json)=>AllClients(clients: (json["clients"] as List).map((e) => Clients.fromJson(e)).toList());
+}
+
+class Clients {
   int? id;
-  String clientName;
-  bool status;
+  String? clientName;
+  bool? status;
   String? clientTin;
   String? contactPersonFirstName;
   String? contactPersonLastName;
@@ -10,24 +16,25 @@ class ClientModel {
   String? physicalAddress;
   String? note;
 
-  ClientModel(
+  Clients(
       {this.id,
-      required this.clientName,
-      required this.status,
-      this.clientTin,
-      this.contactPersonFirstName,
-      this.contactPersonLastName,
-      this.email,
-      this.phoneNumber,
-      this.physicalAddress,
-      this.note});
+        required this.clientName,
+        required this.status,
+        this.clientTin,
+        this.contactPersonFirstName,
+        this.contactPersonLastName,
+        this.email,
+        this.phoneNumber,
+        this.physicalAddress,
+        this.note});
 
-  factory ClientModel.fromJson(Map<dynamic, dynamic> fromJson) {
-    return ClientModel(
-        clientName: fromJson["clientName"],
+  factory Clients.fromJson(Map<dynamic, dynamic> fromJson) {
+    return Clients(
+        id: fromJson["id"],
+        clientName: fromJson["name"],
         status: fromJson["status"],
-        clientTin: fromJson["clientTIN"],
-        contactPersonFirstName: fromJson["contactPersonF"],
+        clientTin: fromJson["number"],
+        contactPersonFirstName: fromJson["contactPerson"],
         contactPersonLastName: fromJson["contactPersonL"],
         email: fromJson["email"],
         phoneNumber: fromJson["phoneNumber"],

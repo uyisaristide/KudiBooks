@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../models/Users/products_sold_model.dart';
-import '../../models/product_model.dart';
+import '../../models/product/product_model.dart';
 import '../../providers/all_providers_list.dart';
 import '../auth_screens/validators/validator.dart';
 import '../auth_screens/widgets/login_button.dart';
@@ -41,7 +41,6 @@ class _AddProductsPopupState extends ConsumerState<AddProductsPopup> {
 
   selectedProduct(ProductModel productModel) {
     setState(() {
-      productId = productModel.id;
       productNames = productModel.productName;
       pricePerProduct = productModel.productPrice;
       pricePerSubUnit = productModel.subUnitPrice;

@@ -20,7 +20,7 @@ class ErrorHandler{
       case DioErrorType.response:
       // TODO: Handle this case.
         info = NetworkInfo<T>.errors(e.response?.data ?? {},
-            statusCode: e.response!.statusCode, status: NetworkStatus.empty);
+            statusCode: e.response!.statusCode, status: NetworkStatus.error);
         break;
       case DioErrorType.cancel:
       // TODO: Handle this case.
@@ -31,6 +31,8 @@ class ErrorHandler{
         info = NetworkInfo(errorMessage: "Check your internet");
         break;
     }
+    print("in handle: ${info.networkStatus}");
+    print("in handle: ${info.getErrorMessage}");
     return info;
   }
 }

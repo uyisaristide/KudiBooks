@@ -49,7 +49,8 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   path_provider: ^2.0.11
-  go_router: ^4.2.8
+  go_router: ^4.3.0
+  easy_localization: ^3.0.1
 
   # Hive related packages
 
@@ -93,6 +94,7 @@ flutter:
     - assets/images/splash/
     - assets/images/categories/
     - assets/images/
+    - assets/translations/
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

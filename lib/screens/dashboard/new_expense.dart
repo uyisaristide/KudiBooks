@@ -230,7 +230,7 @@ class _NewExpenseState extends ConsumerState<NewExpense> {
                 text: 'Save',
                 actionField: () {
                   if (_formKey.currentState!.validate()) {
-                    ref.read(expencesProvider.notifier).addExpense(Expense(
+                    ref.read(expenseProvider.notifier).addExpense(Expense(
                         _idRandom.nextInt(100),
                         expenseAccount.toString(),
                         double.parse(amountPaidExpensesController.text),
