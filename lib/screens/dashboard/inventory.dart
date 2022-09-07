@@ -70,6 +70,7 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen>
   Widget build(BuildContext context) {
     List<InventoryModel> _loadsList = ref.watch(inventoryProvider);
     var allProductWatcher = ref.watch(allProductProvider);
+
     ref.listen<NetworkInfo<List<RetrieveProductModel>>>(allProductProvider, (previous, next) {
       if (next.networkStatus == NetworkStatus.success) {
         populateListOfProducts();
@@ -130,8 +131,7 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen>
                       maxHeight: 70,
                       minHeight: 70,
                       child: Container(
-                        padding:
-                            const EdgeInsets.only(left: 15, right: 15, top: 10),
+                        padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
                         decoration: BoxDecoration(
                           shape: BoxShape.rectangle,
                           borderRadius: BorderRadius.circular(20.0),
@@ -261,8 +261,7 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen>
                                                   .contains(values))
                                               .toList();
                                           if (resultsInventory.isNotEmpty) {
-                                            searchInInventory =
-                                                resultsInventory;
+                                            searchInInventory = resultsInventory;
                                             searchInventoryValue = values;
                                           } else {
                                             searchInInventory = [];
@@ -282,7 +281,6 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen>
               children: [
                 allProductWatcher.networkStatus == NetworkStatus.loading?Center(child: CircularProgressIndicator(color: Colors.green.shade400),):
                 SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
                   child: Padding(
                     padding: const EdgeInsets.only(left: 15, right: 15),
                     child: allProductWatcher.networkStatus == NetworkStatus.loading?
@@ -292,59 +290,38 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen>
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         searchResult.isEmpty || searchString == '' || searchContent.text.isEmpty
-                                ? RefreshIndicator(
-                                  onRefresh: () { return ref.read(allProductProvider.notifier).allProducts(); },
-                                  child: LimitedBox(
-                                      child: ListView.separated(
-                                          shrinkWrap: true,
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          itemBuilder: (context, index) =>
-                                          allProductsToSell.reversed
-                                                      .toList()
-                                                      .isEmpty
-                                                  ? const Text('')
-                                                  : ProductListTile(
-                                                      productList:allProductsToSell[index],
-                                                    ),
-                                          // itemBuilder: (context, index) => const Text("Kigali"),
-                                          separatorBuilder: (_, idx) =>
-                                              const SizedBox(
-                                                height: 10,
+                                ? ListView.separated(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemBuilder: (context, index) =>
+                                      allProductsToSell.reversed.toList().isEmpty
+                                              ? const Text('')
+                                              : ProductListTile(
+                                                  productList:allProductsToSell[index],
+                                                ),
+                                      // itemBuilder: (context, index) => const Text("Kigali"),
+                                      separatorBuilder: (_, idx) =>
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                      itemCount: allProductsToSell.isEmpty ? 1 : allProductsToSell.length)
+                                : ListView.separated(
+                                    shrinkWrap: true,
+                                    physics: const NeverScrollableScrollPhysics(),
+                                    itemBuilder: (context, index) =>
+                                        searchResult.reversed.toList().isEmpty
+                                            ? Center(
+                                                child: const Text("dashboard.inventory_screen.there_is_no_inventory").tr(),
+                                              )
+                                            : ProductListTile(
+                                                productList: searchResult[index],
                                               ),
-                                          itemCount: allProductsToSell.isEmpty
-                                              ? 1
-                                              : allProductsToSell.length),
-                                    ),
-                                )
-                                : RefreshIndicator(
-                                  onRefresh: () { return ref.read(allProductProvider.notifier).allProducts(); },
-                                  child: LimitedBox(
-                                      child: ListView.separated(
-                                          shrinkWrap: true,
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          itemBuilder: (context, index) =>
-                                              searchResult.reversed
-                                                      .toList()
-                                                      .isEmpty
-                                                  ? Center(
-                                                      child: const Text("dashboard.inventory_screen.there_is_no_inventory").tr(),
-                                                    )
-                                                  : ProductListTile(
-                                                      productList:
-                                                          searchResult[index],
-                                                    ),
-                                          // itemBuilder: (context, index) => const Text("Kigali"),
-                                          separatorBuilder: (_, idx) =>
-                                              const SizedBox(
-                                                height: 10,
-                                              ),
-                                          itemCount: searchResult.isEmpty
-                                              ? 1
-                                              : searchResult.length),
-                                    ),
-                                ),
+                                    // itemBuilder: (context, index) => const Text("Kigali"),
+                                    separatorBuilder: (_, idx) =>
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                    itemCount: searchResult.isEmpty ? 1 : searchResult.length),
                       ],
                     ):
                     Center(child: Text(allProductWatcher.getErrorMessage),),

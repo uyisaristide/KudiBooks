@@ -11,27 +11,19 @@ class ProductListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(bottom: 30),
-      decoration: BoxDecoration(
-          border: Border(
-              bottom:
-                  BorderSide(width: 0.6, color: Colors.grey.withOpacity(0.7)))),
-      child: ListTile(
-        onTap: () => context.pushNamed('pDetails', extra: productList),
-        leading:
-            Image.asset("assets/images/itemImage.png", width: 50, height: 50),
-        title: Text(productList.name),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(productList.price),
-            const Icon(
-              Icons.arrow_forward_ios,
-              size: 20,
-            )
-          ],
-        ),
+    return ListTile(
+      onTap: () => context.push("/productDetails/${productList.id}"),
+      leading:const Icon(Icons.account_balance_wallet_outlined),
+      title: Text(productList.name),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text("RWF ${productList.price}"),
+          // const Icon(
+          //   Icons.arrow_forward_ios,
+          //   size: 20,
+          // )
+        ],
       ),
     );
   }

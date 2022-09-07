@@ -7,7 +7,6 @@ import 'package:hive/hive.dart';
 import '../../dio_services.dart';
 import '../../handle/error_handler.dart';
 import '../../models/product/product_sell_model.dart';
-import '../../models/product/retrive_product_model.dart';
 import '../../models/utilities/network_info.dart';
 
 class ProductNotifier extends StateNotifier<NetworkInfo<List<ProductSellModel>>>{
@@ -23,7 +22,6 @@ class ProductNotifier extends StateNotifier<NetworkInfo<List<ProductSellModel>>>
   Future<NetworkInfo> createProduct(ProductSellModel productSellModel) async{
     state=NetworkInfo(networkStatus: NetworkStatus.loading);
     try{
-
       var dataProduct = productSellModel.toJson();
       debugPrint("Sent product Data: ${jsonEncode(dataProduct)}");
       Response response = await _dio.post("${DioServices.baseUrl}app/product-to-sell", data: dataProduct, options: Options(headers: mainHeader));
@@ -67,7 +65,25 @@ class ProductNotifier extends StateNotifier<NetworkInfo<List<ProductSellModel>>>
       var unknownError = NetworkInfo<List<ProductSellModel>>(networkStatus: NetworkStatus.error, errorMessage: "Contact system admin");
       state=unknownError;
       return unknownError;
+    }
+  }
+  Future<NetworkInfo> removeProductToSell(int productId) async{
+    state=NetworkInfo(networkStatus: NetworkStatus.loading);
+    try{
+      Response response = await _dio.delete("${DioServices.baseUrl}app/product-to-sell/delete/$productId", options: Options(headers: mainHeader));
+      var deleteResponse = NetworkInfo(networkStatus: NetworkStatus.success, statusCode: 200);
+      return deleteResponse;
+    }  on DioError catch(e){
+      debugPrint("${e.response?.statusMessage}");
+      var errorInfo = ErrorHandler.handleError<List<ProductSellModel>>(e);
+      state=errorInfo;
+      return errorInfo;
 
+    } catch(e){
+      debugPrint("$e");
+      var unknownError = NetworkInfo<List<ProductSellModel>>(networkStatus: NetworkStatus.error, errorMessage: "Contact system admin");
+      state=unknownError;
+      return unknownError;
     }
   }
 }
