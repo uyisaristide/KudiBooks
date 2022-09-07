@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive/hive.dart';
+import '../../../models/company_model.dart';
 import '../../../models/plan.dart';
+import '../../../models/utilities/network_info.dart';
 import '../../../providers/all_providers_list.dart';
 import '../../auth_screens/widgets/drop_down_widget.dart';
 import '../../auth_screens/widgets/login_button.dart';
@@ -11,6 +13,7 @@ import '../../auth_screens/widgets/text_form_field.dart';
 import '../../background.dart';
 import '../../dashboard/classes/snack_bars.dart';
 
+import '../models/create_company_model.dart';
 import '../providers.dart';
 import '../widgets/planCard.dart';
 
@@ -231,21 +234,21 @@ class _NewCompanyState extends ConsumerState<NewCompany> {
             LoginButton(
                 text: "Create company",
                 actionField: () async {
-                  // var createCompany = await ref
-                  //     .read(createCompanyProvider.notifier)
-                  //     .createCompany(CompanyModel(
-                  //         companyName: companyNameController.text,
-                  //         industry: int.parse(selectedIndustry.toString()),
-                  //         country: int.parse(selectedCountry.toString()),
-                  //         currency: 2,
-                  //         plan: 1),email: widget.email);
-                  // if (createCompany.networkStatus == NetworkStatus.success) {
-                  //   context.goNamed("dashboard");
-                  // } else {
-                  //   ScaffoldMessenger.of(context).showSnackBar(
-                  //       SnackBars.snackBars('${createCompany.getErrorMessage}',
-                  //           Colors.redAccent.shade400));
-                  // }
+                  var createCompany = await ref
+                      .read(createCompanyProvider.notifier)
+                      .createCompany(CreateCompanyModel(
+                          companyName: companyNameController.text,
+                          industry: selectedCountry,
+                          country: selectedCountry,
+                          currency: selectedCurrency,
+                          plan: selectedPlan));
+                  if (createCompany.networkStatus == NetworkStatus.success) {
+                    context.goNamed("dashboard");
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBars.snackBars('${createCompany.getErrorMessage}',
+                            Colors.redAccent.shade400));
+                  }
                 })
           ],
         ),

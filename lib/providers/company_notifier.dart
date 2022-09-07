@@ -9,6 +9,7 @@ import '../handle/error_handler.dart';
 import '../main.dart';
 import '../models/company_model.dart';
 import '../models/utilities/network_info.dart';
+import '../screens/company/models/create_company_model.dart';
 import 'user_provider.dart';
 
 class CompanyNotifier extends StateNotifier<NetworkInfo<List<CompanyModel>>> {
@@ -19,15 +20,20 @@ class CompanyNotifier extends StateNotifier<NetworkInfo<List<CompanyModel>>> {
   List<CompanyModel> data = [];
 
   CompanyModel? myCompany;
+
+  Map<String, String> mainHeader = {
+    "Content-type": "application/json",
+    "Authorization": "Bearer $myToken"
+  };
   // CompanyModel? miCompany;
   Future getCompaniesList() async {
     state = NetworkInfo(networkStatus: NetworkStatus.loading)
       ..data = state.data;
     try {
-      Map<String, String> mainHeader = {
-        "Content-type": "application/json",
-        "Authorization": "Bearer $myToken"
-      };
+      // Map<String, String> mainHeader = {
+      //   "Content-type": "application/json",
+      //   "Authorization": "Bearer $myToken"
+      // };
       Response companiesListResponse = await _dio.get(
           '${DioServices.baseUrl}app/company',
           options: Options(headers: mainHeader));
@@ -95,30 +101,16 @@ class CompanyNotifier extends StateNotifier<NetworkInfo<List<CompanyModel>>> {
     return myCompany;
   }
 
-  Future<NetworkInfo> createCompany(CompanyModel company,
-      {String? email}) async {
+  Future<NetworkInfo> createCompany(CreateCompanyModel company) async {
     state = NetworkInfo(networkStatus: NetworkStatus.loading);
     try {
-      debugPrint("${company.toJson()}");
+      // debugPrint(" company: ${company.toJson()}");
       var response = await _dio.post("${DioServices.baseUrl}app/company",
-          data: company.toJson(),
-          options: Options(headers: DioServices.mainHeader));
+          data: company.toJson(), options: Options(headers: mainHeader));
 
-      // await Hive.openBox('company');
-      // await Hive.box('company').put('companyInfo', {
-      //   'companyId': '${response.data['companyID']}',
-      //   'ownerEmail': '$email'
-      // });
-
-      var companyInfo = Hive.box('company').get('companyInfo');
-
-      var companyId = companyInfo['companyId'];
-      var ownerEmail = companyInfo['ownerEmail'];
-
-      debugPrint('Company Id: ${companyInfo['companyId']}');
-      debugPrint('Owner Email: ${companyInfo['ownerEmail']}');
-
-      var info = NetworkInfo<List<CompanyModel>>(
+      print(mainHeader);
+      print(response);
+      var info = NetworkInfo<List<CreateCompanyModel>>(
           networkStatus: NetworkStatus.success, statusCode: 200);
       return info;
     } on DioError catch (e) {

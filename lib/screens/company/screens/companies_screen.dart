@@ -31,6 +31,7 @@ class _CompaniesScreenState extends ConsumerState<CompaniesScreen> {
     ref.read(companyProvider.notifier).getCompanyFromHive();
     ref.read(userInHiveProvider.notifier).getUserFromHive();
     ref.read(requireDataProvider.notifier).getRequiredData();
+    ref.read(companyProvider.notifier).getCompaniesList();
   }
 
   @override

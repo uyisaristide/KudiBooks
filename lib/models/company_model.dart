@@ -18,7 +18,7 @@ class CompanyModel {
     required this.industry,
   });
 @HiveField(0)
-  int? companyId;
+  int companyId;
 
   @HiveField(1)
   String companyName;
@@ -27,13 +27,13 @@ class CompanyModel {
   dynamic website;
 
   @HiveField(3)
-  int? amIAdmin;
+  int amIAdmin;
 
   @HiveField(4)
-  int? suspendedByKudiBooks;
+  int suspendedByKudiBooks;
 
   @HiveField(5)
-  int? suspendedByAdmin;
+  int suspendedByAdmin;
 
   @HiveField(6)
   String industry;
@@ -49,7 +49,7 @@ class CompanyModel {
       );
 
   Map<String, dynamic> toJson() => {
-        // "companyID": companyId,
+        "companyID": companyId,
         "companyName": companyName,
         "website": website,
         "amIAdmin": amIAdmin,
