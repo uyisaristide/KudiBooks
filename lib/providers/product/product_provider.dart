@@ -31,6 +31,7 @@ class ProductInLoadProvider extends StateNotifier<List<ProductInLoadModel>> {
 
 class AddProductToSalesNotifier extends StateNotifier<List<ProductToSell>> {
   AddProductToSalesNotifier() : super([]);
+
   addProductToSales(ProductToSell productToSell) {
     state = [...state, productToSell];
   }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'models/Users/products_sold_model.dart';
 import 'models/product/product_model.dart';
+import 'models/product/product_sell_model.dart';
 import 'providers/clients/client_profile.dart';
 import 'providers/vendor/vendor_profile.dart';
 import 'screens/dashboard/vendors/new_vendor.dart';
@@ -183,9 +185,11 @@ GoRouter router = GoRouter(
           builder: (context, state) => const Reports()),
       GoRoute(
           name: 'pDetails',
-          path: '/productDetails',
-          builder: (context, state) =>
-              ProductDetails(productModel: state.extra as ProductModel)),
+          path: '/productDetails/:id',
+          builder: (context, state) {
+            int id = int.parse(state.params["id"].toString());
+            return ProductDetails(id: id);
+          }),
       GoRoute(
           name: 'settingScreens',
           path: '/settings',
