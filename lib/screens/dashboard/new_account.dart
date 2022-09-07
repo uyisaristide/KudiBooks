@@ -71,15 +71,11 @@ class _NewAccountState extends ConsumerState<NewAccount> {
     var details = ref.watch(accountDetailsProvider);
     var requiredData = ref.watch(chartAccountProvider);
     if (details.networkStatus == NetworkStatus.success) {
-<<<<<<< HEAD
       var category = requiredData.data
           ?.singleWhere((element) => element.accountType == 5)
           .expenseCategories
           .singleWhere((element) =>
               element.id == details.data?.accountDetails.expenseCategory);
-=======
-      var category = requiredData.data?.singleWhere((element) => element.accountType == 5).expenseCategories.singleWhereOrNull((element) => element.id == details.data?.accountDetails.expenseCategory);
->>>>>>> 39b1895d71f9f30293927ea113498717da5f5883
       // debugPrint("${category?.name}");
       accountTypeController.text = details.data?.accountSelected.name ?? '';
       codeController.text = details.data?.accountDetails.code ?? '';

@@ -71,7 +71,6 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen>
     List<InventoryModel> _loadsList = ref.watch(inventoryProvider);
     var allProductWatcher = ref.watch(allProductProvider);
 
-<<<<<<< HEAD
 
     var signedUser = ref.watch(userProfileProvider).data;
     // .firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
@@ -79,13 +78,11 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen>
     // User? signedUser = ref.watch(usersProvider)
     //     .firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
 
-=======
     ref.listen<NetworkInfo<List<RetrieveProductModel>>>(allProductProvider, (previous, next) {
       if (next.networkStatus == NetworkStatus.success) {
         populateListOfProducts();
       }
     });
->>>>>>> 39b1895d71f9f30293927ea113498717da5f5883
     return Scaffold(
       drawer: Drawers(userInfo: signedUser,),
       body: DefaultTabController(
@@ -94,14 +91,8 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen>
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) {
               return [
-<<<<<<< HEAD
-                const SliverAppBar(
-                  systemOverlayStyle: SystemUiOverlayStyle(
-                      statusBarColor: Color.fromARGB(255, 100, 146, 131)),
-=======
                 SliverAppBar(
                   systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: Color(0xff157253)),
->>>>>>> 39b1895d71f9f30293927ea113498717da5f5883
                   pinned: true,
                   automaticallyImplyLeading: true,
                   elevation: 0.0,

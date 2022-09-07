@@ -2,10 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-<<<<<<< HEAD
-import '../../models/Users/user_profile_model.dart';
-=======
->>>>>>> 39b1895d71f9f30293927ea113498717da5f5883
 import '../../models/utilities/network_info.dart';
 import '../../providers/all_providers_list.dart';
 import '../../providers/user_provider.dart';
@@ -184,11 +180,7 @@ class _LoginState extends ConsumerState<Login> {
             // ),
 
             LoginButton(
-<<<<<<< HEAD
-              text: 'Login net',
-=======
               text: 'signUpScreen.button.login'.tr(),
->>>>>>> 39b1895d71f9f30293927ea113498717da5f5883
               actionField: () async {
                 if (_formKey.currentState!.validate()) {
                   var check = await ref
@@ -211,13 +203,7 @@ class _LoginState extends ConsumerState<Login> {
                     context.goNamed('companiesScreen');
                   } else {
                     debugPrint("${loginEmailWatcher.networkStatus}");
-<<<<<<< HEAD
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBars.snackBars('${loginEmailWatcher.errorMessage}',
-                            Colors.redAccent.shade400));
-=======
                     ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars(check.getErrorMessage, Colors.redAccent.shade400));
->>>>>>> 39b1895d71f9f30293927ea113498717da5f5883
                   }
                 }
               },

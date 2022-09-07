@@ -133,11 +133,7 @@ class _DrawersState extends ConsumerState<Drawers> {
                         ),
                       ),
                       ListTile(
-<<<<<<< HEAD
-                        onTap: () => context.pushNamed('transactionsAll'),
-=======
                         onTap: () {},
->>>>>>> 39b1895d71f9f30293927ea113498717da5f5883
                         leading: const Icon(Icons.credit_card),
                         title: Text("dashboard.drawer.transaction".tr()),
                         trailing: const Icon(
@@ -198,15 +194,8 @@ class _DrawersState extends ConsumerState<Drawers> {
                             .read(userInHiveProvider.notifier)
                             .deleUserFromHive();
                         context.goNamed('signin');
-<<<<<<< HEAD
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBars.snackBars('${response.errorMessage}',
-                                Colors.redAccent.shade400));
-=======
                       }else{
                         ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars(response.getErrorMessage, Colors.redAccent.shade400));
->>>>>>> 39b1895d71f9f30293927ea113498717da5f5883
                       }
                     },
                   ),

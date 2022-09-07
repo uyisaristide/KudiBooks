@@ -42,13 +42,8 @@ void initState() {
 
 
     return Scaffold(
-<<<<<<< HEAD
       drawer: Drawers(userInfo: signedUser,),
       appBar: AppBarCommon.preferredSizeWidget(context, 'My Account'),
-=======
-      drawer: Drawers(),
-      appBar: AppBarCommon.preferredSizeWidget(context, 'dashboard.account_screen.my_account'.tr()),
->>>>>>> 39b1895d71f9f30293927ea113498717da5f5883
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Container(
@@ -100,13 +95,9 @@ void initState() {
                     // Text("${signedUser.firstName} ${signedUser.lastName}",
                     //     style: const TextStyle(
                     //         fontSize: 24, fontWeight: FontWeight.bold)),
-<<<<<<< HEAD
                     // const Text("Firstname Lastname",
                     //     style: TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold)),
-=======
-                    const Text("Firstname Lastname", style: TextStyle( fontSize: 24, fontWeight: FontWeight.bold)),
->>>>>>> 39b1895d71f9f30293927ea113498717da5f5883
                     // Text(
                     //     signedUser.phoneOrEmail == null
                     //         ? ""
@@ -114,15 +105,11 @@ void initState() {
                     //     style: const TextStyle(
                     //       fontSize: 16,
                     //     )),
-<<<<<<< HEAD
                     const Text("Phone and Email",
                         style: TextStyle(
 
                           fontSize: 16,
                         )),
-=======
-                    const Text("Phone and Email", style: TextStyle( fontSize: 16, )),
->>>>>>> 39b1895d71f9f30293927ea113498717da5f5883
                     const SizedBox(
                       height: 20,
                     ),
