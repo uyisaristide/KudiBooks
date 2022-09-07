@@ -1,7 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../models/Users/user_profile_model.dart';
 import '../../models/utilities/network_info.dart';
 import '../../providers/all_providers_list.dart';
 import '../../providers/user_provider.dart';
@@ -58,11 +58,11 @@ class _LoginState extends ConsumerState<Login> {
           TextButton(
             onPressed: () => context.goNamed('signup'),
             child: const Text(
-              "Sign up",
+              "signUpScreen.button.signUp",
               style: TextStyle(
                 color: Color(0Xff157253),
               ),
-            ),
+            ).tr(),
           ),
         ],
       ),
@@ -73,14 +73,14 @@ class _LoginState extends ConsumerState<Login> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const LockIcon(),
-            const PageTitle(title: 'Account Sign In'),
+            PageTitle(title: 'signUpScreen.title'.tr()),
             CustomFormField(
-              labelText: "Enter your email",
+              labelText: "signUpScreen.form.email.label".tr(),
               inputType: TextInputType.emailAddress,
               onChangeAction: (value) {
                 // Validators.validateEmail(value) == null ? :;
               },
-              hintText: 'Email',
+              hintText: 'signUpScreen.form.email.hint'.tr(),
               fieldIcon: const Icon(
                 Icons.email,
                 color: Colors.grey,
@@ -134,13 +134,13 @@ class _LoginState extends ConsumerState<Login> {
                           color: Colors.red,
                         )),
                     contentPadding: const EdgeInsets.only(left: 10),
-                    hintText: "Password",
-                    labelText: 'Enter your password',
+                    hintText: "signUpScreen.form.password.hint".tr(),
+                    labelText: 'signUpScreen.form.password.label'.tr(),
                     hintStyle: const TextStyle(color: Colors.grey)),
               ),
             ),
             HyperLinkText(
-              directingText: 'Forgot Password ?',
+              directingText: 'signUpScreen.forgotPassword'.tr(),
               actions: () {
                 context.pushNamed('requestTokenEmail',
                     extra: emailController.text);
@@ -180,7 +180,7 @@ class _LoginState extends ConsumerState<Login> {
             // ),
 
             LoginButton(
-              text: 'Login net',
+              text: 'signUpScreen.button.login'.tr(),
               actionField: () async {
                 if (_formKey.currentState!.validate()) {
                   var check = await ref
@@ -203,15 +203,13 @@ class _LoginState extends ConsumerState<Login> {
                     context.goNamed('companiesScreen');
                   } else {
                     debugPrint("${loginEmailWatcher.networkStatus}");
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBars.snackBars('${loginEmailWatcher.errorMessage}',
-                            Colors.redAccent.shade400));
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars(check.getErrorMessage, Colors.redAccent.shade400));
                   }
                 }
               },
             ),
             CustomDevider(
-              middleText: 'Or sign in with',
+              middleText: 'signUpScreen.signUpWith'.tr(),
               horizotalPadding: 40.0,
               verticalPadding: 15.0,
             ),

@@ -19,9 +19,7 @@ class AccountSelected {
 
   AccountSelected({required this.code, required this.name, required this.type});
 
-  factory AccountSelected.fromJson(Map<String, dynamic> json) =>
-      AccountSelected(
-          code: json['code'], name: json['name'], type: json['type']);
+  factory AccountSelected.fromJson(Map<String, dynamic> json) => AccountSelected( code: json['code'], name: json['name'], type: json['type']);
 }
 
 class AccountDetails {

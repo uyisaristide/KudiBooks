@@ -1,0 +1,177 @@
+{
+  "dashboard": {
+    "home": {
+      "action": "Action",
+      "sell": "Sell",
+      "newLoad": "New Load",
+      "expenses": "Expenses",
+      "more": "More",
+      "sales": "Sales",
+      "recentTransaction": "Recent Transaction",
+      "view_all": "View all",
+      "approved": "Approved",
+      "in_process": "In process"
+    },
+    "bottom_nav": {
+      "home": "Home",
+      "inventory": "Inventory",
+      "alerts": "Alerts",
+      "account": "Account"
+    },
+    "inventory_screen": {
+      "new_product": "New Product",
+      "product": "Product",
+      "search_product": "Search product",
+      "search_inventory": "Search inventory",
+      "there_is_no_inventory": "There is no inventory"
+    },
+    "account_screen": {
+      "my_account": "My account",
+      "billing_details": "Billing Details",
+      "company_profile": "Company Profile",
+      "chart_of_account": "Chart of Account",
+      "refer_and_earn": "Refer & Earn",
+      "edit_profile": "Edit Profile",
+      "change_password": "Change password",
+      "settings": "Settings",
+      "help": "Help",
+      "sign_out": "Sign out"
+    },
+    "drawer": {
+      "load_inventory": "Load Inventory",
+      "client": "Clients",
+      "transaction": "Transaction",
+      "vendors": "Vendors",
+      "reports": "Reports"
+    }
+  },
+  "createAccountPhone": {
+    "title": "Create an account",
+    "form": {
+      "firstName": {
+        "hint": "First Name",
+        "label": "Enter your First Name"
+      },
+      "lastName": {
+        "hint": "Last Name",
+        "label": "Enter your Last Name"
+      },
+      "phoneNumber": {
+        "hint": "Phone Number",
+        "label": "Enter your phone"
+      },
+      "pin": {
+        "hint": "Pin",
+        "label": "Enter your pin"
+      },
+      "button": {
+        "register": "Register"
+      }
+    },
+    "validate": {
+      "name": "{} is invalid",
+      "pinNotMatch": "Pin not match",
+      "fillOutThisForm": "Fill out this form"
+    },
+    "button": {
+      "loginInstead": "Login instead"
+    },
+    "signUpWith": "Or Sign up with"
+  },
+  "createAccountEmail": {
+    "title": "Create new account",
+    "form": {
+      "firstName": {
+        "hint": "@:createAccountPhone.form.firstName.hint",
+        "label": "@:createAccountPhone.form.lastName.label"
+      },
+      "lastName": {
+        "hint": "Last Name",
+        "label": "Enter your Last Name"
+      },
+      "email": {
+        "hint": "Enter your email",
+        "label": "Email"
+      },
+      "password": {
+        "hint": "Password",
+        "label": "Enter your password"
+      },
+      "confirmPassword": {
+        "hint": "Confirm password",
+        "label": "Confirm Password"
+      },
+      "button": {
+        "register": "Register"
+      },
+      "validate": {
+        "matchCharacter": "Match 8 characters at least"
+      }
+    },
+    "button": {
+      "loginInstead": "@:createAccountPhone.button.loginInstead"
+    },
+    "signUpWith": "@:createAccountPhone.signUpWith"
+  },
+  "validator": {
+    "email": {
+      "isEmpty": "Enter your email",
+      "isInvalid": "Entered email is invalid"
+    },
+    "password": {
+      "isEmpty": "Enter password",
+      "matchLength": "6 is minimum character for password"
+    },
+    "validatePin": {
+      "isEmpty": "Enter Pin",
+      "matchLength": "PIN should be at least 4 digits"
+    },
+    "validateName": {
+      "isEmpty": "Fill out this field"
+    },
+    "validatePhoneNumber": {
+      "phoneIsRequired": "Phone field is required",
+      "invalidPhone": "Invalid Phone number"
+    }
+  },
+
+  "signUpScreen": {
+    "title": "Account Sign in",
+    "form": {
+      "email": {
+        "hint": "@:createAccountEmail.form.email.hint",
+        "label": "@:createAccountEmail.form.email.label"
+      },
+      "password": {
+        "hint": "Password",
+        "label": "Enter your password"
+      }
+    },
+    "forgotPassword": "Forgot Password",
+    "button": {
+      "login": "Login",
+      "signUp": "Sign in"
+    },
+    "signUpWith": "@:createAccountPhone.signUpWith"
+  },
+
+  "signUpPhoneScreen": {
+    "title": "Account Sign in",
+    "form": {
+      "phoneNumber": {
+        "hint": "Phone Number",
+        "label": "Enter your phone number"
+      },
+      "pin": {
+        "hint": "Pin",
+        "label": "Enter your pin"
+      }
+    },
+    "forgotPassword": "Forgot password",
+    "button": {
+      "login": "Login",
+      "signUp": "Sign up"
+    },
+    "signUpWith": "@:createAccountPhone.signUpWith"
+  }
+}

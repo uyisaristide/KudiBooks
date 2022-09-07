@@ -4,7 +4,7 @@ class SearchTextField extends StatelessWidget {
   Function(String)? searchingContent;
   TextStyle? hintStyle;
   String? hintTexts;
-  Icon? fieldIcon;
+  Widget? fieldIcon;
   TextEditingController searchContent;
 
   SearchTextField(
@@ -27,21 +27,12 @@ class SearchTextField extends StatelessWidget {
           child: TextFormField(
               validator: (value) {
                 return null;
-              
-
               },
               controller: searchContent,
               style: hintStyle,
               onChanged: searchingContent,
               decoration: InputDecoration(
-                suffixIcon: searchContent.text.isEmpty
-                    ? null
-                    : IconButton(
-                        onPressed: () => searchContent.clear(),
-                        icon: const Icon(
-                          Icons.close,
-                          color: Colors.grey,
-                        )),
+                suffixIcon: fieldIcon,
                 filled: true,
                 hintText: hintTexts,
                 hintStyle: hintStyle,

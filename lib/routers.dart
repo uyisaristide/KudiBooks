@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'models/product_model.dart';
+import 'models/Users/products_sold_model.dart';
+import 'models/product/product_model.dart';
+import 'models/product/product_sell_model.dart';
+import 'providers/clients/client_profile.dart';
+import 'providers/vendor/vendor_profile.dart';
+import 'screens/dashboard/vendors/new_vendor.dart';
 import 'screens/auth_screens/login.dart';
 import 'screens/auth_screens/otp_verification.dart';
 import 'screens/auth_screens/phone_login.dart';
@@ -25,12 +30,13 @@ import 'screens/dashboard/new_account.dart';
 import 'screens/dashboard/new_client.dart';
 import 'screens/dashboard/new_expense.dart';
 import 'screens/dashboard/new_inventory.dart';
-import 'screens/dashboard/new_product.dart';
+import 'screens/dashboard/product/new_product.dart';
 import 'screens/dashboard/product_details.dart';
 import 'screens/dashboard/product_sale.dart';
 import 'screens/dashboard/products.dart';
 import 'screens/dashboard/reports.dart';
 import 'screens/dashboard/settings_screen.dart';
+import 'screens/dashboard/vendors/vendor_list.dart';
 import 'screens/dashboard/widget/bottom_navigation.dart';
 import 'screens/splash_screen/green_splash_screen.dart';
 import 'screens/splash_screen/white_splash_screen.dart';
@@ -115,7 +121,7 @@ GoRouter router = GoRouter(
       GoRoute(
           name: 'createInventory',
           path: '/newInventory',
-          builder: (context, state) => NewInventory()),
+          builder: (context, state) => const NewInventory()),
       GoRoute(
           name: 'createExpense',
           path: '/newExpense',
@@ -164,18 +170,30 @@ GoRouter router = GoRouter(
           path: '/allClients',
           builder: (context, state) => ClientList()),
       GoRoute(
+          name: 'clientProfile',
+          path: '/profileClient/:id',
+          builder: (context, state){
+            final id = state.params["id"];
+            return ClientProfile(client:int.parse(id.toString()));
+          }),
+      GoRoute(
           name: 'newClient',
-          path: '/createClient',
-          builder: (context, state) => const NewClient()),
+          path: '/createClient/:clientId',
+          builder: (context, state) {
+            String? id=state.params['clientId'];
+            return NewClient(clientId: id,);
+          }),
       GoRoute(
           name: 'reports',
           path: '/reportsScreen',
           builder: (context, state) => const Reports()),
       GoRoute(
           name: 'pDetails',
-          path: '/productDetails',
-          builder: (context, state) =>
-              ProductDetails(productModel: state.extra as ProductModel)),
+          path: '/productDetails/:id',
+          builder: (context, state) {
+            int id = int.parse(state.params["id"].toString());
+            return ProductDetails(id: id);
+          }),
       GoRoute(
           name: 'settingScreens',
           path: '/settings',
@@ -224,5 +242,43 @@ GoRouter router = GoRouter(
               recoverEmail: email,
               token: token,
             );
-          })
+          }),
+
+      //Vendor
+
+      // GoRoute(
+      //     path: '/password/reset/:token',
+      //     builder: (context, state) {
+      //       final token = state.params["token"];
+      //       final email = state.queryParams["email"];
+      //       return ResetEmailPassword(
+      //         recoverEmail: email,
+      //         token: token,
+      //       );
+      //     }),
+      GoRoute(
+        name: 'vendors',
+        path: '/vendorList',
+        builder: (context, state) =>const Vendors(),
+      ),
+      GoRoute(
+        name: 'newVendor',
+        path: '/createVendor/:id',
+        builder: (context, state){
+          final id = state.params['id'];
+          return NewVendor(vendorId: id,);
+        },
+      ),
+      GoRoute(
+        name: 'profileVendor',
+        path: '/profileVendor/:id',
+        builder: (context, state){
+          final id = int.parse(state.params['id'].toString());
+          return VendorProfile(vendorId: id,);
+        },
+      ),
+
+      //Product Routes
+
     ]);
+

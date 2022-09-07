@@ -25,8 +25,8 @@ class UserNotifier extends StateNotifier<NetworkInfo<List<User>>> {
     try {
       Response response = await _dio.post('${DioServices.baseUrl}auth/register',
           data: user.toJsonEmail());
-      var info = NetworkInfo<List<User>>(
-          networkStatus: NetworkStatus.success, statusCode: 200);
+      var info  = NetworkInfo<List<User>>(networkStatus: NetworkStatus.success, statusCode: 200);
+      state=info;
       return info;
     } on DioError catch (e) {
       print("${e.response?.data["errors"]}");
@@ -114,17 +114,16 @@ class UserNotifier extends StateNotifier<NetworkInfo<List<User>>> {
       Response loginResponse = await _dio.post(
           '${DioServices.baseUrl}auth/login',
           data: {"email": email, "password": password});
-      await Hive.openBox('tokens');
-      await Hive.box('tokens').put('token', loginResponse.data["token"]);
-      var infoLogin = NetworkInfo<List<User>>(
-          networkStatus: NetworkStatus.success, statusCode: 200);
-      myToken = loginResponse.data["token"];
-
-      return infoLogin;
-    } on DioError catch (e) {
-      print("${e.response?.data['errors']}");
+        await Hive.openBox('tokens');
+        await Hive.box('tokens').put('token', loginResponse.data["token"]);
+        var infoLogin = NetworkInfo<List<User>>(networkStatus: NetworkStatus.success, statusCode: 200);
+        debugPrint("${loginResponse.data}");
+        return infoLogin;
+    } on DioError catch(e){
+      print("${e.response?.data}");
       var informationError = ErrorHandler.handleError<List<User>>(e);
-      state = informationError;
+      state=informationError;
+      debugPrint("${informationError.networkStatus}");
       return informationError;
     } catch (e) {
       NetworkInfo<List<User>> errorInfo = NetworkInfo(
@@ -156,21 +155,4 @@ class UserNotifier extends StateNotifier<NetworkInfo<List<User>>> {
       return infoError;
     }
   }
-
-  Future resetPasswordWithEmail(String email) async {
-    Response resetPwdResponse;
-    try {
-      resetPwdResponse = await _dio.post(
-          '${DioServices.baseUrl}auth/forgot-password',
-          data: {"email": email});
-
-      if (resetPwdResponse.statusCode == 200) {
-        return 'Reset Link sent to your email';
-      }
-    } catch (e) {
-      // print e;
-    }
-  }
-//
-// Future<Response> loginPhone() {}
 }

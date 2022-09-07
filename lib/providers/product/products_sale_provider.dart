@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../models/product_sale_model.dart';
+import '../../models/product_sale_model.dart';
 
 class ProductSalesProvider extends StateNotifier<List<ProductSalesModel>> {
   ProductSalesProvider() : super([]);

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:flutter/material.dart';
@@ -12,10 +13,12 @@ class PhoneField extends StatelessWidget {
   final TextEditingController phoneNumber;
   final String? initialString;
   final void Function(Country)? countryCodes;
+  final String? textLabel;
 
   const PhoneField(
       {required this.validators,
       this.fieldIcon,
+      this.textLabel,
       this.onChangeAction,
       Key? key,
       required this.phoneNumber,
@@ -34,6 +37,7 @@ class PhoneField extends StatelessWidget {
         validator: validators,
         onCountryChanged: countryCodes,
         decoration: InputDecoration(
+            labelText: textLabel,
             suffixIcon: phoneNumber.text.isEmpty
                 ? fieldIcon
                 : IconButton(
@@ -56,7 +60,7 @@ class PhoneField extends StatelessWidget {
                   color: Colors.red,
                 )),
             contentPadding: const EdgeInsets.only(left: 10),
-            hintText: "Phone Number"),
+            hintText: "createAccountPhone.form.phoneNumber.hint".tr()),
       ),
     );
   }

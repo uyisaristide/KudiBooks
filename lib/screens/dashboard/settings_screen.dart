@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'widget/common_appBar.dart';
 import 'widget/list_tile.dart';
@@ -10,8 +11,11 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
+
   @override
   Widget build(BuildContext context) {
+    var selectedValue = context.locale.toString() == 'en_US'?'English':'French';
+    print("Selected value: ${context.locale.toString()}");
     return Scaffold(
       appBar: AppBarCommon.preferredSizeWidget(context, "Settings"),
       body: SingleChildScrollView(
@@ -31,13 +35,63 @@ class _SettingsState extends State<Settings> {
                       color: Colors.grey),
                 ),
               ),
-              DoubleRowWidgets(
-                leftSideWidget: IconButton(
-                  icon: const Icon(Icons.arrow_forward_ios),
-                  onPressed: () {},
-                ),
-                borderSidebottom: false,
-                rightSideText: 'Theme',
+              const ListTile(
+                title: Text("Theme"),
+                trailing: Icon(Icons.arrow_forward_ios),
+              ),
+              ListTile(
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (contextDialog) {
+                        return AlertDialog(
+                          actions: [
+                            Column(children: [
+                              RadioListTile(
+                                  secondary: const CircleAvatar(backgroundImage: AssetImage("assets/images/US.png"),radius: 15.0,),
+                                  controlAffinity:ListTileControlAffinity.trailing,
+                                  title: const Text("English"),
+                                  value: "English",
+                                  groupValue: selectedValue,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      selectedValue="English";
+                                    });
+                                    contextDialog.setLocale(const Locale('en', 'US'));
+                                    Navigator.pop(contextDialog);
+                                  }),
+                              RadioListTile(
+                                  secondary: const CircleAvatar(backgroundImage: AssetImage("assets/images/RW.png"),radius: 15.0),
+                                  controlAffinity:ListTileControlAffinity.trailing,
+                                  title: const Text("Kinyarwanda"),
+                                  value: "Kinyarwanda",
+                                  groupValue: selectedValue,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      selectedValue="Kinyarwanda";
+                                    });
+                                  }),
+                              RadioListTile(
+                                  secondary: const CircleAvatar(backgroundImage: AssetImage("assets/images/FR.png"),radius: 15.0),
+                                  controlAffinity:ListTileControlAffinity.trailing,
+                                  title: const Text("French"),
+                                  value: "French",
+                                  groupValue: selectedValue,
+                                  onChanged: (value){
+                                    setState(() {
+                                      selectedValue="French";
+                                    });
+                                    print("${contextDialog.locale.toString()}");
+                                    contextDialog.setLocale(const Locale('fr', 'FR'));
+                                    Navigator.pop(contextDialog);
+                                  }),
+                            ]),
+                          ],
+                        );
+                      });
+                },
+                title: const Text("Language"),
+                leading: const Icon(Icons.language),
               ),
               Container(
                 alignment: Alignment.centerLeft,

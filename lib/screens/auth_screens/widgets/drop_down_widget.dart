@@ -6,13 +6,10 @@ class SelectInputType extends StatelessWidget {
   Function(String?)? selectedValue;
   Function()? tapSelect;
   String? Function(String?)? validation;
+  String? defaultValue;
 
   SelectInputType(
-      {this.dropDownHint,
-      this.validation,
-        this.tapSelect,
-      required this.itemsToSelect,
-      this.selectedValue,
+      {this.dropDownHint,this.validation, this.tapSelect, required this.itemsToSelect, this.selectedValue, this.defaultValue,
       Key? key})
       : super(key: key);
 
@@ -21,6 +18,7 @@ class SelectInputType extends StatelessWidget {
     return Container(
         margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5.0),
         child: DropdownButtonFormField<String>(
+          value: defaultValue,
           validator: validation,
           hint: dropDownHint,
           decoration: InputDecoration(

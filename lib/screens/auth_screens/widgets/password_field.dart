@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class PasswordField extends StatelessWidget {
   bool isHidden = true;
   TextEditingController passwordController;
@@ -9,6 +8,7 @@ class PasswordField extends StatelessWidget {
   int? maxLength;
   String? hintText;
   TextInputType? textInputType;
+  String? labelText;
 
   PasswordField(
       {required this.isHidden,
@@ -18,6 +18,7 @@ class PasswordField extends StatelessWidget {
       required this.passwordController,
       this.suffixIcon,
       this.validators,
+      this.labelText,
       Key? key})
       : super(key: key);
 
@@ -33,6 +34,7 @@ class PasswordField extends StatelessWidget {
         maxLength: maxLength,
         validator: validators,
         decoration: InputDecoration(
+            labelText: labelText,
             focusColor: const Color(0xff157253),
             labelStyle: const TextStyle(
               fontSize: 12,
