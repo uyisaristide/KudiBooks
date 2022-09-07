@@ -44,7 +44,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
     var signedUser = ref.watch(userProfileProvider).data;
     var currentUser = ref.watch(userInHiveProvider.notifier).currentUser;
     myToken = currentUser!.token;
-
+    debugPrint(myToken);
     ref.read(companyProvider.notifier).getCompaniesList();
 
     // var signedUser=currentux

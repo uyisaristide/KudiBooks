@@ -198,7 +198,7 @@ class _LoginState extends ConsumerState<Login> {
                         .read(userProfileProvider.notifier)
                         .getUserFromHive();
                     // var companiesAssociated =
-                        ref.read(companyProvider.notifier).getCompaniesList();
+                    ref.read(companyProvider.notifier).getCompaniesList();
                     // print('get user returned: ${companiesAssociated}');
                     context.goNamed('companiesScreen');
                   } else {

@@ -66,10 +66,10 @@ class UserNotifier extends StateNotifier<NetworkInfo<List<User>>> {
   Future<NetworkInfo> logout() async {
     state = NetworkInfo(networkStatus: NetworkStatus.loading);
     try {
-      Box myBox =  Hive.box(userProfileBoxName);
+      Box myBox = Hive.box(userProfileBoxName);
       UserProfile userProfile = myBox.get('user');
 
-      // debugPrint("Before map: $myToken");
+      debugPrint("Before map: $myToken");
       Map<String, String> mainHeader = {
         "Content-type": "application/json",
         "Authorization": "Bearer ${userProfile.token}"
@@ -85,6 +85,7 @@ class UserNotifier extends StateNotifier<NetworkInfo<List<User>>> {
       var successLogout = NetworkInfo<List<User>>(
           networkStatus: NetworkStatus.success, statusCode: 200);
       state = NetworkInfo(networkStatus: NetworkStatus.success);
+      debugPrint("after map: $myToken");
       return successLogout;
     } on DioError catch (e) {
       var dioError = ErrorHandler.handleError<List<User>>(e);

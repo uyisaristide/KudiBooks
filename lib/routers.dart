@@ -10,8 +10,9 @@ import 'screens/auth_screens/request_token_email_screen.dart';
 import 'screens/auth_screens/reset_password.dart';
 import 'screens/auth_screens/reset_pin.dart';
 import 'screens/auth_screens/signup.dart';
-import 'screens/company/companies_screen.dart';
-import 'screens/company/new_company.dart';
+
+import 'screens/company/screens/companies_screen.dart';
+import 'screens/company/screens/new_company.dart';
 import 'screens/dashboard/account_transfer.dart';
 import 'screens/dashboard/all_transaction.dart';
 import 'screens/dashboard/chart_of_account.dart';

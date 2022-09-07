@@ -98,7 +98,7 @@ class UserProfileNotifier extends StateNotifier<NetworkInfo<UserProfile>> {
     // userProfileBox = await Hive.openBox<UserProfile?>(userProfileBoxName);
     userProfileBox = Hive.box(userProfileBoxName);
     currentUser = userProfileBox.get('user');
-
+    myToken = currentUser!.token;
     return currentUser;
   }
 

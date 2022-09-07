@@ -211,9 +211,9 @@ class _DrawersState extends ConsumerState<Drawers> {
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: LoginButton(
-                    text: 'Create Company',
+                    text: 'switch company',
                     actionField: () {
-                      context.pushNamed('newCompany');
+                      context.pushNamed('companiesScreen');
                     },
                   ),
                 ),

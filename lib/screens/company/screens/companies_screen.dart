@@ -6,7 +6,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../providers/all_providers_list.dart';
+import '../../../providers/all_providers_list.dart';
+import '../providers.dart';
 
 class CompaniesScreen extends ConsumerStatefulWidget {
   const CompaniesScreen({Key? key}) : super(key: key);
@@ -26,7 +27,10 @@ class _CompaniesScreenState extends ConsumerState<CompaniesScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     ref.read(companyProvider.notifier).getCompanyFromHive();
+    ref.read(userInHiveProvider.notifier).getUserFromHive();
+    ref.read(requireDataProvider.notifier).getRequiredData();
   }
 
   @override
@@ -38,7 +42,9 @@ class _CompaniesScreenState extends ConsumerState<CompaniesScreen> {
     var currentCompany = ref.watch(companyProvider.notifier).myCompany;
 
     var limit = companies.length;
-    print('company of id  : ${currentCompany!.companyId}');
+    // print('company of id  : ${currentCompany!.companyId}');
+
+    ref.read(requireDataProvider.notifier).getRequiredData;
 
     return Scaffold(
       floatingActionButton: ElevatedButton(
@@ -98,7 +104,7 @@ class _CompaniesScreenState extends ConsumerState<CompaniesScreen> {
                               // )
                               Container(
                             decoration: BoxDecoration(
-                                color: currentCompany.companyId ==
+                                color: currentCompany!.companyId ==
                                         companies.toList()[index].companyId
                                     ? Colors.grey[400]
                                     : Colors.grey[100],

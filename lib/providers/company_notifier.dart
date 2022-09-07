@@ -104,11 +104,11 @@ class CompanyNotifier extends StateNotifier<NetworkInfo<List<CompanyModel>>> {
           data: company.toJson(),
           options: Options(headers: DioServices.mainHeader));
 
-      await Hive.openBox('company');
-      await Hive.box('company').put('companyInfo', {
-        'companyId': '${response.data['companyID']}',
-        'ownerEmail': '$email'
-      });
+      // await Hive.openBox('company');
+      // await Hive.box('company').put('companyInfo', {
+      //   'companyId': '${response.data['companyID']}',
+      //   'ownerEmail': '$email'
+      // });
 
       var companyInfo = Hive.box('company').get('companyInfo');
 
