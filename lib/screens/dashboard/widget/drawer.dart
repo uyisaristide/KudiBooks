@@ -117,7 +117,7 @@ class Drawers extends ConsumerWidget {
                       ListTile(
                         onTap: ()=>context.pushNamed('vendors'),
                         leading: const Icon(Icons.shopping_bag_rounded),
-                        title: Text("dashboard.drawer.vendors".tr()),
+                        title: const Text("dashboard.drawer.vendors").tr(),
                         trailing: const Icon(
                           Icons.arrow_forward_ios,
                           size: 15,
@@ -126,7 +126,7 @@ class Drawers extends ConsumerWidget {
                       ListTile(
                         onTap: () => context.pushNamed('reports'),
                         leading: const Icon(Icons.bar_chart_outlined),
-                        title: Text("dashboard.drawer.reports".tr()),
+                        title: const Text("dashboard.drawer.reports").tr(),
                         trailing: const Icon(
                           Icons.arrow_forward_ios,
                           size: 15,

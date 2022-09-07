@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -64,36 +65,40 @@ class _SignUpState extends ConsumerState<SignUp> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const PageTitle(title: 'Create new account'),
+            PageTitle(title: 'createAccountEmail.title'.tr()),
             CustomFormField(
+              labelText: 'createAccountEmail.form.firstName.label'.tr(),
               fieldController: firstNameController,
               fieldIcon: const Icon(Icons.person),
-              hintText: 'First Name',
+              hintText: 'createAccountEmail.form.firstName.hint'.tr(),
               validators: (value) => Validators.validateName(value),
               isShown: false,
             ),
             CustomFormField(
+              labelText: 'createAccountEmail.form.lastName.label'.tr(),
               fieldController: lastNameController,
               fieldIcon: const Icon(Icons.person_outline),
-              hintText: 'Last Name',
+              hintText: 'createAccountEmail.form.lastName.hint'.tr(),
               validators: (value) => Validators.validateName(value),
               isShown: false,
             ),
             CustomFormField(
+              labelText: 'createAccountEmail.form.email.hint'.tr(),
               fieldController: emailController,
               fieldIcon: const Icon(Icons.email),
-              hintText: 'Email Address',
+              hintText: 'createAccountEmail.form.email.label'.tr(),
               validators: (value) => Validators.validateEmail(value),
               isShown: false,
             ),
             PasswordField(
-              hintText: "Password",
+              labelText: 'createAccountEmail.form.password.label'.tr(),
+              hintText: "createAccountEmail.form.password.hint".tr(),
               maxLength: 30,
               isHidden: isHiddens,
               passwordController: passwordController,
               validators: (value) {
                 if (value!.length < 8) {
-                  return "Much 8 charactor string";
+                  return "At least 8 characters is needed";
                 }
                 return null;
               },
@@ -106,8 +111,8 @@ class _SignUpState extends ConsumerState<SignUp> {
                         )
                       : const Icon(Icons.visibility_off)),
             ),
-            PasswordField(
-              hintText: "Confirm Password",
+            PasswordField(labelText: "createAccountEmail.form.confirmPassword.label".tr(),
+              hintText: "createAccountEmail.form.confirmPassword.hint".tr(),
               maxLength: 30,
               isHidden: isHidden,
               passwordController: confirmController,
@@ -115,7 +120,7 @@ class _SignUpState extends ConsumerState<SignUp> {
                 if (value != passwordController.text) {
                   return "Password not match";
                 } else if (value == '') {
-                  return 'Fill out this form';
+                  return 'validator.password.isEmpty'.tr();
                 }
                 return null;
               },
@@ -157,7 +162,7 @@ class _SignUpState extends ConsumerState<SignUp> {
             // ),
             const SizedBox(height: 5),
             LoginButton(
-              text: 'Register now',
+              text: 'createAccountEmail.form.button.register'.tr(),
               actionField: () async {
                 var serverPassword = "${passwordController.text}+1234";
                 if (_formKey.currentState!.validate()) {
@@ -179,11 +184,11 @@ class _SignUpState extends ConsumerState<SignUp> {
               },
             ),
             HyperLinkText(
-              directingText: 'Login instead',
+              directingText: 'createAccountEmail.button.loginInstead'.tr(),
               actions: () => context.goNamed('signin'),
             ),
             CustomDevider(
-              middleText: 'Or sign in with',
+              middleText: 'createAccountEmail.signUpWith'.tr(),
               horizotalPadding: 40.0,
               verticalPadding: 15.0,
             ),

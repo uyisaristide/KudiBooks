@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../models/inventory_model.dart';
-import '../../models/product/product_model.dart';
 import '../../models/product/retrive_product_model.dart';
 import '../../models/utilities/network_info.dart';
 import '../../providers/all_providers_list.dart';

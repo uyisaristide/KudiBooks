@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -60,32 +61,32 @@ class _PhoneSignupState extends ConsumerState<PhoneSignup> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const PageTitle(
-              title: 'Create new account',
-            ),
+            PageTitle( title: 'createAccountPhone.title'.tr(), ),
             CustomFormField(
+              labelText: 'createAccountPhone.form.firstName.label'.tr(),
               fieldIcon: const Icon(
                 Icons.person_outline,
                 size: 18,
               ),
-              hintText: 'First Name',
+              hintText: 'createAccountPhone.form.firstName.hint'.tr(),
               validators: (value) => Validators.validateName(value),
               fieldController: firstNameController,
               isShown: false,
             ),
             CustomFormField(
+              labelText: 'createAccountPhone.form.lastName.label'.tr(),
               fieldIcon: const Icon(Icons.person, size: 18),
-              hintText: 'Last Name',
+              hintText: 'createAccountPhone.form.lastName.hint'.tr(),
               validators: (value) => Validators.validateName(value),
               fieldController: lastNameController,
               isShown: false,
             ),
             PhoneField(
+              textLabel: 'createAccountPhone.form.phoneNumber.label'.tr(),
               countryCodes: (country) {
                 setState(() {
                   _countryCodes = country.dialCode;
                 });
-                debugPrint("Phone Number with country code");
               },
               fieldIcon: const Icon(Icons.phone, size: 18),
               phoneNumber: phoneController,
@@ -106,6 +107,7 @@ class _PhoneSignupState extends ConsumerState<PhoneSignup> {
                 maxLength: 4,
                 validator: (value) => Validators.validatePin(value!),
                 decoration: InputDecoration(
+                    labelText: "createAccountPhone.form.pin.label".tr(),
                     focusColor: const Color(0xff157253),
                     labelStyle: const TextStyle(
                       fontSize: 12,
@@ -141,7 +143,7 @@ class _PhoneSignupState extends ConsumerState<PhoneSignup> {
                           color: Colors.red,
                         )),
                     contentPadding: const EdgeInsets.only(left: 10),
-                    hintText: "Pin",
+                    hintText: "createAccountPhone.form.pin.hint".tr(),
                     hintStyle: const TextStyle(color: Colors.grey)),
               ),
             ),
@@ -158,13 +160,14 @@ class _PhoneSignupState extends ConsumerState<PhoneSignup> {
                 maxLength: 4,
                 validator: (value) {
                   if (value != pinController.text) {
-                    return "Pin not match";
+                    return "createAccountPhone.validate.pinNotMatch".tr();
                   } else if (value == '') {
-                    return 'Fill out this form';
+                    return 'createAccountPhone.validate.fillOutThisForm'.tr();
                   }
                   return null;
                 },
                 decoration: InputDecoration(
+                    labelText: "createAccountPhone.form.pin.label".tr(),
                     focusColor: const Color(0xff157253),
                     labelStyle: const TextStyle(
                       fontSize: 12,
@@ -191,8 +194,7 @@ class _PhoneSignupState extends ConsumerState<PhoneSignup> {
                             width: 1.0),
                         borderRadius: BorderRadius.circular(10.0)),
                     enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(color: Colors.grey, width: 1.0),
+                        borderSide: const BorderSide(color: Colors.grey, width: 1.0),
                         borderRadius: BorderRadius.circular(10.0)),
                     errorBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
@@ -200,13 +202,13 @@ class _PhoneSignupState extends ConsumerState<PhoneSignup> {
                           color: Colors.red,
                         )),
                     contentPadding: const EdgeInsets.only(left: 10),
-                    hintText: "Pin",
+                    hintText: "createAccountPhone.form.pin.hint".tr(),
                     hintStyle: const TextStyle(color: Colors.grey)),
               ),
             ),
             const SizedBox(height: 5),
             LoginButton(
-              text: 'Register',
+              text: 'createAccountPhone.form.button.register'.tr(),
               actionField: () async{
                 if (_formKey.currentState!.validate()) {
                   var _phoneNumber = "+$_countryCodes${phoneController.text}";
@@ -228,11 +230,11 @@ class _PhoneSignupState extends ConsumerState<PhoneSignup> {
               },
             ),
             HyperLinkText(
-              directingText: 'Login instead',
+              directingText: 'createAccountPhone.button.loginInstead'.tr(),
               actions: () => context.goNamed('signin'),
             ),
             CustomDevider(
-              middleText: 'Or sign up with',
+              middleText: 'createAccountPhone.signUpWith'.tr(),
               horizotalPadding: 40.0,
               verticalPadding: 15.0,
             ),

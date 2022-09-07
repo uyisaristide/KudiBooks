@@ -45,4 +45,29 @@ class ProductNotifier extends StateNotifier<NetworkInfo<List<ProductSellModel>>>
 
     }
   }
+  Future<NetworkInfo> createProductSecond(ProductSellModel productSellModel) async{
+    state=NetworkInfo(networkStatus: NetworkStatus.loading);
+    try{
+
+      var dataProduct = productSellModel.toJsonNotInventory();
+      debugPrint("Sent product Data: ${jsonEncode(dataProduct)}");
+      Response response = await _dio.post("${DioServices.baseUrl}app/product-to-sell", data: dataProduct, options: Options(headers: mainHeader));
+      var info = NetworkInfo<List<ProductSellModel>>(networkStatus: NetworkStatus.success, statusCode: 200);
+      state=info;
+      return info;
+
+    } on DioError catch(e){
+      debugPrint("${e.response?.statusMessage}");
+      var errorInfo = ErrorHandler.handleError<List<ProductSellModel>>(e);
+      state=errorInfo;
+      return errorInfo;
+
+    } catch(e){
+      debugPrint("$e");
+      var unknownError = NetworkInfo<List<ProductSellModel>>(networkStatus: NetworkStatus.error, errorMessage: "Contact system admin");
+      state=unknownError;
+      return unknownError;
+
+    }
+  }
 }

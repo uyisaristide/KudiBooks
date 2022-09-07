@@ -77,61 +77,61 @@ class MyAccountScreen extends ConsumerWidget {
               ),
               ListTile(
                 onTap: () => context.pushNamed('accountTransfer'),
-                title: Text('dashboard.account_screen.billing_details'.tr()),
+                title: const Text('dashboard.account_screen.billing_details').tr(),
                 leading: const Icon(Icons.inventory),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 16),
               ),
               ListTile(
                 onTap: () => context.pushNamed('accountTransfer'),
-                title: Text('dashboard.account_screen.company_profile'.tr()),
+                title: const Text('dashboard.account_screen.company_profile').tr(),
                 leading: const Icon(Icons.inventory),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 16),
               ),
               ListTile(
                 onTap: () => context.pushNamed('chartAccount'),
-                title: Text('dashboard.account_screen.chart_of_account'.tr()),
+                title: const Text('dashboard.account_screen.chart_of_account').tr(),
                 leading: const Icon(Icons.inventory),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 16),
               ),
               ListTile(
                 onTap: () {},
-                title: Text('dashboard.account_screen.refer_and_earn'.tr()),
+                title: const Text('dashboard.account_screen.refer_and_earn').tr(),
                 leading: const Icon(Icons.inventory),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 16),
               ),
               ListTile(
                 onTap: () {},
-                title: Text('dashboard.account_screen.edit_profile'.tr()),
+                title: const Text('dashboard.account_screen.edit_profile').tr(),
                 leading: const Icon(Icons.inventory),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 16),
               ),
               ListTile(
                 onTap: () {},
-                title: Text('dashboard.account_screen.change_password'.tr()),
+                title: const Text('dashboard.account_screen.change_password').tr(),
                 leading: const Icon(Icons.inventory),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 16),
               ),
               ListTile(
                 onTap: () => context.pushNamed('settingScreens'),
-                title: Text('dashboard.account_screen.settings'.tr()),
+                title: const Text('dashboard.account_screen.settings').tr(),
                 leading: const Icon(Icons.inventory),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 16),
               ),
               ListTile(
                 onTap: () => context.pushNamed('settingScreens'),
-                title: Text('dashboard.account_screen.help'.tr()),
+                title: const Text('dashboard.account_screen.help').tr(),
                 leading: const Icon(Icons.inventory),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 16),
               ),
               ListTile(
                 onTap: () => context.goNamed('signin'),
-                title: Text(
-                  "dashboard.account_screen.sign_out".tr(),
-                  style: const TextStyle(
+                title: const Text(
+                  "dashboard.account_screen.sign_out",
+                  style: TextStyle(
                       fontSize: 18.0,
                       fontWeight: FontWeight.w400,
                       color: Color(0xffD16262)),
-                ),
+                ).tr(),
                 leading: const Icon(Icons.inventory),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 16),
               ),
