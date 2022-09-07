@@ -1,12 +1,13 @@
+import 'package:easy_localization/easy_localization.dart';
 
 class Validators {
   static String? validateEmail(String value) {
     final RegExp regex = RegExp(
         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
     if (value.isEmpty) {
-      return 'Enter email address';
+      return 'validator.email.isEmpty'.tr();
     } else if (!regex.hasMatch(value)) {
-      return 'Enter the valid email';
+      return 'validator.email.isInvalid'.tr();
     } else {
       return null;
     }
@@ -14,9 +15,9 @@ class Validators {
 
   static String? validatePassword(String value) {
     if (value.isEmpty) {
-      return 'Enter password';
+      return 'validator.password.isEmpty'.tr();
     } else if (value.length < 6) {
-      return '6 is minimum character for password';
+      return 'validator.password.matchLength'.tr();
     } else {
       return null;
     }
@@ -24,9 +25,9 @@ class Validators {
 
   static String? validatePin(String value) {
     if (value.toString().isEmpty) {
-      return 'Enter Pin';
+      return 'validator.validatePin.isEmpty'.tr();
     } else if (value.toString().length < 4) {
-      return 'PIN is 4 digits';
+      return 'validator.validatePin.matchLength'.tr();
     } else {
       return null;
     }
@@ -34,9 +35,9 @@ class Validators {
 
   static String? validateName(String value) {
     if (value.isEmpty) {
-      return 'Enter user name';
+      return 'validator.validateName.isEmpty'.tr();
     } else if (value.length < 3) {
-      return '$value is Invalid';
+      return 'createAccountPhone.validate.name'.tr(args: [value]);
     } else {
       return null;
     }
@@ -45,9 +46,9 @@ class Validators {
   static String? validatePhoneNumber(String value) {
     final RegExp regex = RegExp(r'(^(?:[+0]9)?[0-9]{10,12}$)');
     if (value.isEmpty) {
-      return 'Phone field is required';
+      return 'validator.validatePhoneNumber.phoneIsRequired'.tr();
     } else if (!regex.hasMatch(value)) {
-      return 'Invalid Phone number';
+      return 'validator.validatePhoneNumber.invalidPhone'.tr();
     } else {
       return null;
     }
@@ -55,7 +56,7 @@ class Validators {
 
   static String? notEmpty(String value) {
     if (value.isEmpty) {
-      return "cant't be empty";
+      return "can't be empty";
     } else {
       return null;
     }

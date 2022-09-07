@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -90,10 +91,10 @@ class _DashboardState extends ConsumerState<Dashboard> {
                           left: 15.0, bottom: 10.0, top: 30),
                       alignment: AlignmentDirectional.centerStart,
                       child: const Text(
-                        "Actions",
+                        "dashboard.home.action",
                         style: TextStyle(
                             fontSize: 17.0, fontWeight: FontWeight.bold),
-                      ),
+                      ).tr(),
                     ),
                     Container(
                       padding: const EdgeInsets.only(left: 10, right: 10),
@@ -107,7 +108,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
                               color: Colors.white,
                             ),
                             cardColor: const Color(0xff157253),
-                            title: 'Sell',
+                            title: 'dashboard.home.sell'.tr(),
                             titleColor: Colors.white,
                           ),
                           ActionCard(
@@ -118,7 +119,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
                               color: Colors.white,
                             ),
                             cardColor: const Color(0xffA70C4A),
-                            title: 'New Load',
+                            title: 'dashboard.home.newLoad'.tr(),
                             titleColor: Colors.white,
                           ),
                           ActionCard(
@@ -130,7 +131,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
                               color: Colors.white,
                             ),
                             cardColor: const Color(0xffFDAB30),
-                            title: 'Expenses',
+                            title: 'dashboard.home.expenses'.tr(),
                           ),
                           ActionCard(
                             titleColor: Colors.white,
@@ -147,7 +148,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
                               color: Colors.white,
                             ),
                             cardColor: const Color(0xff61B76B),
-                            title: 'More',
+                            title: 'dashboard.home.more'.tr(),
                           ),
                         ],
                       ),
@@ -157,10 +158,9 @@ class _DashboardState extends ConsumerState<Dashboard> {
                           left: 15.0, top: 10, bottom: 10),
                       alignment: AlignmentDirectional.centerStart,
                       child: const Text(
-                        "Sales",
-                        style: TextStyle(
-                            fontSize: 17.0, fontWeight: FontWeight.bold),
-                      ),
+                        "dashboard.home.sales",
+                        style: TextStyle( fontSize: 17.0, fontWeight: FontWeight.bold),
+                      ).tr(),
                     ),
                     // Container(
                     //   padding: const EdgeInsets.only(left: 15, right: 15),
@@ -178,14 +178,14 @@ class _DashboardState extends ConsumerState<Dashboard> {
                     // const LineChartIndicator(),
 
                     DoubleHeader(
-                      rightSide: "Recent Transactions",
+                      rightSide: "dashboard.home.recentTransaction".tr(),
                       iconButton2: IconButton(
                         onPressed: () {},
                         icon: const Icon(Icons.arrow_forward_ios),
                       ),
                       iconButton: InkWell(
                           onTap: () => context.pushNamed('transactionsAll'),
-                          child: const Text("View all")),
+                          child: const Text("dashboard.home.view_all").tr()),
                     ),
                     LimitedBox(
                       maxHeight: 800,
@@ -202,8 +202,8 @@ class _DashboardState extends ConsumerState<Dashboard> {
                                     ),
                                     Text(
                                       index % 2 == 0
-                                          ? "Approved"
-                                          : "In process",
+                                          ? "dashboard.home.approved".tr()
+                                          : "dashboard.home.in_process".tr(),
                                       style: TextStyle(
                                         color: index % 2 == 0
                                             ? Colors.green

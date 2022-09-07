@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../alert_screen.dart';
 import '../dashboard.dart';
@@ -13,7 +14,8 @@ class NavigationBottom extends StatefulWidget {
 }
 
 class _NavigationBottomState extends State<NavigationBottom> {
-  List<Widget> get screens => [
+  List<Widget> get screens =>
+      [
         const Dashboard(),
         InventoryScreen(),
         AlertScreen(),
@@ -53,7 +55,8 @@ class _NavigationBottomState extends State<NavigationBottom> {
         body: PageView(
             controller: _pageController,
             children: screens,
-            onPageChanged: (newPage) => setState(() {
+            onPageChanged: (newPage) =>
+                setState(() {
                   _currentIndex = newPage;
                 })),
         // body: screens[currentIndex],
@@ -67,17 +70,20 @@ class _NavigationBottomState extends State<NavigationBottom> {
                   duration: const Duration(milliseconds: 10),
                   curve: Curves.easeInOut);
             },
-            items: const [
+            items: [
               BottomNavigationBarItem(
-                icon: Icon(Icons.inventory_2_outlined),
-                label: 'Home',
+                icon: const Icon(Icons.inventory_2_outlined),
+                label: 'dashboard.bottom_nav.home'.tr(),
               ),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.folder), label: 'Inventory'),
+                  icon: const Icon(Icons.folder),
+                  label: 'dashboard.bottom_nav.inventory'.tr()),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.add_moderator), label: 'Alerts'),
+                  icon: const Icon(Icons.add_moderator),
+                  label: 'dashboard.bottom_nav.alerts'.tr()),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.person_outline), label: 'Account'),
+                  icon: const Icon(Icons.person_outline),
+                  label: 'dashboard.bottom_nav.account'.tr()),
             ]),
         extendBodyBehindAppBar: true,
       ),

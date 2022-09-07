@@ -82,6 +82,7 @@ flutter:
     - assets/images/splash/
     - assets/images/categories/
     - assets/images/
+    - assets/translations/
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

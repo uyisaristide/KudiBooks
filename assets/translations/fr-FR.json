@@ -1,0 +1,177 @@
+{
+  "dashboard": {
+    "home": {
+      "action": "Action",
+      "sell": "vendre",
+      "newLoad": "Nouvelle charge",
+      "expenses": "Dépenses",
+      "more": "Suite",
+      "sales": "Ventes",
+      "recentTransaction": "Transaction Récente",
+      "view_all": "Voir tout",
+      "approved": "Approuvé",
+      "in_process": "En cours"
+    },
+    "bottom_nav": {
+      "home": "Accueil",
+      "inventory": "Inventaire",
+      "alerts": "Alertes",
+      "account": "Compte"
+    },
+    "inventory_screen": {
+      "new_product": "Nouveau Produit",
+      "product": "Produit",
+      "search_product": "Rechercher un produit",
+      "search_inventory": "Rechercher un l'inventaire",
+      "there_is_no_inventory": "Il n'y a pas d'inventaire"
+    },
+    "account_screen": {
+      "my_account": "Mon compte",
+      "billing_details": "Détails de facturation",
+      "company_profile": "Profil de l'entreprise",
+      "chart_of_account": "Plan comptable",
+      "refer_and_earn": "Parrainez et gagnez",
+      "edit_profile": "Editer le profil",
+      "change_password": "Change le mot de passe",
+      "settings": "Réglages",
+      "help": "Aider",
+      "sign_out": "Se déconnecter"
+    },
+    "drawer": {
+      "load_inventory": "Charger l'inventaire",
+      "client": "Clientes",
+      "transaction": "Transaction",
+      "vendors": "Vendeurs",
+      "reports": "Rapports"
+    }
+  },
+  "createAccountPhone": {
+    "title": "Créer un compte",
+    "form": {
+      "firstName": {
+        "hint": "Nom",
+        "label": "Entrez votre nom"
+      },
+      "lastName": {
+        "hint": "Prénom",
+        "label": "Entrez votre prénom"
+      },
+      "phoneNumber": {
+        "hint": "Numéro de téléphone",
+        "label": "Entrez votre numéro de téléphone"
+      },
+      "pin": {
+        "hint": "Broche",
+        "label": "Entrez votre broche"
+      },
+      "button": {
+        "register": "S'inscrire"
+      }
+    },
+    "validate": {
+      "name": "{} est invalid",
+      "pinNotMatch": "La broche ne correspond pas",
+      "fillOutThisForm": "Remplissez ce formulaire"
+    },
+    "button": {
+      "loginInstead": "Connectez-vous plutôt"
+    },
+    "signUpWith": "Ou inscrivez-vous avec"
+  },
+  "createAccountEmail": {
+    "title": "Créer un nouveau compte",
+    "form": {
+      "firstName": {
+        "hint": "@:createAccountPhone.form.firstName.hint",
+        "label": "@:createAccountPhone.form.lastName.label"
+      },
+      "lastName": {
+        "hint": "Prénom",
+        "label": "Entrez votre prénom"
+      },
+      "email": {
+        "hint": "Écrivez votre e-mail",
+        "label": "E-mail"
+      },
+      "password": {
+        "hint": "Mot de passe",
+        "label": "Écrivez votre mot de passe"
+      },
+      "confirmPassword": {
+        "hint": "Réécrire le mot de passe",
+        "label": "Confirmez le mot de passe"
+      },
+      "button": {
+        "register": "@:createAccountPhone.form.button.register"
+      },
+      "validate": {
+        "matchCharacter": "Au moins 8 caractères sont nécessaires"
+      }
+    },
+    "button": {
+      "loginInstead": "@:createAccountPhone.button.loginInstead"
+    },
+    "signUpWith": "@:createAccountPhone.signUpWith"
+  },
+
+  "validator": {
+    "email": {
+      "isEmpty": "Entrer votre Email",
+      "isInvalid": "L'e-mail saisi n'est pas valide"
+    },
+    "password": {
+      "isEmpty": "Entrer le mot de passe",
+      "matchLength": "6 est le caractère minimum pour le mot de passe"
+    },
+    "validatePin": {
+      "isEmpty": "Entrez votre PIN",
+      "matchLength": "Le code PIN doit comporter au moins 4 chiffres"
+    },
+    "validateName": {
+      "isEmpty": "Remplissez ce champ"
+    },
+    "validatePhoneNumber": {
+      "phoneIsRequired": "Le champ Téléphone est obligatoire",
+      "invalidPhone": "Le numéro de téléphone est invalide"
+    }
+  },
+  "signUpScreen": {
+    "title": "Connexion au compte",
+    "form": {
+      "email": {
+        "hint": "@:createAccountEmail.form.email.hint",
+        "label": "@:createAccountEmail.form.email.label"
+      },
+      "password": {
+        "hint": "Mot de passe",
+        "label": "Écrivez votre mot de passe"
+      }
+    },
+    "forgotPassword": "Mot de passe oublié",
+    "button": {
+      "login": "Connexion",
+      "signUp": "S'inscrire"
+    },
+    "signUpWith": "@:createAccountPhone.signUpWith"
+  },
+
+  "signUpPhoneScreen": {
+    "title": "Connexion au compte",
+    "form": {
+      "phoneNumber": {
+        "hint": "Numéro de téléphone",
+        "label": "Entrez votre numéro de téléphone"
+      },
+      "pin": {
+        "hint": "Broche",
+        "label": "Entrez votre broche"
+      }
+    },
+    "forgotPassword": "Mot de passe oublié",
+    "button": {
+      "login": "Connexion",
+      "signUp": "S'inscrire"
+    },
+    "signUpWith": "@:createAccountPhone.signUpWith"
+  }
+}

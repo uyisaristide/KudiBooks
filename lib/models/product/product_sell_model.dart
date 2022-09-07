@@ -57,4 +57,16 @@ class ProductSellModel {
       'units': units
     };
   }
+  Map<String, dynamic> toJsonNotInventory() {
+    return {
+      'revenueAccountSelected': revenueAccountSelected,
+      'productName': productName,
+      'productPrice': productPrice,
+      'soldInSubUnits': soldInSubUnits,
+      'isInventory': isInventory,
+      'productNote': productNote,
+      'inventoryAccountSelected': inventoryAccountSelected,
+      'productDesc': productDesc,
+    };
+  }
 }

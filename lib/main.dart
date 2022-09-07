@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'providers/all_providers_list.dart';
@@ -12,8 +13,18 @@ void main() async {
   Hive.init(directory.path);
   await Hive.openBox('tokens');
   await Hive.openBox('company');
-  // debugPrint("Kigali Tokens: ${Hive.box('tokens').get('tokens')}");
-  runApp(const ProviderScope(child: MyApp()));
+  await EasyLocalization.ensureInitialized();
+  debugPrint("Kigali Tokens: ${Hive.box('tokens').get('tokens')}");
+  runApp(EasyLocalization(
+      startLocale: const Locale('fr', 'FR'),
+      fallbackLocale: const Locale('en', 'US'),
+      path: 'assets/translations',
+      assetLoader: const RootBundleAssetLoader(),
+      useFallbackTranslations: true,
+      supportedLocales: const [Locale('fr', 'FR'),Locale('en', 'US')],
+      child: const ProviderScope(child: MyApp())
+      )
+  );
 }
 
 class MyApp extends ConsumerStatefulWidget {
@@ -31,8 +42,11 @@ class _MyAppState extends ConsumerState<MyApp> {
   Widget build(BuildContext context) {
     var modes = ref.watch(modeProvider);
     return MaterialApp.router(
-      theme: ThemeData(),
+      theme: ThemeData(primarySwatch: Colors.green),
       darkTheme: ThemeData.dark(),
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
       themeMode: modes ?? mode,
       debugShowCheckedModeBanner: false,
       title: 'KudiBooks',
