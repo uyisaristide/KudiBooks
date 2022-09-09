@@ -35,7 +35,7 @@ class _DrawersState extends ConsumerState<Drawers> {
     var userProfile = ref.watch(userInHiveProvider.notifier).currentUser;
     var company = ref.watch(companyProvider.notifier).myCompany;
 
-    print('now in company ${company!.companyName}');
+    print('now in company ${company!.companyId}');
     // Box<UserProfile> loggMeOut = Hive.box(userProfileBoxName);
     return Drawer(
       elevation: 0.0,

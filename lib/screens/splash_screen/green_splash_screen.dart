@@ -40,7 +40,7 @@ class _GreenSplashScreenState extends ConsumerState<GreenSplashScreen> {
         var currentUser = Hive.box(userProfileBoxName);
         // ref.watch(userProfileProvider.notifier).userProfileBox;
         // print(currentUser);
-          // currentUser!.token !=null
+        // currentUser!.token !=null
         currentUser.containsKey('user')
             ? context.goNamed('dashboard')
             // } else {

@@ -26,13 +26,13 @@ Future<void> main() async {
   await Hive.openBox(userProfileBoxName);
   await Hive.openBox(currentCompanyBoxName);
 
-  runApp(const ProviderScope(child: MyApp()));
-  Directory directory = await path_provider.getApplicationDocumentsDirectory();
-  Hive.init(directory.path);
-  await Hive.openBox('tokens');
-  await Hive.openBox('company');
-  await EasyLocalization.ensureInitialized();
-  debugPrint("Kigali Tokens: ${Hive.box('tokens').get('tokens')}");
+  // runApp(const ProviderScope(child: MyApp()));
+  // Directory directory = await path_provider.getApplicationDocumentsDirectory();
+  // Hive.init(directory.path);
+  // await Hive.openBox('tokens');
+  // await Hive.openBox('company');
+  // await EasyLocalization.ensureInitialized();
+  // debugPrint("Kigali Tokens: ${Hive.box('tokens').get('tokens')}");
   runApp(EasyLocalization(
       startLocale: const Locale('fr', 'FR'),
       fallbackLocale: const Locale('en', 'US'),
