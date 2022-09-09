@@ -12,6 +12,8 @@ import '../models/utilities/network_info.dart';
 import '../screens/company/models/create_company_model.dart';
 import 'user_provider.dart';
 
+int? selectedCompanyId;
+
 class CompanyNotifier extends StateNotifier<NetworkInfo<List<CompanyModel>>> {
   CompanyNotifier() : super(NetworkInfo());
   final Dio _dio = Dio();
@@ -97,7 +99,7 @@ class CompanyNotifier extends StateNotifier<NetworkInfo<List<CompanyModel>>> {
     // userProfileBox = await Hive.openBox<UserProfile?>(userProfileBoxName);
     var currentCompany = Hive.box(currentCompanyBoxName);
     myCompany = currentCompany.get('company');
-
+    selectedCompanyId = myCompany!.companyId;
     return myCompany;
   }
 

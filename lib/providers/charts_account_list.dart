@@ -1,4 +1,3 @@
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,22 +6,23 @@ import '../dio_services.dart';
 import '../handle/error_handler.dart';
 import '../models/chart_accounts.dart';
 import '../models/utilities/network_info.dart';
+import 'company_notifier.dart';
 
-class AllChartAccountsProvider extends StateNotifier<NetworkInfo<List<Accounts>>> {
+class AllChartAccountsProvider
+    extends StateNotifier<NetworkInfo<List<Accounts>>> {
   AllChartAccountsProvider() : super(NetworkInfo());
   final _dio = Dio();
 
   chartRetrieve() async {
-
     state = NetworkInfo(networkStatus: NetworkStatus.loading);
     try {
       Map<String, dynamic> chartHeader = {
         "Content-type": "application/json",
         "Authorization": "Bearer ${Hive.box('tokens').get('token')}",
-        "companyID": 29
+        "companyID": selectedCompanyId
         // "companyID": '${Hive.box('company').get('companyId')}'
       };
-      debugPrint('${Hive.box('company').get('companyId')}');
+      // debugPrint('${Hive.box('company').get('companyId')}');
       Response response = await _dio.get("${DioServices.baseUrl}app/chart",
           options: Options(headers: chartHeader));
       var data = ChartAccount.fromJson(response.data);
@@ -32,8 +32,6 @@ class AllChartAccountsProvider extends StateNotifier<NetworkInfo<List<Accounts>>
         allChartAccounts.add(chart);
       }
 
-      
-
       var info = NetworkInfo<List<Accounts>>(
           data: allChartAccounts,
           networkStatus: NetworkStatus.success,
@@ -42,9 +40,10 @@ class AllChartAccountsProvider extends StateNotifier<NetworkInfo<List<Accounts>>
     } on DioError catch (e) {
       state = ErrorHandler.handleError<List<Accounts>>(e);
     } catch (e) {
-      NetworkInfo<List<Accounts>> info = NetworkInfo(networkStatus: NetworkStatus.error);
+      NetworkInfo<List<Accounts>> info =
+          NetworkInfo(networkStatus: NetworkStatus.error);
       info.errorMessage = "Not found! contact admin";
-      state=info;
+      state = info;
     }
   }
 
@@ -53,19 +52,21 @@ class AllChartAccountsProvider extends StateNotifier<NetworkInfo<List<Accounts>>
       Map<String, dynamic> chartHeaders = {
         "Content-type": "application/json",
         "Authorization": "Bearer ${Hive.box('tokens').get('token')}",
-        "companyID": 29
+        "companyID": selectedCompanyId
         // "companyID": '${Hive.box('company').get('companyId')}'
       };
-      debugPrint('${Hive.box('company').get('companyId')}');
+      // debugPrint('${Hive.box('company').get('companyId')}');
       Response response = await _dio.delete(
           '${DioServices.baseUrl}app/chart/delete/$chartId}',
           options: Options(headers: chartHeaders));
-       var removeInfo = NetworkInfo<List<Accounts>>(networkStatus: NetworkStatus.success, statusCode: 200);
+      var removeInfo = NetworkInfo<List<Accounts>>(
+          networkStatus: NetworkStatus.success, statusCode: 200);
       // state = removeInfo;
       return removeInfo;
-    }  on DioError catch (e) {
+    } on DioError catch (e) {
+      debugPrint(e.response!.data);
       var info = ErrorHandler.handleError<List<Accounts>>(e);
-      state=info;
+      state = info;
       return info;
     } catch (e) {
       NetworkInfo<List<Accounts>> info = NetworkInfo();
@@ -73,5 +74,4 @@ class AllChartAccountsProvider extends StateNotifier<NetworkInfo<List<Accounts>>
       return info;
     }
   }
-
 }

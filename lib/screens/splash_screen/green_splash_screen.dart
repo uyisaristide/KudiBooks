@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/adapters.dart';
 import '../../main.dart';
-import '../../providers/all_providers_list.dart';
 import 'widgets/splash.dart';
 
 class GreenSplashScreen extends ConsumerStatefulWidget {
@@ -21,12 +20,12 @@ class _GreenSplashScreenState extends ConsumerState<GreenSplashScreen> {
     //   if(box.)
     // }
 
-    @override
-    void initState() async {
-      super.initState();
-      var user = await ref.read(userProfileProvider.notifier).getUserFromHive();
-      print('start with: $user');
-    }
+    // @override
+    // void initState() async {
+    //   super.initState();
+    //   var user = await ref.read(userProfileProvider.notifier).getUserFromHive();
+    //   print('start with: $user');
+    // }
   }
 
   @override

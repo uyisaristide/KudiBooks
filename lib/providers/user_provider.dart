@@ -25,8 +25,9 @@ class UserNotifier extends StateNotifier<NetworkInfo<List<User>>> {
     try {
       Response response = await _dio.post('${DioServices.baseUrl}auth/register',
           data: user.toJsonEmail());
-      var info  = NetworkInfo<List<User>>(networkStatus: NetworkStatus.success, statusCode: 200);
-      state=info;
+      var info = NetworkInfo<List<User>>(
+          networkStatus: NetworkStatus.success, statusCode: 200);
+      state = info;
       return info;
     } on DioError catch (e) {
       print("${e.response?.data["errors"]}");
@@ -114,15 +115,17 @@ class UserNotifier extends StateNotifier<NetworkInfo<List<User>>> {
       Response loginResponse = await _dio.post(
           '${DioServices.baseUrl}auth/login',
           data: {"email": email, "password": password});
-        await Hive.openBox('tokens');
-        await Hive.box('tokens').put('token', loginResponse.data["token"]);
-        var infoLogin = NetworkInfo<List<User>>(networkStatus: NetworkStatus.success, statusCode: 200);
-        debugPrint("${loginResponse.data}");
-        return infoLogin;
-    } on DioError catch(e){
+      await Hive.openBox('tokens');
+      await Hive.box('tokens').put('token', loginResponse.data["token"]);
+      myToken = loginResponse.data["token"];
+      var infoLogin = NetworkInfo<List<User>>(
+          networkStatus: NetworkStatus.success, statusCode: 200);
+      debugPrint("${loginResponse.data}");
+      return infoLogin;
+    } on DioError catch (e) {
       print("${e.response?.data}");
       var informationError = ErrorHandler.handleError<List<User>>(e);
-      state=informationError;
+      state = informationError;
       debugPrint("${informationError.networkStatus}");
       return informationError;
     } catch (e) {

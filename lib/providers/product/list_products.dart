@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,6 +6,8 @@ import '../../dio_services.dart';
 import '../../handle/error_handler.dart';
 import '../../models/product/retrive_product_model.dart';
 import '../../models/utilities/network_info.dart';
+import '../company_notifier.dart';
+import '../user_provider.dart';
 
 class RetrieveProductNotifier extends StateNotifier<NetworkInfo<List<RetrieveProductModel>>>{
   RetrieveProductNotifier() : super(NetworkInfo());
@@ -15,8 +16,8 @@ class RetrieveProductNotifier extends StateNotifier<NetworkInfo<List<RetrievePro
 
   Map<String, dynamic> mainHeader = {
     "Content-type": "application/json",
-    "Authorization": "Bearer ${Hive.box('tokens').get('token')}",
-    "companyID": 29
+    "Authorization": "Bearer $myToken",
+    "companyID": selectedCompanyId
   };
 
   allProducts() async{

@@ -7,6 +7,7 @@ import '../../models/inventory_model.dart';
 import '../../models/product/retrive_product_model.dart';
 import '../../models/utilities/network_info.dart';
 import '../../providers/all_providers_list.dart';
+import '../../providers/company_notifier.dart';
 import '../../providers/product/providers.dart';
 import 'classes/sliver_delegate_search.dart';
 import 'widget/button_widget.dart';
@@ -70,6 +71,8 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen>
     var allProductWatcher = ref.watch(allProductProvider);
 
     var signedUser = ref.watch(userProfileProvider).data;
+
+    print('company id: $selectedCompanyId');
     // .firstWhere((user) => user.phoneOrEmail == widget.loggedUser);
 
     // User? signedUser = ref.watch(usersProvider)

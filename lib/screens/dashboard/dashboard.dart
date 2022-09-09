@@ -14,12 +14,10 @@ import '../../providers/all_providers_list.dart';
 import '../../providers/user_provider.dart';
 import 'widget/title_double.dart';
 
-import 'package:hive/hive.dart';
 import 'widget/action_card.dart';
 import 'widget/drawer.dart';
 import 'widget/line_chart.dart';
 import 'widget/pie_chart.dart';
-import 'widget/title_double.dart';
 
 class Dashboard extends ConsumerStatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -45,7 +43,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
     var signedUser = ref.watch(userProfileProvider).data;
     var currentUser = ref.watch(userInHiveProvider.notifier).currentUser;
     myToken = currentUser!.token;
-    debugPrint(myToken);
+    ref.read(companyProvider.notifier).getCompanyFromHive();
     ref.read(companyProvider.notifier).getCompaniesList();
 
     // var signedUser=currentux
@@ -189,7 +187,8 @@ class _DashboardState extends ConsumerState<Dashboard> {
                       alignment: AlignmentDirectional.centerStart,
                       child: const Text(
                         "dashboard.home.sales",
-                        style: TextStyle( fontSize: 17.0, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 17.0, fontWeight: FontWeight.bold),
                       ).tr(),
                     ),
                     // Container(
