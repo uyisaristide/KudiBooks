@@ -6,7 +6,9 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../models/utilities/network_info.dart';
 import '../../../providers/all_providers_list.dart';
+import '../../../providers/user_provider.dart';
 import '../providers.dart';
 
 class CompaniesScreen extends ConsumerStatefulWidget {
@@ -24,28 +26,11 @@ class _CompaniesScreenState extends ConsumerState<CompaniesScreen> {
   // }
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-    ref.read(companyProvider.notifier).getCompanyFromHive();
-    ref.read(userInHiveProvider.notifier).getUserFromHive();
-    ref.read(requireDataProvider.notifier).getRequiredData();
-    ref.read(companyProvider.notifier).getCompaniesList();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    ref.read(companyProvider.notifier).data;
-    var selectedCompany =
+    var companies = ref.read(companyListProvider).data;
+
+    var currentCompany =
         ref.read(companyProvider.notifier).getCompanyFromHive();
-    var companies = ref.watch(companyProvider.notifier).data;
-    var currentCompany = ref.watch(companyProvider.notifier).myCompany;
-
-    var limit = companies.length;
-    // print('company of id  : ${currentCompany!.companyId}');
-
-    ref.read(requireDataProvider.notifier).getRequiredData;
 
     return Scaffold(
       floatingActionButton: ElevatedButton(
@@ -89,10 +74,10 @@ class _CompaniesScreenState extends ConsumerState<CompaniesScreen> {
                       physics: const NeverScrollableScrollPhysics(),
                       // itemBuilder: (context, index) => ProductListCard(index: index),
                       itemBuilder: (context, index) {
-                        if (currentCompany != null) {
-                          if (currentCompany.companyId ==
-                              companies.toList()[index].companyId) {}
-                        }
+                        // if (currentCompany != null) {
+                        //   if (currentCompany.companyId ==
+                        //       companies!.toList()[index].companyId) {}
+                        // }
                         // currentCompany??currentCompany!.companyId == companies.toList()[index].companyId?isCurrentlySelected =true : ;
 
                         return Padding(
@@ -106,7 +91,7 @@ class _CompaniesScreenState extends ConsumerState<CompaniesScreen> {
                               Container(
                             decoration: BoxDecoration(
                                 color: currentCompany!.companyId ==
-                                        companies.toList()[index].companyId
+                                        companies!.toList()[index].companyId
                                     ? Colors.grey[400]
                                     : Colors.grey[100],
                                 borderRadius: BorderRadius.circular(5)),
@@ -149,22 +134,13 @@ class _CompaniesScreenState extends ConsumerState<CompaniesScreen> {
                                         ? 'continue'
                                         : 'choose'),
                                     onPressed: () async {
-                                      ref
-                                          .read(companyProvider.notifier)
-                                          .getCompaniesList();
+                                      
 
                                       ref
                                           .read(companyProvider.notifier)
                                           .addCurrentCompanyToHive(
                                               companies.toList()[index]);
-                                      ref
-                                          .read(companyProvider.notifier)
-                                          .getCompanyFromHive();
-                                      var myCompany = ref
-                                          .watch(companyProvider.notifier)
-                                          .myCompany;
-                                      print(
-                                          'now in company ${myCompany!.companyName}');
+                                      
 
                                       context.goNamed('dashboard');
                                     },
@@ -175,7 +151,7 @@ class _CompaniesScreenState extends ConsumerState<CompaniesScreen> {
                           ),
                         );
                       },
-                      itemCount: limit),
+                      itemCount: companies!.length),
                 ),
               ],
             ),

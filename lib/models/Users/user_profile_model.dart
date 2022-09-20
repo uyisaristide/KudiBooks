@@ -68,7 +68,7 @@ class UserProfile {
 
   @HiveField(14)
   String? token;
-
+   
   factory UserProfile.fromJson(Map<dynamic, dynamic> json) => UserProfile(
       id: json["id"],
       firstName: json["firstName"],

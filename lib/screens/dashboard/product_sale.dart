@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -62,30 +63,32 @@ class _ProductSaleState extends ConsumerState<ProductSale> {
 
   @override
   Widget build(BuildContext context) {
-    
-
     List<ProductSalesModel> salesList = ref.watch(salesProvider);
 
     return Scaffold(
-      appBar: AppBarCommon.preferredSizeWidget(context, "Products sale"),
+      appBar: AppBarCommon.preferredSizeWidget(
+        context,
+        "productSaleScreen.title".tr(),
+      ),
       bottomNavigationBar: BottomAppBar(
           color: Colors.transparent,
           elevation: 0.0,
           child: Container(
             margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             child: LoginButton(
-                text: 'Save',
+                text: "productSaleScreen.save_btn".tr(),
                 actionField: () {
                   if (_formKey.currentState!.validate()) {
-                    ref.read(salesProvider.notifier).addNewSale(ProductSalesModel(
-                        saleId: 11,
-                        transactionDate: transactionDateController.text,
-                        transactionName: productNameController.text,
-                        productSold: 'product1',
-                        amountPaid: double.parse(amountPaidController.text),
-                        paymentMethod: bankAccountsValue!,
-                        debtAmount: double.parse(debtAmountController.text),
-                        client: 'mehuii'));
+                    ref.read(salesProvider.notifier).addNewSale(
+                        ProductSalesModel(
+                            saleId: 11,
+                            transactionDate: transactionDateController.text,
+                            transactionName: productNameController.text,
+                            productSold: 'product1',
+                            amountPaid: double.parse(amountPaidController.text),
+                            paymentMethod: bankAccountsValue!,
+                            debtAmount: double.parse(debtAmountController.text),
+                            client: 'mehuii'));
 
                     print(salesList.toList());
                     return Navigator.pop(context);
@@ -120,7 +123,7 @@ class _ProductSaleState extends ConsumerState<ProductSale> {
                       icon: const Icon(Icons.close),
                     ),
                     title: const Text(
-                      "Add products",
+                      "",
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
                     )),
@@ -261,7 +264,6 @@ class _ProductSaleState extends ConsumerState<ProductSale> {
   }
 
   _addProductForm(BuildContext context) {
-    
     List<ProductModel> _productModel = ref.watch(productProvider);
     List<ProductToSell> _productsToSell = ref.watch(productToSalesProvide);
     return Form(
@@ -287,7 +289,7 @@ class _ProductSaleState extends ConsumerState<ProductSale> {
               validators: (value) {
                 return Validators.notEmpty(value!);
               },
-              hintText: 'Transaction date',
+              hintText: "productSaleScreen.form.transaction_date".tr(),
               fieldController: transactionDateController,
               isShown: false,
               inputType: TextInputType.datetime),
@@ -295,7 +297,7 @@ class _ProductSaleState extends ConsumerState<ProductSale> {
               validators: (value) {
                 return Validators.notEmpty(value);
               },
-              hintText: 'Transaction name',
+              hintText: "productSaleScreen.form.transaction_name".tr(),
               fieldController: nameController,
               isShown: false,
               inputType: TextInputType.name),
@@ -303,9 +305,9 @@ class _ProductSaleState extends ConsumerState<ProductSale> {
             alignment: Alignment.centerLeft,
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
             child: const Text(
-              "Products section",
+              "productSaleScreen.products_section",
               style: TextStyle(fontSize: 16, color: Color(0xff808080)),
-            ),
+            ).tr(),
           ),
 
           LimitedBox(
@@ -330,7 +332,8 @@ class _ProductSaleState extends ConsumerState<ProductSale> {
                             Icons.close,
                             color: Color(0xffA34646),
                           ),
-                          onPressed: () => setState(() => ref.read(productToSalesProvide.notifier)
+                          onPressed: () => setState(() => ref
+                              .read(productToSalesProvide.notifier)
                               .removeProductToSales(int.parse(changeToInt))),
                         ),
                         bottomSize: 10,
@@ -490,9 +493,9 @@ class _ProductSaleState extends ConsumerState<ProductSale> {
                           return const AddProductsPopup();
                         }),
                     child: const Text(
-                      "Add Product",
+                      "productSaleScreen.add_product",
                       style: TextStyle(color: Color(0xff6FCF97), fontSize: 12),
-                    ))),
+                    ).tr())),
           ),
           Container(
             margin: const EdgeInsets.only(right: 15.0, bottom: 1.0, top: 30),
@@ -501,9 +504,9 @@ class _ProductSaleState extends ConsumerState<ProductSale> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 const Text(
-                  "Total Amount: ",
+                  "productSaleScreen.total_amount",
                   style: TextStyle(fontSize: 16, color: Colors.grey),
-                ),
+                ).tr(),
                 Text(
                   "${_productsToSell.length}",
                   style: const TextStyle(
@@ -530,16 +533,16 @@ class _ProductSaleState extends ConsumerState<ProductSale> {
                     validators: (value) {
                       return Validators.notEmpty(value);
                     },
-                    hintText: 'Amount paid',
+                    hintText: 'productSaleScreen.form.amount_paid'.tr(),
                     fieldController: amountPaidController,
                     isShown: false,
                     inputType: TextInputType.number),
                 SelectInputType(
                   itemsToSelect: bankAccounts,
                   dropDownHint: const Text(
-                    "Cash / Bank Account",
+                    "productSaleScreen.form.account",
                     style: TextStyle(color: Colors.grey),
-                  ),
+                  ).tr(),
                   selectedValue: (value) {
                     setState(() {
                       bankAccountsValue = value;
@@ -553,9 +556,9 @@ class _ProductSaleState extends ConsumerState<ProductSale> {
             margin: const EdgeInsets.only(right: 15.0, bottom: 15.0),
             alignment: Alignment.topRight,
             child: const Text(
-              "Add payment method",
+              "productSaleScreen.payment_method",
               style: TextStyle(fontSize: 12, color: Color(0xffA70C4A)),
-            ),
+            ).tr(),
           ),
           Container(
             margin: const EdgeInsets.only(bottom: 20),
@@ -566,7 +569,7 @@ class _ProductSaleState extends ConsumerState<ProductSale> {
                     validators: (value) {
                       return Validators.notEmpty(value);
                     },
-                    hintText: 'Debt amount',
+                    hintText: "productSaleScreen.form.dept_amount".tr(),
                     fieldController: debtAmountController,
                     isShown: false,
                     inputType: TextInputType.number),
@@ -577,7 +580,7 @@ class _ProductSaleState extends ConsumerState<ProductSale> {
                       clientListValue = value;
                     });
                   },
-                  dropDownHint: const Text("Select client"),
+                  dropDownHint: const Text("productSaleScreen.form.select_client").tr(),
                 ),
               ],
             ),

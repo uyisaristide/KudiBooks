@@ -8,14 +8,15 @@ import '../main.dart';
 import '../models/Users/user_model.dart';
 import '../models/Users/user_profile_model.dart';
 import '../models/utilities/network_info.dart';
+import 'all_providers_list.dart';
 
 String? myToken;
 
 class UserNotifier extends StateNotifier<NetworkInfo<List<User>>> {
-  UserNotifier() : super(NetworkInfo());
+  UserNotifier(this.ref) : super(NetworkInfo());
   final _dio = Dio();
   String? wrongCred;
-
+  Ref ref;
   // void addUser(User user) {
   //   state = [...state, user];
   // }
@@ -118,9 +119,16 @@ class UserNotifier extends StateNotifier<NetworkInfo<List<User>>> {
       await Hive.openBox('tokens');
       await Hive.box('tokens').put('token', loginResponse.data["token"]);
       myToken = loginResponse.data["token"];
-      var infoLogin = NetworkInfo<List<User>>(
-          networkStatus: NetworkStatus.success, statusCode: 200);
-      debugPrint("${loginResponse.data}");
+      var infoLogin = NetworkInfo<Response>(
+          networkStatus: NetworkStatus.success,
+          statusCode: 200,
+          data: loginResponse);
+
+      await ref
+          .read(companyListProvider.notifier)
+          .getCompaniesList(loginResponse.data["token"]);
+      debugPrint("${loginResponse}");
+      await ref.read(userInHiveProvider.notifier).getUserProfile(loginResponse.data["token"]);
       return infoLogin;
     } on DioError catch (e) {
       print("${e.response?.data}");
@@ -152,9 +160,11 @@ class UserNotifier extends StateNotifier<NetworkInfo<List<User>>> {
     } on DioError catch (e) {
       var info = ErrorHandler.handleError<List<User>>(e);
       state = info;
+      print(info);
       return info;
     } catch (e) {
       var infoError = NetworkInfo(networkStatus: NetworkStatus.error);
+
       return infoError;
     }
   }

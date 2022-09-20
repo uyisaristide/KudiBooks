@@ -12,7 +12,12 @@ class LoadProductRequiredData extends ConsumerStatefulWidget {
   bool? inInventory;
   Function(RevenueAccounts revenueAccounts)? revenueExpenseFunction;
   Function(InventoryExpenseAccounts inventoryAccount)? inventoryAccount;
-  LoadProductRequiredData({this.inInventory,this.inventoryAccount, this.revenueExpenseFunction,  Key? key}) : super(key: key);
+  LoadProductRequiredData(
+      {this.inInventory,
+      this.inventoryAccount,
+      this.revenueExpenseFunction,
+      Key? key})
+      : super(key: key);
 
   @override
   ConsumerState<LoadProductRequiredData> createState() =>
@@ -37,9 +42,11 @@ class _LoadProductRequiredDataState
   }
 
   populateRequiredDataInventory() {
-    var requiredDataWatcherInventory = ref.watch(productToSellRequiredDataProvider);
+    var requiredDataWatcherInventory =
+        ref.watch(productToSellRequiredDataProvider);
     //revenue account
-    inventoryAccountsList = requiredDataWatcherInventory.data?.inventoryExpenseAccounts ?? [];
+    inventoryAccountsList =
+        requiredDataWatcherInventory.data?.inventoryExpenseAccounts ?? [];
     //
   }
 
@@ -57,12 +64,14 @@ class _LoadProductRequiredDataState
   @override
   Widget build(BuildContext context) {
     var listWatcher = ref.watch(productToSellRequiredDataProvider);
-    ref.listen<NetworkInfo<RequiredDataProduct>>( productToSellRequiredDataProvider, (previous, next) {
+    ref.listen<NetworkInfo<RequiredDataProduct>>(
+        productToSellRequiredDataProvider, (previous, next) {
       if (next.networkStatus == NetworkStatus.success) {
         populateRequiredData();
       }
     });
-    ref.listen<NetworkInfo<RequiredDataProduct>>( productToSellRequiredDataProvider, (previous, next) {
+    ref.listen<NetworkInfo<RequiredDataProduct>>(
+        productToSellRequiredDataProvider, (previous, next) {
       if (next.networkStatus == NetworkStatus.success) {
         populateRequiredDataInventory();
       }
@@ -87,7 +96,9 @@ class _LoadProductRequiredDataState
                   ),
                   RefreshIndicator(
                     onRefresh: () {
-                      return ref.read(productToSellRequiredDataProvider.notifier).productRequiredData();
+                      return ref
+                          .read(productToSellRequiredDataProvider.notifier)
+                          .productRequiredData();
                     },
                     child: ListView(
                       shrinkWrap: true,
@@ -102,7 +113,9 @@ class _LoadProductRequiredDataState
                                 leading: const Icon(
                                     Icons.account_balance_wallet_outlined),
                               ))
-                          .toList().reversed.toList(),
+                          .toList()
+                          .reversed
+                          .toList(),
                     ),
                   )
                 ])
@@ -120,7 +133,9 @@ class _LoadProductRequiredDataState
                       ),
                       RefreshIndicator(
                         onRefresh: () {
-                          return ref.read(productToSellRequiredDataProvider.notifier).productRequiredData();
+                          return ref
+                              .read(productToSellRequiredDataProvider.notifier)
+                              .productRequiredData();
                         },
                         child: ListView(
                           shrinkWrap: true,
@@ -135,7 +150,9 @@ class _LoadProductRequiredDataState
                                     leading: const Icon(
                                         Icons.account_balance_wallet_outlined),
                                   ))
-                              .toList().reversed.toList(),
+                              .toList()
+                              .reversed
+                              .toList(),
                         ),
                       )
                     ])

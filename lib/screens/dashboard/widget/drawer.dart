@@ -32,10 +32,12 @@ class _DrawersState extends ConsumerState<Drawers> {
 
   @override
   Widget build(BuildContext context) {
-    var userProfile = ref.watch(userInHiveProvider.notifier).currentUser;
-    var company = ref.watch(companyProvider.notifier).myCompany;
+    var userProfile = ref.read(userInHiveProvider.notifier).getUserFromHive();
+    
 
-    print('now in company ${company!.companyId}');
+    var company = ref.read(companyProvider.notifier).getCompanyFromHive();
+
+    // print('now in company ${company!.companyId}');
     // Box<UserProfile> loggMeOut = Hive.box(userProfileBoxName);
     return Drawer(
       elevation: 0.0,
@@ -97,6 +99,23 @@ class _DrawersState extends ConsumerState<Drawers> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       ListTile(
+                        onTap: () => context.pushNamed('companiesScreen'),
+                        leading: const Icon(
+                          Icons.shopping_bag,
+                          size: 25,
+                        ),
+                        title: Text(
+                          "${"dashboard.bottom_nav.company".tr()}: ${company!.companyName}",
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        subtitle: Text(company.industry),
+                        trailing: const Icon(
+                          Icons.switch_access_shortcut_add,
+                          size: 20,
+                          color: Color(0Xff157253),
+                        ),
+                      ),
+                      ListTile(
                         onTap: () => Navigator.pop(context),
                         leading: const Icon(Icons.home),
                         title: Text("dashboard.bottom_nav.home".tr()),
@@ -142,7 +161,7 @@ class _DrawersState extends ConsumerState<Drawers> {
                         ),
                       ),
                       ListTile(
-                        onTap: ()=>context.pushNamed('vendors'),
+                        onTap: () => context.pushNamed('vendors'),
                         leading: const Icon(Icons.shopping_bag_rounded),
                         title: const Text("dashboard.drawer.vendors").tr(),
                         trailing: const Icon(
@@ -161,7 +180,7 @@ class _DrawersState extends ConsumerState<Drawers> {
                       ),
                       ListTile(
                         onTap: () => context.pushNamed('settingScreens'),
-                        leading: const Icon(Icons.notifications),
+                        leading: const Icon(Icons.settings),
                         title: Text("dashboard.account_screen.settings".tr()),
                         trailing: const Icon(
                           Icons.arrow_forward_ios,
@@ -194,8 +213,10 @@ class _DrawersState extends ConsumerState<Drawers> {
                             .read(userInHiveProvider.notifier)
                             .deleUserFromHive();
                         context.goNamed('signin');
-                      }else{
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars(response.getErrorMessage, Colors.redAccent.shade400));
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBars.snackBars(response.getErrorMessage,
+                                Colors.redAccent.shade400));
                       }
                     },
                   ),

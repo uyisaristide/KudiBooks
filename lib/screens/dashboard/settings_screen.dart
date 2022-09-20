@@ -11,10 +11,10 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-
   @override
   Widget build(BuildContext context) {
-    var selectedValue = context.locale.toString() == 'en_US'?'English':'French';
+    var selectedValue =
+        context.locale.toString() == 'en_US' ? 'English' : 'French';
     print("Selected value: ${context.locale.toString()}");
     return Scaffold(
       appBar: AppBarCommon.preferredSizeWidget(context, "Settings"),
@@ -48,41 +48,57 @@ class _SettingsState extends State<Settings> {
                           actions: [
                             Column(children: [
                               RadioListTile(
-                                  secondary: const CircleAvatar(backgroundImage: AssetImage("assets/images/US.png"),radius: 15.0,),
-                                  controlAffinity:ListTileControlAffinity.trailing,
+                                  secondary: const CircleAvatar(
+                                    backgroundImage:
+                                        AssetImage("assets/images/US.png"),
+                                    radius: 15.0,
+                                  ),
+                                  controlAffinity:
+                                      ListTileControlAffinity.trailing,
                                   title: const Text("English"),
                                   value: "English",
                                   groupValue: selectedValue,
-                                  onChanged: (value) {
+                                  onChanged: (value) async {
+                                    selectedValue = "English";
                                     setState(() {
-                                      selectedValue="English";
+                                      context
+                                          .setLocale(const Locale('en', 'US'));
                                     });
-                                    contextDialog.setLocale(const Locale('en', 'US'));
+
                                     Navigator.pop(contextDialog);
                                   }),
                               RadioListTile(
-                                  secondary: const CircleAvatar(backgroundImage: AssetImage("assets/images/RW.png"),radius: 15.0),
-                                  controlAffinity:ListTileControlAffinity.trailing,
+                                  secondary: const CircleAvatar(
+                                      backgroundImage:
+                                          AssetImage("assets/images/RW.png"),
+                                      radius: 15.0),
+                                  controlAffinity:
+                                      ListTileControlAffinity.trailing,
                                   title: const Text("Kinyarwanda"),
                                   value: "Kinyarwanda",
                                   groupValue: selectedValue,
                                   onChanged: (value) {
                                     setState(() {
-                                      selectedValue="Kinyarwanda";
+                                      selectedValue = "Kinyarwanda";
                                     });
                                   }),
                               RadioListTile(
-                                  secondary: const CircleAvatar(backgroundImage: AssetImage("assets/images/FR.png"),radius: 15.0),
-                                  controlAffinity:ListTileControlAffinity.trailing,
+                                  secondary: const CircleAvatar(
+                                      backgroundImage:
+                                          AssetImage("assets/images/FR.png"),
+                                      radius: 15.0),
+                                  controlAffinity:
+                                      ListTileControlAffinity.trailing,
                                   title: const Text("French"),
                                   value: "French",
                                   groupValue: selectedValue,
-                                  onChanged: (value){
+                                  onChanged: (value) {
                                     setState(() {
-                                      selectedValue="French";
+                                      selectedValue = "French";
                                     });
                                     print("${contextDialog.locale.toString()}");
-                                    contextDialog.setLocale(const Locale('fr', 'FR'));
+                                    contextDialog
+                                        .setLocale(const Locale('fr', 'FR'));
                                     Navigator.pop(contextDialog);
                                   }),
                             ]),

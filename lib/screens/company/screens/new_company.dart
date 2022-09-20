@@ -66,16 +66,16 @@ class _NewCompanyState extends ConsumerState<NewCompany> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const PageTitle(title: 'Create new account'),
-            LoginButton(
-                text: "Skip",
-                actionField: () {
-                  var tokenId = '${Hive.box('company').get('companyId')}';
-                  tokenId.isNotEmpty
-                      ? context.goNamed('dashboard')
-                      : ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBars.snackBars('Register Company first',
-                              Colors.redAccent.shade400));
-                }),
+            // LoginButton(
+            //     text: "Skip",
+            //     actionField: () {
+            //       var tokenId = '${Hive.box('company').get('companyId')}';
+            //       tokenId.isNotEmpty
+            //           ? context.goNamed('dashboard')
+            //           : ScaffoldMessenger.of(context).showSnackBar(
+            //               SnackBars.snackBars('Register Company first',
+            //                   Colors.redAccent.shade400));
+            //     }),
             CustomFormField(
               fieldController: companyNameController,
               fieldIcon: const Icon(Icons.person),

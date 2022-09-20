@@ -17,6 +17,7 @@ import 'account_details.dart';
 import 'chart_of_account.dart';
 import 'charts_account_list.dart';
 
+import 'company/get_company_list.dart';
 import 'company_notifier.dart';
 import 'expenses_provider.dart';
 import 'inventory_provider.dart';
@@ -27,33 +28,40 @@ import 'user_profile_provider.dart';
 import 'user_provider.dart';
 import 'authentication/auth_provider.dart';
 
-final productProvider = StateNotifierProvider<ProductProvider, List<ProductModel>>( (ref) => ProductProvider());
+final productProvider =
+    StateNotifierProvider<ProductProvider, List<ProductModel>>(
+        (ref) => ProductProvider());
 
-final expenseProvider = StateNotifierProvider<ExpensesProvider, List<Expense>>((ref) => ExpensesProvider());
+final expenseProvider = StateNotifierProvider<ExpensesProvider, List<Expense>>(
+    (ref) => ExpensesProvider());
 
-final inventoryProvider =StateNotifierProvider<InventoryProviders, List<InventoryModel>>((ref) => InventoryProviders());
+final inventoryProvider =
+    StateNotifierProvider<InventoryProviders, List<InventoryModel>>(
+        (ref) => InventoryProviders());
 
 //User Providers
 final usersProvider =
     StateNotifierProvider<UserNotifier, NetworkInfo<List<User>>>(
-        (ref) => UserNotifier());
+        (ref) => UserNotifier(ref));
 final createUserEmailProvider =
     StateNotifierProvider<UserNotifier, NetworkInfo<List<User>>>(
-        (ref) => UserNotifier());
+        (ref) => UserNotifier(ref));
 final createUserPhoneProvider =
     StateNotifierProvider<UserNotifier, NetworkInfo<List<User>>>(
-        (ref) => UserNotifier());
+        (ref) => UserNotifier(ref));
 final loginEmailProvider =
     StateNotifierProvider<UserNotifier, NetworkInfo<List<User>>>(
-        (ref) => UserNotifier());
+        (ref) => UserNotifier(ref));
 final loginPhoneProvider =
     StateNotifierProvider<UserNotifier, NetworkInfo<List<User>>>(
-        (ref) => UserNotifier());
+        (ref) => UserNotifier(ref));
 final logoutProvider =
     StateNotifierProvider<UserNotifier, NetworkInfo<List<User>>>(
-        (ref) => UserNotifier());
+        (ref) => UserNotifier(ref));
 
-final productToSalesProvide = StateNotifierProvider<AddProductToSalesNotifier, List<ProductToSell>>( (ref) => AddProductToSalesNotifier());
+final productToSalesProvide =
+    StateNotifierProvider<AddProductToSalesNotifier, List<ProductToSell>>(
+        (ref) => AddProductToSalesNotifier());
 final productToLoadProvider =
     StateNotifierProvider<ProductInLoadProvider, List<ProductInLoadModel>>(
         (ref) => ProductInLoadProvider());
@@ -62,11 +70,14 @@ final salesProvider =
         (ref) => ProductSalesProvider());
 
 //Company providers
+final companyListProvider =
+    StateNotifierProvider<CompanyListNotifier, NetworkInfo<List<CompanyModel>>>(
+        (ref) => CompanyListNotifier());
 final companyProvider =
-    StateNotifierProvider<CompanyNotifier, NetworkInfo<List<CompanyModel>>>(
+    StateNotifierProvider<CompanyNotifier, NetworkInfo<CompanyModel>>(
         (ref) => CompanyNotifier());
 final createCompanyProvider =
-    StateNotifierProvider<CompanyNotifier, NetworkInfo<List<CompanyModel>>>(
+    StateNotifierProvider<CompanyNotifier, NetworkInfo<CompanyModel>>(
         (ref) => CompanyNotifier());
 
 //Auth
@@ -91,11 +102,10 @@ final modeProvider =
 
 final userProfileProvider =
     StateNotifierProvider<UserProfileNotifier, NetworkInfo<UserProfile>>(
-        (ref) => UserProfileNotifier());
-        final userInHiveProvider =
+        (ref) => UserProfileNotifier(ref));
+final userInHiveProvider =
     StateNotifierProvider<UserProfileNotifier, NetworkInfo<UserProfile>>(
-        (ref) => UserProfileNotifier());
-
+        (ref) => UserProfileNotifier(ref));
 
 //Chart of account providers
 final removeChartProvider = StateNotifierProvider<AllChartAccountsProvider,

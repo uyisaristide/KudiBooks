@@ -4,12 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// import 'package:kudibooks_app/providers/all_providers_list.dart';
-// import 'package:kudibooks_app/screens/dashboard/widget/action_card.dart';
-// import 'package:kudibooks_app/screens/dashboard/widget/business_movement_cart.dart';
-// import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
-// import 'package:kudibooks_app/screens/dashboard/widget/line_chart.dart';
-// import 'package:kudibooks_app/screens/dashboard/widget/pie_chart.dart';
 import '../../providers/all_providers_list.dart';
 import '../../providers/user_provider.dart';
 import 'widget/title_double.dart';
@@ -27,30 +21,12 @@ class Dashboard extends ConsumerStatefulWidget {
 }
 
 class _DashboardState extends ConsumerState<Dashboard> {
-  // final List<BusinessMovement> chartData = BusinessMovement.data;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-    ref.read(userInHiveProvider.notifier).getUserFromHive();
-  }
-
   @override
   Widget build(BuildContext context) {
-    var currentux = ref.read(userInHiveProvider.notifier).getUserFromHive();
-    var signedUser = ref.watch(userProfileProvider).data;
-    var currentUser = ref.watch(userInHiveProvider.notifier).currentUser;
-    myToken = currentUser!.token;
-    ref.read(companyProvider.notifier).getCompanyFromHive();
-    ref.read(companyProvider.notifier).getCompaniesList();
+    var signedUser = ref.read(userProfileProvider.notifier).getUserFromHive();
 
-    // var signedUser=currentux
-    // debugPrint("Logged user is: ${signedUser!.userName}");
-
-    // debugPrint("Logged user is: ${Hive.box('tokens').get('token')}");
-
+    var company = ref.watch(companyProvider);
+    print("signed user ${signedUser}");
     return Scaffold(
         extendBodyBehindAppBar: true,
         drawer: Drawers(userInfo: signedUser),

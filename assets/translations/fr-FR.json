@@ -16,7 +16,8 @@
       "home": "Accueil",
       "inventory": "Inventaire",
       "alerts": "Alertes",
-      "account": "Compte"
+      "account": "Compte",
+      "company": "compagnie"
     },
     "inventory_screen": {
       "new_product": "Nouveau Produit",
@@ -113,7 +114,6 @@
     },
     "signUpWith": "@:createAccountPhone.signUpWith"
   },
-
   "validator": {
     "email": {
       "isEmpty": "Entrer votre Email",
@@ -154,7 +154,6 @@
     },
     "signUpWith": "@:createAccountPhone.signUpWith"
   },
-
   "signUpPhoneScreen": {
     "title": "Connexion au compte",
     "form": {
@@ -173,5 +172,21 @@
       "signUp": "S'inscrire"
     },
     "signUpWith": "@:createAccountPhone.signUpWith"
+  },
+  "productSaleScreen": {
+    "title": "vente de produits",
+    "form": {
+      "transaction_date": "Date de la transaction",
+      "transaction_name": "nom de la transaction",
+      "amount_paid": "Le montant payé",
+      "account": "Espèces/Compte bancaire ",
+      "dept_amount": "Montant de la dette",
+      "select_client": "Sélectionnez un client"
+    },
+    "products_section" :"Rubrique Produits" ,
+    "add_product":  "Ajouter des produits",
+    "total_amount":"Montant total",
+    "payment_method":"Ajouter un mode de paiement",
+    "save_btn":"Enregistrer"
   }
 }

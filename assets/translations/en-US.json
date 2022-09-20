@@ -16,7 +16,8 @@
       "home": "Home",
       "inventory": "Inventory",
       "alerts": "Alerts",
-      "account": "Account"
+      "account": "Account",
+      "company": " Company"
     },
     "inventory_screen": {
       "new_product": "New Product",
@@ -173,5 +174,23 @@
       "signUp": "Sign up"
     },
     "signUpWith": "@:createAccountPhone.signUpWith"
+  },
+  "productSaleScreen": {
+    "title": "Product sale",
+    "form": {
+      "transaction_date": "Transaction date",
+      "transaction_name": "Transaction name",
+      "amount_paid": "Amount paid",
+      "account": "Cash/Bank Account ",
+      "dept_amount": "Dept amount",
+      "select_client": "Select client"
+
+    },
+    "products_section": "Products section",
+    "add_product":  "Add Products",
+    "total_amount":"Total amount",
+    "payment_method":"Add payment method",
+    "save_btn":"save"
+    
   }
 }

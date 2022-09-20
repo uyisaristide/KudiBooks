@@ -16,11 +16,6 @@ import 'widgets/text_form_field.dart';
 import '../background.dart';
 import '../dashboard/classes/snack_bars.dart';
 
-// late Box box;
-// void createBox() async {
-//    box = await Hive.openBox('sad');
-// }
-
 class Login extends ConsumerStatefulWidget {
   const Login({Key? key}) : super(key: key);
 
@@ -37,20 +32,25 @@ class _LoginState extends ConsumerState<Login> {
 
   // late Box<UserProfile> loggedUserBox;
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    ref.read(loginEmailProvider);
-    emailController.addListener(() => setState(() {}));
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   ref.read(loginEmailProvider);
+  //   emailController.addListener(() => setState(() {}));
 
-    // loggedUserBox = Hive.box(userProfileBoxName);
-  }
+  //   // loggedUserBox = Hive.box(userProfileBoxName);
+  // }
 
   @override
   Widget build(BuildContext context) {
-    var loginEmailWatcher = ref.watch(loginEmailProvider);
-    debugPrint("Logged user is: $myToken");
+    // ref.read(userInHiveProvider.notifier).getUserFromHive();
+    // var loginEmailWatcher = ref.watch(loginEmailProvider);
+    // var logged = ref.watch(userInHiveProvider.notifier).currentUser;
+
+    // var user = ref.read(userProfileProvider.notifier).getUserProfile(ref);
+    // var met = user;
+    // debugPrint("Logged user is: ${logged!.email}");
     return BackgroundScreen(
       buttonWidget: Row(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -187,23 +187,14 @@ class _LoginState extends ConsumerState<Login> {
                       .read(loginEmailProvider.notifier)
                       .loginEmail(
                           emailController.text, passwordController.text);
+
+                  print(check);
                   if (check.networkStatus == NetworkStatus.success) {
-                    var user = await ref
-                        .read(userProfileProvider.notifier)
-                        .getUserProfile();
-                    var toHive = await ref
-                        .read(userProfileProvider.notifier)
-                        .addLoggedUserToHive();
-                    var getUserProfile = ref
-                        .read(userProfileProvider.notifier)
-                        .getUserFromHive();
-                    // var companiesAssociated =
-                    ref.read(companyProvider.notifier).getCompaniesList();
-                    // print('get user returned: ${companiesAssociated}');
                     context.goNamed('companiesScreen');
                   } else {
-                    debugPrint("${loginEmailWatcher.networkStatus}");
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBars.snackBars(check.getErrorMessage, Colors.redAccent.shade400));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBars.snackBars(
+                            check.getErrorMessage, Colors.redAccent.shade400));
                   }
                 }
               },

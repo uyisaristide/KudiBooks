@@ -13,7 +13,6 @@ import 'package:kudibooks_app/screens/dashboard/widget/drawer.dart';
 import 'widget/common_appBar.dart';
 import 'widget/drawer.dart';
 
-
 class MyAccountScreen extends ConsumerStatefulWidget {
   String? loggedUser;
 
@@ -26,23 +25,24 @@ class MyAccountScreen extends ConsumerStatefulWidget {
 class _MyAccountScreenState extends ConsumerState<MyAccountScreen> {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
   @override
-void initState() {
+  void initState() {
     // TODO: implement initState
     super.initState();
     ref.read(userInHiveProvider.notifier).getUserFromHive();
   }
+
   @override
   Widget build(BuildContext context) {
     // User? signedUser = loadUser
     //     .watch(usersProvider)
     //     .firstWhere((user) => user.phoneOrEmail == loggedUser);
 
-
-    UserProfile? signedUser = ref.watch(userInHiveProvider.notifier).currentUser;
-
-
+    var signedUser = ref.read(userInHiveProvider.notifier).getUserFromHive();
+    
     return Scaffold(
-      drawer: Drawers(userInfo: signedUser,),
+      drawer: Drawers(
+        userInfo: signedUser,
+      ),
       appBar: AppBarCommon.preferredSizeWidget(context, 'My Account'),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -86,18 +86,16 @@ void initState() {
                     Text("${signedUser!.firstName} ${signedUser.lastName}",
                         style: const TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold)),
-                    Text(
-                        signedUser.phoneNumber == null
-                            ? ""
-                            : signedUser.email,
+                    Text(signedUser.phoneNumber == null ? "" : signedUser.email,
                         style: const TextStyle(
 
-                    // Text("${signedUser.firstName} ${signedUser.lastName}",
-                    //     style: const TextStyle(
-                    //         fontSize: 24, fontWeight: FontWeight.bold)),
-                    // const Text("Firstname Lastname",
-                    //     style: TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold)),
+                            // Text("${signedUser.firstName} ${signedUser.lastName}",
+                            //     style: const TextStyle(
+                            //         fontSize: 24, fontWeight: FontWeight.bold)),
+                            // const Text("Firstname Lastname",
+                            //     style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold)),
                     // Text(
                     //     signedUser.phoneOrEmail == null
                     //         ? ""
@@ -107,7 +105,6 @@ void initState() {
                     //     )),
                     const Text("Phone and Email",
                         style: TextStyle(
-
                           fontSize: 16,
                         )),
                     const SizedBox(
@@ -118,25 +115,29 @@ void initState() {
               ),
               ListTile(
                 onTap: () => context.pushNamed('accountTransfer'),
-                title: const Text('dashboard.account_screen.billing_details').tr(),
+                title:
+                    const Text('dashboard.account_screen.billing_details').tr(),
                 leading: const Icon(Icons.inventory),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 16),
               ),
               ListTile(
                 onTap: () => context.pushNamed('accountTransfer'),
-                title: const Text('dashboard.account_screen.company_profile').tr(),
+                title:
+                    const Text('dashboard.account_screen.company_profile').tr(),
                 leading: const Icon(Icons.inventory),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 16),
               ),
               ListTile(
                 onTap: () => context.pushNamed('chartAccount'),
-                title: const Text('dashboard.account_screen.chart_of_account').tr(),
+                title: const Text('dashboard.account_screen.chart_of_account')
+                    .tr(),
                 leading: const Icon(Icons.inventory),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 16),
               ),
               ListTile(
                 onTap: () {},
-                title: const Text('dashboard.account_screen.refer_and_earn').tr(),
+                title:
+                    const Text('dashboard.account_screen.refer_and_earn').tr(),
                 leading: const Icon(Icons.inventory),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 16),
               ),
@@ -148,7 +149,8 @@ void initState() {
               ),
               ListTile(
                 onTap: () {},
-                title: const Text('dashboard.account_screen.change_password').tr(),
+                title:
+                    const Text('dashboard.account_screen.change_password').tr(),
                 leading: const Icon(Icons.inventory),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 16),
               ),

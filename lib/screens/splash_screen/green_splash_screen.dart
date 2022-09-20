@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/adapters.dart';
 import '../../main.dart';
+import '../../providers/all_providers_list.dart';
 import 'widgets/splash.dart';
 
 class GreenSplashScreen extends ConsumerStatefulWidget {
@@ -27,6 +28,17 @@ class _GreenSplashScreenState extends ConsumerState<GreenSplashScreen> {
     //   print('start with: $user');
     // }
   }
+  Future<bool> isLogged() async {
+    await Hive.openBox(userProfileBoxName);
+
+    var currentUser = Hive.box(userProfileBoxName);
+
+    if (currentUser.containsKey('user')) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,15 +50,20 @@ class _GreenSplashScreenState extends ConsumerState<GreenSplashScreen> {
         // if (token == null) {
         var currentUser = Hive.box(userProfileBoxName);
         // ref.watch(userProfileProvider.notifier).userProfileBox;
-        // print(currentUser);
-        // currentUser!.token !=null
-        currentUser.containsKey('user')
+       Future  <bool> logged ;
+       var isLogged= ref.read(userProfileProvider.notifier).isLogged();
+       
+        
+        
+        isLogged ==true
             ? context.goNamed('dashboard')
-            // } else {
-            : context.goNamed('signin');
-        // }
+           
+            :
+        context.goNamed('signin');
+        
       });
     });
+
     return const Splash(
       backgroundColor: Color(0Xff157253),
       logoImage: "assets/images/splash/kudibooks-WHITE-PNG-LOGO.png",
