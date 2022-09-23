@@ -19,11 +19,7 @@ class CompaniesScreen extends ConsumerStatefulWidget {
 }
 
 class _CompaniesScreenState extends ConsumerState<CompaniesScreen> {
-  // List<CompanyModel> listCompanies = [];
-  // populateCompanies() {
-  //   var companyList = ref.watch(companyProvider);
-  //   listCompanies = companyList.data ?? [];
-  // }
+  
 
   @override
   Widget build(BuildContext context) {

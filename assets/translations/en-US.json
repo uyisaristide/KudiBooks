@@ -135,7 +135,6 @@
       "invalidPhone": "Invalid Phone number"
     }
   },
-
   "signUpScreen": {
     "title": "Account Sign in",
     "form": {
@@ -155,7 +154,6 @@
     },
     "signUpWith": "@:createAccountPhone.signUpWith"
   },
-
   "signUpPhoneScreen": {
     "title": "Account Sign in",
     "form": {
@@ -184,13 +182,35 @@
       "account": "Cash/Bank Account ",
       "dept_amount": "Dept amount",
       "select_client": "Select client"
-
     },
     "products_section": "Products section",
-    "add_product":  "Add Products",
-    "total_amount":"Total amount",
-    "payment_method":"Add payment method",
-    "save_btn":"save"
-    
+    "add_product": "Add Products",
+    "total_amount": "Total amount",
+    "payment_method": "Add payment method",
+    "save_btn": "save"
+  },
+  "setting_screen": {
+    "settings": "Settings",
+    "display": "Display",
+    "theme": "Theme",
+    "language": "Language",
+    "english": "English",
+    "french": "French",
+    "inventory": "Inventory refill alert",
+    "billing": "Billing updates",
+    "product": "Product expiration",
+    "updates": "Other updates",
+    "permissions": "Device permissions",
+    "sms": "SMS permissions",
+    "camera": "Camera permissions",
+    "default": "Default data"
+  },
+  "alert_screen": {
+    "alerts": "Alerts",
+    "today": "Today at 12: 50",
+    "inventory": "Inventory Alert",
+    "body_txt": "Hey, you are running out of inventory items in this product, stock in ASAP",
+    "action_btn": "Action",
+    "cancel_btn": "Cancel"
   }
 }

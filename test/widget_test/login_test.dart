@@ -1,12 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kudibooks_app/screens/auth_screens/login.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/circled_logo.dart';
 import 'package:kudibooks_app/screens/auth_screens/widgets/login_button.dart';
 
-import '../common/local_tree.dart';
+
+import 'common/local_tree.dart';
 
 void main() {
   
@@ -57,4 +57,11 @@ void main() {
       
     },
   );
+
+
+  
+  
 }
+
+
+

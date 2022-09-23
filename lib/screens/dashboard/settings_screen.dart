@@ -17,7 +17,8 @@ class _SettingsState extends State<Settings> {
         context.locale.toString() == 'en_US' ? 'English' : 'French';
     print("Selected value: ${context.locale.toString()}");
     return Scaffold(
-      appBar: AppBarCommon.preferredSizeWidget(context, "Settings"),
+      appBar: AppBarCommon.preferredSizeWidget(
+          context, "setting_screen.settings".tr()),
       body: SingleChildScrollView(
         child: Container(
           margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
@@ -27,17 +28,17 @@ class _SettingsState extends State<Settings> {
               Container(
                 alignment: Alignment.centerLeft,
                 padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
-                child: const Text(
-                  "Display",
-                  style: TextStyle(
+                child: Text(
+                  "setting_screen.display".tr(),
+                  style: const TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.bold,
                       color: Colors.grey),
                 ),
               ),
-              const ListTile(
-                title: Text("Theme"),
-                trailing: Icon(Icons.arrow_forward_ios),
+              ListTile(
+                title: const Text("setting_screen.theme").tr(),
+                trailing: const Icon(Icons.arrow_forward_ios),
               ),
               ListTile(
                 onTap: () {
@@ -55,7 +56,7 @@ class _SettingsState extends State<Settings> {
                                   ),
                                   controlAffinity:
                                       ListTileControlAffinity.trailing,
-                                  title: const Text("English"),
+                                  title: Text("setting_screen.english".tr()),
                                   value: "English",
                                   groupValue: selectedValue,
                                   onChanged: (value) async {
@@ -89,14 +90,14 @@ class _SettingsState extends State<Settings> {
                                       radius: 15.0),
                                   controlAffinity:
                                       ListTileControlAffinity.trailing,
-                                  title: const Text("French"),
+                                  title: Text("setting_screen.french".tr()),
                                   value: "French",
                                   groupValue: selectedValue,
                                   onChanged: (value) {
                                     setState(() {
                                       selectedValue = "French";
                                     });
-                                    print("${contextDialog.locale.toString()}");
+                                    print(contextDialog.locale.toString());
                                     contextDialog
                                         .setLocale(const Locale('fr', 'FR'));
                                     Navigator.pop(contextDialog);
@@ -106,65 +107,72 @@ class _SettingsState extends State<Settings> {
                         );
                       });
                 },
-                title: const Text("Language"),
+                title: Text("setting_screen.language".tr()),
                 leading: const Icon(Icons.language),
               ),
               Container(
                 alignment: Alignment.centerLeft,
                 padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
-                child: const Text(
-                  "Display",
-                  style: TextStyle(
+                child: Text(
+                  "setting_screen.display".tr(),
+                  style: const TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.bold,
                       color: Colors.grey),
                 ),
               ),
+              Row(
+                children: [
+                  Flexible(
+                    child: DoubleRowWidgets(
+                      leftSideWidget:
+                          Switch(value: true, onChanged: (value) {}),
+                      rightSideText: 'setting_screen.inventory'.tr(),
+                      borderSidebottom: true,
+                    ),
+                  ),
+                ],
+              ),
               DoubleRowWidgets(
                 leftSideWidget: Switch(value: true, onChanged: (value) {}),
-                rightSideText: 'Inventory refill alert',
+                rightSideText: 'setting_screen.billing'.tr(),
                 borderSidebottom: true,
               ),
               DoubleRowWidgets(
                 leftSideWidget: Switch(value: true, onChanged: (value) {}),
-                rightSideText: 'Billing updates',
+                rightSideText: 'setting_screen.product'.tr(),
                 borderSidebottom: true,
               ),
               DoubleRowWidgets(
                 leftSideWidget: Switch(value: true, onChanged: (value) {}),
-                rightSideText: 'Product expiration',
-                borderSidebottom: true,
-              ),
-              DoubleRowWidgets(
-                leftSideWidget: Switch(value: true, onChanged: (value) {}),
-                rightSideText: 'Other updates',
+                rightSideText: 'setting_screen.updates'.tr(),
                 borderSidebottom: false,
               ),
               Container(
                 alignment: Alignment.centerLeft,
                 padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
                 child: const Text(
-                  "Device permissions",
+                  "setting_screen.permisions",
                   style: TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.bold,
                       color: Colors.grey),
-                ),
+                ).tr(),
               ),
               DoubleRowWidgets(
                 leftSideWidget: Switch(value: true, onChanged: (value) {}),
-                rightSideText: 'SMS permission',
+                rightSideText: 'setting_screen.sms'.tr(),
                 borderSidebottom: true,
               ),
               DoubleRowWidgets(
                 leftSideWidget: Switch(value: true, onChanged: (value) {}),
-                rightSideText: 'Camera permisson',
+                rightSideText: 'setting_screen.camera'.tr(),
                 borderSidebottom: false,
               ),
               const SizedBox(height: 50),
               DoubleRowWidgets(
                 leftSideWidget: Switch(value: true, onChanged: (value) {}),
-                rightSideText: 'Default data',
+                rightSideText: 'setting_screen.default'.tr(),
                 borderSidebottom: true,
               ),
             ],

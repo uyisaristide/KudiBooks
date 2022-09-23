@@ -3,7 +3,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive/hive.dart';
 
+import '../../main.dart';
 import '../../providers/all_providers_list.dart';
 import '../../providers/user_provider.dart';
 import 'widget/title_double.dart';
@@ -23,10 +25,11 @@ class Dashboard extends ConsumerStatefulWidget {
 class _DashboardState extends ConsumerState<Dashboard> {
   @override
   Widget build(BuildContext context) {
+    Hive.box(userProfileBoxName);
     var signedUser = ref.read(userProfileProvider.notifier).getUserFromHive();
 
-    var company = ref.watch(companyProvider);
-    print("signed user ${signedUser}");
+    // var company = ref.watch(companyProvider);
+    print("signed user $signedUser");
     return Scaffold(
         extendBodyBehindAppBar: true,
         drawer: Drawers(userInfo: signedUser),
@@ -222,9 +225,9 @@ class _DashboardState extends ConsumerState<Dashboard> {
                                     )
                                   ],
                                 ),
-                                title: const Text(
-                                  "Transaction name",
-                                  style: TextStyle(
+                                title: Text(
+                                  "Transaction $index",
+                                  style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 14),
                                 ),

@@ -25,11 +25,13 @@ class DoubleRowWidgets extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-            child: Text(
-              rightSideText,
-              style:
-                  const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w400),
+          Flexible(
+            child: Container(
+              child: Text(
+                rightSideText,
+                style: const TextStyle(
+                    fontSize: 18.0, fontWeight: FontWeight.w400),
+              ),
             ),
           ),
           Container(alignment: Alignment.centerRight, child: leftSideWidget),

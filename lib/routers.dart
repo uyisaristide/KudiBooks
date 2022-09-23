@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'mocking_testing/display_products.dart';
 import 'models/Users/products_sold_model.dart';
 import 'models/product/product_model.dart';
 import 'models/product/product_sell_model.dart';
@@ -160,7 +161,7 @@ GoRouter router = GoRouter(
       GoRoute(
           name: 'screenProducts',
           path: '/productScreens',
-          builder: (context, state) => ProductsScreen()),
+          builder: (context, state) => const ListAllProducts()),
       GoRoute(
           name: 'loadsScreens',
           path: '/allLoads',

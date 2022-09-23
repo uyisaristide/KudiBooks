@@ -183,10 +183,34 @@
       "dept_amount": "Montant de la dette",
       "select_client": "Sélectionnez un client"
     },
-    "products_section" :"Rubrique Produits" ,
-    "add_product":  "Ajouter des produits",
-    "total_amount":"Montant total",
-    "payment_method":"Ajouter un mode de paiement",
-    "save_btn":"Enregistrer"
+    "products_section": "Rubrique Produits",
+    "add_product": "Ajouter des produits",
+    "total_amount": "Montant total",
+    "payment_method": "Ajouter un mode de paiement",
+    "save_btn": "Enregistrer"
+  },
+  "setting_screen": {
+    "settings": "Réglages",
+    "display": "Affichage",
+    "theme": "Thème",
+    "language": "Langue",
+    "english": "Anglais",
+    "french": "Français",
+    "inventory": "Alerte de réapprovisionnement des stocks",
+    "billing": "Mises à jour de facturation",
+    "product": "Expiration du produit",
+    "updates": "Autres mises à jour",
+    "permissions": "Autorisations de l'appareil",
+    "sms": "Autorisations SMS",
+    "camera": "Autorisations de la caméra",
+    "default": "Données par défaut"
+  },
+  "alert_screen": {
+    "alerts": "Alertes",
+    "today": "Aujourd'hui à 12h50\n",
+    "inventory": "Alerte d'inventaire\n",
+    "body_txt": "Hé, vous manquez d'articles en stock dans ce produit, stockez dès que possible",
+    "action_btn": "Action",
+    "cancel_btn": "Annuler"
   }
 }

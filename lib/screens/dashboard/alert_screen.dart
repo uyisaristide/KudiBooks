@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/all_providers_list.dart';
@@ -28,21 +29,21 @@ class _AlertScreenState extends ConsumerState<AlertScreen> {
     return Scaffold(
       drawerEnableOpenDragGesture: true,
       drawer: Drawers(userInfo: signedUser,),
-      appBar: AppBarCommon.preferredSizeWidget(context, "Alerts"),
+      appBar: AppBarCommon.preferredSizeWidget(context, 'alert_screen.alerts'.tr(),),
       body: SingleChildScrollView(
         child: Container(
           margin: const EdgeInsets.all(15.0),
           child: Column(
             children: [
               CustomDevider(
-                middleText: 'Today at 12:50',
+                middleText: "alert_screen.today".tr(),
                 horizotalPadding: 0.0,
                 verticalPadding: 0.0,
               ),
               AlertCard(
-                cardTitle: 'Inventory alert',
+                cardTitle: 'alert_screen.inventory'.tr(),
                 bodyCard:
-                    'Hey, you are running out of inventory items in this product, stock in ASAP',
+                    "alert_screen.body_txt".tr(),
                 topLignColor: const Color(0xffC66666),
                 actionButton: ElevatedButton(
                   onPressed: () {},
@@ -52,7 +53,7 @@ class _AlertScreenState extends ConsumerState<AlertScreen> {
                       elevation: 0.0,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25.0))),
-                  child: const Text("Action"),
+                  child:  Text('alert_screen.action_btn'.tr(),),
                 ),
                 cancelButton: TextButton(
                   style: TextButton.styleFrom(
@@ -62,9 +63,9 @@ class _AlertScreenState extends ConsumerState<AlertScreen> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25.0))),
                   onPressed: () {},
-                  child: const Text(
-                    "Cancel",
-                    style: TextStyle(fontSize: 14),
+                  child:  Text(
+                    'alert_screen.cancel_btn'.tr(),
+                    style: const TextStyle(fontSize: 14),
                   ),
                 ),
               ),
